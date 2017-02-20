@@ -1,4 +1,4 @@
-" autocommand, whenever save file ~/.vimrc, it gets automatically sourced
+" ommand, whenever save file ~/.vimrc, it gets automatically sourced
 :au! BufWritePost $MYVIMRC source $MYVIMRC
 
 "====[ Make tabs, trailing whitespace, and non-breaking spaces visible]======
@@ -7,7 +7,7 @@ set list
 
 call plug#begin('~/.vim/plugged')
 
-" plugins
+"" plugins
 Plug 'tpope/vim-fugitive'
 Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
@@ -17,6 +17,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'luochen1990/rainbow'
+Plug 'lervag/vimtex'
 " plugins
 
 call plug#end()
@@ -25,21 +26,21 @@ call plug#end()
 syntax enable
 set background=dark
 colorscheme solarized
-
+"
 " tabs keybindings
 map <C-t><up> :tabr<cr>
 map <C-t><down> :tabl<cr>
 map <C-left> :tabp<cr>
 map <C-right> :tabn<cr>
-
+"
 " vim-ansible-yaml
 let g:ansible_options = {'ignore_blank_lines': 0}
 let g:ansible_options = {'documentation_mapping': '<C-K>'} "ctrl-k for docs
-
-" vim-arline
+"
+" " vim-arline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'simple'
 set laststatus=2
-
-" rainbow
+"
+" " rainbow
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
