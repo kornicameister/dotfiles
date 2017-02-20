@@ -16,6 +16,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jmcantrell/vim-virtualenv'
+Plug 'luochen1990/rainbow'
 " plugins
 
 call plug#end()
@@ -40,3 +41,5 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'simple'
 set laststatus=2
 
+" rainbow
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
