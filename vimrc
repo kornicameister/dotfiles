@@ -13,6 +13,9 @@ Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
 Plug 'altercation/vim-colors-solarized'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'jmcantrell/vim-virtualenv'
 " plugins
 
 call plug#end()
@@ -25,9 +28,15 @@ colorscheme solarized
 " tabs keybindings
 map <C-t><up> :tabr<cr>
 map <C-t><down> :tabl<cr>
-map <C-t><left> :tabp<cr>
-map <C-t><right> :tabn<cr>
+map <C-left> :tabp<cr>
+map <C-right> :tabn<cr>
 
 " vim-ansible-yaml
 let g:ansible_options = {'ignore_blank_lines': 0}
 let g:ansible_options = {'documentation_mapping': '<C-K>'} "ctrl-k for docs
+
+" vim-arline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'simple'
+set laststatus=2
+
