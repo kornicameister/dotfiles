@@ -5,6 +5,9 @@
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
+" determine OS for come conditional installations
+let os = substitute(system('uname'), "\n", "", "")
+
 call plug#begin('~/.vim/plugged')
 
 " plugins
@@ -20,10 +23,13 @@ Plug 'luochen1990/rainbow'
 Plug 'nvie/vim-flake8'
 Plug 'lervag/vimtex'
 
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-
 Plug 'glench/vim-jinja2-syntax'
+
+if os == "Linux"
+  " following plugins works only for Linux
+  Plug 'SirVer/ultisnips'
+endif
 
 " plugins
 
