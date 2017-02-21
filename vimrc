@@ -23,6 +23,8 @@ Plug 'lervag/vimtex'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+Plug 'glench/vim-jinja2-syntax'
+
 " plugins
 
 call plug#end()
