@@ -5,6 +5,10 @@
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
+" enforce spaces
+set smartindent
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
 " determine OS for come conditional installations
 let os = substitute(system('uname'), "\n", "", "")
 
