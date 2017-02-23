@@ -5,6 +5,15 @@
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
+" auto-remove trailing spaces
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
 " enforce spaces
 set smartindent
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
