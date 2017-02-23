@@ -27,7 +27,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
+
 Plug 'altercation/vim-colors-solarized'
+
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -49,8 +51,12 @@ endif
 call plug#end()
 
 " vim colors solarized settings
-syntax enable
-set background=dark
+syntax on
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
 colorscheme solarized
 
 " tabs keybindings
