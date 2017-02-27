@@ -121,3 +121,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+" set vertical line marking end-of-line
+set colorcolumn=79
+match ErrorMsg '\%>80v.\+'
+
