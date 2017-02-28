@@ -1,11 +1,14 @@
 " autocommand, whenever save file ~/.vimrc, it gets automatically sourced
 :au! BufWritePost $MYVIMRC source $MYVIMRC
 
-"====[ Make tabs, trailing whitespace, and non-breaking spaces visible]======
+""" editior settings
+set smartindent
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
+" make whitespaces, tabs visible
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
-" auto-remove trailing spaces
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
     let c = col(".")
@@ -14,9 +17,9 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" enforce spaces
-set smartindent
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+" enable filetypes plugins
+filetype plugin on
+""" editor settings
 
 " determine OS for come conditional installations
 let os = substitute(system('uname'), "\n", "", "")
