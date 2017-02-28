@@ -58,6 +58,8 @@ endif
 
 Plug 'tmhedberg/SimpylFold'
 
+Plug 'hashivim/vim-vagrant'
+
 " plugins
 
 call plug#end()
