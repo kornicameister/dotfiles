@@ -10,3 +10,7 @@ fshow() {
               xargs -I % sh -c 'vim fugitive://\$(git rev-parse --show-toplevel)/.git//% < /dev/tty'"
 }
 
+git_clean_orig() {
+    find $(pwd) -type f -name '*.orig' -print0 | xargs -0 rm -fv || true
+}
+

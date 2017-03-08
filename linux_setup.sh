@@ -26,6 +26,7 @@ function install_vimplug {
 }
 
 function install_my_functions {
+    cp -f ./bash_functions $HOME/.kornicameister_bash_functions
     if ! grep -q "source ~/.kornicameister_bash_functions" "$HOME/.bashrc"; then
         echo "source ~/.kornicameister_bash_functions" >> $HOME/.bashrc
     else
