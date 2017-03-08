@@ -4,3 +4,4 @@ alias pip_glob_upgrade="pip freeze | tr '=' ' ' | awk '{print $1}' | xargs sudo 
 
 # time vagrant run
 alias vagrant="time vagrant"
+
