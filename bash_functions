@@ -10,8 +10,62 @@ fshow() {
               xargs -I % sh -c 'vim fugitive://\$(git rev-parse --show-toplevel)/.git//% < /dev/tty'"
 }
 
+# git related
+
+# Public: Removes all .orig files after rebase/merge/cherry-pick ops
+#
+# No args
+#
+# Examples
+#   git_clean_orig
+#
+# Returns
+#   null
 git_clean_orig() {
     find $(pwd) -type f -name '*.orig' -print0 | xargs -0 rm -fv || true
+}
+
+# Public: Clones git repo and sets it up
+#
+# Clones git repository into "directory"
+# and:
+#   * sets remote name based on address
+#   * for gerrit executes `git-review -r gerrit -s master`
+#
+# Args:
+#   $1 url - repository url
+#   $2 directory - where repository should be cleaned
+#
+# Examples
+#   git_clone ssh://trebskit@review.openstack.org:29418/openstack/pymod2pkg pymod2pkg
+# Returns
+#   HEAD commit title
+git_clone() {
+    local repo=$1
+    local directory=$2
+
+    local remote_name
+    local pwd=$(pwd)
+
+    if [[ $repo =~ .*review\.openstack\.org.* ]]; then
+        remote_name="gerrit"
+    elif [[ $repo =~ .*github.* ]]; then
+        remote_name="github"
+    elif [[ $repo =~ .*gitlab.* ]]; then
+        remote_name="gitlab"
+    fi
+
+    git clone $repo $directory --progress --origin $remote_name --branch master
+
+    if [ "$remote_name" = "gerrit" ]; then
+        cd $directory
+        git-review -r gerrit -s master
+        cd $pwd
+    fi
+
+    cd $directory
+    git show --oneline | head -1
+    cd $pwd
 }
 
 replace_in_all() {
@@ -20,4 +74,3 @@ replace_in_all() {
     local where=${3:-'*'}
     sed -e "s/${expr_what}/${expr_to}/g" -i $(find -type f -name "${where}" -exec grep -inHl "${expr_what}" {} /dev/null \;)
 }
-
