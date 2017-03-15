@@ -31,8 +31,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
 
+" themes
 Plug 'jnurmine/Zenburn'
+Plug 'blueshirts/darcula'
+Plug 'nanotech/jellybeans.vim'
 Plug 'altercation/vim-colors-solarized'
+" themes
 
 Plug 'ConradIrwin/vim-bracketed-paste'
 
@@ -57,20 +61,19 @@ if os == "Linux"
 endif
 
 Plug 'tmhedberg/SimpylFold'
-
 Plug 'hashivim/vim-vagrant'
 
 " plugins
 
 call plug#end()
 
-" vim colors solarized settings
+" vim theme settings
 syntax on
 if has('gui_running')
     colorscheme zenburn
     set background=dark
 else
-    colorscheme solarized
+    colorscheme jellybeans
     set background=dark
 endif
 
