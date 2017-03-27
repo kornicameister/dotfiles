@@ -133,6 +133,3 @@ let g:NERDTreeIndicatorMapCustom = {
 set colorcolumn=79
 match ErrorMsg '\%>80v.\+'
 
-" by default use en-us locale
-set spell spelllang=en_us
-
