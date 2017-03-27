@@ -72,5 +72,5 @@ replace_in_all() {
     local expr_what=$1
     local expr_to=$2
     local where=${3:-'*'}
-    sed -e "s/${expr_what}/${expr_to}/g" -i $(find -type f -name "${where}" -exec grep -inHl "${expr_what}" {} /dev/null \;)
+    sed -e "s/${expr_what}/${expr_to}/g" -i $(find -type f -name "${where}" -exec grep -inHl --binary-files=without-match "${expr_what}" {} /dev/null \;)
 }
