@@ -21,51 +21,7 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 filetype plugin on
 """ editor settings
 
-" determine OS for come conditional installations
-let os = substitute(system('uname'), "\n", "", "")
-
-call plug#begin('~/.vim/plugged')
-
-" plugins
-Plug 'tpope/vim-fugitive'
-Plug 'chase/vim-ansible-yaml'
-Plug 'wakatime/vim-wakatime'
-
-" themes
-Plug 'jnurmine/Zenburn'
-Plug 'blueshirts/darcula'
-Plug 'nanotech/jellybeans.vim'
-Plug 'altercation/vim-colors-solarized'
-" themes
-
-Plug 'ConradIrwin/vim-bracketed-paste'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'luochen1990/rainbow'
-Plug 'nvie/vim-flake8'
-Plug 'lervag/vimtex'
-
-Plug 'honza/vim-snippets'
-Plug 'glench/vim-jinja2-syntax'
-
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-if os == "Linux"
-  " following plugins works only for Linux
-  Plug 'SirVer/ultisnips'
-endif
-
-Plug 'tmhedberg/SimpylFold'
-Plug 'hashivim/vim-vagrant'
-
-" plugins
-
-call plug#end()
+source ~/.vim/plugins.vim
 
 " vim theme settings
 syntax on
@@ -132,4 +88,8 @@ let g:NERDTreeIndicatorMapCustom = {
 " set vertical line marking end-of-line
 set colorcolumn=79
 match ErrorMsg '\%>80v.\+'
+
+" jedi-vim settings
+let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#use_splits_not_buffers = "left"
 

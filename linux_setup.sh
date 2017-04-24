@@ -19,6 +19,21 @@ function install_fzf {
     yes | ~/.fzf/install >> /dev/null
 }
 
+function install_vimrc {
+    # install vimrc
+    ln -sf $(pwd)/vimrc $HOME/.vimrc && echo "Linked $(pwd)/vimrc to $HOME/.vimrc"
+
+    # install splitted configuration
+    ln -sfF $(pwd)/vim/plugins/ $HOME/.vim/
+    ln -sf $(pwd)/vim/plugins.vim $HOME/.vim/plugins.vim
+}
+
+function install_vim_stuff {
+    sudo -EH pip install jedi && echo "Installed jedi for jedi-vim"
+    install_vimplug && echo "Installed vimplug"
+    install_vimrc
+}
+
 function install_vimplug {
     echo "Installing vimplug"
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -34,14 +49,20 @@ function install_my_functions {
     fi
 }
 
+function install_mdv {
+    echo "Installing MDV - markdown viewer"
+    sudo -EH pip install mdv
+}
+
 if [ $1 == "--debug" ]; then
    set -x
 fi
 
 install_tig
 install_fzf
-install_vimplug
+install_mdv
 install_my_functions
+install_vim_stuff
 
 # TODO(trebskit) installing bash aliases would be nice to have
 
