@@ -54,6 +54,14 @@ function install_mdv {
     sudo -EH pip install mdv
 }
 
+function install_purge_old_kernels {
+    local url="https://raw.githubusercontent.com/jarnos/bikeshed/patch-1/purge-old-kernels"
+    sudo -EH curl -L -o /usr/local/bin/purge-old-kernels \
+        https://raw.githubusercontent.com/jarnos/bikeshed/patch-1/purge-old-kernels \
+        -z /usr/local/bin/purge-old-kernels
+    sudo -EH chmod +x /usr/local/bin/purge-old-kernels
+}
+
 if [ $1 == "--debug" ]; then
    set -x
 fi
@@ -63,6 +71,7 @@ install_fzf
 install_mdv
 install_my_functions
 install_vim_stuff
+install_purge_old_kernels
 
 # TODO(trebskit) installing bash aliases would be nice to have
 
