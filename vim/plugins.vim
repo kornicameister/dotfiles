@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
 
 source ~/.vim/plugins/git.vim
 source ~/.vim/plugins/theming.vim
+source ~/.vim/plugins/code_assistance.vim
 
 Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
@@ -35,9 +36,11 @@ endif
 Plug 'tmhedberg/SimpylFold'
 Plug 'hashivim/vim-vagrant'
 
-Plug 'davidhalter/jedi-vim' "code completing
 Plug 'ervandew/supertab'    "supertab
 
 " plugins
 
 call plug#end()
+
+" load pluggins settings at this point, now that all plugins are in
+source ~/.vim/plugins/settings.vim
