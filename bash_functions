@@ -1,3 +1,11 @@
+#!/bin/bash
+
+docker_gc() {
+    docker run --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v /etc:/etc:ro spotify/docker-gc
+}
+
 # fshow - git commit browser
 fshow() {
   git log --graph --color=always \
