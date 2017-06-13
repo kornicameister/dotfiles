@@ -40,12 +40,21 @@ function install_vimplug {
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
-function install_my_functions {
+function install_bash_functions {
     cp -f ./bash_functions $HOME/.kornicameister_bash_functions
     if ! grep -q "source ~/.kornicameister_bash_functions" "$HOME/.bashrc"; then
         echo "source ~/.kornicameister_bash_functions" >> $HOME/.bashrc
     else
         echo "source ~/.kornicameister_bash_functions already in $HOME/.bashrc"
+    fi
+}
+
+function install_bash_aliases {
+    cp -f ./bash_aliases $HOME/.kornicameister_bash_aliases
+    if ! grep -q "source ~/.kornicameister_bash_aliases" "$HOME/.bashrc"; then
+        echo "source ~/.kornicameister_bash_aliases" >> $HOME/.bashrc
+    else
+        echo "source ~/.kornicameister_bash_aliases already in $HOME/.bashrc"
     fi
 }
 
@@ -93,7 +102,8 @@ fi
 install_tig
 install_fzf
 install_mdv
-install_my_functions
+install_bash_functions
+install_bash_aliases
 install_vim_stuff
 install_purge_old_kernels
 install_vagrant_plugins
