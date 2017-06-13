@@ -51,7 +51,7 @@ function install_my_functions {
 
 function install_mdv {
     echo "Installing MDV - markdown viewer"
-    sudo -EH pip install mdv
+    sudo -EH pip install mdv --upgrade
 }
 
 function install_purge_old_kernels {
