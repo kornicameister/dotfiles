@@ -82,3 +82,65 @@ replace_in_all() {
     local where=${3:-'*'}
     sed -e "s/${expr_what}/${expr_to}/g" -i $(find -type f -name "${where}" -exec grep -inHl --binary-files=without-match "${expr_what}" {} /dev/null \;)
 }
+
+proxy_freedom() {
+    echo "Unsetting the proxy in proxy"
+
+    if is_app_installed docker; then
+        echo "Removing proxy from docker"
+        sudo rm -rf /etc/systemd/system/docker.service.d/proxy.conf
+        sudo systemctl daemon-reload && echo "reloaded systemctl"
+        sudo systemctl restart docker && echo "restarted docker without proxy"
+    fi
+
+    if is_app_installed git; then
+        echo "Removing proxy from git"
+        git config --global --unset http.proxy
+        git config --global --unset https.proxy
+    fi
+
+    if [ -f $HOME/.config/proxy.sh ]; then
+        mv -f $HOME/.config/proxy.sh $HOME/.config/proxy.sh.backup
+        touch $HOME/.config/proxy.sh
+    fi
+
+    unset $(env | grep proxy | tr '=' ' ' | awk '{print $1}') && echo "Removed proxy from current environment"
+
+    source $HOME/.bashrc && echo "Resourced myself"
+}
+
+proxy_chains() {
+    echo "Restoring proxy settings"
+
+    if is_app_installed docker; then
+        echo "Applying proxy for docker"
+        sudo touch /etc/systemd/system/docker.service.d/proxy.conf
+        sudo chown $USER /etc/systemd/system/docker.service.d/proxy.conf
+echo "docker_proxy" && cat > /etc/systemd/system/docker.service.d/proxy.conf << EOF
+[Service]
+Environment="HTTP_PROXY=$http_proxy"
+Environment="HTTPS_PROXY=$http_proxy"
+EOF
+        sudo systemctl daemon-reload && echo "reloaded systemctl"
+        sudo systemctl restart docker && echo "restarted docker with proxy"
+    fi
+
+    if is_app_installed git; then
+        git config --global http.proxy $http_proxy
+        git config --global https.proxy $http_proxy
+    fi
+
+    if [ ! -f $HOME/.config/proxy.sh.backup ]; then
+        echo "Is proxy backup missing ???"
+    else
+        mv -f $HOME/.config/proxy.sh.backup $HOME/.config/proxy.sh
+    fi
+
+    source $HOME/.bashrc && echo "Resourced myself"
+}
+
+is_app_installed() {
+    local what=$1
+    command -v ${what} >/dev/null 2>&1 || return 1
+    return 0
+}
