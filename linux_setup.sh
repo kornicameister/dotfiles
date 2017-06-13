@@ -72,19 +72,18 @@ function install_purge_old_kernels {
 }
 
 function install_vagrant_plugins {
-    command -v vagrant >/dev/null 2>&1 || echo "Install vagrant dummy" && return 1
+    command -v vagrant >/dev/null 2>&1 || (echo "Install vagrant dummy" ; return 1)
 
     echo "vagrant plugins : $(vagrant plugin list)"
     vagrant plugin update && echo "updated all vagrant plugins prior to installation"
 
     local plugins=(
-        'vagrant-reload'
-        'vagrant-ip-show'
         'vagrant-proxyconf'
         'vagrant-timezone'
         'vagrant-cachier'
         'vagrant-hosts'
         'sahara'
+        'vagrant-triggers'
     )
     local plugin
 
