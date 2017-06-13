@@ -62,6 +62,30 @@ function install_purge_old_kernels {
     sudo -EH chmod +x /usr/local/bin/purge-old-kernels
 }
 
+function install_vagrant_plugins {
+    command -v vagrant >/dev/null 2>&1 || echo "Install vagrant dummy" && return 1
+
+    echo "vagrant plugins : $(vagrant plugin list)"
+    vagrant plugin update && echo "updated all vagrant plugins prior to installation"
+
+    local plugins=(
+        'vagrant-reload'
+        'vagrant-ip-show'
+        'vagrant-proxyconf'
+        'vagrant-timezone'
+        'vagrant-cachier'
+        'vagrant-hosts'
+        'sahara'
+    )
+    local plugin
+
+    echo "###########################"
+    for plugin in ${plugins[@]}; do
+        vagrant plugin install ${plugin} && echo "${plugin} installed"
+    done
+    echo "###########################"
+}
+
 if [ $1 == "--debug" ]; then
    set -x
 fi
@@ -72,6 +96,7 @@ install_mdv
 install_my_functions
 install_vim_stuff
 install_purge_old_kernels
+install_vagrant_plugins
 
 # TODO(trebskit) installing bash aliases would be nice to have
 
