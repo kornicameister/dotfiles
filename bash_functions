@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PROXY_CONF=$HOME/.config/proxy.sh
+PROXY_BACKUP=$PROXY_CONF.backup
+
 docker_gc() {
     docker run --rm \
         -v /var/run/docker.sock:/var/run/docker.sock \
@@ -100,8 +103,9 @@ proxy_freedom() {
     fi
 
     if [ -f $HOME/.config/proxy.sh ]; then
-        mv -f $HOME/.config/proxy.sh $HOME/.config/proxy.sh.backup
-        touch $HOME/.config/proxy.sh
+        echo "Backing up proxy config to $PROXY_BACKUP"
+        mv -f $PROXY_CONF $PROXY_BACKUP
+        touch $PROXY_CONF
     fi
 
     unset $(env | grep proxy | tr '=' ' ' | awk '{print $1}') && echo "Removed proxy from current environment"
@@ -126,14 +130,16 @@ EOF
     fi
 
     if is_app_installed git; then
+        echo "Applygin proxy for git"
         git config --global http.proxy $http_proxy
         git config --global https.proxy $http_proxy
     fi
 
-    if [ ! -f $HOME/.config/proxy.sh.backup ]; then
-        echo "Is proxy backup missing ???"
+    if [ ! -f $PROXY_BACKUP ]; then
+        echo "Is proxy backup missing at $PROXY_BACKUP ???"
     else
-        mv -f $HOME/.config/proxy.sh.backup $HOME/.config/proxy.sh
+        echo "Restoring proxy from $PROXY_BACKUP"
+        mv -f $PROXY_BACKUP $PROXY_CONF
     fi
 
     source $HOME/.bashrc && echo "Resourced myself"

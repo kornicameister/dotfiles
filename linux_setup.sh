@@ -1,6 +1,31 @@
 #!/bin/bash
 
-source ${PWD}/bash_functions && echo "Got access to my own stuff"
+_XTRACE_KOLLA=$(set +o | grep xtrace)
+set -o xtrace
+_ERREXIT_KOLLA=$(set +o | grep errexit)
+set -o errexit
+
+source ${PWD}/globals
+source ${PWD}/bash_functions
+
+DEBUG=0
+SKIP_PROXY=0
+
+# https://stackoverflow.com/a/39398359/1396508
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+        --skip-proxy)
+        SKIP_PROXY=1
+        ;;
+        *)
+        # Do whatever you want with extra options
+        echo "Unknown option '$key'"
+        ;;
+    esac
+    # Shift after checking all the cases to get the next option
+    shift
+done
 
 function install_tig {
     # text-mode interface for git https://github.com/jonas/tig
@@ -97,6 +122,12 @@ function install_vagrant_plugins {
 }
 
 install_proxy() {
+
+    if [ $SKIP_PROXY -eq 1 ]; then
+        echo "Skipping proxy setup..."
+        return
+    fi
+
     local proxy_local=${PWD}/proxy.crap
     local proxy_target=$HOME/.config/proxy.sh
 
@@ -141,10 +172,6 @@ configure_git() {
     fi
 }
 
-if [ $1 == "--debug" ]; then
-   set -x
-fi
-
 install_proxy
 configure_git
 install_tig
@@ -156,8 +183,5 @@ install_vim_stuff
 install_purge_old_kernels
 install_vagrant_plugins
 
-# TODO(trebskit) installing bash aliases would be nice to have
-
-if [ $1 == "--debug" ]; then
-    set +x
-fi
+$_ERREXIT_KOLLA
+$_XTRACE_KOLLA
