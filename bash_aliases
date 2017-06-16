@@ -6,5 +6,6 @@ alias pip_upgrade_os="pip_install_os --upgrade"
 
 # time vagrant run
 alias vagrant="time vagrant"
-alias vagrant_up="vagrant destroy -f ; rm -rf .vagrant ; vagrant up"
+alias vagrant_up="vagrant destroy -f && rm -rf .vagrant && vagrant up"
+alias vagrant_destroy="vagrant destroy -f && rm -rf .vagrant"
 
