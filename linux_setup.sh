@@ -169,6 +169,7 @@ configure_git() {
     if is_app_installed git; then
         git config --global url.https://github.com/.insteadof git://github.com/
         git config --global url.https://git.openstack.org/.insteadof git://git.openstack.org/
+        git config --global pull.rebase true
     fi
 }
 
