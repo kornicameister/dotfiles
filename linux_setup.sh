@@ -68,7 +68,7 @@ function install_vimplug {
 }
 
 function install_bash_functions {
-    cp -f ./bash_functions $HOME/.kornicameister_bash_functions
+    ln -sf ${PWD}/bash_functions $HOME/.kornicameister_bash_functions
     if ! grep -q "source ~/.kornicameister_bash_functions" "$HOME/.bashrc"; then
         echo "source ~/.kornicameister_bash_functions" >> $HOME/.bashrc
     else
@@ -77,7 +77,7 @@ function install_bash_functions {
 }
 
 function install_bash_aliases {
-    cp -f ./bash_aliases $HOME/.kornicameister_bash_aliases
+    ln -sf ${PWD}/bash_aliases $HOME/.kornicameister_bash_aliases
     if ! grep -q "source ~/.kornicameister_bash_aliases" "$HOME/.bashrc"; then
         echo "source ~/.kornicameister_bash_aliases" >> $HOME/.bashrc
     else
