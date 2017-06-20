@@ -91,9 +91,13 @@ proxy_freedom() {
 
     if is_app_installed docker; then
         echo "Removing proxy from docker"
-        sudo rm -rf /etc/systemd/system/docker.service.d/proxy.conf
-        sudo systemctl daemon-reload && echo "reloaded systemctl"
-        sudo systemctl restart docker && echo "restarted docker without proxy"
+        if [ -f /etc/systemd/system/docker.service.d/proxy.conf ]; then
+            sudo rm -rf /etc/systemd/system/docker.service.d/proxy.conf
+            sudo systemctl daemon-reload && echo "reloaded systemctl"
+            sudo systemctl restart docker && echo "restarted docker without proxy"
+        else
+            echo "Sneaky bastard, there's no proxy for docker anymore \m/"
+        fi
     fi
 
     if is_app_installed git; then
