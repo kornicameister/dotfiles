@@ -102,6 +102,13 @@ proxy_freedom() {
         git config --global --unset https.proxy
     fi
 
+    if is_app_installed npm; then
+        echo "Removing proxy from npm"
+        npm config delete proxy
+        npm config delete https-proxy
+        npm config set registry $(npm config get registry | sed 's|http|https|g')
+    fi
+
     if [ -f $HOME/.config/proxy.sh ]; then
         echo "Backing up proxy config to $PROXY_BACKUP"
         mv -f $PROXY_CONF $PROXY_BACKUP
@@ -115,6 +122,14 @@ proxy_freedom() {
 
 proxy_chains() {
     echo "Restoring proxy settings"
+
+    if [ ! -f $PROXY_BACKUP ]; then
+        echo "Is proxy backup missing at $PROXY_BACKUP ???"
+    else
+        echo "Restoring proxy from $PROXY_BACKUP"
+        mv -f $PROXY_BACKUP $PROXY_CONF
+        source $PROXY_CONF
+    fi
 
     if is_app_installed docker; then
         echo "Applying proxy for docker"
@@ -135,11 +150,11 @@ EOF
         git config --global https.proxy $http_proxy
     fi
 
-    if [ ! -f $PROXY_BACKUP ]; then
-        echo "Is proxy backup missing at $PROXY_BACKUP ???"
-    else
-        echo "Restoring proxy from $PROXY_BACKUP"
-        mv -f $PROXY_BACKUP $PROXY_CONF
+    if is_app_installed npm; then
+        echo "Removing proxy from npm"
+        npm config set proxy $http_proxy
+        npm config set https-proxy $https_proxy
+        npm config set registry $(npm config get registry | sed 's|https|http|g')
     fi
 
     source $HOME/.bashrc && echo "Resourced myself"
