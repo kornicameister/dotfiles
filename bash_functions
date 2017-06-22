@@ -119,6 +119,14 @@ proxy_freedom() {
         touch $PROXY_CONF
     fi
 
+    if [ -f $HOME/.wakatime.cfg ]; then
+        echo "Removing proxy from wakatime"
+        section="settings"
+        option="proxy"
+        file="HOME/.wakatime.cfg"
+        sed -i -e "/^\[$section\]/,/^\[.*\]/ { /^$option[ \t]*=/ d; }" "$file"
+    fi
+
     unset $(env | grep proxy | tr '=' ' ' | awk '{print $1}') && echo "Removed proxy from current environment"
 
     source $HOME/.bashrc && echo "Resourced myself"
@@ -159,6 +167,17 @@ EOF
         npm config set proxy $http_proxy
         npm config set https-proxy $https_proxy
         npm config set registry $(npm config get registry | sed 's|https|http|g')
+    fi
+
+    if [ -f $HOME/.wakatime.cfg ]; then
+        echo "Setting proxy in wakatime"
+        section="settings"
+        option="proxy"
+        file="$HOME/.wakatime.cfg"
+        value=$http_proxy
+        sed -i -e "/^\[$section\]/ a\\
+$option = $value
+" "$file"
     fi
 
     source $HOME/.bashrc && echo "Resourced myself"
