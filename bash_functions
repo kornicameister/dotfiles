@@ -123,7 +123,7 @@ proxy_freedom() {
         echo "Removing proxy from wakatime"
         section="settings"
         option="proxy"
-        file="HOME/.wakatime.cfg"
+        file="$HOME/.wakatime.cfg"
         sed -i -e "/^\[$section\]/,/^\[.*\]/ { /^$option[ \t]*=/ d; }" "$file"
     fi
 
