@@ -115,11 +115,8 @@ function install_vim_python_deps {
 
 function install_vimrc {
     # install vimrc
-    ln -sf $(pwd)/vimrc $HOME/.vimrc && echo "Linked $(pwd)/vimrc to $HOME/.vimrc"
-
-    # install splitted configuration
-    ln -sfF $(pwd)/vim/plugins/ $HOME/.vim/
-    ln -sf $(pwd)/vim/plugins.vim $HOME/.vim/plugins.vim
+    ln -sf $(pwd)/vimrc $HOME/.vimrc
+    ln -sfF $(pwd)/vim $HOME/.vim/k
 }
 
 function install_vimplug {
