@@ -1,6 +1,9 @@
 " autocommand, whenever save file ~/.vimrc, it gets automatically sourced
 :au! BufWritePost $MYVIMRC source $MYVIMRC
 
+" plugins
+source ~/.vim/plugins.vim
+
 """ editior settings
 set smartindent
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
@@ -9,19 +12,9 @@ set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
 " enable filetypes plugins
 filetype plugin on
 """ editor settings
-
-source ~/.vim/plugins.vim
 
 " vim theme settings
 syntax on
@@ -38,6 +31,10 @@ map <C-t><up> :tabr<cr>
 map <C-t><down> :tabl<cr>
 map <C-left> :tabp<cr>
 map <C-right> :tabn<cr>
+
+" vim-better-whitespace
+autocmd BufEnter * EnableStripWhitespaceOnSave
+autocmd BufWritePre * EnableStripWhitespaceOnSave
 
 " vim-ansible-yaml
 let g:ansible_options = {'ignore_blank_lines': 0}
