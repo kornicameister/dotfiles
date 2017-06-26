@@ -46,6 +46,73 @@ function install_fzf {
     yes | ~/.fzf/install >> /dev/null
 }
 
+function install_vim {
+    local vim_deps=""
+    local vim_apt_pkgs=""
+
+    vim_deps="libncurses5-dev libgnome2-dev
+    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev
+    libx11-dev libxpm-dev libxt-dev python-dev python3-dev
+    lua5.1 lua5.1-dev libperl-dev git"
+    vim_apt_pkgs="vim vim-runtime gvim"
+    sudo -EH apt-get install $vim_deps -y -qq && echo "Installed vim dependencies: $vim_deps"
+    sudo -EH apt-get purge $vim_apt_pkgs -y -qq && echo "Uninstalled older vim: $vim_apt_pkgs " || true
+
+    local vim_repo="https://github.com/vim/vim.git"
+    local vim_dir=$HOME/vim
+
+    if [ ! -d $vim_dir ]; then
+        git clone $vim_repo $vim_dir --depth 1
+    else
+        pushd $vim_dir
+        git fetch --all
+        git reset --hard origin/master
+        git rebase origin/master
+        popd
+    fi
+
+    local python_conf_dir=""
+    if is_app_installed python2.7; then
+        python_conf_dir=$(whereis python2.7 | tr ' ' '\n' | grep config | head -n 1)
+    elif is_app_installed python3.5; then
+        echo "using python3.5 as --with-python-config-dir"
+        python_conf_dir=$(whereis python3.5 | tr ' ' '\n' | grep config | head -n 1)
+    fi
+
+    local CONF_ARGS=""
+    CONF_ARGS="--with-modified-by=$(whoami)"
+    CONF_ARGS="$CONF_ARGS --enable-pythoninterp=yes"
+    CONF_ARGS="$CONF_ARGS --with-python-config-dir=${python_conf_dir}"
+    CONF_ARGS="$CONF_ARGS --disable-gui"
+    CONF_ARGS="$CONF_ARGS --enable-luainterp=dynamic"
+    CONF_ARGS="$CONF_ARGS --enable-rubyinterp=dynamic"
+    CONF_ARGS="$CONF_ARGS --enable-perlinterp=dynamic"
+    CONF_ARGS="$CONF_ARGS --enable-cscope"
+    CONF_ARGS="$CONF_ARGS --enable-multibyte"
+    CONF_ARGS="$CONF_ARGS --with-features=huge"
+    CONF_ARGS="$CONF_ARGS --enable-xim"
+    CONF_ARGS="$CONF_ARGS --enable-fontset"
+
+    local pkg_name="vim"
+    local pgk_version=$(cd $vim_dir ; git tag ; cd - >> /dev/null)
+
+    local ci_args=""
+    ci_args="$ci_args --install=yes"
+    ci_args="$ci_args --type=debian"
+    ci_args="$ci_args --pkgname=$pkg_name --pkgversion=$(echo ${pkg_version/v/""})"
+    ci_args="$ci_args --default"
+
+    pushd $vim_dir
+    cd src
+    sudo dpkg -r $pkg_name || echo "Looks like vim has been removed"
+    make distclean && ./configure $CONF_ARGS && sudo -EH checkinstall $ci_args
+    popd
+}
+
+function install_vim_python_deps {
+    sudo -EH pip install jedi && echo "Installed jedi for jedi-vim"
+}
+
 function install_vimrc {
     # install vimrc
     ln -sf $(pwd)/vimrc $HOME/.vimrc && echo "Linked $(pwd)/vimrc to $HOME/.vimrc"
@@ -55,16 +122,22 @@ function install_vimrc {
     ln -sf $(pwd)/vim/plugins.vim $HOME/.vim/plugins.vim
 }
 
-function install_vim_stuff {
-    sudo -EH pip install jedi && echo "Installed jedi for jedi-vim"
-    install_vimplug && echo "Installed vimplug"
-    install_vimrc
-}
-
 function install_vimplug {
     echo "Installing vimplug"
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+}
+
+function install_vim_plugins {
+    vim +PlugInstall +all
+}
+
+function install_vim_stuff {
+    install_vim
+    install_vim_python_deps
+    install_vimplug
+    install_vimrc
+    install_vim_plugins
 }
 
 function install_bash_functions {
@@ -119,6 +192,11 @@ function install_vagrant_plugins {
         vagrant plugin install ${plugin} && echo "${plugin} installed"
     done
     echo "###########################"
+}
+
+install_checkinstall {
+    # https://help.ubuntu.com/community/CheckInstall
+    sudo -EH apt-get install checkinstall
 }
 
 install_wakatime() {
@@ -228,6 +306,7 @@ configure_git() {
 
 install_proxy
 configure_git
+install_checkinstall
 install_wakatime
 install_tig
 install_fzf
