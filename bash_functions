@@ -82,8 +82,16 @@ git_clone() {
 replace_in_all() {
     local expr_what=$1
     local expr_to=$2
-    local where=${3:-'*'}
-    sed -e "s/${expr_what}/${expr_to}/g" -i $(find -type f -name "${where}" -exec grep -inHl --binary-files=without-match "${expr_what}" {} /dev/null \;)
+    local find_pattern=${3:-*}
+    local find_where=${4:-.}
+
+    local files
+    files=$(find "${find_where}" -type f -name "${find_pattern}" -exec grep -inHl --binary-files=without-match "${expr_what}" {} /dev/null \;)
+
+    if [ -z $files ]; then
+        echo "Found $files to replace $expr_what"
+        sed -e "s/${expr_what}/${expr_to}/g" -i ${files}
+    fi
 }
 
 proxy_freedom() {
