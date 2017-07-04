@@ -191,7 +191,7 @@ function install_vagrant_plugins {
     echo "###########################"
 }
 
-install_checkinstall {
+install_checkinstall() {
     # https://help.ubuntu.com/community/CheckInstall
     sudo -EH apt-get install checkinstall
 }
