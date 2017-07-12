@@ -196,3 +196,8 @@ is_app_installed() {
     command -v ${what} >/dev/null 2>&1 || return 1
     return 0
 }
+
+# tox utilities
+tox_all() {
+    tox -a | head -n $(((tox -a | wc -l)-1)) | tr '\n' ',' | xargs -t tox "$@" -e
+}
