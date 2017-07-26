@@ -79,6 +79,22 @@ git_clone() {
     cd $pwd
 }
 
+git_checkout_pr() {
+    pr_id=$1
+    pr_branch=${2:-pr}
+    pr_origin=${3:-origin}
+
+    # temporarily checkout branch from any remote there is
+    def_remote=$(git remote | head -n 1)
+    def_branch=$(git branch -r --points-at refs/remotes/$def_remote/HEAD | grep '\->' | cut -d' ' -f5 | cut -d/ -f2)
+
+    git checkout $def_remote/$def_branch
+
+    git branch -D $pr_branch
+    git fetch $pr_origin pull/$pr_id/head:$pr_branch
+    git checkout $pr_branch
+}
+
 replace_in_all() {
     local expr_what=$1
     local expr_to=$2
