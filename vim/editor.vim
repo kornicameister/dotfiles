@@ -44,3 +44,6 @@ nnoremap <C-H> <C-W><C-H>
 set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za
+
+" transparent background always
+hi Normal ctermbg=none
