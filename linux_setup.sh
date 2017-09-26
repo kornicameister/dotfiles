@@ -334,6 +334,44 @@ EOL
     fi
 }
 
+install_docker() {
+    echo "Installing docker"
+
+    # first check if docker installed and if we want to remove
+    # it first
+    if is_app_installed docker; then
+        echo -n "Docker already installed, remove [y/n]"
+        read uninstall_docker
+
+        if [ "${uninstall_docker}" == "y" ]; then
+            sudo apt-get remove docker docker-engine docker.io -y -qq
+        else
+            return 1
+        fi
+    fi
+
+    if ! is_app_installed docker; then
+        sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual -y -qq
+        sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y -qq
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo apt-key fingerprint 0EBFCD88
+        sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+        sudo apt-get update -qq || true
+        sudo apt-get install docker docker-compose docker.io  -y -qq
+
+        sudo systemctl enable docker
+        sudo systemctl restart docker
+
+        sudo groupadd docker || true
+        sudo usermod -aG docker $USER
+    fi
+}
+
+sudo apt-get update -qq && echo "System packages list updated"
+
 install_proxy
 install_git
 configure_git
@@ -347,6 +385,7 @@ install_bash_aliases
 install_vim_stuff
 install_purge_old_kernels
 install_vagrant_plugins
+install_docker
 
 $_ERREXIT_KOLLA
 $_XTRACE_KOLLA
