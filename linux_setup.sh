@@ -311,6 +311,29 @@ configure_git() {
     fi
 }
 
+install_git_prompt() {
+    local repo=git@github.com:magicmonty/bash-git-prompt.git
+    local target_dir=$HOME/.bash-git-prompt
+
+    if [ ! -d $target_dir ]; then
+        git clone $repo .bash-git-prompt --depth=1
+    else
+        cd $target_dir
+        git reset --hard HEAD
+        git fetch --all
+        git rebase origin/master
+    fi
+
+    if ! grep -q "GIT_PROMPT_" "$HOME/.bashrc"; then
+        cat >$HOME/.bashrc <<EOL
+GIT_PROMPT_ONLY_IN_REPO=1
+source $target_dir/gitprompt.sh
+EOL
+    else
+        echo "bash-git-prompt already in bashrc"
+    fi
+}
+
 install_proxy
 install_git
 configure_git
