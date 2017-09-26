@@ -59,17 +59,9 @@ function install_vim {
     sudo -EH apt-get purge $vim_apt_pkgs -y -qq && echo "Uninstalled older vim: $vim_apt_pkgs " || true
 
     local vim_repo="https://github.com/vim/vim.git"
-    local vim_dir=$HOME/vim
+    local vim_dir=$TMP/vim
 
-    if [ ! -d $vim_dir ]; then
-        git clone $vim_repo $vim_dir --depth 1
-    else
-        pushd $vim_dir
-        git fetch --all
-        git reset --hard origin/master
-        git rebase origin/master
-        popd
-    fi
+    git clone $vim_repo $vim_dir --depth 1
 
     local python_conf_dir=""
     if is_app_installed python2.7; then
@@ -107,6 +99,8 @@ function install_vim {
     sudo dpkg -r $pkg_name || echo "Looks like vim has been removed"
     make distclean && ./configure $CONF_ARGS && sudo -EH checkinstall $ci_args
     popd
+
+    sudo rm -rf $vim_dir || true
 }
 
 function install_vim_python_deps {
