@@ -287,15 +287,32 @@ install_proxy() {
    proxy_chains && echo "Successfully applied proxy"
 }
 
+install_git() {
+    if ! is_app_installed git; then
+        sudo apt-get install git
+    fi
+}
+
 configure_git() {
     if is_app_installed git; then
         git config --global url.https://github.com/.insteadof git://github.com/
         git config --global url.https://git.openstack.org/.insteadof git://git.openstack.org/
         git config --global pull.rebase true
+        git config --global core.editor "vim"
+
+        echo -n "git user.email: [ENTER]"
+        read git_user_email
+
+        echo -n "git user.name: [ENTER]"
+        read git_user_name
+
+        git config --global user.email "${git_user_email}"
+        git config --global user.name "${git_user_name}"
     fi
 }
 
 install_proxy
+install_git
 configure_git
 install_checkinstall
 install_wakatime
