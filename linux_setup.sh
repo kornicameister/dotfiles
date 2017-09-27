@@ -1,23 +1,17 @@
 #!/bin/bash
 
-_XTRACE_KOLLA=$(set +o | grep xtrace)
-set -o xtrace
-_ERREXIT_KOLLA=$(set +o | grep errexit)
-set -o errexit
-
 source ${PWD}/globals
 source ${PWD}/bash_functions
 
 DEBUG=0
-SKIP_PROXY=0
 ME=$USER
 
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-        --skip-proxy)
-        SKIP_PROXY=1
+        --debug)
+        DEBUG=1
         ;;
         *)
         # Do whatever you want with extra options
@@ -27,6 +21,24 @@ while [[ $# -gt 0 ]]; do
     # Shift after checking all the cases to get the next option
     shift
 done
+
+function install {
+    local what=$1
+    local fn=$2
+    local val
+
+    echo -n "Install $what [y/n]: " ; read answer
+
+    if [ "$answer" == "y" ]; then
+        ($fn)
+        val=0
+    else
+        echo "Skipping ${what} installation, answer was ${answer}"
+        val=1
+    fi
+
+    return $val
+}
 
 function install_tig {
     # text-mode interface for git https://github.com/jonas/tig
@@ -60,7 +72,7 @@ function install_vim {
     sudo -EH apt-get purge $vim_apt_pkgs -y -qq && echo "Uninstalled older vim: $vim_apt_pkgs " || true
 
     local vim_repo="https://github.com/vim/vim.git"
-    local vim_dir=$TMP/vim
+    local vim_dir=/tmp/vim
 
     git clone $vim_repo $vim_dir --depth 1
 
@@ -98,7 +110,10 @@ function install_vim {
     pushd $vim_dir
     cd src
     sudo dpkg -r $pkg_name || echo "Looks like vim has been removed"
-    make distclean && ./configure $CONF_ARGS && sudo -EH checkinstall $ci_args
+    make distclean
+    ./configure
+    ./configure $CONF_ARGS
+    sudo -EH checkinstall $ci_args
     popd
 
     sudo rm -rf $vim_dir || true
@@ -245,11 +260,7 @@ EOF
 }
 
 install_proxy() {
-
-    if [ $SKIP_PROXY -eq 1 ]; then
-        echo "Skipping proxy setup..."
-        return
-    fi
+    echo "Installing proxy"
 
     local proxy_local=${PWD}/proxy.crap
     local proxy_target=$HOME/.config/proxy.sh
@@ -363,23 +374,31 @@ install_docker() {
     fi
 }
 
+if [ $DEBUG -eq 1 ]; then
+    _XTRACE_KOLLA=$(set +o | grep xtrace)
+    set -o xtrace
+    _ERREXIT_KOLLA=$(set +o | grep errexit)
+    set -o errexit
+fi
+
 sudo true && echo "sudo granted, it is needed"
 sudo apt-get update -qq && echo "System packages list updated"
 
-install_proxy
-install_git
-configure_git
-install_checkinstall
-install_wakatime
-install_tig
-install_fzf
-install_mdv
-install_bash_functions
-install_bash_aliases
-install_vim_stuff
-install_purge_old_kernels
-install_vagrant_plugins
-install_docker
+install proxy install_proxy
+install git install_git && configure_git
+install checkinstall install_checkinstall
+install wakatime install_wakatime
+install tig install_tig
+install fzf install_fzf
+install mdv install_mdv
+install k_bash_functions install_bash_functions
+install k_bash_aliases install_bash_aliases
+install vim install_vim_stuff
+install purge_old_kernels install_purge_old_kernels
+install vagrant_plugins install_vagrant_plugins
+install docker install_docker
 
-$_ERREXIT_KOLLA
-$_XTRACE_KOLLA
+if [ $DEBUG -eq 1 ]; then
+    $_ERREXIT_KOLLA
+    $_XTRACE_KOLLA
+fi
