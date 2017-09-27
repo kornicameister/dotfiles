@@ -14,6 +14,7 @@ K_START_POINT="${K_DIR}/k.sh"
 source ${TOP_DIR}/globals
 source ${TOP_DIR}/bash_functions
 source ${TOP_DIR}/utils.sh
+
 source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
 
 # https://stackoverflow.com/a/39398359/1396508
@@ -302,53 +303,6 @@ install_proxy() {
    proxy_chains && echo "Successfully applied proxy"
 }
 
-install_git() {
-    if ! is_app_installed git; then
-        sudo apt-get install git
-    fi
-}
-
-configure_git() {
-    if is_app_installed git; then
-        git config --global url.https://github.com/.insteadof git://github.com/
-        git config --global url.https://git.openstack.org/.insteadof git://git.openstack.org/
-        git config --global pull.rebase true
-        git config --global core.editor "vim"
-
-        echo -n "git user.email: [ENTER]"
-        read git_user_email
-
-        echo -n "git user.name: [ENTER]"
-        read git_user_name
-
-        git config --global user.email "${git_user_email}"
-        git config --global user.name "${git_user_name}"
-    fi
-}
-
-install_git_prompt() {
-    local repo=git@github.com:magicmonty/bash-git-prompt.git
-    local target_dir=$HOME/.bash-git-prompt
-
-    if [ ! -d $target_dir ]; then
-        git clone $repo .bash-git-prompt --depth=1
-    else
-        cd $target_dir
-        git reset --hard HEAD
-        git fetch --all
-        git rebase origin/master
-    fi
-
-    if ! grep -q "GIT_PROMPT_" "$HOME/.bashrc"; then
-        cat >$HOME/.bashrc <<EOL
-GIT_PROMPT_ONLY_IN_REPO=1
-source $target_dir/gitprompt.sh
-EOL
-    else
-        echo "bash-git-prompt already in bashrc"
-    fi
-}
-
 install_docker() {
     echo "Installing docker"
 
@@ -387,9 +341,9 @@ install_nnn() {
 update_start_point() {
     rm -rf "${K_START_POINT}" && echo "Removed old ${K_START_POINT}"
 
-    bindings=$(ls "${K_DIR}" | grep b_)
-    for binding in "${bindings[@]}"; do
-        echo ". ${K_DIR}/${binding}" >> "${K_START_POINT}"
+    for binding in $K_DIR/b_* ; do
+        echo "Adding binding ${binding}"
+        echo ". ${binding}" >> "${K_START_POINT}"
     done
 
     if ! grep -q "${K_START_POINT}" "$HOME/.bashrc"; then
@@ -421,7 +375,8 @@ if [ $INSTALL -eq 1 ]; then
         sudo apt-get update -qq && echo "System packages list updated"
 
         install_prompt proxy install_proxy
-        install_prompt git install_git && configure_git
+        install_prompt dev install_dev
+
         install_prompt checkinstall install_checkinstall
         install_prompt wakatime install_wakatime
         install_prompt tig install_tig
@@ -434,7 +389,6 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt vagrant_plugins install_vagrant_plugins
         install_prompt docker install_docker
         install_prompt nnn install_nnn
-        install_prompt dev install_dev
 
     fi
 
