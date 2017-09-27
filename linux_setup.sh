@@ -338,7 +338,15 @@ install_nnn() {
     sudo apt-get install nnn
 }
 
-update_start_point() {
+enable_bash_completion() {
+    if ! grep -q "/etc/bash_completion" "${HOME}/.bashrc"; then
+        if [ -f "/etc/bash_completion" ]; then
+            echo ". /etc/bash_completion" >> "${HOME}/.bashrc"
+        fi
+    fi
+}
+
+enable_start_point() {
     rm -rf "${K_START_POINT}" && echo "Removed old ${K_START_POINT}"
 
     for binding in $K_DIR/b_* ; do
@@ -368,6 +376,9 @@ if [ $INSTALL -eq 1 ]; then
     if [ ! -d "${K_DIR}" ]; then
         mkdir -p "${K_DIR}" && echo "A place of K [${K_DIR}] has been created"
     fi
+    if [ ! -f "${HOME}/.bashrc" ]; then
+        touch "${HOME}/.bashrc"
+    fi
 
     if [ $UPDATE_START_POINT_ONLY -eq 0 ]; then
 
@@ -392,7 +403,8 @@ if [ $INSTALL -eq 1 ]; then
 
     fi
 
-    echo "Updating ${K_START_POINT}" && update_start_point
+    echo "Updating ${K_START_POINT}" && enable_start_point
+    echo "Enable bash completion" && enable_bash_completion
 fi
 if [ $PURGE -eq 1 ]; then
     echo "Damn...already removing all that"
