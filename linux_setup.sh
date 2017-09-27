@@ -1,10 +1,12 @@
 #!/bin/bash
 
-source ${PWD}/globals
-source ${PWD}/bash_functions
-
+TOP_DIR="${PWD}"
 DEBUG=0
 ME=$USER
+
+source ${TOP_DIR}/globals
+source ${TOP_DIR}/bash_functions
+source ${TOP_DIR}/utils.sh
 
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
@@ -21,24 +23,6 @@ while [[ $# -gt 0 ]]; do
     # Shift after checking all the cases to get the next option
     shift
 done
-
-function install {
-    local what=$1
-    local fn=$2
-    local val
-
-    echo -n "Install $what [y/n]: " ; read answer
-
-    if [ "$answer" == "y" ]; then
-        ($fn)
-        val=0
-    else
-        echo "Skipping ${what} installation, answer was ${answer}"
-        val=1
-    fi
-
-    return $val
-}
 
 function install_tig {
     # text-mode interface for git https://github.com/jonas/tig
@@ -391,20 +375,20 @@ fi
 sudo true && echo "sudo granted, it is needed"
 sudo apt-get update -qq && echo "System packages list updated"
 
-install proxy install_proxy
-install git install_git && configure_git
-install checkinstall install_checkinstall
-install wakatime install_wakatime
-install tig install_tig
-install fzf install_fzf
-install mdv install_mdv
-install k_bash_functions install_bash_functions
-install k_bash_aliases install_bash_aliases
-install vim install_vim_stuff
-install purge_old_kernels install_purge_old_kernels
-install vagrant_plugins install_vagrant_plugins
-install docker install_docker
-install nnn install_nnn
+install_prompt proxy install_proxy
+install_prompt git install_git && configure_git
+install_prompt checkinstall install_checkinstall
+install_prompt wakatime install_wakatime
+install_prompt tig install_tig
+install_prompt fzf install_fzf
+install_prompt mdv install_mdv
+install_prompt k_bash_functions install_bash_functions
+install_prompt k_bash_aliases install_bash_aliases
+install_prompt vim install_vim_stuff
+install_prompt purge_old_kernels install_purge_old_kernels
+install_prompt vagrant_plugins install_vagrant_plugins
+install_prompt docker install_docker
+install_prompt nnn install_nnn
 
 if [ $DEBUG -eq 1 ]; then
     $_ERREXIT_KOLLA
