@@ -5,14 +5,29 @@ TOP_DIR="${1}"
 K_DIR="${2}"
 
 GIT_PROMPT_BINDING="${K_DIR}/b_git_prompt.sh"
+GLOBAL_GITIGNORE="${K_DIR}/gitignore"
 
 install_dev_git() {
     if ! is_app_installed git; then
         echo "Installing git"
         sudo apt-get install git -y -qq
+        _configure_global_gitignore
         _configure_git
     fi
     _install_git_prompt
+}
+
+_configure_global_gitignore() {
+    rm -f "${GLOBAL_GITIGNORE}"
+    if [ ! -f "${GLOBAL_GITIGNORE}" ]; then
+    cat >"${GLOBAL_GITIGNORE}" <<EOL
+*.swp
+*.swo
+.idea/
+.vscode/
+.wakatime
+EOL
+    fi
 }
 
 _configure_git() {
@@ -22,6 +37,7 @@ _configure_git() {
     git config --global url.https://git.openstack.org/.insteadof git://git.openstack.org/
     git config --global pull.rebase true
     git config --global core.editor "vim"
+    git config --global core.excludesfile "${GLOBAL_GITIGNORE}"
 
     echo -n "git user.email: [ENTER]"
     read git_user_email
