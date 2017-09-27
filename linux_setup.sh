@@ -2,11 +2,15 @@
 
 TOP_DIR="${PWD}"
 DEBUG=0
-ME=$USER
+INSTALL=1
+PURGE=0
+ME="${USER}"
+K_DIR="${HOME}/.k_stuff"
 
 source ${TOP_DIR}/globals
 source ${TOP_DIR}/bash_functions
 source ${TOP_DIR}/utils.sh
+source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
 
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
@@ -14,6 +18,17 @@ while [[ $# -gt 0 ]]; do
     case "$key" in
         --debug)
         DEBUG=1
+        ;;
+        --install)
+        INSTALL=1
+        PURGE=0
+        ;;
+        --purge)
+        INSTALL=0
+        PURGE=1
+        ;;
+        --only)
+        INSTALL_ONLY=$2 && shift
         ;;
         *)
         # Do whatever you want with extra options
@@ -372,23 +387,46 @@ if [ $DEBUG -eq 1 ]; then
     set -o errexit
 fi
 
-sudo true && echo "sudo granted, it is needed"
-sudo apt-get update -qq && echo "System packages list updated"
+if [ $INSTALL -eq 1 ]; then
+    echo "Installing kornicameister stuff"
 
-install_prompt proxy install_proxy
-install_prompt git install_git && configure_git
-install_prompt checkinstall install_checkinstall
-install_prompt wakatime install_wakatime
-install_prompt tig install_tig
-install_prompt fzf install_fzf
-install_prompt mdv install_mdv
-install_prompt k_bash_functions install_bash_functions
-install_prompt k_bash_aliases install_bash_aliases
-install_prompt vim install_vim_stuff
-install_prompt purge_old_kernels install_purge_old_kernels
-install_prompt vagrant_plugins install_vagrant_plugins
-install_prompt docker install_docker
-install_prompt nnn install_nnn
+    sudo true && echo "sudo granted, it is needed"
+    sudo apt-get update -qq && echo "System packages list updated"
+
+    if [ ! -d "${K_DIR}" ]; then
+        mkdir -p "${K_DIR}" && echo "A place of K [${K_DIR}] has been created"
+    fi
+
+    install_prompt proxy install_proxy
+    install_prompt git install_git && configure_git
+    install_prompt checkinstall install_checkinstall
+    install_prompt wakatime install_wakatime
+    install_prompt tig install_tig
+    install_prompt fzf install_fzf
+    install_prompt mdv install_mdv
+    install_prompt k_bash_functions install_bash_functions
+    install_prompt k_bash_aliases install_bash_aliases
+    install_prompt vim install_vim_stuff
+    install_prompt purge_old_kernels install_purge_old_kernels
+    install_prompt vagrant_plugins install_vagrant_plugins
+    install_prompt docker install_docker
+    install_prompt nnn install_nnn
+    install_prompt dev install_dev
+
+    # final touch, let's get all of the b_ files to produce new profile
+    sudo rm -rf "${K_DIR}/k_profile.sh" && echo "removed local profile"
+    sudo rm -rf "/etc/profile.d/k_profile" && echo "removed actual profile"
+
+    bindings=$(ls "${K_DIR}" | grep b_)
+    for binding in "${bindings[@]}"; do
+        echo "source ${K_DIR}/${binding}" >> "${K_DIR}/k_profile.sh"
+    done
+    sudo ln -sf "${K_DIR}/k_profile.sh" "/etc/profile.d/k_profile"
+fi
+if [ $PURGE -eq 1 ]; then
+    echo "Damn...already removing all that"
+    echo "Haha...not implemented"
+fi
 
 if [ $DEBUG -eq 1 ]; then
     $_ERREXIT_KOLLA

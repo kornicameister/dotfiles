@@ -5,10 +5,13 @@ install_prompt() {
     local fn=$2
     local val
 
+    # remove two required arguments and use the rest to call passed function
+    shift && shift
+
     echo -n "Install $what [y/n]: " ; read answer
 
     if [ "$answer" == "y" ]; then
-        ($fn)
+        ($fn "$@")
         val=0
     else
         echo "Skipping ${what} installation, answer was ${answer}"
