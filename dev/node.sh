@@ -11,7 +11,21 @@ install_dev_node() {
     _install_nvm
     _install_node
     _configure_node
+    _install_yarn
     set +i
+}
+
+_install_yarn() {
+    echo "Installing yarn"
+
+    local yarn_apt="/etc/apt/sources.list.d/yarn.list"
+
+    if [ ! -f "${yarn_apt}" ]; then
+        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+        echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee "${yarn_apt}"
+    fi
+    sudo apt-get update -qq
+    sudo apt-get install yarn -y -qq
 }
 
 _install_nvm() {
