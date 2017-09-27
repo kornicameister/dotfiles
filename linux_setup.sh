@@ -374,6 +374,13 @@ install_docker() {
     fi
 }
 
+install_nnn() {
+    # https://github.com/jarun/nnn
+    echo "Installing nnn"
+    sudo add-apt-repository ppa:twodopeshaggy/jarun -yu
+    sudo apt-get install nnn
+}
+
 if [ $DEBUG -eq 1 ]; then
     _XTRACE_KOLLA=$(set +o | grep xtrace)
     set -o xtrace
@@ -397,6 +404,7 @@ install vim install_vim_stuff
 install purge_old_kernels install_purge_old_kernels
 install vagrant_plugins install_vagrant_plugins
 install docker install_docker
+install nnn install_nnn
 
 if [ $DEBUG -eq 1 ]; then
     $_ERREXIT_KOLLA
