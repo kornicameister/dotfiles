@@ -16,16 +16,15 @@ install_dev_node() {
 }
 
 _install_yarn() {
-    echo "Installing yarn"
-
-    local yarn_apt="/etc/apt/sources.list.d/yarn.list"
-
-    if [ ! -f "${yarn_apt}" ]; then
-        curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-        echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee "${yarn_apt}"
+    source "${NVM_DIR}/nvm.sh" >> /dev/null; \
+    local yarn_in_system=$(npm list --global | grep yarn)
+    if [[ "${yarn_in_system}" ==  *"yarn"* ]] ; then
+        echo "Updating yarn"
+        npm update --global yarn
+    else
+        echo "Installing yarn"
+        npm install --global yarn;
     fi
-    sudo apt-get update -qq
-    sudo apt-get install yarn -y -qq
 }
 
 _install_nvm() {
@@ -58,7 +57,7 @@ EOL
 _install_node() {
     echo "Installing latest Node.JS"
     (
-        source "${NVM_DIR}/nvm.sh" >> /dev/null; \
+        source "${nvm_dir}/nvm.sh" >> /dev/null; \
         nvm install node; \
         nvm use node;
     )
