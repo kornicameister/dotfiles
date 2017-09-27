@@ -10,6 +10,7 @@ source ${PWD}/bash_functions
 
 DEBUG=0
 SKIP_PROXY=0
+ME=$USER
 
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
@@ -351,16 +352,8 @@ install_docker() {
     fi
 
     if ! is_app_installed docker; then
-        sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual -y -qq
-        sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y -qq
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-        sudo apt-key fingerprint 0EBFCD88
-        sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-        sudo apt-get update -qq || true
-        sudo apt-get install docker docker-compose docker.io  -y -qq
+        local gist="kornicameister/9d102653522ab8c85ed6a6f4cc18d58a"
+        wget -O - https://gist.githubusercontent.com/$gist/raw/install.sh | bash
 
         sudo systemctl enable docker
         sudo systemctl restart docker
@@ -370,6 +363,7 @@ install_docker() {
     fi
 }
 
+sudo true && echo "sudo granted, it is needed"
 sudo apt-get update -qq && echo "System packages list updated"
 
 install_proxy
