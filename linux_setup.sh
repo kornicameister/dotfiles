@@ -355,9 +355,7 @@ enable_start_point() {
     done
 
     if ! grep -q "${K_START_POINT}" "$HOME/.bashrc"; then
-        cat >$HOME/.bashrc <<EOL
-. ${K_START_POINT}
-EOL
+        echo ". ${K_START_POINT}" >> "$HOME/.bashrc"
     else
         echo "${K_START_POINT} already in bashrc"
     fi
@@ -378,6 +376,10 @@ if [ $INSTALL -eq 1 ]; then
     fi
     if [ ! -f "${HOME}/.bashrc" ]; then
         touch "${HOME}/.bashrc"
+    else
+        if [ ! -f "${HOME}/.bashrc.copy" ]; then
+            cp "${HOME}/.bashrc" "${HOME}/.bashrc.copy"
+        fi
     fi
 
     if [ $UPDATE_START_POINT_ONLY -eq 0 ]; then
