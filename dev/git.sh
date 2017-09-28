@@ -21,11 +21,21 @@ _configure_global_gitignore() {
     rm -f "${GLOBAL_GITIGNORE}"
     if [ ! -f "${GLOBAL_GITIGNORE}" ]; then
     cat >"${GLOBAL_GITIGNORE}" <<EOL
+
 *.swp
 *.swo
+
 .idea/
 .vscode/
-.wakatime
+
+.wakatime-project
+.vagrant/
+
+api-guide/build
+api-ref/build
+doc/build
+releasenotes/build
+
 EOL
     fi
 }
