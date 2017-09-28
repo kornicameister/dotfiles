@@ -3,8 +3,8 @@
 TOP_DIR="${1}"
 K_DIR="${2}"
 
-NVM_BINDING="${K_DIR}/b_nvm.sh"
-NVM_DIR="${K_DIR}/nvm"
+export NVM_BINDING="${K_DIR}/b_nvm.sh"
+export NVM_DIR="${K_DIR}/nvm"
 
 install_dev_node() {
     set -i
@@ -25,6 +25,7 @@ _install_yarn() {
         echo "Installing yarn"
         npm install --global yarn;
     fi
+    (source "${NVM_DIR}/nvm.sh" >> /dev/null; nvm reinstall-packages)
 }
 
 _install_nvm() {
