@@ -290,7 +290,6 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt tig install_tig
         install_prompt fzf install_fzf
         install_prompt mdv install_mdv
-        install_prompt vim install_vim_stuff
         install_prompt purge_old_kernels install_purge_old_kernels
         install_prompt vagrant_plugins install_vagrant_plugins
         install_prompt docker install_docker
