@@ -1,0 +1,13 @@
+sudo: required
+language: sh
+
+services:
+  - docker
+  
+before_install:
+  - export DOCKER_REPO=koalaman/shellcheck
+  
+jobs:
+  include:
+    - stage: lint
+      script: docker pull koalaman/shellcheck:latest && docker run -v "$PWD:/mnt" koalaman/shellcheck linux_setup.sh
