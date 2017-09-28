@@ -12,7 +12,8 @@ K_DIR="${HOME}/.k_stuff"
 K_START_POINT="${K_DIR}/k.sh"
 
 source ${TOP_DIR}/globals
-source ${TOP_DIR}/bash_functions
+source ${TOP_DIR}/bash/fn.sh
+source ${TOP_DIR}/bash/aliases.sh
 source ${TOP_DIR}/utils.sh
 
 source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
@@ -149,24 +150,6 @@ function install_vim_stuff {
     install_vimplug
     install_vimrc
     install_vim_plugins
-}
-
-function install_bash_functions {
-    ln -sf ${PWD}/bash_functions $HOME/.kornicameister_bash_functions
-    if ! grep -q "source ~/.kornicameister_bash_functions" "$HOME/.bashrc"; then
-        echo "source ~/.kornicameister_bash_functions" >> $HOME/.bashrc
-    else
-        echo "source ~/.kornicameister_bash_functions already in $HOME/.bashrc"
-    fi
-}
-
-function install_bash_aliases {
-    ln -sf ${PWD}/bash_aliases $HOME/.kornicameister_bash_aliases
-    if ! grep -q "source ~/.kornicameister_bash_aliases" "$HOME/.bashrc"; then
-        echo "source ~/.kornicameister_bash_aliases" >> $HOME/.bashrc
-    else
-        echo "source ~/.kornicameister_bash_aliases already in $HOME/.bashrc"
-    fi
 }
 
 function install_mdv {
@@ -395,8 +378,6 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt tig install_tig
         install_prompt fzf install_fzf
         install_prompt mdv install_mdv
-        install_prompt k_bash_functions install_bash_functions
-        install_prompt k_bash_aliases install_bash_aliases
         install_prompt vim install_vim_stuff
         install_prompt purge_old_kernels install_purge_old_kernels
         install_prompt vagrant_plugins install_vagrant_plugins
