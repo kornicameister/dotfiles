@@ -13,6 +13,7 @@ install_dev_git() {
         _install_git
         _configure_global_gitignore
         _configure_git
+        _install_git_extras
     fi
     _install_git_prompt
 }
@@ -21,6 +22,11 @@ _install_git() {
     sudo add-apt-repository ppa:git-core/ppa -y
     sudo apt-get update -qq
     sudo apt-get install git -y -qq
+}
+
+_install_git_extras() {
+    # tj/git-extras
+    curl -sSL http://git.io/git-extras-setup | sudo bash /dev/stdin
 }
 
 _configure_global_gitignore() {
