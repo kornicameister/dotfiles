@@ -10,11 +10,17 @@ GLOBAL_GITIGNORE="${K_DIR}/gitignore"
 install_dev_git() {
     if ! is_app_installed git; then
         echo "Installing git"
-        sudo apt-get install git -y -qq
+        _install_git
         _configure_global_gitignore
         _configure_git
     fi
     _install_git_prompt
+}
+
+_install_git() {
+    sudo add-apt-repository ppa:git-core/ppa -y
+    sudo apt-get update -qq
+    sudo apt-get install git -y -qq
 }
 
 _configure_global_gitignore() {
