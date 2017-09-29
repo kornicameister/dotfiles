@@ -11,10 +11,10 @@ install_dev_git() {
     if ! is_app_installed git; then
         echo "Installing git"
         _install_git
-        _configure_global_gitignore
-        _configure_git
-        _install_git_extras
     fi
+    _configure_global_gitignore
+    _configure_git
+    _install_git_extras
     _install_git_prompt
 }
 
@@ -26,12 +26,15 @@ _install_git() {
 
 _install_git_extras() {
     # tj/git-extras
-    curl -sSL http://git.io/git-extras-setup | sudo bash /dev/stdin
+    if ! is_app_installed git-extras; then
+        curl -sSL http://git.io/git-extras-setup | sudo bash /dev/stdin
+    else
+        sudo -EH git-extras update
+    fi
 }
 
 _configure_global_gitignore() {
     rm -f "${GLOBAL_GITIGNORE}"
-    if [ ! -f "${GLOBAL_GITIGNORE}" ]; then
     cat >"${GLOBAL_GITIGNORE}" <<EOL
 
 *.swp
@@ -49,7 +52,6 @@ doc/build
 releasenotes/build
 
 EOL
-    fi
 }
 
 _configure_git() {
@@ -61,10 +63,10 @@ _configure_git() {
     git config --global core.editor "vim"
     git config --global core.excludesfile "${GLOBAL_GITIGNORE}"
 
-    echo -n "git user.email: [ENTER]"
+    echo -n "git user.email: [ENTER] "
     read git_user_email
 
-    echo -n "git user.name: [ENTER]"
+    echo -n "git user.name: [ENTER] "
     read git_user_name
 
     git config --global user.email "${git_user_email}"
