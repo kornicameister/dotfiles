@@ -290,7 +290,6 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt checkinstall install_checkinstall
         install_prompt wakatime install_wakatime
         install_prompt tig install_tig
-        install_prompt fzf install_fzf
         install_prompt mdv install_mdv
         install_prompt purge_old_kernels install_purge_old_kernels
         install_prompt vagrant_plugins install_vagrant_plugins
