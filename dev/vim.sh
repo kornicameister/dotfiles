@@ -1,9 +1,9 @@
 #!/bin/bash
 
-TOP_DIR=${1}
-K_DIR=${2}
+TOP_DIR="${1}"
+K_DIR="${2}"
 
-source ${TOP_DIR}/utils.sh
+source "${TOP_DIR}/utils.sh"
 
 install_dev_vim() {
     echo "Installing vim"
@@ -88,8 +88,9 @@ _install_vim_python_deps() {
 _install_vimrc() {
     # install vimrc
     # TODO(make installation enclosed within the K_DIR
-    ln -sf $(TOP_DIR)/vimrc $HOME/.vimrc
-    ln -sfF $(TOP_DIR)/vim $HOME/.vim/k
+    
+    echo "Linking ${TOP_DIR}/vimrc to ${HOME}/.vimrc" && ln -sf "${TOP_DIR}/vimrc" "${HOME}/.vimrc"
+    echo "Linking ${TOP_DIR}/vim to ${HOME}/.vim/k" && ln -sfF "${TOP_DIR}/vim" "${HOME}/.vim/k"
 }
 
 _install_vimplug() {

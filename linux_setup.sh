@@ -1,6 +1,13 @@
 #!/bin/bash
 
-TOP_DIR="${PWD}"
+# Keep track of the top dir
+TOP_DIR="$(cd $(dirname "$0") && pwd)"
+
+# Check for uninitialized variables, a big cause of bugs
+NOUNSET="${NOUNSET:-}"
+if [[ -n "${NOUNSET}" ]]; then
+    set -o nounset
+fi
 
 DEBUG=0
 INSTALL=1
