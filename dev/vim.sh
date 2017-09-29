@@ -56,7 +56,7 @@ _install_vim() {
     CONF_ARGS="$CONF_ARGS --enable-xim"
     CONF_ARGS="$CONF_ARGS --enable-fontset"
 
-    local pkg_name="vim"
+    local pkg_name="k_vim"
     local pgk_version=$(cd $vim_dir ; git tag ; cd - >> /dev/null)
 
     local ci_args=""
