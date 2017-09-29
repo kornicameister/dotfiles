@@ -88,8 +88,8 @@ _install_git_prompt() {
         git rebase origin/master
     fi
 
-    if [ ! -f "${GIT_PROMPT_BINDING}" ]; then
-        cat >"${GIT_PROMPT_BINDING}" <<EOL
+    rm -rf "${GIT_PROMPT_BINDING}"
+    cat >"${GIT_PROMPT_BINDING}" <<EOL
 
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_SHOW_UPSTREAM=1
@@ -98,7 +98,6 @@ GIT_PROMPT_THEME=Solarized_Ubuntu
 . $target_dir/gitprompt.sh
 
 EOL
-    fi
 }
 
 
