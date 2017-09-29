@@ -88,7 +88,7 @@ _install_vim_python_deps() {
 _install_vimrc() {
     # install vimrc
     # TODO(make installation enclosed within the K_DIR
-    
+
     echo "Linking ${TOP_DIR}/vimrc to ${HOME}/.vimrc" && ln -sf "${TOP_DIR}/vimrc" "${HOME}/.vimrc"
     echo "Linking ${TOP_DIR}/vim to ${HOME}/.vim/k" && ln -sfF "${TOP_DIR}/vim" "${HOME}/.vim/k"
 }

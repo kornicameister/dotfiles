@@ -58,19 +58,6 @@ function install_tig {
     sudo -EH apt-get install tig -yy -qq
 }
 
-function install_fzf {
-    echo "Installing fzf"
-    if [[ -d "$HOME/.fzf" ]]; then
-        pushd ~/.fzf
-        git fetch --all >> /dev/null
-        git rebase origin/master >> /dev/null
-        popd
-    else
-        git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf &1>1 >> /dev/null
-    fi
-    yes | ~/.fzf/install >> /dev/null
-}
-
 function install_mdv {
     echo "Installing MDV - markdown viewer"
     sudo -EH pip install mdv --upgrade
