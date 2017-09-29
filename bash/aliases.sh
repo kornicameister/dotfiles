@@ -9,3 +9,6 @@ alias vagrant="time vagrant"
 alias vagrant_up="vagrant destroy -f && rm -rf .vagrant && vagrant up"
 alias vagrant_destroy="vagrant destroy -f && rm -rf .vagrant"
 
+# vim
+alias vim="vim -p"
+
