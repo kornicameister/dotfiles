@@ -19,9 +19,20 @@ install_dev_python() {
 }
 
 _pip() {
-    local get_pip_url="https://bootstrap.pypa.io/get-pip.py"
-    rm -f "${GET_PIP}" && wget -O "${GET_PIP}" "${get_pip_url}"
-    python "${GET_PIP}" && rm -f "${GET_PIP}"
+
+    # ensure that we don't have conflicting python-pip
+    sudo apt-get purge python-pip -y -qq
+
+    if ! is_app_installed pip; then
+        echo "Installing pip with get-pip.py"
+
+        local get_pip_url="https://bootstrap.pypa.io/get-pip.py"
+        rm -f "${GET_PIP}" && wget -O "${GET_PIP}" "${get_pip_url}"
+        sudo -EH python "${GET_PIP}" && rm -f "${GET_PIP}"
+    else
+        echo "Upgrading pip"
+        sudo -EH pip install -U pip
+    fi
 }
 
 _virtualenvwrapper() {
