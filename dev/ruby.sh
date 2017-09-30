@@ -6,10 +6,18 @@ K_DIR="${2}"
 RVM_VERSION="stable"
 RUBY_VERSION="ruby-head"
 
+RVM_BINDING="${K_DIR}/b_rvm.sh"
+
 install_dev_ruby() {
     _install_keys
     _install_rvm
     _install_ruby
+    _install_binding
+}
+
+_install_binding() {
+    rm -rf "${RVM_BINDING}"
+    echo ". ~/.rvm/scripts/rvm" >>"${RVM_BINDING}"
 }
 
 _install_keys() {
