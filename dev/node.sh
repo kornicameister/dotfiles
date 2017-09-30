@@ -58,7 +58,7 @@ EOL
 _install_node() {
     echo "Installing latest Node.JS"
     (
-        source "${nvm_dir}/nvm.sh" >> /dev/null; \
+        source "${NVM_DIR}/nvm.sh" >> /dev/null; \
         nvm install node; \
         nvm use node;
     )
