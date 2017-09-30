@@ -14,6 +14,7 @@ source ${TOP_DIR}/dev/gerrit.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/dev/python.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/dev/bash.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/dev/ruby.sh "${TOP_DIR}" "${K_DIR}"
+source ${TOP_DIR}/dev/travis.sh "${TOP_DIR}" "${K_DIR}"
 # dev tools
 
 install_dev() {
@@ -25,5 +26,6 @@ install_dev() {
     install_prompt node install_dev_node
     install_prompt gerrit install_dev_gerrit
     install_prompt ruby install_dev_ruby
+    install_prompt travis install_dev_travis
 }
 
