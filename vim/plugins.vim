@@ -7,6 +7,7 @@ call plug#begin('~/.vim/plugged')
 source ~/.vim/k/plugins/git.vim
 source ~/.vim/k/plugins/theming.vim
 source ~/.vim/k/plugins/code_assistance.vim
+source ~/.vim/k/plugins/react.vim
 
 Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
