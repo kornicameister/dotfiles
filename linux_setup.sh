@@ -202,7 +202,7 @@ install_docker() {
         read uninstall_docker
 
         if [ "${uninstall_docker}" == "y" ]; then
-            sudo apt-get remove docker docker-engine docker.io -y -qq
+            sudo apt-get remove docker-ce docker docker-engine docker.io -y -qq
         else
             return 1
         fi
