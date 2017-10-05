@@ -24,6 +24,7 @@ source ${TOP_DIR}/bash/aliases.sh
 source ${TOP_DIR}/utils.sh
 
 source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
+source ${TOP_DIR}/other/all.sh "${TOP_DIR}" "${K_DIR}"
 
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
@@ -227,14 +228,6 @@ install_nnn() {
     sudo apt-get install nnn
 }
 
-install_spotify() {
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-    echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-
-    sudo apt-get update -qq
-    sudo apt-get install spotify-client -y -qq
-}
-
 enable_bash_completion() {
     if ! grep -q "/etc/bash_completion" "${HOME}/.bashrc"; then
         if [ -f "/etc/bash_completion" ]; then
@@ -296,8 +289,7 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt docker install_docker
         install_prompt nnn install_nnn
 
-        install_prompt spotify install_spotify
-
+        intall_prompt other install_other
     fi
 
     echo "Updating ${K_START_POINT}" && enable_start_point
