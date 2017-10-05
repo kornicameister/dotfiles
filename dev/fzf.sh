@@ -26,7 +26,7 @@ _install_fzf() {
     else
         git clone "${fzf_repo}" "${FZF_HOME}" --depth 1
     fi
-    yes | ~/.fzf/install >> /dev/null
+    yes | "${FZF_HOME}"/install >> /dev/null
 }
 
 _install_fzf_binding() {
