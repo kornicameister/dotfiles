@@ -10,7 +10,7 @@ source ${TOP_DIR}/other/spotify.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/other/chrome.sh "${TOP_DIR}" "${K_DIR}"
 # dev tools
 
-install_dev() {
+install_other() {
     install_prompt spotify install_spotify
     install_prompt chrome install_chrome
 }

@@ -289,7 +289,7 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt docker install_docker
         install_prompt nnn install_nnn
 
-        intall_prompt other install_other
+        install_prompt other install_other
     fi
 
     echo "Updating ${K_START_POINT}" && enable_start_point
