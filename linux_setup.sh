@@ -278,9 +278,9 @@ if [ $INSTALL -eq 1 ]; then
         sudo apt-get update -qq && echo "System packages list updated"
 
         install_prompt proxy install_proxy
+        install_prompt checkinstall install_checkinstall
         install_prompt dev install_dev
 
-        install_prompt checkinstall install_checkinstall
         install_prompt wakatime install_wakatime
         install_prompt tig install_tig
         install_prompt mdv install_mdv
