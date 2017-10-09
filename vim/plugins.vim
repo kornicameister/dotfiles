@@ -9,6 +9,7 @@ source ~/.vim/k/plugins/theming.vim
 source ~/.vim/k/plugins/code_assistance.vim
 source ~/.vim/k/plugins/react.vim
 source ~/.vim/k/plugins/commit.vim
+source ~/.vim/k/plugins/elm.vim
 
 Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
