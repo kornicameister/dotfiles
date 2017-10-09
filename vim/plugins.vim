@@ -4,6 +4,7 @@ let os = substitute(system('uname'), "\n", "", "")
 
 call plug#begin('~/.vim/plugged')
 
+source ~/.vim/k/plugins/ale.vim
 source ~/.vim/k/plugins/git.vim
 source ~/.vim/k/plugins/theming.vim
 source ~/.vim/k/plugins/code_assistance.vim
