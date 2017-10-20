@@ -25,6 +25,7 @@ source ${TOP_DIR}/utils.sh
 
 source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/other/all.sh "${TOP_DIR}" "${K_DIR}"
+source ${TOP_DIR}/tools/all.sh  "${TOP_DIR}" "${K_DIR}"
 
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
@@ -53,25 +54,6 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-function install_tig {
-    # text-mode interface for git https://github.com/jonas/tig
-    echo "Insalling tig"
-    sudo -EH apt-get install tig -yy -qq
-}
-
-function install_mdv {
-    echo "Installing MDV - markdown viewer"
-    sudo -EH pip install mdv --upgrade
-}
-
-function install_purge_old_kernels {
-    local url="https://raw.githubusercontent.com/jarnos/bikeshed/patch-1/purge-old-kernels"
-    sudo -EH curl -L -o /usr/local/bin/purge-old-kernels \
-        https://raw.githubusercontent.com/jarnos/bikeshed/patch-1/purge-old-kernels \
-        -z /usr/local/bin/purge-old-kernels
-    sudo -EH chmod +x /usr/local/bin/purge-old-kernels
-}
-
 function install_vagrant_plugins {
     command -v vagrant >/dev/null 2>&1 || (echo "Install vagrant dummy" ; return 1)
 
@@ -93,11 +75,6 @@ function install_vagrant_plugins {
         vagrant plugin install ${plugin} && echo "${plugin} installed"
     done
     echo "###########################"
-}
-
-install_checkinstall() {
-    # https://help.ubuntu.com/community/CheckInstall
-    sudo -EH apt-get install checkinstall
 }
 
 install_wakatime() {
@@ -278,18 +255,14 @@ if [ $INSTALL -eq 1 ]; then
         sudo apt-get update -qq && echo "System packages list updated"
 
         install_prompt proxy install_proxy
-        install_prompt checkinstall install_checkinstall
+        install_prompt tools install_tools
         install_prompt dev install_dev
+        install_prompt other install_other
 
         install_prompt wakatime install_wakatime
-        install_prompt tig install_tig
-        install_prompt mdv install_mdv
-        install_prompt purge_old_kernels install_purge_old_kernels
         install_prompt vagrant_plugins install_vagrant_plugins
         install_prompt docker install_docker
         install_prompt nnn install_nnn
-
-        install_prompt other install_other
     fi
 
     echo "Updating ${K_START_POINT}" && enable_start_point

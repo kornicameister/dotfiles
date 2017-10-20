@@ -29,5 +29,13 @@ install_dev() {
     install_prompt ruby install_dev_ruby
     install_prompt travis install_dev_travis
     install_prompt elm install_dev_elm
+    install_prompt mdv _install_mdv
+}
+
+# small dev tools
+
+_install_mdv() {
+    # MDV - markdown viewer
+    sudo -EH pip install mdv --upgrade
 }
 
