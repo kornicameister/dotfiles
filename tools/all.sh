@@ -49,6 +49,9 @@ _install_whatpulse() {
 
     # make the whatpulse globally available for launchers etc
     sudo ln -sf "${wp_dir}/whatpulse" /usr/local/bin/whatpulse
+
+    # cleanup
+    rm -rf "${target}"
 }
 
 _install_tlp() {
