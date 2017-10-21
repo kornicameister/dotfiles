@@ -11,6 +11,44 @@ install_tools() {
     install_prompt checkinstall _install_checkinstall
     install_prompt tig _install_tig
     install_prompt purge_old_kernels _install_purge_old_kernels
+    install_prompt whatpulse _install_whatpulse
+}
+
+_install_whatpulse() {
+    local arch;
+    local url;
+    local target;
+    local wp_dir="${K_DIR}/whatpulse"
+
+    arch=$(getconf LONG_BIT)
+    url="https://whatpulse.org/downloads/298/${arch}bit/"
+    target="${K_DIR}/whatpulse.tar.gz"
+
+    echo "Downloading WhatPulse from ${url}"
+
+    rm -rf "${target}" "${wp_dir}"
+    mkdir -p "${wp_dir}"
+
+    if is_app_installed wget; then
+        wget -O "${target}" "${url}"
+    else
+        die "No wget to download ${url}"
+    fi
+
+    # install qt deps
+    sudo apt-get install libqtcore4 libqtwebkit4 libqt4-sql libqt4-sql-sqlite \
+        libssl-dev libqtscript4-core libqtscript4-gui libqtscript4-network \
+        libqtscript4-webkit libpcap0.8 libpcapnav0 -yy -qq
+
+    # unpack the whatpulse over to wp_dir
+    tar -zxvf "${target}" -C "${wp_dir}"
+
+    # part where we need user interactions
+    sudo "${wp_dir}/setup-input-permissions.sh"
+    sudo setcap cap_net_raw,cap_net_admin=eip "${wp_dir}/whatpulse"
+
+    # make the whatpulse globally available for launchers etc
+    sudo ln -sf "${wp_dir}/whatpulse" /usr/local/bin/whatpulse
 }
 
 _install_tlp() {
