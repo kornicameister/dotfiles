@@ -27,6 +27,10 @@ source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/other/all.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/tools/all.sh  "${TOP_DIR}" "${K_DIR}"
 
+if lsb_release -a | grep elementary; then
+    source ${TOP_DIR}/os/elementary.sh "${TOP_DIR}" "${K_DIR}"
+fi
+
 # https://stackoverflow.com/a/39398359/1396508
 while [[ $# -gt 0 ]]; do
     key="$1"
@@ -258,6 +262,7 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt tools install_tools
         install_prompt dev install_dev
         install_prompt other install_other
+        install_prompt os_specific install_os
 
         install_prompt wakatime install_wakatime
         install_prompt vagrant_plugins install_vagrant_plugins
