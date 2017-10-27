@@ -12,6 +12,27 @@ install_tools() {
     install_prompt tig _install_tig
     install_prompt purge_old_kernels _install_purge_old_kernels
     install_prompt whatpulse _install_whatpulse
+    install_prompt resume-cli  _install_resume_cli
+}
+
+_install_resume_cli() {
+    if is_app_installed docker; then
+
+        docker pull kornicameister/resume-cli:latest
+        cat >>"${BASH_BINDING}" <<EOL
+# resume-cli docker alias
+alias resume="docker run -it --rm -v $(pwd):/app -w /app resume-cli:latest resume"
+EOL
+
+    elif is_app_installed nvm; then
+
+        source "${NVM_DIR}/nvm.sh" >> /dev/null; nvm use node
+        install_node_pkg resume-cli
+        (source "${NVM_DIR}/nvm.sh" >> /dev/null; nvm reinstall-packages)
+
+    else
+        echo "No suitable way to install resume-cli"
+    fi
 }
 
 _install_whatpulse() {

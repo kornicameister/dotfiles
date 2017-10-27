@@ -201,3 +201,15 @@ is_app_installed() {
 tox_all() {
     tox -a | head -n $(((tox -a | wc -l)-1)) | tr '\n' ',' | xargs -t tox "$@" -e
 }
+
+install_node_package() {
+    local pkg=$1
+    local in_system=$(npm list --global | grep ${pkg})
+    if [[ "${in_system}" ==  *"${pkg}"* ]] ; then
+        echo "Updating ${pkg}"
+        npm update --global ${pkg}
+    else
+        echo "Installing ${pkg}"
+        npm install --global ${pkg}
+    fi
+}
