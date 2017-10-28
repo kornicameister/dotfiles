@@ -21,7 +21,7 @@ _install_resume_cli() {
         docker pull kornicameister/resume-cli:latest
         cat >>"${BASH_BINDING}" <<EOL
 # resume-cli docker alias
-alias resume="docker run -it --rm -v $(pwd):/app -w /app resume-cli:latest resume"
+alias resume="docker run -it --rm -v $(pwd):/app -w /app kornicameister/resume-cli:latest resume"
 EOL
 
     elif is_app_installed nvm; then
