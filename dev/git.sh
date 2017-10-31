@@ -27,7 +27,11 @@ _install_git() {
 _install_git_extras() {
     # tj/git-extras
     if ! is_app_installed git-extras; then
-        curl -sSL http://git.io/git-extras-setup | sudo bash /dev/stdin
+        local proxyFlag=""
+        if [[ -n $http_proxy ]] || [[ -n $HTTP_PROXY ]]; then
+            proxyFlag="-x ${http_proxy:-$HTTP_PROXY}";
+        fi
+        curl "${proxyFlag}" -sSL http://git.io/git-extras-setup | sudo bash /dev/stdin
     else
         sudo -EH git-extras update
     fi

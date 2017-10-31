@@ -95,7 +95,13 @@ _install_vimrc() {
 
 _install_vimplug() {
     echo "Installing vimplug"
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+
+    local proxyFlag=""
+    if [[ -n $http_proxy ]] || [[ -n $HTTP_PROXY ]]; then
+        proxyFlag="-x ${http_proxy:-$HTTP_PROXY}";
+    fi
+
+    curl "${proxyFlag}" -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
