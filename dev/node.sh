@@ -69,6 +69,7 @@ _configure_node() {
     echo "Configuring node and npm"
     (
         source "${NVM_DIR}/nvm.sh" >> /dev/null; \
+        [[ -n "${http_proxy}" ]] && npm config set proxy "${http_proxy}"
         npm config set registry "http://registry.npmjs.org/"; \
         npm set strict-ssl false;
     )
