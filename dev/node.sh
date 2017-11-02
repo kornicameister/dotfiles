@@ -49,6 +49,7 @@ _install_nvm() {
     if [ ! -f "${NVM_BINDING}" ]; then
     cat >"${NVM_BINDING}" <<EOL
 export NVM_DIR="${NVM_DIR}"
+export NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist
 [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"  # This loads nvm
 [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"  # This loads nvm bash_completion
 EOL
