@@ -66,6 +66,10 @@ _configure_git() {
     git config --global pull.rebase true
     git config --global core.editor "vim"
     git config --global core.excludesfile "${GLOBAL_GITIGNORE}"
+    git config --global core.whitespace trailing-space,space-before-tab
+    git config --global branch.autosetupmerge true
+    git config --global rerere.enabled true
+    git config --global merge.stat true
 
     echo -n "git user.email: [ENTER] "
     read git_user_email
