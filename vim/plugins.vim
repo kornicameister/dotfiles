@@ -12,7 +12,6 @@ source ~/.vim/k/plugins/react.vim
 source ~/.vim/k/plugins/commit.vim
 source ~/.vim/k/plugins/elm.vim
 
-Plug 'chase/vim-ansible-yaml'
 Plug 'wakatime/vim-wakatime'
 
 Plug 'ConradIrwin/vim-bracketed-paste'
