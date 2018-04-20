@@ -4,6 +4,7 @@ let os = substitute(system('uname'), "\n", "", "")
 
 call plug#begin('~/.vim/plugged')
 
+source ~/.vim/k/plugins/airline.vim
 source ~/.vim/k/plugins/ale.vim
 source ~/.vim/k/plugins/git.vim
 source ~/.vim/k/plugins/theming.vim
@@ -11,13 +12,11 @@ source ~/.vim/k/plugins/code_assistance.vim
 source ~/.vim/k/plugins/react.vim
 source ~/.vim/k/plugins/commit.vim
 source ~/.vim/k/plugins/elm.vim
+source ~/.vim/k/plugins/nerdtree.vim
 
 Plug 'wakatime/vim-wakatime'
 
 Plug 'ConradIrwin/vim-bracketed-paste'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 
 Plug 'jmcantrell/vim-virtualenv', {'for': ['python']}
 Plug 'luochen1990/rainbow'
@@ -26,10 +25,6 @@ Plug 'lervag/vimtex'
 
 Plug 'honza/vim-snippets'
 Plug 'glench/vim-jinja2-syntax'
-
-Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 
 if os == "Linux"
   " following plugins works only for Linux
