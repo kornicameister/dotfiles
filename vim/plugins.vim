@@ -19,7 +19,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'jmcantrell/vim-virtualenv'
+Plug 'jmcantrell/vim-virtualenv', {'for': ['python']}
 Plug 'luochen1990/rainbow'
 Plug 'nvie/vim-flake8'
 Plug 'lervag/vimtex'

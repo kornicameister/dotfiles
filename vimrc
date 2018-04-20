@@ -11,11 +11,6 @@ source ~/.vim/k/editor.vim
 let g:ansible_options = {'ignore_blank_lines': 0}
 let g:ansible_options = {'documentation_mapping': '<C-K>'} "ctrl-k for docs
 
-" vim-arline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'simple'
-set laststatus=2
-
 " rainbow
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
