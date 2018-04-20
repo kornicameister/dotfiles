@@ -14,22 +14,6 @@ let g:ansible_options = {'documentation_mapping': '<C-K>'} "ctrl-k for docs
 " rainbow
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
-" file tree
-let NERDTreeIgnore=['\.pyc$', '\~$']
-let g:NERDTreeShowIgnoredStatus = 0
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
-    \ }
-
 " set vertical line marking end-of-line
 set colorcolumn=79
 match ErrorMsg '\%>80v.\+'
