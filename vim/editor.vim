@@ -1,23 +1,39 @@
-" Copyright 2017 kornicameister
+" Copyright 2018 kornicameister
 "
+
+" general settings for editor
+set nocompatible
+syntax on
 set encoding=utf-8
-
 set smartindent
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 
+" set proper tabs
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+
+" backspace fix
 set backspace=indent,eol,start
 fixdel
+
+" Show linenumbers
+set number
+set ruler
 
 " make whitespaces, tabs visible
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
 
+" always display status line
+set laststatus=2
+
 " enable filetypes plugins
-filetype plugin on
+filetype plugin indent on
 """ editor settings
 
 " vim theme settings
-syntax on
 if has('gui_running')
     colorscheme zenburn
     set background=dark

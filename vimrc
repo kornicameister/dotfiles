@@ -5,8 +5,6 @@
 source ~/.vim/k/plugins.vim
 source ~/.vim/k/editor.vim
 
-""" editior settings
-
 " vim-ansible-yaml
 let g:ansible_options = {'ignore_blank_lines': 0}
 let g:ansible_options = {'documentation_mapping': '<C-K>'} "ctrl-k for docs
