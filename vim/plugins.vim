@@ -9,10 +9,11 @@ source ~/.vim/k/plugins/ale.vim
 source ~/.vim/k/plugins/git.vim
 source ~/.vim/k/plugins/theming.vim
 source ~/.vim/k/plugins/code_assistance.vim
-source ~/.vim/k/plugins/react.vim
+source ~/.vim/k/plugins/javascript.vim
 source ~/.vim/k/plugins/commit.vim
 source ~/.vim/k/plugins/elm.vim
 source ~/.vim/k/plugins/nerdtree.vim
+source ~/.vim/k/plugins/you_complete_me.vim
 
 Plug 'wakatime/vim-wakatime'
 
@@ -32,9 +33,6 @@ if os == "Linux"
 endif
 
 Plug 'tmhedberg/SimpylFold'
-Plug 'hashivim/vim-vagrant'
-
-Plug 'ervandew/supertab'    "supertab
 
 " plugins
 
