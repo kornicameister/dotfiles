@@ -18,18 +18,18 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-let g:ale_fixers = {
-\   'javascript': ['eslint', 'tslint', 'trim_whitespace'],
-\   'elm': ['elm-format', 'trim_whitespace'],
-\   'python': ['autopep8', 'isort', 'yapf', 'trim_whitespace'],
-\   'json': ['fixjson', 'jq', 'trim_whitespace'],
-\   'vim': ['trim_whitespace'],
-\}
-
-let g:ale_linters = {
-\   'elm': ['elm-make', 'elm-format'],
-\   'json': ['json'],
-\   'python': ['flake8', 'pycodestyle', 'pylint'],
-\   'vim': ['vint'],
-\   'dockerfile': ['hadolint'],
-\}
+" let g:ale_fixers = {
+" \   'javascript': ['eslint', 'tslint', 'trim_whitespace'],
+" \   'elm': ['format', 'elm-format', 'trim_whitespace'],
+" \   'python': ['autopep8', 'isort', 'yapf', 'trim_whitespace'],
+" \   'json': ['fixjson', 'jq', 'trim_whitespace'],
+" \   'vim': ['trim_whitespace'],
+" \}
+"
+" let g:ale_linters = {
+" \   'elm': ['elm-make', 'elm-format'],
+" \   'json': ['json'],
+" \   'python': ['flake8', 'pycodestyle', 'pylint'],
+" \   'vim': ['vint'],
+" \   'dockerfile': ['hadolint'],
+" \}
