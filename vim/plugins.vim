@@ -22,14 +22,6 @@ source ~/.vim/k/plugins/ctrlp.vim
 
 Plug 'wakatime/vim-wakatime'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'lervag/vimtex'
-Plug 'honza/vim-snippets'
-Plug 'glench/vim-jinja2-syntax'
-
-if os == "Linux"
-  " following plugins works only for Linux
-  Plug 'SirVer/ultisnips'
-endif
 
 " plugins
 
