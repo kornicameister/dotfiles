@@ -56,7 +56,7 @@ filetype plugin indent on
 " vim theme settings
 hi Normal ctermbg=none
 colorscheme PaperColor
-set background=light
+set background=dark
 
 " tabs keybindings
 map <C-t><up> :tabr<cr>
