@@ -4,10 +4,17 @@
 let mapleader=','
 
 " general settings for editor
-set nocompatible
 syntax on
+set nocompatible
 set encoding=utf-8
 set smartindent
+set noerrorbells
+set novisualbell
+set timeoutlen=500
+
+" searching stuff
+set nohlsearch " no highlight search result
+set incsearch " make it act more modern
 
 " no temp or backup files
 set noswapfile
@@ -26,7 +33,12 @@ set backspace=indent,eol,start
 fixdel
 
 " Show linenumbers
-set number
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 set ruler
 
 " make whitespaces, tabs visible
@@ -39,8 +51,6 @@ set laststatus=2
 
 " enable filetypes plugins
 filetype plugin indent on
-
-""" editor settings
 
 " vim theme settings
 hi Normal ctermbg=none
@@ -65,6 +75,3 @@ nnoremap <C-H> <C-W><C-H>
 set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za
-
-" Reload changes to .vimrc automatically
-autocmd BufWritePost ~/.vimrc source ~/.vimrc
