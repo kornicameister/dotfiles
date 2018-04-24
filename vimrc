@@ -4,6 +4,7 @@
 " plugins
 source ~/.vim/k/plugins.vim
 source ~/.vim/k/editor.vim
+source ~/.vim/k/session.vim
 
 " vim-ansible-yaml
 let g:ansible_options = {'ignore_blank_lines': 0}

@@ -66,3 +66,5 @@ set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za
 
+" Reload changes to .vimrc automatically
+autocmd BufWritePost ~/.vimrc source ~/.vimrc
