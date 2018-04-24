@@ -9,10 +9,3 @@ source ~/.vim/k/editor.vim
 let g:ansible_options = {'ignore_blank_lines': 0}
 let g:ansible_options = {'documentation_mapping': '<C-K>'} "ctrl-k for docs
 
-" rainbow
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-
-" jedi-vim settings
-let g:jedi#use_tabs_not_buffers = 1
-let g:jedi#use_splits_not_buffers = "left"
-

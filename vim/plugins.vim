@@ -14,16 +14,15 @@ source ~/.vim/k/plugins/commit.vim
 source ~/.vim/k/plugins/elm.vim
 source ~/.vim/k/plugins/nerdtree.vim
 source ~/.vim/k/plugins/you_complete_me.vim
+source ~/.vim/k/plugins/python.vim
+source ~/.vim/k/plugins/folding.vim
+source ~/.vim/k/plugins/rainbow.vim
+source ~/.vim/k/plugins/json.vim
+source ~/.vim/k/plugins/ctrlp.vim
 
 Plug 'wakatime/vim-wakatime'
-
 Plug 'ConradIrwin/vim-bracketed-paste'
-
-Plug 'jmcantrell/vim-virtualenv', {'for': ['python']}
-Plug 'luochen1990/rainbow'
-Plug 'nvie/vim-flake8'
 Plug 'lervag/vimtex'
-
 Plug 'honza/vim-snippets'
 Plug 'glench/vim-jinja2-syntax'
 
@@ -31,8 +30,6 @@ if os == "Linux"
   " following plugins works only for Linux
   Plug 'SirVer/ultisnips'
 endif
-
-Plug 'tmhedberg/SimpylFold'
 
 " plugins
 

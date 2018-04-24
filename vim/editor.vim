@@ -1,11 +1,18 @@
 " Copyright 2018 kornicameister
-"
+
+" leader
+let mapleader=','
 
 " general settings for editor
 set nocompatible
 syntax on
 set encoding=utf-8
 set smartindent
+
+" no temp or backup files
+set noswapfile
+set nobackup
+set nowritebackup
 
 " set proper tabs
 set tabstop=4
@@ -24,6 +31,7 @@ set ruler
 
 " make whitespaces, tabs visible
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+highlight BadWhitespace ctermbg=red guibg=red
 set list
 
 " always display status line
@@ -31,16 +39,13 @@ set laststatus=2
 
 " enable filetypes plugins
 filetype plugin indent on
+
 """ editor settings
 
 " vim theme settings
-if has('gui_running')
-    colorscheme zenburn
-    set background=dark
-else
-    colorscheme jellybeans
-    set background=dark
-endif
+hi Normal ctermbg=none
+colorscheme PaperColor
+set background=light
 
 " tabs keybindings
 map <C-t><up> :tabr<cr>
@@ -61,5 +66,3 @@ set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za
 
-" transparent background always
-hi Normal ctermbg=none
