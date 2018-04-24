@@ -14,6 +14,7 @@ set timeoutlen=500
 
 " searching stuff
 set nohlsearch " no highlight search result
+nnoremap <F3> :set hlsearch!<CR>
 set incsearch " make it act more modern
 
 " no temp or backup files
