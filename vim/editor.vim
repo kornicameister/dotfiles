@@ -41,6 +41,10 @@ set copyindent
 " set title
 set title
 
+" make searching smart
+set ignorecase
+set smartcase
+
 " Make the keyboard fast
 set ttyfast
 set timeout timeoutlen=1000 ttimeoutlen=50
