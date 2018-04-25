@@ -35,6 +35,9 @@ set smarttab
 set autoindent
 set copyindent
 
+" set title
+set title
+
 " backspace fix
 set backspace=indent,eol,start
 fixdel
