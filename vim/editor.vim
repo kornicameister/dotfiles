@@ -118,3 +118,6 @@ set undolevels=1000
 
 " in case we forgot sudo
 cmap w!! w !sudo tee % >/dev/null
+
+" normal OS clipboard interaction
+set clipboard=unnamed
