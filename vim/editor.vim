@@ -72,6 +72,7 @@ set list
 
 " always display status line
 set laststatus=2
+set cmdheight=1
 
 " enable filetypes plugins
 filetype plugin indent on
@@ -98,7 +99,8 @@ nnoremap <C-H> <C-W><C-H>
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
-nnoremap <space> za
+nnoremap <Space> za
+vnoremap <Space> za
 
 " spelling
 setlocal spell
