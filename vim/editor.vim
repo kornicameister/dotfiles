@@ -51,6 +51,7 @@ set timeout timeoutlen=1000 ttimeoutlen=50
 
 " always safe on focus lost
 au FocusLost * :wa
+set autoread
 
 " backspace fix
 set backspace=indent,eol,start
