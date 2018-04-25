@@ -49,6 +49,9 @@ set smartcase
 set ttyfast
 set timeout timeoutlen=1000 ttimeoutlen=50
 
+" always safe on focus lost
+au FocusLost * :wa
+
 " backspace fix
 set backspace=indent,eol,start
 fixdel
