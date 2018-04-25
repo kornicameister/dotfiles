@@ -21,12 +21,19 @@ set noswapfile
 set nobackup
 set nowritebackup
 
-" set proper tabs
+" do not wrap lines
+set nowrap
+
+" tabs settings
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 set smarttab
+
+" indentation settings
+set autoindent
+set copyindent
 
 " backspace fix
 set backspace=indent,eol,start
@@ -83,3 +90,7 @@ map <silent> <leader>ss :setlocal spell!<cr>
 " quickly edit/reload vimrc
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" do not close the buffer, hide them to preserve
+" markers, undo etc
+set hidden
