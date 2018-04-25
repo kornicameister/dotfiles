@@ -5,7 +5,6 @@ let mapleader=','
 
 " general settings for editor
 syntax on
-set nocompatible
 set encoding=utf-8
 set smartindent
 set noerrorbells
