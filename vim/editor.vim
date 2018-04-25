@@ -75,3 +75,7 @@ nnoremap <C-H> <C-W><C-H>
 set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za
+
+" spelling
+setlocal spell
+map <leader>ss :setlocal spell!<cr>
