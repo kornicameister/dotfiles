@@ -78,4 +78,8 @@ nnoremap <space> za
 
 " spelling
 setlocal spell
-map <leader>ss :setlocal spell!<cr>
+map <silent> <leader>ss :setlocal spell!<cr>
+
+" quickly edit/reload vimrc
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
