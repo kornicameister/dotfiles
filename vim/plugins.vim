@@ -19,6 +19,7 @@ source ~/.vim/k/plugins/folding.vim
 source ~/.vim/k/plugins/rainbow.vim
 source ~/.vim/k/plugins/json.vim
 source ~/.vim/k/plugins/ctrlp.vim
+source ~/.vim/k/plugins/md.vim
 
 Plug 'wakatime/vim-wakatime'
 Plug 'ConradIrwin/vim-bracketed-paste'
