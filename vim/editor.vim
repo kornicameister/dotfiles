@@ -3,6 +3,9 @@
 " leader
 let mapleader=','
 
+" save from typing :
+nnoremap ; :
+
 " general settings for editor
 syntax on
 set encoding=utf-8
