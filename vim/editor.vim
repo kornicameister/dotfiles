@@ -41,6 +41,10 @@ set copyindent
 " set title
 set title
 
+" Make the keyboard fast
+set ttyfast
+set timeout timeoutlen=1000 ttimeoutlen=50
+
 " backspace fix
 set backspace=indent,eol,start
 fixdel
