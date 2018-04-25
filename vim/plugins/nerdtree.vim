@@ -20,6 +20,9 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
+" always open
+autocmd vimenter * NERDTree
+
 " open tabs always
 let g:NERDTreeMapOpenInTab='<ENTER>'
 
