@@ -94,3 +94,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " do not close the buffer, hide them to preserve
 " markers, undo etc
 set hidden
+
+" increase history sized
+set history=1000
+set undolevels=1000
