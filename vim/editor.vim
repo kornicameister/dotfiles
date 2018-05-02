@@ -124,3 +124,7 @@ cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
 set clipboard=unnamed
+
+" navigate through the buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
