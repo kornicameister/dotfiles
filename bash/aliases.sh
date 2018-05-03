@@ -19,3 +19,7 @@ alias cd..='cd ..'       # Common misspelling for going up one directory
 alias ...='cd ../..'     # Go up two directories
 alias ....='cd ../../..' # Go up three directories
 alias -- -='cd -'        # Go back
+
+# colored grep
+alias grep='grep --color=always'
+export GREP_COLOR='1;33'
