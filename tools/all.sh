@@ -6,6 +6,7 @@ K_DIR="${2}"
 source "${TOP_DIR}/utils.sh"
 
 install_tools() {
+    set -i
     install_prompt tlp _install_tlp
     install_prompt preload _install_preload
     install_prompt checkinstall _install_checkinstall
@@ -13,6 +14,12 @@ install_tools() {
     install_prompt purge_old_kernels _install_purge_old_kernels
     install_prompt whatpulse _install_whatpulse
     install_prompt resume-cli  _install_resume_cli
+    install_prompt aria2 _install_aria
+    set +i
+}
+
+_install_aria() {
+    sudo apt update -qq && sudo apt install aria2 -yy -qq
 }
 
 _install_resume_cli() {
