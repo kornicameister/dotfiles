@@ -1,0 +1,16 @@
+
+*.swp
+*.swo
+
+.idea/
+.vscode/
+
+.wakatime-project
+.vagrant/
+
+api-guide/build
+api-ref/build
+doc/build
+releasenotes/build
+
+.history/
