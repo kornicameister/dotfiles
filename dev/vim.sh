@@ -9,10 +9,6 @@ install_dev_vim() {
     echo "Installing vim"
     _remove_system_vim
     _install_vim
-    _install_vim_python_deps
-    _install_vimplug
-    _install_vimrc
-    _install_vim_plugins
 }
 
 _remove_system_vim() {
@@ -77,34 +73,3 @@ _install_vim() {
     sudo rm -rf $vim_dir || true
 }
 
-_install_vim_python_deps() {
-    if ! is_app_installed pip; then
-        die "Please install python & pip first"
-    else
-        sudo -EH pip install jedi && echo "Installed jedi for jedi-vim"
-    fi
-}
-
-_install_vimrc() {
-    # install vimrc
-    # TODO(make installation enclosed within the K_DIR
-
-    echo "Linking ${TOP_DIR}/vimrc to ${HOME}/.vimrc" && ln -sf "${TOP_DIR}/vimrc" "${HOME}/.vimrc"
-    echo "Linking ${TOP_DIR}/vim to ${HOME}/.vim/k" && ln -sfF "${TOP_DIR}/vim" "${HOME}/.vim/k"
-}
-
-_install_vimplug() {
-    echo "Installing vimplug"
-
-    local proxyFlag=""
-    if [[ -n $http_proxy ]] || [[ -n $HTTP_PROXY ]]; then
-        proxyFlag="-x ${http_proxy:-$HTTP_PROXY}";
-    fi
-
-    curl "${proxyFlag}" -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-}
-
-_install_vim_plugins() {
-    vim +PlugInstall +all
-}
