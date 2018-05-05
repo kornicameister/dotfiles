@@ -1,0 +1,36 @@
+[alias]
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+
+[apply]
+
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
+
+[url "https://github.com/"]
+    insteadof = git://github.com/
+
+[url "https://git.openstack.org/"]
+    insteadof = git://git.openstack.org/
+
+[pull]
+    rebase = true
+
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore
+
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+    # Speed up commands involving untracked files such as `git status`.
+    # https://git-scm.com/docs/git-update-index#_untracked_cache
+    untrackedCache = true
+
+[user]
+    email = kornicameister@gmail.com
+    name = Tomasz Trębski
+
+[push]
+    default = simple

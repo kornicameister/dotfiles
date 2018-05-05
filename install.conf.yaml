@@ -8,3 +8,5 @@
     ~/.dotfiles: ''
     ~/.vim: vim
     ~/.vimrc: vimrc
+    ~/.gitignore: gitignore
+    ~/.gitconfig: gitconfig
