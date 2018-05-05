@@ -2,6 +2,6 @@
 " first ever
 set nocompatible
 
-source ~/.vim/k/plugins.vim
-source ~/.vim/k/editor.vim
-source ~/.vim/k/session.vim
+source ~/.vim/plugins.vim
+source ~/.vim/editor.vim
+source ~/.vim/session.vim
