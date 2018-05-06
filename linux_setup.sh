@@ -88,7 +88,7 @@ install_wakatime() {
 
 install_wakatime_bash() {
     cwd=${PWD} && pushd $HOME
-    bw_dir=$PWD/bash-wakatime
+    bw_dir=$PWD/.bash-wakatime
     bw_script=$bw_dir/bash-wakatime.sh
     bw_config=$HOME/.wakatime.cfg
 
