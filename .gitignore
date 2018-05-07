@@ -1,3 +1,4 @@
 proxy.crap
 vim/autoload/
-vim/plugged
+vim/plugged/
+vim/view/
