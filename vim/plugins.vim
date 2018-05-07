@@ -20,7 +20,6 @@ source ~/.vim/plugins/javascript.vim
 source ~/.vim/plugins/commit.vim
 source ~/.vim/plugins/elm.vim
 source ~/.vim/plugins/nerdtree.vim
-source ~/.vim/plugins/you_complete_me.vim
 source ~/.vim/plugins/python.vim
 source ~/.vim/plugins/folding.vim
 source ~/.vim/plugins/rainbow.vim
