@@ -53,9 +53,9 @@ _install_git_prompt() {
     rm -rf "${GIT_PROMPT_BINDING}"
     cat >"${GIT_PROMPT_BINDING}" <<EOL
 
-GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_ONLY_IN_REPO=0
 GIT_PROMPT_SHOW_UPSTREAM=1
-GIT_PROMPT_THEME=Solarized_Ubuntu
+GIT_PROMPT_THEME=Single_line_Solarized_Lamda
 
 . $target_dir/gitprompt.sh
 
