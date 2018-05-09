@@ -7,6 +7,8 @@
 - shell:
     - command: git submodule update --init --recursive
       description: Install submodules
+    - command: ./fzf/install --all
+      description: Install fzf
 
 - link:
     ~/.dotfiles: ''
@@ -26,3 +28,5 @@
     ~/.bash_aliases: bash/aliases.sh
     ~/.bash_functions: bash/fn.sh
 
+    # fzf
+    ~/.fzf: fzf

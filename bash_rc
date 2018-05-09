@@ -1,5 +1,9 @@
 # Nothing to see here — Everything's in .bash_profile
 [ -n "$PS1" ] && source ~/.bash_profile
 
+# source fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # Source k_stuff configuration
 [ -f ~/.k_stuff/k.sh ] &&  source ~/.k_stuff/k.sh
+
