@@ -22,7 +22,6 @@
     # bash stuff
     ~/.bashrc: bash_rc
     ~/.bash_profile: bash_profile
-    ~/.bash_prompt: bash/prompt.sh
     ~/.bash_exports: bash/exports.sh
     ~/.bash_aliases: bash/aliases.sh
     ~/.bash_functions: bash/fn.sh

@@ -2,7 +2,7 @@
 # Copyright kornicameister @ 2018
 
 # source all bash configuration chunks
-for file in ~/.{bash_prompt,bash_exports,bash_aliases,bash_functions,gitprompt}; do
+for file in ~/.{bash_exports,bash_aliases,bash_functions,gitprompt}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
