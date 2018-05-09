@@ -1,0 +1,34 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- shell:
+    - command: git submodule update --init --recursive
+      description: Install submodules
+    - command: ./fzf/install --all
+      description: Install fzf
+    - command: curl -OL https://bashhub.com/setup && bash setup && rm -rf setup
+      description: Install bashhub cli
+
+- link:
+    ~/.dotfiles: ''
+    # vim stuff
+    ~/.vim: vim
+    ~/.vimrc: vimrc
+
+    # git stuff
+    ~/.gitignore: gitignore
+    ~/.gitconfig: gitconfig
+    ~/.gitprompt: bash-git-prompt/gitprompt.sh
+
+    # bash stuff
+    ~/.bashrc: bash_rc
+    ~/.bash_profile: bash_profile
+    ~/.bash_exports: bash/exports.sh
+    ~/.bash_aliases: bash/aliases.sh
+    ~/.bash_functions: bash/fn.sh
+
+    # fzf
+    ~/.fzf: fzf
