@@ -1,3 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "bash-git-prompt"]
+	path = bash-git-prompt
+	url = https://github.com/magicmonty/bash-git-prompt
