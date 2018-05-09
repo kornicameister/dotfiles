@@ -12,7 +12,6 @@ source ${TOP_DIR}/dev/node.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/dev/git.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/dev/gerrit.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/dev/python.sh "${TOP_DIR}" "${K_DIR}"
-source ${TOP_DIR}/dev/elm.sh "${TOP_DIR}" "${K_DIR}"
 # dev tools
 
 install_dev() {
@@ -22,7 +21,6 @@ install_dev() {
     install_prompt fzf install_dev_fzf
     install_prompt node install_dev_node
     install_prompt gerrit install_dev_gerrit
-    install_prompt elm install_dev_elm
     install_prompt mdv _install_mdv
 }
 
