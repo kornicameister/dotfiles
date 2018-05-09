@@ -6,4 +6,3 @@
 
 # Source k_stuff configuration
 [ -f ~/.k_stuff/k.sh ] &&  source ~/.k_stuff/k.sh
-
