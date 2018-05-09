@@ -10,23 +10,22 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-source ~/.vim/k/plugins/whitespace.vim
-source ~/.vim/k/plugins/airline.vim
-source ~/.vim/k/plugins/ale.vim
-source ~/.vim/k/plugins/git.vim
-source ~/.vim/k/plugins/theming.vim
-source ~/.vim/k/plugins/fzf.vim
-source ~/.vim/k/plugins/javascript.vim
-source ~/.vim/k/plugins/commit.vim
-source ~/.vim/k/plugins/elm.vim
-source ~/.vim/k/plugins/nerdtree.vim
-source ~/.vim/k/plugins/you_complete_me.vim
-source ~/.vim/k/plugins/python.vim
-source ~/.vim/k/plugins/folding.vim
-source ~/.vim/k/plugins/rainbow.vim
-source ~/.vim/k/plugins/json.vim
-source ~/.vim/k/plugins/ctrlp.vim
-source ~/.vim/k/plugins/md.vim
+source ~/.vim/plugins/whitespace.vim
+source ~/.vim/plugins/airline.vim
+source ~/.vim/plugins/ale.vim
+source ~/.vim/plugins/git.vim
+source ~/.vim/plugins/theming.vim
+source ~/.vim/plugins/fzf.vim
+source ~/.vim/plugins/javascript.vim
+source ~/.vim/plugins/commit.vim
+source ~/.vim/plugins/elm.vim
+source ~/.vim/plugins/nerdtree.vim
+source ~/.vim/plugins/python.vim
+source ~/.vim/plugins/folding.vim
+source ~/.vim/plugins/rainbow.vim
+source ~/.vim/plugins/json.vim
+source ~/.vim/plugins/ctrlp.vim
+source ~/.vim/plugins/md.vim
 
 Plug 'wakatime/vim-wakatime'
 Plug 'ConradIrwin/vim-bracketed-paste'
