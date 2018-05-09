@@ -80,7 +80,7 @@ filetype plugin indent on
 
 " vim theme settings
 hi Normal ctermbg=none
-colorscheme dracula
+colorscheme py-darcula
 set background=dark
 
 " tabs keybindings
