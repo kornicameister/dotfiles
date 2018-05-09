@@ -4,6 +4,10 @@
 
 - clean: ['~']
 
+- shell:
+    - command: git submodule update --init --recursive
+      description: Install submodules
+
 - link:
     ~/.dotfiles: ''
     # vim stuff
@@ -13,6 +17,7 @@
     # git stuff
     ~/.gitignore: gitignore
     ~/.gitconfig: gitconfig
+    ~/.gitprompt: bash-git-prompt/gitprompt.sh
 
     # bash stuff
     ~/.bashrc: bash_rc

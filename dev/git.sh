@@ -13,7 +13,6 @@ install_dev_git() {
         _install_git
     fi
     _install_git_extras
-    _install_git_prompt
 }
 
 _install_git() {
@@ -34,26 +33,4 @@ _install_git_extras() {
         sudo -EH git-extras update
     fi
 }
-
-_install_git_prompt() {
-    echo "Installing git-prompt"
-
-    local repo=git@github.com:magicmonty/bash-git-prompt.git
-    local target_dir="${K_DIR}/bash-git-prompt"
-
-    if [ ! -d $target_dir ]; then
-        git clone "${repo}" "${target_dir}" --depth=1
-    else
-        cd $target_dir
-        git reset --hard HEAD
-        git fetch --all
-        git rebase origin/master
-    fi
-
-    rm -rf "${GIT_PROMPT_BINDING}"
-    cat >"${GIT_PROMPT_BINDING}" <<EOL
-. $target_dir/gitprompt.sh
-EOL
-}
-
 
