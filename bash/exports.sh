@@ -21,3 +21,8 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
+
+# Setting for bash-git-prompt
+export GIT_PROMPT_ONLY_IN_REPO=0
+export GIT_PROMPT_SHOW_UPSTREAM=1
+export GIT_PROMPT_THEME=Single_line_Solarized_Lamda
