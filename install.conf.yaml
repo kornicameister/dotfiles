@@ -16,7 +16,7 @@
       # TODO(kornicameister) these should be launched from within the linux_setup.sh
     - command: sudo apt update -qq ; sudo apt install dconf-cli -yy -qq
       description: Install dconf
-    - command: command -v tilix >/dev/null 2>&1 && dconf load /com/gexperts/Tilix/ < config/tilix.conf
+    - command: command -v tilix >/dev/null 2>&1 && dconf load /com/gexperts/Tilix/ < config/tilix
       description: Restore Tilix configuration
 
 - link:
@@ -43,4 +43,7 @@
     ~/.fzf: fzf
 
     # custom application configuration
-    ~/.config/tilix.conf: config/tilix.conf
+    ~/.config/tilix.conf: config/tilix
+    ~/.config/terminator/config:
+        create: true
+        path: config/terminator
