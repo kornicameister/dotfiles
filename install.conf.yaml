@@ -13,9 +13,15 @@
       description: Backup already existing ~/.bashrc
     - command: "[ ! -f ~/.bash_profile_backup ] && mv ~/.bash_profile ~/.bash_profile_backup"
       description: Backup already existing ~/.bash_profile
+      # TODO(kornicameister) these should be launched from within the linux_setup.sh
+    - command: sudo apt update -qq ; sudo apt install dconf-cli -yy -qq
+      description: Install dconf
+    - command: command -v tilix >/dev/null 2>&1 && dconf load /com/gexperts/Tilix/ < config/tilix.conf
+      description: Restore Tilix configuration
 
 - link:
     ~/.dotfiles: ''
+
     # vim stuff
     ~/.vim: vim
     ~/.vimrc: vimrc
@@ -35,3 +41,6 @@
 
     # fzf
     ~/.fzf: fzf
+
+    # custom application configuration
+    ~/.config/tilix.conf: config/tilix.conf
