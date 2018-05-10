@@ -9,10 +9,8 @@
       description: Install submodules
     - command: ./fzf/install --all
       description: Install fzf
-    - command: curl -OL https://bashhub.com/setup && bash setup && rm -rf setup
-      description: Install bashhub cli
 
-- link:
+    - link:
     ~/.dotfiles: ''
     # vim stuff
     ~/.vim: vim
