@@ -2,7 +2,7 @@
 # Copyright kornicameister @ 2018
 
 # source all bash configuration chunks
-for file in ~/.{bash_exports,bash_aliases,bash_functions,gitprompt}; do
+for file in ~/.{bash_exports,bash_aliases,bash_functions,bash_completion,gitprompt}; do
     [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
@@ -31,6 +31,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
