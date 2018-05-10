@@ -10,7 +10,7 @@
     - command: ./fzf/install --all
       description: Install fzf
 
-    - link:
+- link:
     ~/.dotfiles: ''
     # vim stuff
     ~/.vim: vim
