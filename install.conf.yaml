@@ -29,6 +29,7 @@
     ~/.bash_exports: bash/exports.sh
     ~/.bash_aliases: bash/aliases.sh
     ~/.bash_functions: bash/fn.sh
+    ~/.bash_completion: bash/completion.sh
 
     # fzf
     ~/.fzf: fzf
