@@ -26,3 +26,6 @@ export MANPAGER='less -X';
 export GIT_PROMPT_ONLY_IN_REPO=0
 export GIT_PROMPT_SHOW_UPSTREAM=1
 export GIT_PROMPT_THEME=Single_line_Solarized_Lamda
+
+# fzf settings
+command -v fzf >/dev/null 2>&1 && export FZF_DEFAULT_OPTS="--height 60% --reverse --border"
