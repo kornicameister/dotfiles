@@ -9,6 +9,8 @@
       description: Install submodules
     - command: ./fzf/install --all
       description: Install fzf
+    - command: mv ~/.bashrc ~/.bashrc_backup ; mv ~/.bash_profile ~/.bash_profile_backup
+      description: Backup already existing ~/.bashrc and ~/.bash_profile
 
 - link:
     ~/.dotfiles: ''
