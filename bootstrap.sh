@@ -134,46 +134,6 @@ EOF
     cd $cwd
 }
 
-install_proxy() {
-    echo "Installing proxy"
-
-    local proxy_local=${PWD}/proxy.crap
-    local proxy_target=$HOME/.config/proxy.sh
-
-    if [ ! -f ${proxy_local} ]; then
-        echo "Seems like there's no proxy here or there is no $proxy_local file with all the settings"
-
-        echo "File should present following structure::
-
-        export http_proxy={your_proxy}
-        export https_proxy={your_proxy}
-        export ftp_proxy={your_proxy}
-        export socks_proxy={your_proxy}
-        export no_proxy=127.0.0.1,localhost,{rest}
-
-        export HTTP_PROXY=$http_proxy
-        export HTTPS_PROXY=$https_proxy
-        export FTS_PROXY=$fts_proxy
-        export NO_PROXY=$no_proxy
-
-        "
-
-        return 1
-    fi
-
-   echo "Ehh....damn that"
-
-   cp -f ${proxy_local} ${proxy_target} && echo "Copied proxy over to ${proxy_target}"
-   if ! grep -q "source ${proxy_target}" "$HOME/.bashrc"; then
-      echo "source ${proxy_target}" >> $HOME/.bashrc
-   else
-      echo "source ${proxy_target} already in $HOME/.bashrc"
-   fi
-
-   source ${proxy_target}
-   proxy_chains && echo "Successfully applied proxy"
-}
-
 install_docker() {
     echo "Installing docker"
 
@@ -258,7 +218,6 @@ if [ $INSTALL -eq 1 ]; then
         sudo true && echo "sudo granted, it is needed"
         sudo apt-get update -qq && echo "System packages list updated"
 
-        install_prompt proxy install_proxy
         install_prompt tools install_tools
         install_prompt dev install_dev
         install_prompt other install_other
