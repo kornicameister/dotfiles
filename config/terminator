@@ -12,6 +12,7 @@
 [profiles]
   [[default]]
     background_darkness = 0.9
+    background_image = None
     background_type = transparent
     cursor_color = "#aaaaaa"
     cursor_shape = ibeam
@@ -19,6 +20,7 @@
     scrollback_infinite = True
   [[home]]
     background_darkness = 0.9
+    background_image = None
     background_type = transparent
     cursor_color = "#aaaaaa"
     cursor_shape = ibeam
@@ -26,6 +28,7 @@
     scrollback_infinite = True
   [[work]]
     background_color = "#282828"
+    background_image = None
     cursor_color = "#aaaaaa"
     cursor_shape = ibeam
     exit_action = hold
