@@ -53,7 +53,7 @@ _install_vim() {
     flags="$flags --enable-perlinterp=no"
     flags="$flags --enable-cscope=no"
     flags="$flags --enable-tclinterp=no"
-    (command -v python3 >/dev/null 2>&1) && flags="$flags --enable-python3interp=dynamic" || flags="$flags --enable-pythoninterp=dynamic"
+    (command -v python3 >/dev/null 2>&1) && flags="$flags --enable-python3interp=dynamic --enable-pythoniterp=no" || flags="$flags --enable-pythoninterp=dynamic --enable-python3interp=no"
 
     # define checkinstall arguments
     local ci_args=""
