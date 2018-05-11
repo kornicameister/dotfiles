@@ -18,7 +18,7 @@ list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '5cc044e3-433a-4416-ad22-61bd807ff
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
 foreground-color='#A1B0B8'
 visible-name='Work'
-login-shell=true
+login-shell=false
 palette=['#252525', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5', '#708284', '#FF5252', '#C3D82C', '#FFC135', '#42A5F5', '#D81B60', '#00ACC1', '#F5F5F5']
 badge-color-set=false
 cursor-shape='ibeam'
