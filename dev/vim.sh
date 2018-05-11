@@ -12,7 +12,7 @@ install_dev_vim() {
 }
 
 _remove_system_vim() {
-    vim_apt_pkgs="vim vim-runtime gvim"
+    vim_apt_pkgs="vim vim-runtime gvim vim-tiny vim-common vim-gui-common vim-nox"
     sudo -EH apt-get purge $vim_apt_pkgs -y -qq && echo "Uninstalled older vim: $vim_apt_pkgs " || true
 }
 
@@ -21,7 +21,7 @@ _install_vim() {
 
     vim_deps="libncurses5-dev libgnome2-dev
     libgtk2.0-dev libatk1.0-dev libbonoboui2-dev
-    libx11-dev libxpm-dev libxt-dev python-dev python3-dev
+    libx11-dev libxpm-dev libxt-dev python-dev python3-dev python3-pip
     lua5.1 lua5.1-dev libperl-dev git"
     sudo -EH apt-get install $vim_deps -y -qq && echo "Installed vim dependencies: $vim_deps"
 
@@ -30,31 +30,32 @@ _install_vim() {
 
     git clone $vim_repo $vim_dir --depth 1
 
-    local python_conf_dir=""
-    if is_app_installed python2.7; then
-        python_conf_dir=$(whereis python2.7 | tr ' ' '\n' | grep config | head -n 1)
-    elif is_app_installed python3.5; then
-        echo "using python3.5 as --with-python-config-dir"
-        python_conf_dir=$(whereis python3.5 | tr ' ' '\n' | grep config | head -n 1)
-    fi
-
-    local CONF_ARGS=""
-    CONF_ARGS="--with-modified-by=$(whoami)"
-    CONF_ARGS="$CONF_ARGS --enable-pythoninterp=yes"
-    CONF_ARGS="$CONF_ARGS --with-python-config-dir=${python_conf_dir}"
-    CONF_ARGS="$CONF_ARGS --disable-gui"
-    CONF_ARGS="$CONF_ARGS --enable-luainterp=dynamic"
-    CONF_ARGS="$CONF_ARGS --enable-rubyinterp=dynamic"
-    CONF_ARGS="$CONF_ARGS --enable-perlinterp=dynamic"
-    CONF_ARGS="$CONF_ARGS --enable-cscope"
-    CONF_ARGS="$CONF_ARGS --enable-multibyte"
-    CONF_ARGS="$CONF_ARGS --with-features=huge"
-    CONF_ARGS="$CONF_ARGS --enable-xim"
-    CONF_ARGS="$CONF_ARGS --enable-fontset"
-
-    local pkg_name="k_vim"
+    # define basic details
+    local pkg_name="k-vim"
     local pgk_version=$(cd $vim_dir ; git tag ; cd - >> /dev/null)
 
+    # set all necessary flags for compilation
+    local flags=""
+    local python_conf_dir=""
+
+    flags="--with-modified-by=kornicameister --with-compiledby=kornicameister"
+    flags="$flags --disable-gui"
+
+    flags="$flags --enable-multibyte"
+    flags="$flags --with-features=huge"
+    flags="$flags --enable-xim"
+    flags="$flags --enable-fontset"
+
+    flags="$flags --prefix=/usr/local"
+
+    flags="$flags --enable-luainterp=no"
+    flags="$flags --enable-rubyinterp=no"
+    flags="$flags --enable-perlinterp=no"
+    flags="$flags --enable-cscope=no"
+    flags="$flags --enable-tclinterp=no"
+    (command -v python3 >/dev/null 2>&1) && flags="$flags --enable-python3interp=dynamic" || flags="$flags --enable-pythoninterp=dynamic"
+
+    # define checkinstall arguments
     local ci_args=""
     ci_args="$ci_args --install=yes"
     ci_args="$ci_args --type=debian"
@@ -66,10 +67,15 @@ _install_vim() {
     sudo dpkg -r $pkg_name || echo "Looks like vim has been removed"
     make distclean
     ./configure
-    ./configure $CONF_ARGS
+    ./configure $flags
     sudo -EH checkinstall $ci_args
     popd
 
     sudo rm -rf $vim_dir || true
+
+    sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
+    sudo update-alternatives --set editor /usr/local/bin/vim
+    sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
+    sudo update-alternatives --set vi /usr/local/bin/vim
 }
 
