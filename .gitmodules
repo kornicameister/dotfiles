@@ -2,7 +2,7 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 [submodule "bash-git-prompt"]
-	path = bash-git-prompt
+	path = dependencies/bash-git-prompt
 	url = https://github.com/magicmonty/bash-git-prompt
 [submodule "fzf"]
 	path = fzf
