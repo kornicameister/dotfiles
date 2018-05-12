@@ -15,7 +15,21 @@ install_tools() {
     install_prompt whatpulse _install_whatpulse
     install_prompt resume-cli  _install_resume_cli
     install_prompt aria2 _install_aria
+    install_prompt nnn _install_nnn
+    install_prompt mdv _install_mdv
     set +i
+}
+
+_install_mdv() {
+    # MDV - markdown viewer
+    sudo -EH pip install mdv --upgrade
+}
+
+_install_nnn() {
+    # https://github.com/jarun/nnn
+    echo "Installing nnn"
+    sudo add-apt-repository ppa:twodopeshaggy/jarun -yu
+    sudo apt-get install nnn
 }
 
 _install_aria() {

@@ -162,13 +162,6 @@ install_docker() {
     fi
 }
 
-install_nnn() {
-    # https://github.com/jarun/nnn
-    echo "Installing nnn"
-    sudo add-apt-repository ppa:twodopeshaggy/jarun -yu
-    sudo apt-get install nnn
-}
-
 enable_start_point() {
     rm -rf "${K_START_POINT}" && echo "Removed old ${K_START_POINT}"
 
@@ -225,7 +218,6 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt wakatime install_wakatime
         install_prompt vagrant_plugins install_vagrant_plugins
         install_prompt docker install_docker
-        install_prompt nnn install_nnn
     fi
 
     echo "Updating ${K_START_POINT}" && enable_start_point
