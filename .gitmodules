@@ -7,3 +7,6 @@
 [submodule "fzf"]
 	path = fzf
 	url = https://github.com/junegunn/fzf.git
+[submodule "bash-wakatime"]
+	path = bash-wakatime
+	url = https://github.com/gjsheep/bash-wakatime
