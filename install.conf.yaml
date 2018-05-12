@@ -29,7 +29,7 @@
     # git stuff
     ~/.gitignore: gitignore
     ~/.gitconfig: gitconfig
-    ~/.gitprompt: bash-git-prompt/gitprompt.sh
+    ~/.gitprompt: dependencies/bash-git-prompt/gitprompt.sh
 
     # bash stuff
     ~/.bashrc: bash_rc
