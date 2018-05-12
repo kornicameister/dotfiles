@@ -87,24 +87,7 @@ install_wakatime() {
 }
 
 install_wakatime_bash() {
-    cwd=${PWD} && pushd $HOME
-    bw_dir=$PWD/.bash-wakatime
-    bw_script=$bw_dir/bash-wakatime.sh
     bw_config=$HOME/.wakatime.cfg
-
-    if [ ! -d $bw_dir ]; then
-        git clone https://github.com/gjsheep/bash-wakatime.git $bw_dir --depth 1
-    else
-        pushd $bw_dir
-        git fetch --all && git rebase origin/master
-        popd
-    fi
-
-    if ! grep -q "source $bw_script" "$HOME/.bashrc"; then
-        echo "source $bw_script" >> $HOME/.bashrc
-    else
-        echo "source $bw_script already in $HOME/.bashrc"
-    fi
 
     if [ ! -f $bw_config ]; then
         echo -n "wakatime api key: [ENTER]"
@@ -130,8 +113,6 @@ EOF
     else
         echo "$bw_config already exists"
     fi
-
-    cd $cwd
 }
 
 install_docker() {

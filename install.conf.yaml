@@ -42,6 +42,9 @@
     # fzf
     ~/.fzf: fzf
 
+    # wakatime
+    ~/.bash_wakatime: bash-wakatime/bash-wakatime.sh
+
     # custom application configuration
     ~/.config/tilix.conf: config/tilix
     ~/.config/terminator/config:
