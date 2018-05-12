@@ -5,7 +5,7 @@
 	path = dependencies/bash-git-prompt
 	url = https://github.com/magicmonty/bash-git-prompt
 [submodule "fzf"]
-	path = fzf
+	path = dependencies/fzf
 	url = https://github.com/junegunn/fzf.git
 [submodule "bash-wakatime"]
 	path = dependencies/bash-wakatime
