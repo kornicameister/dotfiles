@@ -40,7 +40,7 @@
     ~/.bash_completion: bash/completion.sh
 
     # fzf
-    ~/.fzf: fzf
+    ~/.fzf: dependencies/fzf
 
     # wakatime
     ~/.bash_wakatime: dependencies/bash-wakatime/bash-wakatime.sh
