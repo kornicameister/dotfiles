@@ -17,7 +17,42 @@ install_tools() {
     install_prompt aria2 _install_aria
     install_prompt nnn _install_nnn
     install_prompt mdv _install_mdv
+    install_prompt wakatime _install_wakatime
     set +i
+}
+
+_install_wakatime() {
+    pip install wakatime --user --upgrade && echo "wakatime installed/upgraded"
+    _install_wakatime_bash
+}
+
+_install_wakatime_bash() {
+    bw_config=$HOME/.wakatime.cfg
+
+    if [ ! -f $bw_config ]; then
+        echo -n "wakatime api key: [ENTER]"
+        read waka_api_key
+
+        echo "wakatime.cfg" && cat > $bw_config << EOF
+[settings]
+api_key = $waka_api_key
+debug = false
+hidefilenames = false
+exclude =
+    ^COMMIT_EDITMSG$
+    ^TAG_EDITMSG$
+    ^/var/
+    ^/etc/
+    ^/tmp/
+include =
+    .*
+offline = true
+timeout = 30
+hostname = $hostname
+EOF
+    else
+        echo "$bw_config already exists"
+    fi
 }
 
 _install_mdv() {

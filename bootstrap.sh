@@ -81,40 +81,6 @@ function install_vagrant_plugins {
     echo "###########################"
 }
 
-install_wakatime() {
-    sudo -EH pip install wakatime --upgrade && echo "wakatime installed/upgraded"
-    install_wakatime_bash
-}
-
-install_wakatime_bash() {
-    bw_config=$HOME/.wakatime.cfg
-
-    if [ ! -f $bw_config ]; then
-        echo -n "wakatime api key: [ENTER]"
-        read waka_api_key
-
-        echo "wakatime.cfg" && cat > $bw_config << EOF
-[settings]
-api_key = $waka_api_key
-debug = false
-hidefilenames = false
-exclude =
-    ^COMMIT_EDITMSG$
-    ^TAG_EDITMSG$
-    ^/var/
-    ^/etc/
-    ^/tmp/
-include =
-    .*
-offline = true
-timeout = 30
-hostname = $hostname
-EOF
-    else
-        echo "$bw_config already exists"
-    fi
-}
-
 install_docker() {
     echo "Installing docker"
 
@@ -196,7 +162,6 @@ if [ $INSTALL -eq 1 ]; then
         install_prompt other install_other
         install_prompt os_specific install_os
 
-        install_prompt wakatime install_wakatime
         install_prompt vagrant_plugins install_vagrant_plugins
         install_prompt docker install_docker
     fi
