@@ -36,23 +36,23 @@ while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
         --debug)
-        DEBUG=1
-        ;;
+            DEBUG=1
+            ;;
         --install)
-        INSTALL=1
-        PURGE=0
-        ;;
+            INSTALL=1
+            PURGE=0
+            ;;
         --purge)
-        INSTALL=0
-        PURGE=1
-        ;;
+            INSTALL=0
+            PURGE=1
+            ;;
         --update-start-point-only)
-        UPDATE_START_POINT_ONLY=1
-        ;;
+            UPDATE_START_POINT_ONLY=1
+            ;;
         *)
-        # Do whatever you want with extra options
-        echo "Unknown option '$key'"
-        ;;
+            # Do whatever you want with extra options
+            echo "Unknown option '$key'"
+            ;;
     esac
     # Shift after checking all the cases to get the next option
     shift
@@ -65,12 +65,12 @@ function install_vagrant_plugins {
     vagrant plugin update && echo "updated all vagrant plugins prior to installation"
 
     local plugins=(
-        'vagrant-proxyconf'
-        'vagrant-timezone'
-        'vagrant-cachier'
-        'vagrant-hosts'
-        'sahara'
-        'vagrant-triggers'
+    'vagrant-proxyconf'
+    'vagrant-timezone'
+    'vagrant-cachier'
+    'vagrant-hosts'
+    'sahara'
+    'vagrant-triggers'
     )
     local plugin
 
@@ -101,9 +101,9 @@ install_wakatime_bash() {
     fi
 
     if ! grep -q "source $bw_script" "$HOME/.bashrc"; then
-          echo "source $bw_script" >> $HOME/.bashrc
-      else
-          echo "source $bw_script already in $HOME/.bashrc"
+        echo "source $bw_script" >> $HOME/.bashrc
+    else
+        echo "source $bw_script already in $HOME/.bashrc"
     fi
 
     if [ ! -f $bw_config ]; then
@@ -169,18 +169,11 @@ install_nnn() {
     sudo apt-get install nnn
 }
 
-enable_bash_completion() {
-    if ! grep -q "/etc/bash_completion" "${HOME}/.bashrc"; then
-        if [ -f "/etc/bash_completion" ]; then
-            echo ". /etc/bash_completion" >> "${HOME}/.bashrc"
-        fi
-    fi
-}
-
 enable_start_point() {
     rm -rf "${K_START_POINT}" && echo "Removed old ${K_START_POINT}"
 
     for binding in $K_DIR/b_* ; do
+        [ ! -f $binding ] && continue
         echo "Adding binding ${binding}"
         echo ". ${binding}" >> "${K_START_POINT}"
     done
@@ -205,6 +198,7 @@ if [ $INSTALL -eq 1 ]; then
     if [ ! -d "${K_DIR}" ]; then
         mkdir -p "${K_DIR}" && echo "A place of K [${K_DIR}] has been created"
     fi
+
     if [ ! -f "${HOME}/.bashrc" ]; then
         touch "${HOME}/.bashrc"
     else
@@ -212,6 +206,11 @@ if [ $INSTALL -eq 1 ]; then
             cp "${HOME}/.bashrc" "${HOME}/.bashrc.copy"
         fi
     fi
+
+    echo "Clean old bindings"
+    for file in $K_DIR/b_*; do
+        [ -f $file ] && echo "Removing $file" ; rm -rf $file || echo "$file does not exists"
+    done
 
     if [ $UPDATE_START_POINT_ONLY -eq 0 ]; then
 
@@ -230,7 +229,6 @@ if [ $INSTALL -eq 1 ]; then
     fi
 
     echo "Updating ${K_START_POINT}" && enable_start_point
-    echo "Enable bash completion" && enable_bash_completion
 fi
 if [ $PURGE -eq 1 ]; then
     echo "Damn...already removing all that"
