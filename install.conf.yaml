@@ -9,10 +9,6 @@
       description: Install submodules
     - command: ./fzf/install --all
       description: Install fzf
-    - command: "[ ! -f ~/.bashrc_backup ] && mv ~/.bashrc ~/.bashrc_backup"
-      description: Backup already existing ~/.bashrc
-    - command: "[ ! -f ~/.bash_profile_backup ] && mv ~/.bash_profile ~/.bash_profile_backup"
-      description: Backup already existing ~/.bash_profile
       # TODO(kornicameister) these should be launched from within the linux_setup.sh
     - command: sudo apt update -qq ; sudo apt install dconf-cli -yy -qq
       description: Install dconf
