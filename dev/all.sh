@@ -21,11 +21,3 @@ install_dev() {
     install_prompt gerrit install_dev_gerrit
     install_prompt mdv _install_mdv
 }
-
-# small dev tools
-
-_install_mdv() {
-    # MDV - markdown viewer
-    sudo -EH pip install mdv --upgrade
-}
-
