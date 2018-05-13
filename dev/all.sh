@@ -19,5 +19,4 @@ install_dev() {
     install_prompt vim install_dev_vim
     install_prompt node install_dev_node
     install_prompt gerrit install_dev_gerrit
-    install_prompt mdv _install_mdv
 }
