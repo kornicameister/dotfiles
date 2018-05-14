@@ -40,6 +40,10 @@
     # fzf
     ~/.fzf: dependencies/fzf
 
+    # nvm
+    ~/.nvm: dependencies/nvm
+    ~/.nvm.sh: nvm.sh
+
     # wakatime
     ~/.bash_wakatime: dependencies/bash-wakatime/bash-wakatime.sh
 
