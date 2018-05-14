@@ -36,6 +36,8 @@
     ~/.zshrc: zshrc
     ~/.zprezto: dependencies/prezto
     ~/.zpreztorc: zpreztorc
+    ~/.zlogin: dependencies/prezto/runcoms/zlogin
+    ~/.zprofile: dependencies/prezto/runcoms/zprofile
 
     # fzf
     ~/.fzf: dependencies/fzf
