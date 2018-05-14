@@ -39,6 +39,7 @@
     ~/.zlogin: dependencies/prezto/runcoms/zlogin
     ~/.zprofile: dependencies/prezto/runcoms/zprofile
     ~/.zshenv: dependencies/prezto/runcoms/zshenv
+    ~/.zgen: dependencies/zgen
 
     # fzf
     ~/.fzf: dependencies/fzf
