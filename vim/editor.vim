@@ -80,8 +80,11 @@ filetype plugin indent on
 
 " vim theme settings
 hi Normal ctermbg=none
-colorscheme py-darcula
+colorscheme vim-material
 set background=dark
+if (has("termguicolors"))
+  set termguicolors
+endif
 
 " tabs keybindings
 map <C-t><up> :tabr<cr>
