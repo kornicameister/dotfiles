@@ -38,6 +38,7 @@
     ~/.zpreztorc: zpreztorc
     ~/.zlogin: dependencies/prezto/runcoms/zlogin
     ~/.zprofile: dependencies/prezto/runcoms/zprofile
+    ~/.zshenv: dependencies/prezto/runcoms/zshenv
 
     # fzf
     ~/.fzf: dependencies/fzf
