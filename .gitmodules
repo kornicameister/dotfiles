@@ -10,3 +10,6 @@
 [submodule "bash-wakatime"]
 	path = dependencies/bash-wakatime
 	url = https://github.com/gjsheep/bash-wakatime
+[submodule "nvm"]
+	path = dependencies/nvm
+	url = https://github.com/creationix/nvm.git
