@@ -34,6 +34,8 @@
 
     # zsh stuff
     ~/.zshrc: zshrc
+    ~/.zprezto: dependencies/prezto
+    ~/.zpreztorc: zpreztorc
 
     # fzf
     ~/.fzf: dependencies/fzf
