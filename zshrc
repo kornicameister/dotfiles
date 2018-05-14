@@ -1,12 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 
 export ZDOTDIR=$HOME
-
-[ -f "${ZDOTDIR}/.zprezto/init.zsh" ] && source "${ZDOTDIR}/.zprezto/init.zsh"
-[ -f "${ZDOTDIR}/.fzf.zsh" ] && source "${ZDOTDIR}/.fzf.zsh"
-
 export EDITOR="vim"
 export VISUAL="${EDITOR}"
 
-
+[ -f ~/.zprezto/init.zsh ] && source ~/.zprezto/init.zsh
+[ -f ~/.nvm.sh ] && source ~/.nvm.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
