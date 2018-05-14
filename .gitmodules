@@ -10,3 +10,6 @@
 [submodule "bash-wakatime"]
 	path = dependencies/bash-wakatime
 	url = https://github.com/gjsheep/bash-wakatime
+[submodule "dependencies/prezto"]
+	path = dependencies/prezto
+	url = https://github.com/sorin-ionescu/prezto.git

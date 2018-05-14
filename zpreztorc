@@ -1,0 +1,43 @@
+zstyle ':prezto:*:*' case-sensitive 'false'
+zstyle ':prezto:*:*' color 'yes'
+
+# Set the Prezto modules to load (browse modules).
+# The order matters.
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'git' \
+  'node' \
+  'ssh' \
+  'python' \
+  'completion' \
+  'prompt'\
+  'syntax-highlighting' \
+  'history-substring-search'
+
+zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:editor' dot-expansion 'yes'
+zstyle ':prezto:module:editor' ps-context 'yes'
+
+zstyle ':prezto:module:prompt' theme 'pure'
+zstyle ':prezto:module:prompt' pwd-length 'long'
+zstyle ':prezto:module:prompt' show-return-val 'yes'
+
+zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
+zstyle ':prezto:module:python:virtualenv' initialize 'yes'
+
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+   'main' \
+   'brackets' \
+   'pattern' \
+   'line' \
+   'cursor' \
+   'root'
+
+zstyle ':prezto:module:terminal' auto-title 'yes'
+zstyle ':prezto:module:utility' safe-ops 'yes'
