@@ -11,13 +11,13 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
-  'git' \
   'ssh' \
-  'python' \
   'completion' \
-  'prompt'\
+  'git' \
+  'python' \
   'syntax-highlighting' \
-  'history-substring-search'
+  'history-substring-search' \
+  'prompt'
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'

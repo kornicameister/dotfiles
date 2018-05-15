@@ -33,9 +33,9 @@
     ~/.bash_completion: bash/completion.sh
 
     # zsh stuff
-    ~/.zshrc: zshrc
+    ~/.zshrc: zsh/zshrc
+    ~/.zpreztorc: zsh/zpreztorc
     ~/.zprezto: dependencies/prezto
-    ~/.zpreztorc: zpreztorc
     ~/.zlogin: dependencies/prezto/runcoms/zlogin
     ~/.zprofile: dependencies/prezto/runcoms/zprofile
     ~/.zshenv: dependencies/prezto/runcoms/zshenv
