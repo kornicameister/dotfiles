@@ -35,10 +35,10 @@
     # zsh stuff
     ~/.zshrc: zsh/zshrc
     ~/.zpreztorc: zsh/zpreztorc
+    ~/.zlogin: zsh/zlogin
+    ~/.zprofile: zsh/zprofile
+    ~/.zshenv: zsh/zshenv
     ~/.zprezto: dependencies/prezto
-    ~/.zlogin: dependencies/prezto/runcoms/zlogin
-    ~/.zprofile: dependencies/prezto/runcoms/zprofile
-    ~/.zshenv: dependencies/prezto/runcoms/zshenv
     ~/.zgen: dependencies/zgen
 
     # fzf
