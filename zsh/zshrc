@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 
 export ZDOTDIR=$HOME
-export EDITOR="vim"
+export EDITOR="vim -p"
 export VISUAL="${EDITOR}"
 
 [ -f ~/.zgen/zgen.zsh ] && source ~/.zgen/zgen.zsh
