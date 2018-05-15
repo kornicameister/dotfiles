@@ -12,7 +12,6 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'git' \
-  'node' \
   'ssh' \
   'python' \
   'completion' \
