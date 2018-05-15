@@ -19,3 +19,6 @@
 [submodule "dependencies/zgen"]
 	path = dependencies/zgen
 	url = https://github.com/tarjoilija/zgen.git
+[submodule "dependencies/pyenv"]
+	path = dependencies/pyenv
+	url = https://github.com/pyenv/pyenv.git
