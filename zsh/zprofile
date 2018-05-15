@@ -1,45 +1,20 @@
-#
-# Executes commands at login pre-zshrc.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-#
-# Browser
-#
-
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
-#
-# Editors
-#
-
-export EDITOR='nano'
-export VISUAL='nano'
 export PAGER='less'
+export EDITOR="vim -p"
+export VISUAL="${EDITOR}"
 
-#
-# Language
-#
+# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+export PYTHONIOENCODING='UTF-8';
 
-if [[ -z "$LANG" ]]; then
-  export LANG='en_US.UTF-8'
-fi
-
-#
-# Paths
-#
+# Prefer US English and use UTF-8.
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
-
-# Set the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
 
 # Set the list of directories that Zsh searches for programs.
 path=(
@@ -60,4 +35,9 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+# fzf settings
+if (( $#commands[fzf] )); then
+    export FZF_DEFAULT_OPTS="--height 60% --reverse --border"
 fi
