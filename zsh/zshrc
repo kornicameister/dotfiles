@@ -6,6 +6,7 @@ export ZDOTDIR=$HOME
 [ -f ~/.zprezto/init.zsh ] && source ~/.zprezto/init.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.nvm.sh ] && source ~/.nvm.sh
+[ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
 
 if ! zgen saved; then
     zgen prezto

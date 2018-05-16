@@ -8,4 +8,4 @@
 [ -f ~/.nvm.sh ] && source ~/.nvm.sh
 
 # Source k_stuff configuration
-[ -f ~/.k_stuff/k.sh ] &&  source ~/.k_stuff/k.sh
+[ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
