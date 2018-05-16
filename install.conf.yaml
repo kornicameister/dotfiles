@@ -48,6 +48,9 @@
     ~/.nvm: dependencies/nvm
     ~/.nvm.sh: nvm.sh
 
+    # npm
+    ~/.npmrc.sh: npmrc.sh
+
     # pyenv
     ~/.pyenv: dependencies/pyenv
     ~/.pyenv.sh: pyenv.sh
