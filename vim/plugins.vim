@@ -27,6 +27,7 @@ source ~/.vim/plugins/json.vim
 source ~/.vim/plugins/ctrlp.vim
 source ~/.vim/plugins/md.vim
 source ~/.vim/plugins/deoplete.vim
+source ~/.vim/plugins/docker.vim
 
 Plug 'wakatime/vim-wakatime'
 Plug 'ConradIrwin/vim-bracketed-paste'
