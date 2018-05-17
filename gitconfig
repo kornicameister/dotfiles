@@ -20,6 +20,22 @@
 [push]
     default = simple
 
+[fetch]
+    # delete local state repositories that no longer exists
+    # in remote
+    prune = true
+
+[rebase]
+    # auto squash fixups by default
+    autosquash = true
+
+[status]
+    # show submodules summary by default
+    submoduleSummary = true
+
+[diff]
+    tool = vimdiff
+
 [core]
     editor = vim
     excludesfile = ~/.gitignore
