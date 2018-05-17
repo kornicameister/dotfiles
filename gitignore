@@ -15,8 +15,9 @@ releasenotes/build
 
 .history/
 
-# pyenv auto-env file
+# python stuff
 .python-version
+*.pyc
 
 #
 " nvm auto-env file
