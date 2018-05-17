@@ -1,0 +1,17 @@
+# has to come after zsh or bashrc are sourced, because it overwrites those files.
+./dependencies/fzf/install --all
+
+# install pyenv plugins
+PYENV_PLUGINS_DIR=$(realpath ./dependencies/pyenv/plugins)
+if [ ! -d $PYENV_PLUGINS_DIR/pyenv-update ]; then
+    echo "Installing pyenv-update"
+    git clone git://github.com/pyenv/pyenv-update.git $PYENV_PLUGINS_DIR/pyenv-update
+fi
+if [ ! -d $PYENV_PLUGINS_DIR/pyenv-virtualenv ]; then
+    echo "Intalling pyenv-virtualenv"
+    git clone git://github.com/pyenv/pyenv-virtualenv.git $PYENV_PLUGINS_DIR/pyenv-virtualenv
+fi
+if [ ! -d $PYENV_PLUGINS_DIR/pyenv-ccache ]; then
+    echo "Installing pyenv-cache"
+    git clone git://github.com/pyenv/pyenv-ccache.git $PYENV_PLUGINS_DIR/pyenv-ccache
+fi
