@@ -61,9 +61,7 @@
 
     # custom application configuration
     ~/.config/tilix.conf: config/tilix
-    ~/.config/terminator/config:
-        create: true
-        path: config/terminator
+    ~/.config/terminator: config/terminator
 
 - shell:
     - command: ./post-install
