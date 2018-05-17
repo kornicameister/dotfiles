@@ -17,9 +17,15 @@
 [pull]
     rebase = true
 
+[push]
+    default = simple
+
 [core]
     editor = vim
     excludesfile = ~/.gitignore
+
+    # dont ignore case
+    ignorecase = false
 
     # Treat spaces before tabs and all kinds of trailing whitespace as an error
     whitespace = space-before-tab,-indent-with-non-tab,trailing-space
@@ -32,5 +38,3 @@
     email = kornicameister@gmail.com
     name = Tomasz Trębski
 
-[push]
-    default = simple
