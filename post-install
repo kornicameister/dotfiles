@@ -1,11 +1,22 @@
 # has to come after zsh or bashrc are sourced, because it overwrites those files.
-./dependencies/fzf/install --all
+$PWD/dependencies/fzf/install --all
 
 # install powerline fonts
-./dependencies/powerline-fonts/install.sh
+$PWD/dependencies/powerline-fonts/install.sh
+
+# clone prezto-contrib
+if [ ! $PWD/dependencies/prezto/contrib ]; then
+    git clone https://github.com/belak/prezto-contrib $PWD/dependencies/prezto/contrib
+else
+    cd ./dependencies/prezto/contrib
+    git reset --hard HEAD
+    git fetch --all
+    git rebase origin/master
+    cd -
+fi
 
 # install pyenv plugins
-PYENV_PLUGINS_DIR=$(realpath ./dependencies/pyenv/plugins)
+PYENV_PLUGINS_DIR=$(realpath $PWD/dependencies/pyenv/plugins/)
 if [ ! -d $PYENV_PLUGINS_DIR/pyenv-update ]; then
     echo "Installing pyenv-update"
     git clone git://github.com/pyenv/pyenv-update.git $PYENV_PLUGINS_DIR/pyenv-update

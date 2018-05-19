@@ -1,6 +1,8 @@
 zstyle ':prezto:*:*' case-sensitive 'false'
 zstyle ':prezto:*:*' color 'yes'
 
+zstyle ':prezto:load' pmodule-dirs $HOME/.zprezto/contrib
+
 # Set the Prezto modules to load (browse modules).
 # The order matters.
 zstyle ':prezto:load' pmodule \
@@ -17,13 +19,14 @@ zstyle ':prezto:load' pmodule \
   'python' \
   'syntax-highlighting' \
   'history-substring-search' \
+  'contrib-prompt' \
   'prompt'
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
 
-zstyle ':prezto:module:prompt' theme 'giddie'
+zstyle ':prezto:module:prompt' theme 'spaceship'
 zstyle ':prezto:module:prompt' pwd-length 'long'
 zstyle ':prezto:module:prompt' show-return-val 'yes'
 
