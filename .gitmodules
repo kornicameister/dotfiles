@@ -15,7 +15,7 @@
 	url = https://github.com/creationix/nvm.git
 [submodule "dependencies/prezto"]
 	path = dependencies/prezto
-	url = https://github.com/sorin-ionescu/prezto.git
+	url = git@github.com:kornicameister/prezto.git
 [submodule "dependencies/zgen"]
 	path = dependencies/zgen
 	url = https://github.com/tarjoilija/zgen.git
