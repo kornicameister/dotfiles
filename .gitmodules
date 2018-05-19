@@ -22,3 +22,6 @@
 [submodule "dependencies/pyenv"]
 	path = dependencies/pyenv
 	url = https://github.com/pyenv/pyenv.git
+[submodule "dependencies/powerline-fonts"]
+	path = dependencies/powerline-fonts
+	url = https://github.com/powerline/fonts.git

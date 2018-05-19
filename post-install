@@ -1,6 +1,9 @@
 # has to come after zsh or bashrc are sourced, because it overwrites those files.
 ./dependencies/fzf/install --all
 
+# install powerline fonts
+./dependencies/powerline-fonts/install.sh
+
 # install pyenv plugins
 PYENV_PLUGINS_DIR=$(realpath ./dependencies/pyenv/plugins)
 if [ ! -d $PYENV_PLUGINS_DIR/pyenv-update ]; then
