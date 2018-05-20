@@ -18,14 +18,34 @@ fi
 # install pyenv plugins
 PYENV_PLUGINS_DIR=$(realpath $PWD/dependencies/pyenv/plugins/)
 if [ ! -d $PYENV_PLUGINS_DIR/pyenv-update ]; then
-    echo "Installing pyenv-update"
     git clone git://github.com/pyenv/pyenv-update.git $PYENV_PLUGINS_DIR/pyenv-update
 fi
 if [ ! -d $PYENV_PLUGINS_DIR/pyenv-virtualenv ]; then
-    echo "Intalling pyenv-virtualenv"
     git clone git://github.com/pyenv/pyenv-virtualenv.git $PYENV_PLUGINS_DIR/pyenv-virtualenv
 fi
 if [ ! -d $PYENV_PLUGINS_DIR/pyenv-ccache ]; then
-    echo "Installing pyenv-cache"
     git clone git://github.com/pyenv/pyenv-ccache.git $PYENV_PLUGINS_DIR/pyenv-ccache
+fi
+
+# install nodenv plugins
+NODENV_PLUGINS_DIR=$(realpath $PWD/dependencies/nodenv/plugins)
+mkdir -p $NODENV_PLUGINS_DIR
+
+if [ ! -d $NODENV_PLUGINS_DIR/nodenv-update ]; then
+   git clone https://github.com/nodenv/nodenv-update.git $NODENV_PLUGINS_DIR/nodenv-update
+fi
+if [ ! -d $NODENV_PLUGINS_DIR/nodenv-aliases ]; then
+   git clone https://github.com/nodenv/nodenv-aliases.git $NODENV_PLUGINS_DIR/nodenv-aliases
+fi
+if [ ! -d $NODENV_PLUGINS_DIR/nodenv-package-json-engine ]; then
+   git clone https://github.com/nodenv/nodenv-package-json-engine.git $NODENV_PLUGINS_DIR/nodenv-package-json-engine
+fi
+if [ ! -d $NODENV_PLUGINS_DIR/nodenv-package-rehash ]; then
+   git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_PLUGINS_DIR/nodenv-package-rehash
+fi
+if [ ! -d $NODENV_PLUGINS_DIR/nodenv-each ]; then
+   git clone https://github.com/nodenv/nodenv-each.git $NODENV_PLUGINS_DIR/nodenv-each
+fi
+if [ ! -d $NODENV_PLUGINS_DIR/node-build ]; then
+   git clone https://github.com/nodenv/node-build.git $NODENV_PLUGINS_DIR/node-build
 fi

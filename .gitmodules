@@ -10,9 +10,6 @@
 [submodule "bash-wakatime"]
 	path = dependencies/bash-wakatime
 	url = https://github.com/gjsheep/bash-wakatime
-[submodule "nvm"]
-	path = dependencies/nvm
-	url = https://github.com/creationix/nvm.git
 [submodule "dependencies/prezto"]
 	path = dependencies/prezto
 	url = git@github.com:kornicameister/prezto.git
@@ -25,3 +22,6 @@
 [submodule "dependencies/powerline-fonts"]
 	path = dependencies/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "dependencies/nodenv"]
+	path = dependencies/nodenv
+	url = https://github.com/nodenv/nodenv.git
