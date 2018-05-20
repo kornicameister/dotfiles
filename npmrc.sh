@@ -1,19 +1,15 @@
 # the script dynamically configures npmrc by checking
 # if proxy is enabled in the system
 
-(command -v npm >/dev/null 2>&1) && (
+rm -rf $HOME/.npmrc && touch $HOME/.npmrc
 
-    # clear any changes that might have been there
-    # but are not submitted in here
-    [ -f $HOME/.npmrc ] && rm -rf $HOME/.npmrc
+if [[ -n "${http_proxy}" || -n "${HTTP_PROXY}" ]]; then
+    cat >>"$HOME/.npmrc" <<EOL
+proxy="${HTTP_PROXY:-${http_proxy}}"
+registry="http://registry.npmjs.org/"
+strict-ssl=false
+EOL
+fi
 
-    if [[ -n "${http_proxy}" || -n "${HTTP_PROXY}" ]]; then
-        npm config set proxy "${HTTP_PROXY:-${http_proxy}}"
-        npm config set registry "http://registry.npmjs.org/"
-        npm config set strict-ssl false
-    fi
-
-    npm config set send-metrics true
-    npm config set loglevel "http"
-
-)
+echo "send-metrics=true" >> $HOME/.npmrc
+echo "loglevel=http" >> $HOME/.npmrc

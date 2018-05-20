@@ -45,11 +45,8 @@
     # fzf
     ~/.fzf: dependencies/fzf
 
-    # nvm
-    ~/.nvm: dependencies/nvm
-    ~/.nvm.sh: nvm.sh
-
-    # npm
+    # node
+    ~/.nodenv: dependencies/nodenv
     ~/.npmrc.sh: npmrc.sh
 
     # pyenv
