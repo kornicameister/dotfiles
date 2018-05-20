@@ -21,4 +21,4 @@ releasenotes/build
 
 #
 " nvm auto-env file
-.nvmrc
+.node-version
