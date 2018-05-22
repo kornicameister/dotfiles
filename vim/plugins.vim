@@ -19,7 +19,8 @@ source ~/.vim/plugins/fzf.vim
 source ~/.vim/plugins/javascript.vim
 source ~/.vim/plugins/commit.vim
 source ~/.vim/plugins/elm.vim
-source ~/.vim/plugins/nerdtree.vim
+" NOTE(kornicameister) see if we can live without nerdtree
+" source ~/.vim/plugins/nerdtree.vim
 source ~/.vim/plugins/python.vim
 source ~/.vim/plugins/folding.vim
 source ~/.vim/plugins/rainbow.vim
