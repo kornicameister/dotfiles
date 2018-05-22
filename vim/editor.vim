@@ -80,7 +80,7 @@ filetype plugin indent on
 
 " vim theme settings
 hi Normal ctermbg=none
-colorscheme vim-material
+colorscheme gruvbox
 set background=dark
 if (has("termguicolors"))
   set termguicolors
