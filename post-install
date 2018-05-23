@@ -17,6 +17,9 @@ fi
 if [ ! -d $PYENV_PLUGINS_DIR/pyenv-ccache ]; then
     git clone git://github.com/pyenv/pyenv-ccache.git $PYENV_PLUGINS_DIR/pyenv-ccache
 fi
+if [ ! -d $PYENV_PLUGINS_DIR/pyenv-doctor ]; then
+    git clone git://github.com/pyenv/pyenv-doctor.git $PYENV_PLUGINS_DIR/pyenv-doctor
+fi
 
 # install nodenv plugins
 NODENV_PLUGINS_DIR=$(realpath $PWD/dependencies/nodenv/plugins)
