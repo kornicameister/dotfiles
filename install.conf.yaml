@@ -16,6 +16,9 @@
     ~/.vim: vim
     ~/.vimrc: vimrc
 
+    # neovim stuff
+    ~/.config/nvim: nvim
+
     # git stuff
     ~/.gitignore: gitignore
     ~/.gitconfig: gitconfig

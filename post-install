@@ -46,3 +46,8 @@ fi
 if [ ! -d $NODENV_PLUGINS_DIR/node-build ]; then
    git clone https://github.com/nodenv/node-build.git $NODENV_PLUGINS_DIR/node-build
 fi
+
+# install latest python stuff
+pyenv install-latest -s 2.7
+pyenv install-latest -s 3.6
+pyenv rehash
