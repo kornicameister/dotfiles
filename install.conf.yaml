@@ -5,9 +5,7 @@
 - clean: ['~']
 
 - shell:
-    - command: git submodule update --init --recursive
-      description: Install submodules
-    - command: sudo apt update -qq ; sudo apt install dconf-cli zsh ccache -yy -qq
+    - command: ./pre-install
       description: Install packages
     - command: command -v tilix >/dev/null 2>&1 && dconf load /com/gexperts/Tilix/ < config/tilix
       description: Restore Tilix configuration
@@ -59,6 +57,11 @@
     # custom application configuration
     ~/.config/tilix.conf: config/tilix
     ~/.config/terminator: config/terminator
+
+    # custom binaries
+    ~/.local/bin:
+        glob: true
+        path: bin/*
 
 - shell:
     - command: ./post-install
