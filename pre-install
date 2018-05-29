@@ -1,0 +1,11 @@
+#!/bin/bash
+
+install_system_packages() {
+    sudo apt install -yy -qq \
+        dconf-cli \
+        zsh \
+        ccache
+}
+
+git submodule update --init --recursive
+(sudo apt update -qq ; install_system_packages)
