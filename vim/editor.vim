@@ -86,6 +86,11 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
+" spelling
+setlocal spell
+map <silent> <leader>ss :setlocal spell!<cr>
+hi SpellBad cterm=underline,bold ctermfg=red
+
 " tabs keybindings
 map <C-t><up> :tabr<cr>
 map <C-t><down> :tabl<cr>
@@ -105,10 +110,6 @@ set foldmethod=indent
 set foldlevel=99
 nnoremap <Space> za
 vnoremap <Space> za
-
-" spelling
-setlocal spell
-map <silent> <leader>ss :setlocal spell!<cr>
 
 " quickly edit/reload vimrc
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
