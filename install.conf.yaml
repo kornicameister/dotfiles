@@ -6,7 +6,6 @@
 
 - shell:
     - command: ./pre-install
-      description: Install packages
     - command: command -v tilix >/dev/null 2>&1 && dconf load /com/gexperts/Tilix/ < config/tilix
       description: Restore Tilix configuration
 
@@ -65,4 +64,3 @@
 
 - shell:
     - command: ./post-install
-      description: Execute post install
