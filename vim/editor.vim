@@ -132,3 +132,6 @@ set clipboard=unnamed
 " navigate through the buffers
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
+
+" refresh file
+nnoremap <F5> :edit<CR>
