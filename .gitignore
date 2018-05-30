@@ -3,3 +3,4 @@ vim/autoload/
 vim/plugged/
 vim/view/
 vim/undodir/
+vim/.netrwhist
