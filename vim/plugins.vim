@@ -23,7 +23,6 @@ source ~/.vim/plugins/python.vim
 source ~/.vim/plugins/folding.vim
 source ~/.vim/plugins/rainbow.vim
 source ~/.vim/plugins/json.vim
-source ~/.vim/plugins/ctrlp.vim
 source ~/.vim/plugins/md.vim
 source ~/.vim/plugins/deoplete.vim
 source ~/.vim/plugins/docker.vim
