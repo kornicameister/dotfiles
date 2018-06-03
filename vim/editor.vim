@@ -55,7 +55,9 @@ set autoread
 
 " backspace fix
 set backspace=indent,eol,start
-fixdel
+if ! has('nvim')
+  fixdel
+endif
 
 " Show linenumbers
 set number relativenumber
