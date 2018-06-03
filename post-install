@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # has to come after zsh or bashrc are sourced, because it overwrites those files.
 $PWD/dependencies/fzf/install --all
 
