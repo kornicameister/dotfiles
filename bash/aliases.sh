@@ -25,10 +25,6 @@ alias vagrant="time vagrant"
 alias vagrant_up="vagrant destroy -f && rm -rf .vagrant && vagrant up"
 alias vagrant_destroy="vagrant destroy -f && rm -rf .vagrant"
 
-# apt utilities
-alias install="sudo apt install"
-alias upgrade="sudo apt update ; sudo apt dist-upgrade -y; sudo apt autoremove -y ; sudo apt autoclean -y"
-
 # bash aliases
 alias ..='cd ..'         # Go up one directory
 alias cd..='cd ..'       # Common misspelling for going up one directory
