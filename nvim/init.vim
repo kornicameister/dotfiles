@@ -1,5 +1,9 @@
-let g:python_host_prog = '/home/kornicameister/dev/aps-confs/dependencies/pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/home/kornicameister/dev/aps-confs/dependencies/pyenv/versions/neovim3/bin/python'
+if isdirectory($PYENV_ROOT.'/versions/neovim2')
+    let g:python_host_prog = $PYENV_ROOT.'/versions/neovim2/bin/python'
+endif
+if isdirectory($PYENV_ROOT.'/versions/neovim3')
+    let g:python3_host_prog = $PYENV_ROOT.'/versions/neovim3/bin/python'
+endif
 
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath= &runtimepath
