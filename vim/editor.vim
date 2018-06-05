@@ -137,3 +137,11 @@ nnoremap <S-Tab> :bprevious<CR>
 
 " refresh file
 nnoremap <F5> :edit<CR>
+
+" fzf mappings
+nmap <Leader>t :Tags<CR>
+nmap <Leader>f :Files<CR>
+nmap <Leader>c :Commits<CR>
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
