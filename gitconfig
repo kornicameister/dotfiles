@@ -15,6 +15,9 @@
 [url "https://git.openstack.org/"]
     insteadof = git://git.openstack.org/
 
+[gc]
+    auto = 1
+
 [pull]
     rebase = true
 
