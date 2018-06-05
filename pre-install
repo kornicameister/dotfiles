@@ -4,7 +4,8 @@ install_system_packages() {
     sudo apt install -yy -qq \
         dconf-cli \
         zsh \
-        ccache
+        ccache \
+        tree
 }
 
 # pull all submodules
