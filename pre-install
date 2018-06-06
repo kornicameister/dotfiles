@@ -5,7 +5,8 @@ install_system_packages() {
         dconf-cli \
         zsh \
         ccache \
-        tree
+        tree \
+        silversearcher-ag
 }
 
 # pull all submodules
