@@ -1,9 +1,5 @@
 " Copyright 2018 @ kornicameister
 
-Plug 'jmcantrell/vim-virtualenv', {'for': ['python']}
-Plug 'nvie/vim-flake8', {'for': ['python']}
-Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
-
 " editor settings specific for python
 au BufRead,BufNewFile *.py,*.pyw set expandtab
 au BufRead,BufNewFile *.py,*.pyw set textwidth=139

@@ -1,7 +1,5 @@
 " airline plugin stuff
 
-Plug 'vim-airline/vim-airline'
-
 let g:airline_powerline_fonts = 1
 
 " integrate with vim-ale
