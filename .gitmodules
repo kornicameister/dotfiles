@@ -25,3 +25,6 @@
 [submodule "dependencies/nodenv"]
 	path = dependencies/nodenv
 	url = https://github.com/nodenv/nodenv.git
+[submodule "dependencies/ctags"]
+	path = dependencies/ctags
+	url = https://github.com/universal-ctags/ctags.git

@@ -9,6 +9,38 @@ install_system_packages() {
         silversearcher-ag
 }
 
+install_ctags() {
+    # drop unused package
+    sudo apt remove exuberant-ctags -qq -yy
+
+    local shouldInstall=0
+    if command -v ctags >/dev/null 2>&1; then
+        # already installed check if need to reinstall
+        cd ./dependencies/ctags
+        git fetch origin
+        if [[ $(git log HEAD..origin/master --oneline | wc -l) -eq 0 ]]; then
+            echo "dependencies/ctags is outdated, update the module first"
+            exit 1
+        else
+            shouldInstall=1
+        fi
+        cd -
+    else
+        shouldInstall=1
+    fi
+
+    if [ $shouldInstall -eq 1 ]; then
+        cd ./dependencies/ctags
+
+        ./autogen.sh
+        ./configure --prefix=$HOME/.local
+        make
+        make install
+
+        cd -
+    fi
+}
+
 # pull all submodules
 git submodule update --init --recursive
 
