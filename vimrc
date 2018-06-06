@@ -1,15 +1,32 @@
 " first ever
 set nocompatible
 
-" install vim-plug if not there
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+function! InstallVimPlug()
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        PlugInstall --sync | source $MYVIMRC
+    endif
+endfunction
+
+function! SanitizePlugins()
+    if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+      PlugInstall --sync | q
+      PlugClean | q
+    endif
+endfunction
+
+function! InitVimPlug()
+    :call InstallVimPlug()
+    :call SanitizePlugins()
+endfunction
+
+" initialize vim plug
+autocmd VimEnter * :call InitVimPlug()
 
 " define the plugins
 call plug#begin('~/.vim/plugged')
+
 " theme
 Plug 'morhetz/gruvbox'
 
