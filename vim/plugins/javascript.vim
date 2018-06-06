@@ -1,10 +1,5 @@
 " javascript stuff for vim
 
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
-
 " specific setting for js
 au BufRead,BufNewFile *.js set expandtab
 au BufRead,BufNewFile *.js set tabstop=4

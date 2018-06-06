@@ -2,9 +2,6 @@
 "
 " Plugins for the commit msg handling
 
-Plug 'rhysd/committia.vim'
-Plug 'scrooloose/nerdcommenter'
-
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
     " Scroll the diff window from insert mode
