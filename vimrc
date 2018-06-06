@@ -1,5 +1,6 @@
 " first ever
 set nocompatible
+set shell=/bin/sh
 
 function! InstallVimPlug()
     if empty(glob('~/.vim/autoload/plug.vim'))
