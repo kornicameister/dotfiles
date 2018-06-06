@@ -47,8 +47,8 @@ if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
     Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+        Plug 'roxma/nvim-yarp'
+        Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 " awesome commit message writing
@@ -65,7 +65,7 @@ Plug 'luochen1990/rainbow', {'do': ':RainbowToggleOn'}
 Plug 'pangloss/vim-javascript', { 'for': ['typescript', 'javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'leafgarland/typescript-vim', { 'for' : ['typescript'] }
-Plug 'Quramy/tsuquyomi', { 'for' : ['typescript'] }
+    Plug 'Quramy/tsuquyomi', { 'for' : ['typescript'] }
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
@@ -89,7 +89,7 @@ Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
 Plug 'xolox/vim-notes', { 'for': ['notes'] }        " taking notes in vim
-Plug 'xolox/vim-misc', { 'for': ['notes'] }
+    Plug 'xolox/vim-misc', { 'for': ['notes'] }
 call plug#end()
 
 source ~/.vim/plugins.vim
