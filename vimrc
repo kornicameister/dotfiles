@@ -86,6 +86,7 @@ Plug 'elzr/vim-json', {'for': ['json']}
 Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 
 " various
+Plug 'majutsushi/tagbar'                            " tagbar
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
 Plug 'xolox/vim-notes', { 'for': ['notes'] }        " taking notes in vim
