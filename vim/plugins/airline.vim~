@@ -12,6 +12,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'gruvbox'
 
 " seperators
-let g:airline#extensions#tabline#left_sep=' '          " Slightly fancier than '>'
-let g:airline#extensions#tabline#left_alt_sep=' '      " Slightly fancier than '<'
+let g:airline#extensions#tabline#left_sep=''          " Slightly fancier than '>'
+let g:airline#extensions#tabline#left_alt_sep='‹'      " Slightly fancier than '<'
 
