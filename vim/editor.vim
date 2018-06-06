@@ -24,8 +24,8 @@ set noswapfile
 set nobackup
 set nowritebackup
 
-" do not wrap lines
-set nowrap
+set nowrap              " do not wrap lines
+set virtualedit=onemore " allow cursor to stay beyond last character
 
 " tabs settings
 set tabstop=4
@@ -56,15 +56,15 @@ set autoread
 " backspace fix
 set backspace=indent,eol,start
 if ! has('nvim')
-  fixdel
+    fixdel
 endif
 
 " Show linenumbers
 set number relativenumber
 augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 set ruler
 
@@ -84,8 +84,8 @@ filetype plugin indent on
 hi Normal ctermbg=none
 colorscheme gruvbox
 set background=dark
-if (has("termguicolors"))
-  set termguicolors
+if has("termguicolors")
+    set termguicolors
 endif
 
 " spelling
@@ -129,7 +129,13 @@ set undolevels=1000
 cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
-set clipboard=unnamed
+if has('clipboard')
+    if has('unnamedplus')  " When possible use + register for copy-paste
+        set clipboard=unnamed,unnamedplus
+    else         " On mac and Windows, use * register for copy-paste
+        set clipboard=unnamed
+    endif
+endif
 
 " navigate through the buffers
 nnoremap <Tab> :bnext<CR>
