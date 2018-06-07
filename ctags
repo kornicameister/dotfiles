@@ -2,11 +2,19 @@
 --exclude=*.hg*
 --exclude=*.cvs*
 --exclude=*.svn*
+
 --exclude=vendor/*
+
 --exclude=build/*
+
 --exclude=elm-stuff/*
 --exclude=node_modules/*
 --exclude=bower_components/*
+
+--exclude=dist/
+--exclude=*.egg-info
+--exclude=.tox/*
+
 --exclude=db/*
 --exclude=log/*
 
