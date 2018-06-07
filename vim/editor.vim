@@ -25,7 +25,6 @@ set nobackup
 set nowritebackup
 
 set nowrap              " do not wrap lines
-set virtualedit=onemore " allow cursor to stay beyond last character
 
 " tabs settings
 set tabstop=4
