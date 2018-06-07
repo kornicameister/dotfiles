@@ -11,7 +11,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 check_submodules() {
     local hasOutdated=0
 
-    git submodule update --init --recursive
+    git submodule update --init --quiet --recursive
 
     for git_module in $(git submodule status | awk '{print $2}'); do
         cd $PWD/$git_module
@@ -34,10 +34,9 @@ check_submodules() {
 
 execute_dotbot() {
     cd "${BASEDIR}"
-    git submodule update --init --recursive "${DOTBOT_DIR}"
+    git submodule update --init --quiet --recursive "${DOTBOT_DIR}"
 
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
 }
 
 check_submodules
