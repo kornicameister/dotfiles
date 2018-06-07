@@ -5,6 +5,7 @@
 " persistent undo, for making more 'u' operations
 set backup
 if has("persistent_undo")
+    set undodir=~/.vim/undodir
     set undofile
     set undolevels=1000
     set undoreload=10000
