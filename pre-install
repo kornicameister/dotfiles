@@ -42,7 +42,7 @@ install_ctags() {
 }
 
 # install all necessary system packages
-(sudo apt update -qq ; install_system_packages)
+(sudo apt update -qq ; install_system_packages ; install_ctags)
 
 # create a target directory of bins coming mainly from my dotfiles
 mkdir -p $HOME/.local/bin
