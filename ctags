@@ -10,6 +10,10 @@
 --exclude=db/*
 --exclude=log/*
 
+--tag-relative=yes
+--recurse=yes
+--sort=yes
+
 --langdef=Elm
 --langmap=Elm:.elm
 --regex-Elm=/^ *([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:].*->.*/\1/f,function,functions/
