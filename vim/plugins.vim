@@ -88,7 +88,6 @@ Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 
 " tags
 Plug 'majutsushi/tagbar'                            " tagbar
-Plug 'craigemery/vim-autotag'                       " auto update tags
 
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
@@ -101,7 +100,6 @@ call plug#end()
 autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 let g:rainbow_active = 1
-let g:autotagTagsFile = ".git/tags"
 
 source ~/.vim/plugins/whitespace.vim
 source ~/.vim/plugins/airline.vim
