@@ -3,7 +3,6 @@
 " Contains useful stuff for handling the sessions in Vim
 
 " persistent undo, for making more 'u' operations
-set backup
 if has("persistent_undo")
     set undodir=~/.vim/undodir
     set undofile
