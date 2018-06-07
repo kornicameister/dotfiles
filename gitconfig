@@ -1,3 +1,6 @@
+[init]
+    templatedir = ~/.git_template
+
 [alias]
     tags = tag -l
     branches = branch -a

@@ -22,6 +22,7 @@
     # git stuff
     ~/.gitignore: gitignore
     ~/.gitconfig: gitconfig
+    ~/.git_template: git_template
     ~/.gitprompt: dependencies/bash-git-prompt/gitprompt.sh
 
     # bash stuff
