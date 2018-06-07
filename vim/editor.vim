@@ -41,6 +41,10 @@ set copyindent
 set title
 
 " make searching smart
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
+    set grepformat^=%f:%l:%c:%m
+endif
 set ignorecase
 set smartcase
 
