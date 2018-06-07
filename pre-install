@@ -41,33 +41,6 @@ install_ctags() {
     fi
 }
 
-check_submodules() {
-    local hasOutdated=0
-
-    git submodule update --init --recursive
-
-    for git_module in $(git submodule status | awk '{print $2}'); do
-        cd $PWD/$git_module
-
-        git fetch origin
-
-        if [[ $(git log HEAD..origin/master --oneline | wc -l) -ne 0 ]]; then
-            (tput setaf 1 ; echo "$git_module is outdated")
-            hasOutdated=1
-        fi
-
-        cd - &>/dev/null
-    done
-    unset git_module
-
-    if [ $hasOutdated -eq 1 ]; then
-        exit 1
-    fi
-}
-
-# check if we have newest submodules
-check_submodules
-
 # install all necessary system packages
 (sudo apt update -qq ; install_system_packages)
 
