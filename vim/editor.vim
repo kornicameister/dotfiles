@@ -148,10 +148,11 @@ nnoremap <S-Tab> :bprevious<CR>
 nnoremap <F5> :edit<CR>
 
 " fzf mappings
-nmap <Leader>t :Tags<CR>
-nmap <Leader>f :GFiles<CR>
-nmap <Leader>c :Commits<CR>
-nmap <Leader>b :Buffers<CR>
+nmap <Leader>t  :Tags<CR>
+nmap <Leader>bt :BTags<CR>
+nmap <Leader>f  :GFiles<CR>
+nmap <Leader>c  :Commits<CR>
+nmap <Leader>b  :Buffers<CR>
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
