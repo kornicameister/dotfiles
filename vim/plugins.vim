@@ -86,19 +86,23 @@ Plug 'elzr/vim-json', {'for': ['json']}
 " markdown
 Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 
-" various
+" tags
 Plug 'majutsushi/tagbar'                            " tagbar
+Plug 'craigemery/vim-autotag'                       " auto update tags
+
+" various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
 Plug 'xolox/vim-notes', { 'for': ['notes'] }        " taking notes in vim
     Plug 'xolox/vim-misc', { 'for': ['notes'] }
 call plug#end()
 
-" make some things turned on by default
-autocmd VimEnter * nested :call tagbar#autoopen(1)
-let g:rainbow_active = 1
-
 " per plugin customizations
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+
+let g:rainbow_active = 1
+let g:autotagTagsFile = ".git/tags"
+
 source ~/.vim/plugins/whitespace.vim
 source ~/.vim/plugins/airline.vim
 source ~/.vim/plugins/ale.vim
