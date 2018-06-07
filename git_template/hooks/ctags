@@ -5,6 +5,6 @@ set -e
 dir="`git rev-parse --git-dir`"
 trap 'rm -f "$dir/$$.tags"' EXIT
 
-git ls-files | git ls-files | ctags --tag-relative=yes --sort=yes -L - -f"$dir/$$.tags"
+git ls-files | git ls-files | ctags --recurse=no -L - -f"$dir/$$.tags"
 
 mv "$dir/$$.tags" "$dir/tags"
