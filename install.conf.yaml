@@ -57,6 +57,9 @@
     # wakatime
     ~/.bash_wakatime: dependencies/bash-wakatime/bash-wakatime.sh
 
+    # ctags
+    ~/.ctags: ctags
+
     # custom application configuration
     ~/.config/tilix.conf: config/tilix
     ~/.config/terminator: config/terminator
