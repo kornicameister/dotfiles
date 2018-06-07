@@ -60,7 +60,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
-Plug 'luochen1990/rainbow', {'do': ':RainbowToggleOn'}
+Plug 'luochen1990/rainbow'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['typescript', 'javascript'] }
@@ -93,6 +93,10 @@ Plug 'mhinz/vim-startify'                           " nice start screen
 Plug 'xolox/vim-notes', { 'for': ['notes'] }        " taking notes in vim
     Plug 'xolox/vim-misc', { 'for': ['notes'] }
 call plug#end()
+
+" make some things turned on by default
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+let g:rainbow_active = 1
 
 " per plugin customizations
 source ~/.vim/plugins/whitespace.vim
