@@ -1,17 +1,19 @@
 #!/bin/bash
 
 install_system_packages() {
-    sudo apt install -yy -qq \
+    sudo apt install aptitude -y -q
+    sudo aptitude install -y -V -D -Z \
         dconf-cli \
         zsh \
         ccache \
         tree \
+        neovim \
         silversearcher-ag
 }
 
 install_ctags() {
     # drop unused package
-    sudo apt remove exuberant-ctags -qq -yy
+    sudo aptitude purge exuberant-ctags -q -y
 
     local shouldInstall=0
     if command -v ctags >/dev/null 2>&1; then
@@ -42,7 +44,7 @@ install_ctags() {
 }
 
 # install all necessary system packages
-(sudo apt update -qq ; install_system_packages ; install_ctags)
+(sudo aptitude update -q ; install_system_packages ; install_ctags)
 
 # create a target directory of bins coming mainly from my dotfiles
 mkdir -p $HOME/.local/bin
