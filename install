@@ -8,6 +8,9 @@ DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+USERNAME="${1:-""}"
+EMAIL="${2:-""}"
+
 check_submodules() {
     local hasOutdated=0
 
@@ -39,6 +42,55 @@ execute_dotbot() {
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 }
 
-check_submodules
-execute_dotbot
+setup_git() {
+    # generating GPK key to sign the commits
+    # setup gpk key
+    gpg2 --full-gen-key
 
+    # assumed the highest rsa length:
+    local signingKey=""
+    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 1 ${EMAIL} | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
+
+    cat > $HOME/.gitconfig.local << EOF
+[user]
+    email=${EMAIL}
+    user=${USERNAME}
+    signingKey=${signingKey}
+
+[gpg]
+    program=gpg2
+
+[commit]
+    gpgsign=true
+EOF
+
+    echo "Remember to upload the key to Github"
+}
+
+
+if [ ! -f $HOME/.gitconfig.local ]; then
+    echo "kornicameister/dotfiles - first run"
+
+    args=("$@")
+    argsCount=${#args[@]}
+    if [ ${argsCount} -ne 2 ]; then
+        (tput setaf 1 ; echo "Invalid arguments, example: ./install {git_user} {git_email}")
+    fi
+
+    if [ -z "${USERNAME}" ]; then
+        (tput setaf 1 ; echo "git_user must be set")
+        exit 1
+    fi
+    if [ -z "${EMAIL}" ]; then
+        (tput setaf 1 ; echo "git_email must be set")
+        exit 1
+    fi
+
+    echo "Setting up dotfiles for ${USERNAME}"
+    setup_git
+else
+    echo "kornicameister/dotfiles : update"
+    check_submodules
+fi
+
+execute_dotbot
