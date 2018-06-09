@@ -1,16 +1,5 @@
 #!/bin/bash
 
-install_system_packages() {
-    sudo apt install aptitude -y -q
-    sudo aptitude install -y -V -D -Z \
-        dconf-cli \
-        zsh \
-        ccache \
-        tree \
-        neovim \
-        silversearcher-ag
-}
-
 install_ctags() {
     # drop unused package
     sudo aptitude purge exuberant-ctags -q -y
