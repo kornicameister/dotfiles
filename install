@@ -67,6 +67,17 @@ EOF
     echo "Remember to upload the key to Github"
 }
 
+install_system_packages() {
+    sudo apt install aptitude -y -q
+    sudo aptitude install -y -V -D -Z \
+        git \
+        dconf-cli \
+        zsh \
+        ccache \
+        tree \
+        neovim \
+        silversearcher-ag
+}
 
 if [ ! -f $HOME/.gitconfig.local ]; then
     echo "kornicameister/dotfiles - first run"
@@ -86,14 +97,16 @@ if [ ! -f $HOME/.gitconfig.local ]; then
         exit 1
     fi
 
-    echo "Setting up dotfiles for ${USERNAME}"
+    echo "kornicameister/dotfiles: init"
+
+    install_system_packages
     setup_git
     execute_dotbot
 else
     echo "kornicameister/dotfiles : update"
+
     check_submodules
     execute_dotbot
-
     (pyenv update ; pyenv rehash)
     (nodenv update ; nodenv rehash)
 fi
