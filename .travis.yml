@@ -1,5 +1,0 @@
-sudo: required
-language: sh
-
-script:
-  - echo "Hello Travis"
