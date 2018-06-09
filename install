@@ -71,7 +71,6 @@ install_system_packages() {
     sudo apt install aptitude -y -q
     sudo aptitude install -y -V -D -Z \
         git \
-        dconf-cli \
         zsh \
         ccache \
         tree \
