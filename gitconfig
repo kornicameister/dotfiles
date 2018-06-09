@@ -1,6 +1,23 @@
 [init]
     templatedir = ~/.git_template
 
+[core]
+    editor = vim
+    excludesfile = ~/.gitignore
+
+    # dont ignore case
+    ignorecase = false
+
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+    # Speed up commands involving untracked files such as `git status`.
+    # https://git-scm.com/docs/git-update-index#_untracked_cache
+    untrackedCache = true
+
+[include]
+    path = ~/.gitconfig.local
+
 [alias]
     tags = tag -l
     branches = branch -a
@@ -42,22 +59,3 @@
 
 [diff]
     tool = vimdiff
-
-[core]
-    editor = vim
-    excludesfile = ~/.gitignore
-
-    # dont ignore case
-    ignorecase = false
-
-    # Treat spaces before tabs and all kinds of trailing whitespace as an error
-    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
-
-    # Speed up commands involving untracked files such as `git status`.
-    # https://git-scm.com/docs/git-update-index#_untracked_cache
-    untrackedCache = true
-
-[user]
-    email = kornicameister@gmail.com
-    name = Tomasz Trębski
-

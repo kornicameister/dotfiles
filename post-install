@@ -52,4 +52,3 @@ fi
 # install latest python stuff
 pyenv install-latest -s 2.7
 pyenv install-latest -s 3.6
-pyenv rehash
