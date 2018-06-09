@@ -67,8 +67,9 @@ EOF
     echo "Remember to upload the key to Github"
 }
 
-install_system_packages() {
+install_packages() {
     sudo apt install aptitude -y -q
+    
     sudo aptitude install -y -V -D -Z \
         git \
         zsh \
@@ -76,6 +77,7 @@ install_system_packages() {
         tree \
         neovim \
         silversearcher-ag
+
 }
 
 if [ ! -f $HOME/.gitconfig.local ]; then
@@ -98,7 +100,7 @@ if [ ! -f $HOME/.gitconfig.local ]; then
 
     echo "kornicameister/dotfiles: init"
 
-    install_system_packages
+    install_packages
     setup_git
     execute_dotbot
 else
