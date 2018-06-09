@@ -88,9 +88,13 @@ if [ ! -f $HOME/.gitconfig.local ]; then
 
     echo "Setting up dotfiles for ${USERNAME}"
     setup_git
+    execute_dotbot
 else
     echo "kornicameister/dotfiles : update"
     check_submodules
+    execute_dotbot
+
+    (pyenv update ; pyenv rehash)
+    (nodenv update ; nodenv rehash)
 fi
 
-execute_dotbot
