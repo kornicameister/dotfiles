@@ -69,7 +69,7 @@ EOF
 
 install_packages() {
     sudo apt install aptitude -y -q
-    
+
     sudo aptitude install -y -V -D -Z \
         git \
         zsh \
