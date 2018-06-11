@@ -2,7 +2,7 @@
     templatedir = ~/.git_template
 
 [core]
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore
 
     # dont ignore case
