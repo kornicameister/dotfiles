@@ -53,8 +53,8 @@ setup_git() {
 
     cat > $HOME/.gitconfig.local << EOF
 [user]
+    name=${USERNAME}
     email=${EMAIL}
-    user=${USERNAME}
     signingKey=${signingKey}
 
 [gpg]
