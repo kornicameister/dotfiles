@@ -76,7 +76,8 @@ install_packages() {
         ccache \
         tree \
         neovim \
-        silversearcher-ag
+        silversearcher-ag \
+        gnupg2
 
 }
 
