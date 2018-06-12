@@ -19,6 +19,8 @@ set timeoutlen=500
 set hlsearch                                " highlight search result
 nnoremap <leader><space> :nohlsearch<CR>    " clear with leader<space>
 set incsearch                               " make it act more modern
+nnoremap n nzzzv                            " center line on next search
+nnoremap N Nzzzv                            " -----------//------------
 
 " no temp or backup files
 set noswapfile
