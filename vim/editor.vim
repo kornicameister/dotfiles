@@ -2,6 +2,7 @@
 
 " leader
 let mapleader=','
+let g:mapleader = ','
 
 " save from typing :
 nnoremap ; :
