@@ -16,9 +16,9 @@ set novisualbell
 set timeoutlen=500
 
 " searching stuff
-set nohlsearch " no highlight search result
-nnoremap <F3> :set hlsearch!<CR>
-set incsearch " make it act more modern
+set hlsearch                                " highlight search result
+nnoremap <leader><space> :nohlsearch<CR>    " clear with leader<space>
+set incsearch                               " make it act more modern
 
 " no temp or backup files
 set noswapfile
