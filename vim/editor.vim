@@ -157,8 +157,8 @@ nnoremap <F5> :edit<CR>
 " fzf mappings
 nmap <Leader>t  :Tags<CR>
 nmap <Leader>bt :BTags<CR>
-nmap <Leader>f  :Files<CR>
-nmap <Leader>F  :GFiles<CR>
+nmap <Leader>f  :GFiles<CR>
+nmap <Leader>F  :Files<CR>
 nmap <Leader>c  :Commits<CR>
 nmap <Leader>b  :Buffers<CR>
 nmap <leader><tab> <plug>(fzf-maps-n)
