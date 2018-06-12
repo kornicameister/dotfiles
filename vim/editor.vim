@@ -80,6 +80,10 @@ set list
 set laststatus=2
 set cmdheight=1
 
+" open help vertically
+command! -nargs=* -complete=help Help vertical belowright help <args>
+autocmd FileType help wincmd L
+
 " enable filetypes plugins
 filetype plugin indent on
 
