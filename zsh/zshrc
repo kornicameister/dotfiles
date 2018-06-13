@@ -9,6 +9,7 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf.settings ] && source ~/.fzf.settings
 [ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
+[ -f ~/.t.sh ] && source ~/.t.sh
 
 if ! zgen saved; then
     zgen prezto

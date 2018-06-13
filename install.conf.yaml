@@ -60,8 +60,11 @@
     # ctags
     ~/.ctags: ctags
 
+    # t - todos
+    ~/.t.sh: t.sh
+    ~/.local/bin/t: dependencies/t/t.py
+
     # custom application configuration
-    ~/.config/tilix.conf: config/tilix
     ~/.config/terminator: config/terminator
 
     # custom binaries
