@@ -92,16 +92,21 @@ Plug 'majutsushi/tagbar'                            " tagbar
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
-Plug 'xolox/vim-notes', { 'for': ['notes'] }        " taking notes in vim
-    Plug 'xolox/vim-misc', { 'for': ['notes'] }
+Plug 'xolox/vim-notes', { 'for': ['notes'], 'on': 'Note' }        " taking notes in vim
+    Plug 'xolox/vim-misc', { 'for': ['notes'], 'on': 'Note' }
 call plug#end()
 
-" per plugin customizations
+" Plugin Customizations
+" =====================
 autocmd VimEnter * nested :call tagbar#autoopen(1)
 
+" always color brackets
 let g:rainbow_active = 1
 
-source ~/.vim/plugins/whitespace.vim
+" automatically fix whitespaces
+autocmd BufEnter * FixWhitespace
+autocmd BufWritePre * FixWhitespace
+
 source ~/.vim/plugins/airline.vim
 source ~/.vim/plugins/ale.vim
 source ~/.vim/plugins/javascript.vim
