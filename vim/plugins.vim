@@ -107,8 +107,20 @@ let g:rainbow_active = 1
 autocmd BufEnter * FixWhitespace
 autocmd BufWritePre * FixWhitespace
 
-source ~/.vim/plugins/airline.vim
-source ~/.vim/plugins/ale.vim
+" airline plugin settings
+let g:airline_theme = 'gruvbox'
+
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep='›'          " Slightly fancier than '>'
+let g:airline_right_sep='‹'         " Slightly fancier than '<'
+
+let g:airline#extensions#ale#enabled = 1
+
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep=' '          " Slightly fancier than '>'
+let g:airline#extensions#tabline#left_alt_sep=' '      " Slightly fancier than '<'
+
 source ~/.vim/plugins/javascript.vim
 source ~/.vim/plugins/commit.vim
 source ~/.vim/plugins/elm.vim
