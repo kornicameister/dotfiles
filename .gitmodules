@@ -28,3 +28,6 @@
 [submodule "dependencies/ctags"]
 	path = dependencies/ctags
 	url = https://github.com/universal-ctags/ctags.git
+[submodule "dependencies/t"]
+	path = dependencies/t
+	url = https://github.com/sjl/t
