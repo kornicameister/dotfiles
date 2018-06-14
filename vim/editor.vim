@@ -45,8 +45,8 @@ set title
 
 " make searching smart
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
-    set grepformat^=%f:%l:%c:%m
+  set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
+  set grepformat^=%f:%l:%c:%m
 endif
 set ignorecase
 set smartcase
@@ -62,15 +62,15 @@ set autoread
 " backspace fix
 set backspace=indent,eol,start
 if ! has('nvim')
-    fixdel
+  fixdel
 endif
 
 " Show linenumbers
 set number relativenumber
 augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 set ruler
 
@@ -95,7 +95,7 @@ hi Normal ctermbg=none
 colorscheme gruvbox
 set background=dark
 if has("termguicolors")
-    set termguicolors
+  set termguicolors
 endif
 
 " spelling
@@ -140,11 +140,11 @@ cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
 if has('clipboard')
-    if has('unnamedplus')  " When possible use + register for copy-paste
-        set clipboard=unnamed,unnamedplus
-    else         " On mac and Windows, use * register for copy-paste
-        set clipboard=unnamed
-    endif
+  if has('unnamedplus')  " When possible use + register for copy-paste
+    set clipboard=unnamed,unnamedplus
+  else         " On mac and Windows, use * register for copy-paste
+    set clipboard=unnamed
+  endif
 endif
 
 " navigate through the buffers

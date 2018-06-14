@@ -3,23 +3,23 @@
 " Contains settings for all of the plugins
 
 function! InstallVimPlug()
-    if empty(glob('~/.vim/autoload/plug.vim'))
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        PlugInstall --sync | source $MYVIMRC
-    endif
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    PlugInstall --sync | source $MYVIMRC
+  endif
 endfunction
 
 function! SanitizePlugins()
-    if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-      PlugInstall --sync | q
-      PlugClean | q
-    endif
+  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    PlugInstall --sync | q
+    PlugClean | q
+  endif
 endfunction
 
 function! InitVimPlug()
-    :call InstallVimPlug()
-    :call SanitizePlugins()
+  :call InstallVimPlug()
+  :call SanitizePlugins()
 endfunction
 
 " initialize vim plug
@@ -45,11 +45,11 @@ Plug 'w0rp/ale'
 
 " deoplete
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-    Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
-        Plug 'roxma/nvim-yarp'
-        Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 " awesome commit message writing
@@ -66,7 +66,7 @@ Plug 'luochen1990/rainbow'
 Plug 'pangloss/vim-javascript', { 'for': ['typescript', 'javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'leafgarland/typescript-vim', { 'for' : ['typescript'] }
-    Plug 'Quramy/tsuquyomi', { 'for' : ['typescript'] }
+Plug 'Quramy/tsuquyomi', { 'for' : ['typescript'] }
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
@@ -93,7 +93,7 @@ Plug 'majutsushi/tagbar'                            " tagbar
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
 Plug 'xolox/vim-notes', { 'for': ['notes'], 'on': 'Note' }        " taking notes in vim
-    Plug 'xolox/vim-misc', { 'for': ['notes'], 'on': 'Note' }
+Plug 'xolox/vim-misc', { 'for': ['notes'], 'on': 'Note' }
 call plug#end()
 
 " Plugin Customizations
