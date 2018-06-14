@@ -10,14 +10,3 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-
-" Spell check markdown, git and mercurial commit messages
-" It is possible to add words to your own dictionary using the `zg` key
-" combination. You can undo the add with `zug`.
-" It is also possible to mark a word as incorrectly spelled using `zw`.
-" `zuw` undoes the incorrect marking.
-" You can jump forwards/backwards to the next flagged word using `]s` and `[s`.
-" Once you've located a word, z= will bring up the list of suggested words.
-au FileType markdown  setlocal spell
-au FileType gitcommit setlocal spell
-au FileType asciidoc  setlocal spell
