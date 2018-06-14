@@ -130,6 +130,8 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-source ~/.vim/plugins/elm.vim
+" elm plugin settings
+let g:elm_setup_keybindings = 0
+
 source ~/.vim/plugins/python.vim
 source ~/.vim/plugins/deoplete.vim
