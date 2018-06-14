@@ -121,8 +121,15 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep=' '          " Slightly fancier than '>'
 let g:airline#extensions#tabline#left_alt_sep=' '      " Slightly fancier than '<'
 
-source ~/.vim/plugins/javascript.vim
-source ~/.vim/plugins/commit.vim
+" commit msg - very nerdy
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+    " Scroll the diff window from insert mode
+    " Map <C-n> and <C-p>
+    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+endfunction
+
 source ~/.vim/plugins/elm.vim
 source ~/.vim/plugins/python.vim
 source ~/.vim/plugins/deoplete.vim
