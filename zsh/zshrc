@@ -11,6 +11,9 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 [ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
 [ -f ~/.t.sh ] && source ~/.t.sh
 
+# load local customizations
+[ -f ~/.zshrc.local] && source ~/.zshrc.local
+
 if ! zgen saved; then
     zgen prezto
     zgen load sobolevn/wakatime-zsh-plugin
