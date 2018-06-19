@@ -133,5 +133,12 @@ endfunction
 " elm plugin settings
 let g:elm_setup_keybindings = 0
 
+" ale settings
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+let g:ale_fixers = {
+      \'scss': ['trim_whitespace', 'remove_trailing_lines', 'prettier']
+      \}
+
 source ~/.vim/plugins/python.vim
 source ~/.vim/plugins/deoplete.vim
