@@ -92,8 +92,7 @@ Plug 'majutsushi/tagbar'                            " tagbar
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
-Plug 'xolox/vim-notes', { 'for': ['notes'], 'on': 'Note' }        " taking notes in vim
-Plug 'xolox/vim-misc', { 'for': ['notes'], 'on': 'Note' }
+Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'      " notes taking in VIM
 call plug#end()
 
 " Plugin Customizations
