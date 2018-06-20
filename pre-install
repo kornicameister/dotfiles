@@ -35,7 +35,6 @@ install_ctags() {
 # install all necessary system packages
 (
     sudo aptitude update -q ;
-    install_system_packages ;
     install_ctags ;
 )
 
