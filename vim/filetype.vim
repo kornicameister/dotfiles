@@ -35,5 +35,4 @@ au BufNewFile,BufRead *.jade setlocal et ts=2 sw=2
 
 au FileType gitcommit setlocal spell
 au FileType asciidoc  setlocal spell
-au FileType elm setlocal foldmethod=syntax
 au FileType json setlocal foldmethod=syntax
