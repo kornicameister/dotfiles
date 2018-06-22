@@ -136,8 +136,8 @@ endfunction
 let g:elm_setup_keybindings = 0
 
 " ale settings
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
+let g:ale_fix_on_save = 1                   " run on save
+let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
 let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
 
 source ~/.vim/plugins/python.vim
