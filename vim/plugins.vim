@@ -52,6 +52,9 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+" asynchronous execution library
+Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+
 " awesome commit message writing
 Plug 'rhysd/committia.vim'
 Plug 'scrooloose/nerdcommenter'
