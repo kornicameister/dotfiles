@@ -148,4 +148,5 @@ if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
 
-source ~/.vim/plugins/python.vim
+" editor settings specific for python
+let python_highlight_all = 1
