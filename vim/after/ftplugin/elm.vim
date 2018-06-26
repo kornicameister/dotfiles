@@ -1,4 +1,6 @@
 setlocal fdm=syntax
 setlocal spell
 
-let b:ale_fixers = ['trim_whitespace', 'remove_trailing_lines', 'elm-format']
+" whitespace handler by external plugin
+" elm format run via the vim-cast/elm plugin
+let b:ale_fixers = []
