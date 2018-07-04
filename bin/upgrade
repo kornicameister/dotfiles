@@ -1,7 +1,18 @@
 #!/usr/bin/env bash
 
-sudo true
-sudo aptitude update
-sudo aptitude safe-upgrade -y
-sudo aptitude autoclean -y
-sudo aptitude clean -y
+os_upgrade() {
+    sudo true
+    sudo aptitude update
+    sudo aptitude safe-upgrade -y
+    sudo aptitude autoclean -y
+    sudo aptitude clean -y
+}
+
+hadolint_upgrade() {
+    if command -v docker >/dev/null 2>&1; then
+        docker pull hadolint/hadolint
+    fi
+}
+
+os_upgrade
+hadolint_upgrade
