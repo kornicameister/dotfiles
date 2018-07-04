@@ -77,7 +77,8 @@ install_packages() {
         tree \
         neovim \
         silversearcher-ag \
-        gnupg2
+        gnupg2 \
+        shellcheck
 
 }
 
