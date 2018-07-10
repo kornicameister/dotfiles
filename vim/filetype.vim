@@ -5,15 +5,6 @@ augroup fileTypeDetect
   au BufNewFile,BufRead gitconfig setlocal ft=config
 augroup END
 
-augroup pythonSettings
-  au!
-  au BufRead,BufNewFile *.py,*.pyw setlocal et ai tw=79 ts=4 sts=4 sw=4
-  au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-  au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
-  au         BufNewFile *.py,*.pyw setlocal fileformat=unix
-  au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
-augroup END
-
 augroup jsSettings
   au!
   au BufRead,BufNewFile *.js,*.jsx set et ai ts=4 sts=4 sw=4 tw=79
