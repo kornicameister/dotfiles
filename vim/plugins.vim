@@ -60,7 +60,6 @@ Plug 'rhysd/committia.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " general editor related plugins
-Plug 'bronson/vim-trailing-whitespace'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'luochen1990/rainbow'
@@ -104,10 +103,6 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 " always color brackets
 let g:rainbow_active = 1
-
-" automatically fix whitespaces
-autocmd BufEnter * FixWhitespace
-autocmd BufWritePre * FixWhitespace
 
 " airline plugin settings
 let g:airline_theme = 'gruvbox'
