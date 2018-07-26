@@ -99,7 +99,18 @@ call plug#end()
 
 " Plugin Customizations
 " =====================
-autocmd VimEnter * nested :call tagbar#autoopen(1)
+let g:tagbar_ctags_bin='ctags'
+let g:tagbar_iconchars = ['►', '▼']
+let g:tagbar_autoclose = 1
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:headings',
+        \ 'l:links',
+        \ 'i:images'
+    \ ],
+    \ "sort" : 0
+\ }
 
 " always color brackets
 let g:rainbow_active = 1
