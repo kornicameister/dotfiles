@@ -86,6 +86,7 @@ Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'elzr/vim-json', {'for': ['json']}
 
 " markdown
+Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 
 " tags
