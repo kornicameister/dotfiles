@@ -92,11 +92,11 @@ filetype plugin indent on
 
 " vim theme settings
 hi Normal ctermbg=none
-colorscheme gruvbox
-set background=dark
 if has("termguicolors")
   set termguicolors
 endif
+colorscheme apprentice
+set background=dark
 
 " spelling
 setlocal spell
