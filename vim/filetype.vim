@@ -17,7 +17,6 @@ augroup END
 au BufNewFile,BufRead *.sh setlocal ai et ts=2 sw=2 sts=2
 au BufNewFile,BufRead *.vim setlocal ai et ts=2 sw=2 sts=2
 au BufNewFile,BufRead *.txt setlocal et ts=4 sw=4
-au BufNewFile,BufRead *.md setlocal spell et ts=4 sw=4 tw=99
 au BufNewFile,BufRead *.yml,*.yaml setlocal et ts=2 sw=2
 au BufNewFile,BufRead *.cpp setlocal et ts=2 sw=2
 au BufNewFile,BufRead *.hpp setlocal et ts=2 sw=2
