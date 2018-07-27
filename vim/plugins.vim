@@ -29,7 +29,7 @@ autocmd VimEnter * :call InitVimPlug()
 call plug#begin('~/.vim/plugged')
 
 " theme
-Plug 'morhetz/gruvbox'
+Plug 'romainl/Apprentice'
 
 " fzf
 Plug '~/.fzf'
@@ -62,6 +62,7 @@ Plug 'scrooloose/nerdcommenter'
 " general editor related plugins
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'luochen1990/rainbow'
 
 " javascript & typescript plugins
@@ -117,7 +118,7 @@ let g:tagbar_type_markdown = {
 let g:rainbow_active = 1
 
 " airline plugin settings
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'jellybeans'
 
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep='›'          " Slightly fancier than '>'
