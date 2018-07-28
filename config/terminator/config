@@ -9,8 +9,8 @@
   [[default]]
     [[[child1]]]
       parent = window0
-      type = Terminal
       profile = default
+      type = Terminal
     [[[window0]]]
       parent = ""
       type = Window
