@@ -78,8 +78,8 @@ install_packages() {
         neovim \
         silversearcher-ag \
         gnupg2 \
-        shellcheck
-
+        shellcheck \
+        htop
 }
 
 if [ ! -f $HOME/.gitconfig.local ]; then
