@@ -155,11 +155,14 @@ let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
 
 " deoplete settings
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
 if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
+call deoplete#custom#option({
+    \ 'auto_complete_delay': 200,
+    \ 'smart_case': v:true,
+    \ 'max_list': 50,
+    \ })
 
 " editor settings specific for python
 let python_highlight_all = 1
