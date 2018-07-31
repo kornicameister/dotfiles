@@ -148,11 +148,12 @@ if has('clipboard')
 endif
 
 " navigate through the buffers
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
-
-" refresh file
-nnoremap <F5> :edit<CR>
+nnoremap <silent> <Tab> :bnext<CR>
+nnoremap <silent> <S-Tab> :bprevious<CR>
+nnoremap <silent> <leader>q :bd<CR>
+nnoremap <silent> <leader>Q :bd!<CR>
+nnoremap <silent> <leader>r :e<CR>
+nnoremap <silent> <leader>R :e!<CR>
 
 " fzf mappings
 nmap <Leader>t  :Tags<CR>
