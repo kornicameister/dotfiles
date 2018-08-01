@@ -27,7 +27,24 @@ nodenv_upgrade() {
     fi
 }
 
+neovim_clients_upgrade() {
+    if [ -d "${PYENV_ROOT}/versions/neovim2" ]; then
+        "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
+    fi
+    if [ -d "${PYENV_ROOT}/versions/neovim3" ]; then
+        "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
+    fi
+
+    if command -v npm >/dev/null 2>&1; then
+        npm upgrade -g neovim
+        if command -v nodenv >/dev/null 2>&1; then
+            nodenv rehash
+        fi
+    fi
+}
+
 os_upgrade
 hadolint_upgrade
 pyenv_upgrade
 nodenv_upgrade
+neovim_clients_upgrade
