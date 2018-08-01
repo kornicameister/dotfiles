@@ -31,24 +31,62 @@ NODENV_PLUGINS_DIR=$(realpath $PWD/dependencies/nodenv/plugins)
 mkdir -p $NODENV_PLUGINS_DIR
 
 if [ ! -d $NODENV_PLUGINS_DIR/nodenv-update ]; then
-   git clone https://github.com/nodenv/nodenv-update.git $NODENV_PLUGINS_DIR/nodenv-update
+    git clone https://github.com/nodenv/nodenv-update.git $NODENV_PLUGINS_DIR/nodenv-update
 fi
 if [ ! -d $NODENV_PLUGINS_DIR/nodenv-aliases ]; then
-   git clone https://github.com/nodenv/nodenv-aliases.git $NODENV_PLUGINS_DIR/nodenv-aliases
+    git clone https://github.com/nodenv/nodenv-aliases.git $NODENV_PLUGINS_DIR/nodenv-aliases
 fi
 if [ ! -d $NODENV_PLUGINS_DIR/nodenv-package-json-engine ]; then
-   git clone https://github.com/nodenv/nodenv-package-json-engine.git $NODENV_PLUGINS_DIR/nodenv-package-json-engine
+    git clone https://github.com/nodenv/nodenv-package-json-engine.git $NODENV_PLUGINS_DIR/nodenv-package-json-engine
 fi
 if [ ! -d $NODENV_PLUGINS_DIR/nodenv-package-rehash ]; then
-   git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_PLUGINS_DIR/nodenv-package-rehash
+    git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_PLUGINS_DIR/nodenv-package-rehash
 fi
 if [ ! -d $NODENV_PLUGINS_DIR/nodenv-each ]; then
-   git clone https://github.com/nodenv/nodenv-each.git $NODENV_PLUGINS_DIR/nodenv-each
+    git clone https://github.com/nodenv/nodenv-each.git $NODENV_PLUGINS_DIR/nodenv-each
 fi
 if [ ! -d $NODENV_PLUGINS_DIR/node-build ]; then
-   git clone https://github.com/nodenv/node-build.git $NODENV_PLUGINS_DIR/node-build
+    git clone https://github.com/nodenv/node-build.git $NODENV_PLUGINS_DIR/node-build
 fi
 
-# install latest python stuff
-pyenv install-latest -s 2.7
-pyenv install-latest -s 3.6
+install_latest_dev() {
+    echo "Installing python & node"
+
+    local __LATEST_27
+    local __LATEST_37
+
+    __LATEST_27=$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
+    __LATEST_37=$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
+
+    export __LATEST_27
+    export __LATEST_37
+
+    nodenv install -s "$(cat ./node-system-version)"
+}
+
+init_neovim() (
+    echo "Initializing neovim setup"
+
+    if [ ! -d "${PYENV_ROOT}/versions/neovim2" ]; then
+        pyenv virtualenv "${__LATEST_27}" neovim2
+        "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
+    else
+        echo "${PYENV_ROOT}/versions/neovim2 venv already exists"
+    fi
+    if [ ! -d "${PYENV_ROOT}/versions/neovim3" ]; then
+        pyenv virtualenv "${__LATEST_37}" neovim3
+        "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
+    else
+        echo "${PYENV_ROOT}/versions/neovim3 venv already exists"
+    fi
+
+    if command -v npm >/dev/null 2>&1; then
+        npm install -g neovim
+        if command -v nodenv >/dev/null 2>&1; then
+            nodenv rehash
+        fi
+    fi
+
+)
+
+install_latest_dev && init_neovim
