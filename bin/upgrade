@@ -2,10 +2,10 @@
 
 os_upgrade() {
     sudo true
-    sudo aptitude update
+    sudo aptitude update -q
     sudo aptitude safe-upgrade -y
-    sudo aptitude autoclean -y
-    sudo aptitude clean -y
+    sudo aptitude autoclean -q -y
+    sudo aptitude clean -q -y
 }
 
 hadolint_upgrade() {
@@ -43,8 +43,13 @@ neovim_clients_upgrade() {
     fi
 }
 
+neovim_plugings_upgrade() {
+    nvim +PlugUpgrade +PlugUpdate +qall!
+}
+
 os_upgrade
 hadolint_upgrade
 pyenv_upgrade
 nodenv_upgrade
 neovim_clients_upgrade
+neovim_plugings_upgrade
