@@ -17,7 +17,7 @@ check_submodules() {
     git submodule update --init --quiet --recursive
 
     for git_module in $(git submodule status | awk '{print $2}'); do
-        cd $PWD/$git_module
+        pushd "${PWD}"/"${git_module}"
 
         git fetch origin
 
@@ -26,7 +26,7 @@ check_submodules() {
             hasOutdated=1
         fi
 
-        cd - &>/dev/null
+        popd
     done
     unset git_module
 
@@ -82,12 +82,12 @@ install_packages() {
         htop
 }
 
-if [ ! -f $HOME/.gitconfig.local ]; then
+if [ ! -f "${HOME}/.gitconfig.local" ]; then
     echo "kornicameister/dotfiles - first run"
 
     args=("$@")
     argsCount=${#args[@]}
-    if [ ${argsCount} -ne 2 ]; then
+    if [ "${argsCount}" -ne 2 ]; then
         (tput setaf 1 ; echo "Invalid arguments, example: ./install {git_user} {git_email}")
     fi
 
