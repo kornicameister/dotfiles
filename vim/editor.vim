@@ -168,3 +168,6 @@ omap <leader><tab> <plug>(fzf-maps-o)
 
 " tagbar mapping
 nmap <Leader>tt :TagbarToggle<CR>
+
+" ale fix
+nnoremap <silent> <S-I> :ALEFix<CR>
