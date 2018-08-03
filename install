@@ -79,7 +79,8 @@ install_packages() {
         silversearcher-ag \
         gnupg2 \
         shellcheck \
-        htop
+        htop \
+        tig
 }
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
