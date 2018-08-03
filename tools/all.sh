@@ -10,7 +10,6 @@ install_tools() {
     install_prompt tlp _install_tlp
     install_prompt preload _install_preload
     install_prompt checkinstall _install_checkinstall
-    install_prompt tig _install_tig
     install_prompt purge_old_kernels _install_purge_old_kernels
     install_prompt whatpulse _install_whatpulse
     install_prompt resume-cli  _install_resume_cli
@@ -156,7 +155,3 @@ _install_checkinstall() {
     sudo -EH apt-get install checkinstall -yy -qq
 }
 
-_install_tig() {
-    # text-mode interface for git https://github.com/jonas/tig
-    sudo -EH apt-get install tig -yy -qq
-}
