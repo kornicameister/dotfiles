@@ -145,6 +145,7 @@ endfunction
 
 " elm plugin settings
 let g:elm_setup_keybindings = 0
+let g:elm_format_autosave = 0
 
 " ale settings
 let g:ale_fix_on_save = 1                   " run on save
