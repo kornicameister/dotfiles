@@ -1,4 +1,13 @@
-setlocal et ai tw=79 ts=4 sts=4 sw=4 ff=unix
+setlocal expandtab
+setlocal autoindent
+setlocal smartindent
+setlocal textwidth=79
+setlocal tabstop=4
+setlocal softtabstop=4
+setlocal shiftwidth=4
+setlocal fileformat=unix
+
+set backspace=indent,eol,start
 
 match BadWhitespace /^\t\+/
 match BadWhitespace /\s\+$/
