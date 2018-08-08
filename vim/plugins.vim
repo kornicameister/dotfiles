@@ -10,20 +10,8 @@ function! InstallVimPlug()
   endif
 endfunction
 
-function! SanitizePlugins()
-  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-    PlugInstall --sync | q
-    PlugClean | q
-  endif
-endfunction
-
-function! InitVimPlug()
-  :call InstallVimPlug()
-  :call SanitizePlugins()
-endfunction
-
 " initialize vim plug
-autocmd VimEnter * :call InitVimPlug()
+autocmd VimEnter * :call InstallVimPlug()
 
 " define the plugins
 call plug#begin('~/.vim/plugged')
