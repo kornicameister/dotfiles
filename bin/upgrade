@@ -60,7 +60,7 @@ neovim_clients_upgrade() {
 }
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugUpdate +qall!
+    nvim +PlugUpgrade +PlugInstall +PlugClean +PlugUpdate +qall!
 }
 
 os_upgrade
