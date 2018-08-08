@@ -82,7 +82,7 @@ Plug 'elmcast/elm-vim', {'for': ['elm']}
 
 " python
 Plug 'tmhedberg/SimpylFold', { 'for': ['python'] }
-Plug 'jmcantrell/vim-virtualenv', {'for': ['python']}
+Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'nvie/vim-flake8', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 
@@ -165,5 +165,7 @@ call deoplete#custom#option({
     \ 'max_list': 50,
     \ })
 
-" editor settings specific for python
+" python
 let python_highlight_all = 1
+let g:pyenv#auto_create_ctags = 1
+let g:pyenv#auto_assign_ctags = 1
