@@ -170,4 +170,5 @@ omap <leader><tab> <plug>(fzf-maps-o)
 nmap <Leader>tt :TagbarToggle<CR>
 
 " ale fix
-nnoremap <silent> <S-I> :ALEFix<CR>
+nnoremap <S-I> :ALEFix<CR>
+nnoremap <S-L> :ALELint<CR>
