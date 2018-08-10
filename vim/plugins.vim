@@ -54,7 +54,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'luochen1990/rainbow'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['typescript', 'javascript'] }
