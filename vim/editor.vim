@@ -170,8 +170,8 @@ omap <leader><tab> <plug>(fzf-maps-o)
 nmap <Leader>tt :TagbarToggle<CR>
 
 " ale mapping
-nnoremap <S-I> <Plug>(ale_fix)<CR>
-nnoremap <S-L> <Plug>(ale_lint)<CR>
-nnoremap <S-D> <Plug>(ale_detail)<CR>
+nmap <S-I> <Plug>(ale_fix)<CR>
+nmap <S-L> <Plug>(ale_lint)<CR>
+nmap <S-D> <Plug>(ale_detail)<CR>
 nmap <C-k> <Plug>(ale_previous_wrap)
 nmap <C-j> <Plug>(ale_next_wrap)
