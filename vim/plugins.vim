@@ -155,7 +155,7 @@ if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
 call deoplete#custom#option({
-    \ 'auto_complete_delay': 200,
+    \ 'auto_complete_delay': 50,
     \ 'smart_case': v:true,
     \ 'max_list': 50,
     \ })
