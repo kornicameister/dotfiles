@@ -59,8 +59,8 @@ Plug 'vim-airline/vim-airline-themes'
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['typescript', 'javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
-Plug 'leafgarland/typescript-vim', { 'for' : ['typescript'] }
-Plug 'Quramy/tsuquyomi', { 'for' : ['typescript'] }
+" Plug 'leafgarland/typescript-vim', { 'for' : ['typescript'] }
+" Plug 'Quramy/tsuquyomi', { 'for' : ['typescript'] }
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
