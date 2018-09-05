@@ -23,6 +23,7 @@
     branches = branch -a
     remotes = remote -v
     commits = ! fshow
+    fixup = commit --fixup
 
 [apply]
 
