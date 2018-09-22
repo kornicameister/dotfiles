@@ -67,6 +67,31 @@ EOF
     echo "Remember to upload the key to Github"
 }
 
+install_docker() {
+    sudo aptitude install -y -V -D -Z \
+        linux-image-extra-"$(uname -r)" \
+        linux-image-extra-virtual \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        software-properties-common
+
+    sudo aptitude remove \
+        docker-ce \
+        docker \
+        docker-engine \
+        docker.io -y -V -D -Z
+
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    wget -qO- https://get.docker.com/ | sh
+
+    local compose_version
+    compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\.[0-9][0-9]+\.[0-9]+$" | tail -n 1)
+
+    sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+    sudo chmod +x /usr/local/bin/docker-compose
+}
+
 install_packages() {
     sudo apt install aptitude -y -q
 
@@ -81,6 +106,8 @@ install_packages() {
         shellcheck \
         htop \
         tig
+
+    install_docker
 }
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
