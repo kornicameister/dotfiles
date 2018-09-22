@@ -1,4 +1,0 @@
-#!/bin/bash
-
-PROXY_CONF=$HOME/.config/proxy.sh
-PROXY_BACKUP=$PROXY_CONF.backup
