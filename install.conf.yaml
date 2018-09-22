@@ -23,14 +23,6 @@
     ~/.git_template: git_template
     ~/.gitprompt: dependencies/bash-git-prompt/gitprompt.sh
 
-    # bash stuff
-    ~/.bashrc: bash/rc
-    ~/.bash_profile: bash/profile
-    ~/.bash_exports: bash/exports.sh
-    ~/.bash_aliases: bash/aliases.sh
-    ~/.bash_functions: bash/fn.sh
-    ~/.bash_completion: bash/completion.sh
-
     # zsh stuff
     ~/.zshrc: zsh/zshrc
     ~/.zpreztorc: zsh/zpreztorc
