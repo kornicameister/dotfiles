@@ -8,14 +8,7 @@ source "${TOP_DIR}/utils.sh"
 install_tools() {
     set -i
     install_prompt tlp _install_tlp
-    install_prompt preload _install_preload
-    install_prompt checkinstall _install_checkinstall
-    install_prompt purge_old_kernels _install_purge_old_kernels
     install_prompt whatpulse _install_whatpulse
-    install_prompt resume-cli  _install_resume_cli
-    install_prompt aria2 _install_aria
-    install_prompt nnn _install_nnn
-    install_prompt mdv _install_mdv
     install_prompt wakatime _install_wakatime
     set +i
 }
@@ -51,42 +44,6 @@ hostname = $hostname
 EOF
     else
         echo "$bw_config already exists"
-    fi
-}
-
-_install_mdv() {
-    # MDV - markdown viewer
-    sudo -EH pip install mdv --upgrade
-}
-
-_install_nnn() {
-    # https://github.com/jarun/nnn
-    echo "Installing nnn"
-    sudo add-apt-repository ppa:twodopeshaggy/jarun -yu
-    sudo apt-get install nnn
-}
-
-_install_aria() {
-    sudo apt update -qq && sudo apt install aria2 -yy -qq
-}
-
-_install_resume_cli() {
-    if is_app_installed docker; then
-
-        docker pull kornicameister/resume-cli:latest
-        cat >>"${BASH_BINDING}" <<EOL
-# resume-cli docker alias
-alias resume="docker run -it --rm -v $(pwd):/app -w /app kornicameister/resume-cli:latest resume"
-EOL
-
-    elif is_app_installed nvm; then
-
-        source "${NVM_DIR}/nvm.sh" >> /dev/null; nvm use node
-        install_node_pkg resume-cli
-        (source "${NVM_DIR}/nvm.sh" >> /dev/null; nvm reinstall-packages)
-
-    else
-        echo "No suitable way to install resume-cli"
     fi
 }
 
@@ -135,23 +92,5 @@ _install_tlp() {
     sudo apt-get update -qq
     sudo apt-get install tlp tlp-rdw indicator-cpufreq -yy -qq
     sudo tlp start
-}
-
-_install_purge_old_kernels() {
-    local url="https://raw.githubusercontent.com/jarnos/bikeshed/patch-1/purge-old-kernels"
-    sudo -EH curl -L -o /usr/local/bin/purge-old-kernels \
-        https://raw.githubusercontent.com/jarnos/bikeshed/patch-1/purge-old-kernels \
-        -z /usr/local/bin/purge-old-kernels
-    sudo -EH chmod +x /usr/local/bin/purge-old-kernels
-}
-
-_install_preload() {
-    # https://itsfoss.com/improve-application-startup-speed-with-preload-in-ubuntu/
-    sudo -EH apt-get install preload -yy -qq
-}
-
-_install_checkinstall() {
-    # https://help.ubuntu.com/community/CheckInstall
-    sudo -EH apt-get install checkinstall -yy -qq
 }
 
