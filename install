@@ -105,7 +105,10 @@ install_packages() {
         gnupg2 \
         shellcheck \
         htop \
-        tig
+        tig \
+        aria2 \
+        preload \
+        httpie
 
     install_docker
 }

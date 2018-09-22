@@ -13,11 +13,5 @@ source ${TOP_DIR}/other/chrome.sh "${TOP_DIR}" "${K_DIR}"
 install_other() {
     install_prompt spotify install_spotify
     install_prompt chrome install_chrome
-    install_prompt httpie _install_httpie
-}
-
-_install_httpie() {
-    # sudo -EH apt-get install httpie
-    sudo -EH pip install --upgrade https://github.com/jakubroztocil/httpie/archive/master.tar.gz
 }
 
