@@ -21,7 +21,7 @@ pyenv_upgrade() {
     fi
 }
 nodenv_upgrade() {
-    if command -v pyenv >/dev/null 2>&1; then
+    if command -v nodenv >/dev/null 2>&1; then
         nodenv update
         nodenv rehash
     fi
@@ -30,7 +30,9 @@ nodenv_upgrade() {
 npm_upgrade() (
     if command -v nodenv >/dev/null 2>&1; then
         # use global system node version
-        nodenv shell $"(cat ${HOME}/.nodenv/version | tr -d \n)"
+        local local_version
+        local_version=$(cat $HOME/.nodenv/version | tr -d \n)
+        nodenv shell "${local_version}"
     fi
 
     # upgrade npm
@@ -43,7 +45,7 @@ npm_upgrade() (
     fi
 )
 
-neovim_clients_upgrade() {
+neovim_clients_upgrade() (
     if [ -d "${PYENV_ROOT}/versions/neovim2" ]; then
         "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
     fi
@@ -57,7 +59,7 @@ neovim_clients_upgrade() {
             nodenv rehash
         fi
     fi
-}
+)
 
 neovim_plugings_upgrade() {
     nvim +PlugUpgrade +PlugInstall +PlugClean +PlugUpdate +qall!
