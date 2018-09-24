@@ -166,9 +166,6 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
-" tagbar mapping
-nmap <Leader>tt :TagbarToggle<CR>
-
 " ale mapping
 nmap <A-f> <Plug>(ale_fix)<CR>
 nmap <A-l> <Plug>(ale_lint)<CR>
