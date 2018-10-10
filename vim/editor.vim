@@ -65,6 +65,9 @@ if ! has('nvim')
   fixdel
 endif
 
+" wrap movement
+set whichwrap+=<,>,h,l,[,]
+
 " Show linenumbers
 set number relativenumber
 augroup numbertoggle
@@ -150,8 +153,8 @@ endif
 " navigate through the buffers
 nnoremap <silent> <Tab> :bnext<CR>
 nnoremap <silent> <S-Tab> :bprevious<CR>
-nnoremap <silent> <leader>q :bd<CR>
-nnoremap <silent> <leader>Q :bd!<CR>
+nnoremap <silent> <leader>q :bd<cr>gT
+nnoremap <silent> <leader>Q :bufdo bd<CR>
 nnoremap <silent> <leader>r :e<CR>
 nnoremap <silent> <leader>R :e!<CR>
 

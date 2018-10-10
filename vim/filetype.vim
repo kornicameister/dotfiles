@@ -1,5 +1,8 @@
 " Copyright 2018 @ kornicameister
 
+" unix as the standard file type
+set ffs=unix,dos,mac
+
 augroup fileTypeDetect
   au!
   au BufNewFile,BufRead gitconfig setlocal ft=config
