@@ -47,9 +47,11 @@ npm_upgrade() (
 
 neovim_clients_upgrade() (
     if [ -d "${PYENV_ROOT}/versions/neovim2" ]; then
+        "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade pip
         "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
     fi
     if [ -d "${PYENV_ROOT}/versions/neovim3" ]; then
+        "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade pip
         "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
     fi
 
