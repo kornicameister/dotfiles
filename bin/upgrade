@@ -20,6 +20,7 @@ pyenv_upgrade() {
         pyenv rehash
     fi
 }
+
 nodenv_upgrade() {
     if command -v nodenv >/dev/null 2>&1; then
         nodenv update
