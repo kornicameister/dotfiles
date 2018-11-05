@@ -81,6 +81,9 @@ Plug 'elzr/vim-json', {'for': ['json']}
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 
+" tex
+Plug 'lervag/vimtex', { 'for': ['tex'] }
+
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
