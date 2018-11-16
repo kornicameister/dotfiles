@@ -52,6 +52,7 @@ Plug 'rhysd/committia.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " general editor related plugins
+Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
