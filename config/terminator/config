@@ -23,7 +23,8 @@
     cursor_shape = ibeam
     font = Source Code Pro for Powerline 10
     foreground_color = "#bcbcbc"
-    palette = "#1c1c1c:#af5f5f:#5f875f:#87875f:#5f87af:#5f5f87:#5f8787:#6c6c6c:#444444:#ff8700:#87af87:#ffffaf:#8fafd7:#8787af:#5fafaf:#ffffff"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     scrollback_infinite = True
     use_system_font = False
   [[test]]
+    cursor_color = "#aaaaaa"
