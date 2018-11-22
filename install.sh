@@ -14,6 +14,6 @@ git clone https://github.com/kornicameister/dotfiles.git
 pushd ./dotfiles
 
 git submodule update --init --recursive
-./install
+./install "$@"
 
 popd
