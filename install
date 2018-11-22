@@ -69,8 +69,6 @@ EOF
 
 install_docker() {
     sudo aptitude install -y -V -D -Z \
-        linux-image-extra-"$(uname -r)" \
-        linux-image-extra-virtual \
         apt-transport-https \
         ca-certificates \
         curl \
@@ -117,7 +115,8 @@ install_packages() {
         tig \
         aria2 \
         preload \
-        httpie
+        httpie \
+        google-chrome-unstable
 
     install_docker
 }
