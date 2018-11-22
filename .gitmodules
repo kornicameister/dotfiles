@@ -12,7 +12,7 @@
 	url = https://github.com/gjsheep/bash-wakatime
 [submodule "dependencies/prezto"]
 	path = dependencies/prezto
-	url = git@github.com:kornicameister/prezto.git
+	url = https://github.com/sorin-ionescu/prezto.git
 [submodule "dependencies/zgen"]
 	path = dependencies/zgen
 	url = https://github.com/tarjoilija/zgen.git
