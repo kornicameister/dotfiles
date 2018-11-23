@@ -89,4 +89,18 @@ init_neovim() (
 
 )
 
-install_latest_dev && init_neovim
+init_python_system() (
+    if [ ! -f $PWD/dependencies/pyenv/version ]; then
+        echo "Initializing system wide python ${__LATEST_37}"
+        echo "${__LATEST_37}" > $PWD/dependencies/pyenv/version
+    fi
+)
+
+post_init_python_system () (
+    pip install setuptools pip wakatime --upgrade
+)
+
+init_python_system && \
+    post_init_python_system && \
+    install_latest_dev && \
+    init_neovim
