@@ -118,15 +118,14 @@ install_packages() {
         aria2 \
         preload \
         httpie \
-        google-chrome-unstable
+        google-chrome-unstable \
+        git-extras
     
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
         make build-essential libssl-dev zlib1g-dev libbz2-dev \
         libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
         xz-utils tk-dev libffi-dev liblzma-dev
-
-    install_docker
 }
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
@@ -150,6 +149,7 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
     echo "kornicameister/dotfiles: init"
 
     install_packages
+    install_docker
     setup_git
     execute_dotbot
 else
