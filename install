@@ -103,6 +103,8 @@ install_packages() {
     
     sudo aptitude update -q -y
     sudo aptitude install -y -V -D -Z \
+        wget \ 
+        curl \ 
         git \
         zsh \
         ccache \
@@ -117,6 +119,12 @@ install_packages() {
         preload \
         httpie \
         google-chrome-unstable
+    
+    # packages needed to build python with pyenv
+    sudo aptitude install -y -V -D -Z \
+        make build-essential libssl-dev zlib1g-dev libbz2-dev \
+        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+        xz-utils tk-dev libffi-dev liblzma-dev
 
     install_docker
 }
