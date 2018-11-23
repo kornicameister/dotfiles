@@ -121,7 +121,8 @@ install_packages() {
         preload \
         httpie \
         google-chrome-unstable \
-        git-extras
+        git-extras \
+        terminator
     
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
