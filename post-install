@@ -51,16 +51,8 @@ fi
 
 install_latest_dev() {
     echo "Installing python & node"
-
-    local __LATEST_27
-    local __LATEST_37
-
-    __LATEST_27=$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
-    __LATEST_37=$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
-
-    export __LATEST_27
-    export __LATEST_37
-
+    pyenv install-latest -s 2.7
+    pyenv install-latest -s 3.7
     nodenv install -s "$(cat ./node-system-version)"
 }
 
@@ -68,20 +60,20 @@ init_neovim() (
     echo "Initializing neovim setup"
 
     if [ ! -d "${PYENV_ROOT}/versions/neovim2" ]; then
-        pyenv virtualenv "${__LATEST_27}" neovim2
+        pyenv virtualenv "$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim2
         "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
     else
         echo "${PYENV_ROOT}/versions/neovim2 venv already exists"
     fi
     if [ ! -d "${PYENV_ROOT}/versions/neovim3" ]; then
-        pyenv virtualenv "${__LATEST_37}" neovim3
+        pyenv virtualenv "$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim3
         "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
     else
         echo "${PYENV_ROOT}/versions/neovim3 venv already exists"
     fi
 
     if command -v npm >/dev/null 2>&1; then
-        npm install -g neovim
+        npm install -g neovim typescript
         if command -v nodenv >/dev/null 2>&1; then
             nodenv rehash
         fi
@@ -90,9 +82,12 @@ init_neovim() (
 )
 
 init_python_system() (
-    if [ ! -f $PWD/dependencies/pyenv/version ]; then
-        echo "Initializing system wide python ${__LATEST_37}"
-        echo "${__LATEST_37}" > $PWD/dependencies/pyenv/version
+    if [ ! -f "${PWD}/dependencies/pyenv/version" ]; then
+        local latest_3
+        latest_3=$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
+
+        echo "Initializing system wide python ${latest_3}"
+        echo "${latest_3}" > "${PWD}/dependencies/pyenv/version"
     fi
 )
 
