@@ -9,7 +9,8 @@ DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 USERNAME="${1:-""}"
-EMAIL="${2:-""}"
+PASSWORD="${2:-""}"
+EMAIL="${3:-""}"
 
 check_submodules() {
     local hasOutdated=0
@@ -43,13 +44,21 @@ execute_dotbot() {
 }
 
 setup_git() {
+    # generate ssh key
+    mkdir -p "${HOME}/.ssh"
+    ssh-keygen \
+        -t ed25519 \
+        -b 4096 \
+        -C "${EMAIL}" \
+        -f "${HOME}/.ssh/github" \
+        -N "${PASSWORD}"
+
     # generating GPK key to sign the commits
-    # setup gpk key
     gpg2 --full-gen-key
 
     # assumed the highest rsa length:
     local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 1 ${EMAIL} | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
+    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 ${EMAIL} | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
 
     cat > $HOME/.gitconfig.local << EOF
 [user]
@@ -64,7 +73,7 @@ setup_git() {
     gpgsign=true
 EOF
 
-    echo "Remember to upload the key to Github"
+    echo "Remember to upload the GPG and SSH keys to Github"
 }
 
 install_docker() {
@@ -93,20 +102,20 @@ install_docker() {
 install_packages() {
     sudo apt-get update -q
     sudo apt install aptitude software-properties-common python-software-properties -y -q
-    
+
     # add some necessary ppas for latest version of packages
     # 1. git
     sudo add-apt-repository ppa:git-core/ppa -y
     # 2. google chrome
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
     # 3. super new neovim
     sudo add-apt-repository ppa:neovim-ppa/unstable -y
-    
+
     sudo aptitude update -q -y
     sudo aptitude install -y -V -D -Z \
-        wget \ 
-        curl \ 
+        wget \
+        curl \
         git \
         zsh \
         ccache \
@@ -123,7 +132,7 @@ install_packages() {
         google-chrome-unstable \
         git-extras \
         terminator
-    
+
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
         make build-essential libssl-dev zlib1g-dev libbz2-dev \
@@ -136,16 +145,20 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
 
     args=("$@")
     argsCount=${#args[@]}
-    if [ "${argsCount}" -ne 2 ]; then
-        (tput setaf 1 ; echo "Invalid arguments, example: ./install {git_user} {git_email}")
+    if [ "${argsCount}" -ne 3 ]; then
+        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email}"
     fi
 
     if [ -z "${USERNAME}" ]; then
-        (tput setaf 1 ; echo "git_user must be set")
+        echo "git_user must be set"
+        exit 1
+    fi
+    if [ -z "${PASSWORD}" ]; then
+        echo "git_password must be set"
         exit 1
     fi
     if [ -z "${EMAIL}" ]; then
-        (tput setaf 1 ; echo "git_email must be set")
+        echo "git_email must be set"
         exit 1
     fi
 
