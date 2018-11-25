@@ -76,6 +76,11 @@ EOF
     echo "Remember to upload the GPG and SSH keys to Github"
 }
 
+setup_nvim_as_default_editor() {
+    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 1
+    sudo update-alternatives --set editor /usr/bin/nvim
+}
+
 install_docker() {
     sudo aptitude install -y -V -D -Z \
         apt-transport-https \
@@ -167,6 +172,7 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
     install_packages
     install_docker
     setup_git
+    setup_nvim_as_default_editor
     execute_dotbot
 else
     echo "kornicameister/dotfiles : update"
