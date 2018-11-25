@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source ${TOP_DIR}/dev/all.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/other/all.sh "${TOP_DIR}" "${K_DIR}"
 source ${TOP_DIR}/tools/all.sh  "${TOP_DIR}" "${K_DIR}"
 
