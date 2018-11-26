@@ -13,11 +13,15 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'ssh' \
   'completion' \
+  'fasd' \
   'git' \
+  'gpg' \
   'python' \
   'node' \
   'syntax-highlighting' \
   'history-substring-search' \
+  'autosuggestions' \
+  'command-not-found' \
   'prompt'
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
@@ -38,6 +42,8 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
    'line' \
    'cursor' \
    'root'
+
+zstyle ':prezto:module:autosuggestions:color' found 'fg=6'
 
 zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:utility' safe-ops 'yes'
