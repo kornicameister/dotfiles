@@ -56,6 +56,7 @@ Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
