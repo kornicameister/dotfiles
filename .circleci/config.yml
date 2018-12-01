@@ -11,12 +11,12 @@ jobs:
           command: git submodule update --init --recursive
       - run:
           name: Update submodules to their origin/master
-          command: >
-            git submodule foreach git fetch origin ; \
+          command: |
+            git submodule foreach git fetch origin
             git submodule foreach git rebase origin/master
       - run:
           name: Create and push new commit
-          command: >
+          command: |
             (git add . ; git commit -m "Update submodules $(date)") && \
                 (
                   git config --global user.email "dotfiles@build.circleci" ; \\
