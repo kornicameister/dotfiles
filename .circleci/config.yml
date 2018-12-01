@@ -19,16 +19,8 @@ jobs:
           command: |
             git config --global user.email "dotfiles@build.circleci"
             git config --global user.name "CircleCI"
-            (
-              git add . ; git commit -m "Update submodules $(date)"
-            ) && \
-            (
-              echo "Submodules updated"
-            )
-              || \
-            (
-              echo "No need to update"
-            )
+            git add .
+            git commit -m "Update submodules $(date)" && echo "Submodules updated" || echo "No need to update"
 
 workflows:
   version: 2
