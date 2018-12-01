@@ -12,29 +12,6 @@ USERNAME="${1:-""}"
 PASSWORD="${2:-""}"
 EMAIL="${3:-""}"
 
-check_submodules() {
-    local hasOutdated=0
-
-    git submodule update --init --quiet --recursive
-
-    for git_module in $(git submodule status | awk '{print $2}'); do
-        pushd "${PWD}"/"${git_module}"
-
-        git fetch origin
-
-        if [[ $(git log HEAD..origin/master --oneline | wc -l) -ne 0 ]]; then
-            (tput setaf 1 ; echo "$git_module is outdated")
-            hasOutdated=1
-        fi
-
-        popd
-    done
-    unset git_module
-
-    if [ $hasOutdated -eq 1 ]; then
-        exit 1
-    fi
-}
 
 execute_dotbot() {
     cd "${BASEDIR}"
@@ -186,7 +163,6 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
 else
     echo "kornicameister/dotfiles : update"
 
-    check_submodules
     execute_dotbot
     (pyenv update ; pyenv rehash)
     (nodenv update ; nodenv rehash)
