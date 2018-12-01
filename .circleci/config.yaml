@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Create and push new commit
           command: >
-            (git add . ; git commit -m "Update submodules") && \
+            (git add . ; git commit -m "Update submodules $(date)") && \
                 (
                   git config --global user.email "dotfiles@build.circleci" ; \\
                   git config --global user.name "CircleCI" ; \\
