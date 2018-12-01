@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Update submodules to their origin/master
           command: >
-            git submodule foreach git fetch origin/master ; \
+            git submodule foreach git fetch origin ; \
             git submodule foreach git rebase origin/master
       - run:
           name: Create and push new commit
