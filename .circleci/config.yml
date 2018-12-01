@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  update_submodules:
+    machine: true
+    working_directory: ~/dotfiles
+
+    steps:
+      - checkout
+      - run:
+          name: Fetch submodules
+          command: git submodule update --init --recursive
+      - run:
+          name: Update submodules to their origin/master
+          command: |
+            git submodule foreach git fetch origin
+            git submodule foreach git rebase origin/master
+      - run:
+          name: Create and push new commit
+          command: |
+            git config --global user.email "dotfiles@build.circleci"
+            git config --global user.name "dotfiles@CircleCI"
+            git add .
+            git commit -m "Update submodules $(date)" && ( git push origin HEAD:master && echo "Submodules updated" || exit 1 ) || echo "No need to update"
+
+workflows:
+  version: 2
+  update_submodules:
+    jobs:
+      - update_submodules
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+
