@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Check Scripts
           command: |
-            shellcheck install post-install pre-install
+            shellcheck install post-install pre-install --external-sources
             find bin/ -type f | xargs shellcheck --external-sources
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources
