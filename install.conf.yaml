@@ -48,9 +48,6 @@
     ~/.pyenv: dependencies/pyenv
     ~/.pyenv.sh: pyenv.sh
 
-    # wakatime
-    ~/.bash_wakatime: dependencies/bash-wakatime/bash-wakatime.sh
-
     # ctags
     ~/.ctags: ctags
 
