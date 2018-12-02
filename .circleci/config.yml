@@ -1,5 +1,19 @@
 version: 2
 jobs:
+
+  shellcheck:
+    docker:
+      - image: nlknguyen/alpine-shellcheck
+    steps:
+      - checkout
+      - run:
+          name: Check Scripts
+          command: |
+            shellcheck install post-install pre-install --external-sources
+            find bin/ -type f | xargs shellcheck --external-sources
+            find . -type f -name '*.sh' | wc -l
+            find . -type f -name '*.sh' | xargs shellcheck --external-sources
+
   update_submodules:
     machine: true
     working_directory: ~/dotfiles
@@ -24,6 +38,9 @@ jobs:
 
 workflows:
   version: 2
+  verify:
+    jobs:
+      - shellcheck
   update_submodules:
     jobs:
       - update_submodules
