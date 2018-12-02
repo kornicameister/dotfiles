@@ -73,8 +73,8 @@ docker_compose_upgrade() {
         local remote_compose_version
         local local_compose_version
 
-        remote_compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\.[0-9][0-9]+\.[0-9]+$" | tail -n 1)
-        local_compose_version=$(docker-compose --version | grep -oP "[0-9]+\.[0-9][0-9]+\.[0-9]" | tail -n 1)
+        remote_compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
+        local_compose_version=$(docker-compose --version | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]" | tail -n 1)
 
         if [ "${remote_compose_version}" != "${local_compose_version}" ]; then
             echo "Upgrading docker-compose to ${remote_compose_version}"
