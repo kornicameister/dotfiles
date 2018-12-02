@@ -5,6 +5,8 @@
 - clean: ['~']
 
 - shell:
+    - command: mkdir -p $HOME/.local/bin
+      description: Create directory for local binaries
     - command: ./pre-install
 
 - link:

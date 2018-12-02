@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 install_ctags() {
     # drop unused package
@@ -7,7 +7,7 @@ install_ctags() {
     local shouldInstall=0
     if command -v ctags >/dev/null 2>&1; then
         # already installed check if need to reinstall
-        cd ./dependencies/ctags
+        cd ./dependencies/ctags || echo "ctags submodule not fetched"
         git fetch origin
         if [[ $(git log HEAD..origin/master --oneline | wc -l) -ne 0 ]]; then
             (tput setaf 1 ; echo "dependencies/ctags is outdated, update the module first")
@@ -15,20 +15,20 @@ install_ctags() {
         else
             shouldInstall=1
         fi
-        cd -
+        cd - || exit 1
     else
         shouldInstall=1
     fi
 
     if [ $shouldInstall -eq 1 ]; then
-        cd ./dependencies/ctags
+        cd ./dependencies/ctags || echo "ctags submodule not fetched"
 
         ./autogen.sh
-        ./configure --prefix=$HOME/.local
+        ./configure --prefix="${HOME}/.local"
         make
         make install
 
-        cd -
+        cd - || exit 1
     fi
 }
 
@@ -37,6 +37,3 @@ install_ctags() {
     sudo aptitude update -q ;
     install_ctags ;
 )
-
-# create a target directory of bins coming mainly from my dotfiles
-mkdir -p $HOME/.local/bin
