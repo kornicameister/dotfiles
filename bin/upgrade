@@ -32,7 +32,7 @@ npm_upgrade() (
     if command -v nodenv >/dev/null 2>&1; then
         # use global system node version
         local local_version
-        local_version=$(cat $HOME/.nodenv/version | tr -d \n)
+        local_version=$(tr -d '\n' < "${HOME}/.nodenv/version")
         nodenv shell "${local_version}"
     fi
 
