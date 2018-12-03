@@ -86,6 +86,9 @@ Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 " tex
 Plug 'lervag/vimtex', { 'for': ['tex'] }
 
+" undo like mastash
+Plug 'sjl/gundo.vim'
+
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'mhinz/vim-startify'                           " nice start screen
