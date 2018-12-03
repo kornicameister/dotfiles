@@ -18,6 +18,7 @@ zstyle ':prezto:load' pmodule \
   'gpg' \
   'python' \
   'node' \
+  'archive' \
   'syntax-highlighting' \
   'history-substring-search' \
   'autosuggestions' \
