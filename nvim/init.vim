@@ -9,8 +9,6 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath= &runtimepath
 source ~/.vimrc
 
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
-
-set guicursor=
 " workaround some broken plugins which set guicursor indiscriminately.
+set guicursor=
 autocmd OptionSet guicursor noautocmd set guicursor=
