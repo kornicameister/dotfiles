@@ -117,7 +117,8 @@ install_packages() {
         git-extras \
         terminator \
         autoconf \
-        automake
+        automake \
+        xclip
 
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
