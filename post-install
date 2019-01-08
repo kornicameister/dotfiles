@@ -56,12 +56,14 @@ init_neovim() (
     if [ ! -d "${PYENV_ROOT}/versions/neovim2" ]; then
         pyenv virtualenv "$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim2
         "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
+        pyenv rehash
     else
         echo "${PYENV_ROOT}/versions/neovim2 venv already exists"
     fi
     if [ ! -d "${PYENV_ROOT}/versions/neovim3" ]; then
         pyenv virtualenv "$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim3
         "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
+        pyenv rehash
     else
         echo "${PYENV_ROOT}/versions/neovim3 venv already exists"
     fi
@@ -76,13 +78,8 @@ init_neovim() (
 )
 
 init_python_system() (
-    if [ ! -f "${PWD}/dependencies/pyenv/version" ]; then
-        local latest_3
-        latest_3=$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
-
-        echo "Initializing system wide python ${latest_3}"
-        echo "${latest_3}" > "${PWD}/dependencies/pyenv/version"
-    fi
+    rm -rf "${PWD}/dependencies/pyenv/version"
+    echo "system" > "${PWD}/dependencies/pyenv/version"
 )
 
 post_init_python_system () (
