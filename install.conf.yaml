@@ -23,7 +23,6 @@
     ~/.gitignore: gitignore
     ~/.gitconfig: gitconfig
     ~/.git_template: git_template
-    ~/.gitprompt: dependencies/bash-git-prompt/gitprompt.sh
 
     # zsh stuff
     ~/.zshrc: zsh/zshrc
