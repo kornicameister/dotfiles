@@ -4,3 +4,4 @@ yapf
 jedi
 pip
 setuptools
+wakatime
