@@ -32,7 +32,7 @@ npm_upgrade() (
     if command -v nodenv >/dev/null 2>&1; then
         # use global system node version
         local local_version
-        local_version=$(cat $HOME/.nodenv/version | tr -d \n)
+        local_version=$(tr -d '\n' < "${HOME}/.nodenv/version")
         nodenv shell "${local_version}"
     fi
 
@@ -73,8 +73,8 @@ docker_compose_upgrade() {
         local remote_compose_version
         local local_compose_version
 
-        remote_compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\.[0-9][0-9]+\.[0-9]+$" | tail -n 1)
-        local_compose_version=$(docker-compose --version | grep -oP "[0-9]+\.[0-9][0-9]+\.[0-9]" | tail -n 1)
+        remote_compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
+        local_compose_version=$(docker-compose --version | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]" | tail -n 1)
 
         if [ "${remote_compose_version}" != "${local_compose_version}" ]; then
             echo "Upgrading docker-compose to ${remote_compose_version}"
@@ -91,6 +91,12 @@ docker_compose_upgrade() {
     fi
 }
 
+snap_refresh() {
+    if command -v snap >/dev/null 2>&1; then
+        snap refresh
+    fi
+}
+
 os_upgrade
 docker_compose_upgrade
 hadolint_upgrade
@@ -99,3 +105,4 @@ nodenv_upgrade
 npm_upgrade
 neovim_clients_upgrade
 neovim_plugings_upgrade
+snap_refresh

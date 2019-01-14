@@ -9,49 +9,35 @@ DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 USERNAME="${1:-""}"
-EMAIL="${2:-""}"
+PASSWORD="${2:-""}"
+EMAIL="${3:-""}"
 
-check_submodules() {
-    local hasOutdated=0
-
-    git submodule update --init --quiet --recursive
-
-    for git_module in $(git submodule status | awk '{print $2}'); do
-        pushd "${PWD}"/"${git_module}"
-
-        git fetch origin
-
-        if [[ $(git log HEAD..origin/master --oneline | wc -l) -ne 0 ]]; then
-            (tput setaf 1 ; echo "$git_module is outdated")
-            hasOutdated=1
-        fi
-
-        popd
-    done
-    unset git_module
-
-    if [ $hasOutdated -eq 1 ]; then
-        exit 1
-    fi
-}
 
 execute_dotbot() {
     cd "${BASEDIR}"
     git submodule update --init --quiet --recursive "${DOTBOT_DIR}"
 
-    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}"
 }
 
 setup_git() {
+    # generate ssh key
+    mkdir -p "${HOME}/.ssh"
+    ssh-keygen \
+        -t ed25519 \
+        -b 4096 \
+        -C "${EMAIL}" \
+        -f "${HOME}/.ssh/github" \
+        -N "${PASSWORD}"
+
     # generating GPK key to sign the commits
-    # setup gpk key
     gpg2 --full-gen-key
 
     # assumed the highest rsa length:
     local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 1 ${EMAIL} | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
+    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
 
-    cat > $HOME/.gitconfig.local << EOF
+    cat > "${HOME}/.gitconfig.local" << EOF
 [user]
     name=${USERNAME}
     email=${EMAIL}
@@ -64,13 +50,16 @@ setup_git() {
     gpgsign=true
 EOF
 
-    echo "Remember to upload the key to Github"
+    echo "Remember to upload the GPG and SSH keys to Github"
+}
+
+setup_nvim_as_default_editor() {
+    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 1
+    sudo update-alternatives --set editor /usr/bin/nvim
 }
 
 install_docker() {
     sudo aptitude install -y -V -D -Z \
-        linux-image-extra-"$(uname -r)" \
-        linux-image-extra-virtual \
         apt-transport-https \
         ca-certificates \
         curl \
@@ -86,25 +75,31 @@ install_docker() {
     wget -qO- https://get.docker.com/ | sh
 
     local compose_version
-    compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\.[0-9][0-9]+\.[0-9]+$" | tail -n 1)
+    compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
 
-    sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+    sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose"
     sudo chmod +x /usr/local/bin/docker-compose
 }
 
 install_packages() {
     sudo apt-get update -q
     sudo apt install aptitude software-properties-common python-software-properties -y -q
-    
+
     # add some necessary ppas for latest version of packages
     # 1. git
     sudo add-apt-repository ppa:git-core/ppa -y
     # 2. google chrome
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-    
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
+    # 3. super new neovim
+    sudo add-apt-repository ppa:neovim-ppa/unstable -y
+    # 4. tlp for battery optimal usage
+    sudo add-apt-repository ppa:linrunner/tlp -y
+
     sudo aptitude update -q -y
     sudo aptitude install -y -V -D -Z \
+        wget \
+        curl \
         git \
         zsh \
         ccache \
@@ -117,9 +112,24 @@ install_packages() {
         tig \
         aria2 \
         preload \
-        httpie
+        httpie \
+        google-chrome-unstable \
+        git-extras \
+        terminator \
+        autoconf \
+        automake \
+        xclip
 
-    install_docker
+    # packages needed to build python with pyenv
+    sudo aptitude install -y -V -D -Z \
+        make build-essential libssl-dev zlib1g-dev libbz2-dev \
+        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+        xz-utils tk-dev libffi-dev liblzma-dev
+
+    # tlp packages & start
+    sudo aptitude install -y -V -D -Z \
+        tlp tlp-rdw indicator-cpufreq && \
+        sudo tlp start
 }
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
@@ -127,28 +137,33 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
 
     args=("$@")
     argsCount=${#args[@]}
-    if [ "${argsCount}" -ne 2 ]; then
-        (tput setaf 1 ; echo "Invalid arguments, example: ./install {git_user} {git_email}")
+    if [ "${argsCount}" -ne 3 ]; then
+        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email}"
     fi
 
     if [ -z "${USERNAME}" ]; then
-        (tput setaf 1 ; echo "git_user must be set")
+        echo "git_user must be set"
+        exit 1
+    fi
+    if [ -z "${PASSWORD}" ]; then
+        echo "git_password must be set"
         exit 1
     fi
     if [ -z "${EMAIL}" ]; then
-        (tput setaf 1 ; echo "git_email must be set")
+        echo "git_email must be set"
         exit 1
     fi
 
     echo "kornicameister/dotfiles: init"
 
     install_packages
+    install_docker
     setup_git
+    setup_nvim_as_default_editor
     execute_dotbot
 else
     echo "kornicameister/dotfiles : update"
 
-    check_submodules
     execute_dotbot
     (pyenv update ; pyenv rehash)
     (nodenv update ; nodenv rehash)

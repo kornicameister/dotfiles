@@ -1,66 +1,52 @@
 #!/usr/bin/env bash
 
-# has to come after zsh or bashrc are sourced, because it overwrites those files.
-$PWD/dependencies/fzf/install --all
+install_pyenv_plugins() {
+    local plugins_dir
+    local plugins
 
-# install powerline fonts
-$PWD/dependencies/powerline-fonts/install.sh
+    plugins_dir=$(realpath "${PWD}/dependencies/pyenv/plugins/")
+    plugins=(
+        pyenv-update
+        pyenv-virtualenv
+        pyenv-ccache
+        pyenv-doctor
+        pyenv-install-latest
+    )
 
-# install pyenv plugins
-PYENV_PLUGINS_DIR=$(realpath $PWD/dependencies/pyenv/plugins/)
-mkdir -p $PYENV_PLUGINS_DIR
+    mkdir -p "${plugins_dir}"
+    for plugin in ${plugins[*]}; do
+        if [ ! -d "${plugins_dir}/${plugin}" ]; then
+            git clone "git://github.com/pyenv/${plugin}.git" "${plugins_dir}/${plugin}"
+        fi
+    done
+}
 
-if [ ! -d $PYENV_PLUGINS_DIR/pyenv-update ]; then
-    git clone git://github.com/pyenv/pyenv-update.git $PYENV_PLUGINS_DIR/pyenv-update
-fi
-if [ ! -d $PYENV_PLUGINS_DIR/pyenv-virtualenv ]; then
-    git clone git://github.com/pyenv/pyenv-virtualenv.git $PYENV_PLUGINS_DIR/pyenv-virtualenv
-fi
-if [ ! -d $PYENV_PLUGINS_DIR/pyenv-ccache ]; then
-    git clone git://github.com/pyenv/pyenv-ccache.git $PYENV_PLUGINS_DIR/pyenv-ccache
-fi
-if [ ! -d $PYENV_PLUGINS_DIR/pyenv-doctor ]; then
-    git clone git://github.com/pyenv/pyenv-doctor.git $PYENV_PLUGINS_DIR/pyenv-doctor
-fi
-if [ ! -d $PYENV_PLUGINS_DIR/pyenv-install-latest ]; then
-    git clone https://github.com/momo-lab/pyenv-install-latest.git $PYENV_PLUGINS_DIR/pyenv-install-latest
-fi
+install_nodenv_plugins() {
+    local plugins_dir
+    local plugins
 
-# install nodenv plugins
-NODENV_PLUGINS_DIR=$(realpath $PWD/dependencies/nodenv/plugins)
-mkdir -p $NODENV_PLUGINS_DIR
+    plugins_dir=$(realpath "${PWD}/dependencies/nodenv/plugins/")
+    plugins=(
+        nodenv-update
+        nodenv-aliases
+        nodenv-package-json-engine
+        nodenv-package-rehash
+        nodenv-each
+        node-build
+    )
 
-if [ ! -d $NODENV_PLUGINS_DIR/nodenv-update ]; then
-    git clone https://github.com/nodenv/nodenv-update.git $NODENV_PLUGINS_DIR/nodenv-update
-fi
-if [ ! -d $NODENV_PLUGINS_DIR/nodenv-aliases ]; then
-    git clone https://github.com/nodenv/nodenv-aliases.git $NODENV_PLUGINS_DIR/nodenv-aliases
-fi
-if [ ! -d $NODENV_PLUGINS_DIR/nodenv-package-json-engine ]; then
-    git clone https://github.com/nodenv/nodenv-package-json-engine.git $NODENV_PLUGINS_DIR/nodenv-package-json-engine
-fi
-if [ ! -d $NODENV_PLUGINS_DIR/nodenv-package-rehash ]; then
-    git clone https://github.com/nodenv/nodenv-package-rehash.git $NODENV_PLUGINS_DIR/nodenv-package-rehash
-fi
-if [ ! -d $NODENV_PLUGINS_DIR/nodenv-each ]; then
-    git clone https://github.com/nodenv/nodenv-each.git $NODENV_PLUGINS_DIR/nodenv-each
-fi
-if [ ! -d $NODENV_PLUGINS_DIR/node-build ]; then
-    git clone https://github.com/nodenv/node-build.git $NODENV_PLUGINS_DIR/node-build
-fi
+    mkdir -p "${plugins_dir}"
+    for plugin in ${plugins[*]}; do
+        if [ ! -d "${plugins_dir}/${plugin}" ]; then
+            git clone "git://github.com/nodenv/${plugin}.git" "${plugins_dir}/${plugin}"
+        fi
+    done
+}
 
 install_latest_dev() {
     echo "Installing python & node"
-
-    local __LATEST_27
-    local __LATEST_37
-
-    __LATEST_27=$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
-    __LATEST_37=$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)
-
-    export __LATEST_27
-    export __LATEST_37
-
+    pyenv install-latest -s 2.7
+    pyenv install-latest -s 3.7
     nodenv install -s "$(cat ./node-system-version)"
 }
 
@@ -68,20 +54,22 @@ init_neovim() (
     echo "Initializing neovim setup"
 
     if [ ! -d "${PYENV_ROOT}/versions/neovim2" ]; then
-        pyenv virtualenv "${__LATEST_27}" neovim2
+        pyenv virtualenv "$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim2
         "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
+        pyenv rehash
     else
         echo "${PYENV_ROOT}/versions/neovim2 venv already exists"
     fi
     if [ ! -d "${PYENV_ROOT}/versions/neovim3" ]; then
-        pyenv virtualenv "${__LATEST_37}" neovim3
+        pyenv virtualenv "$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim3
         "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
+        pyenv rehash
     else
         echo "${PYENV_ROOT}/versions/neovim3 venv already exists"
     fi
 
     if command -v npm >/dev/null 2>&1; then
-        npm install -g neovim
+        npm install -g neovim typescript
         if command -v nodenv >/dev/null 2>&1; then
             nodenv rehash
         fi
@@ -89,4 +77,22 @@ init_neovim() (
 
 )
 
-install_latest_dev && init_neovim
+init_python_system() (
+    rm -rf "${PWD}/dependencies/pyenv/version"
+    echo "system" > "${PWD}/dependencies/pyenv/version"
+)
+
+post_init_python_system () (
+    pip install setuptools pip wakatime --upgrade
+)
+
+(
+    "${PWD}/dependencies/fzf/install" --all ;
+    "${PWD}/dependencies/powerline-fonts/install.sh" ;
+    install_pyenv_plugins ;
+    install_nodenv_plugins ;
+    init_python_system ;
+    post_init_python_system ;
+    install_latest_dev ;
+    init_neovim
+)

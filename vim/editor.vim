@@ -142,6 +142,17 @@ set undolevels=1000
 cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
+let g:clipboard = {
+      \   'name': 'korni-clipboard',
+      \   'copy': {
+      \      '+': {lines, regtype -> extend(g:, {'foo': [lines, regtype]}) },
+      \      '*': {lines, regtype -> extend(g:, {'foo': [lines, regtype]}) },
+      \    },
+      \   'paste': {
+      \      '+': {-> get(g:, 'foo', [])},
+      \      '*': {-> get(g:, 'foo', [])},
+      \   },
+      \ }
 if has('clipboard')
   if has('unnamedplus')  " When possible use + register for copy-paste
     set clipboard=unnamed,unnamedplus
@@ -175,3 +186,6 @@ nmap <A-l> <Plug>(ale_lint)<CR>
 nmap <A-d> <Plug>(ale_detail)<CR>
 nmap <A-k> <Plug>(ale_previous_wrap)
 nmap <A-j> <Plug>(ale_next_wrap)
+
+" gundo
+nnoremap <leader>u :GundoToggle<CR>

@@ -1,18 +1,12 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "bash-git-prompt"]
-	path = dependencies/bash-git-prompt
-	url = https://github.com/magicmonty/bash-git-prompt
 [submodule "fzf"]
 	path = dependencies/fzf
 	url = https://github.com/junegunn/fzf.git
-[submodule "bash-wakatime"]
-	path = dependencies/bash-wakatime
-	url = https://github.com/gjsheep/bash-wakatime
 [submodule "dependencies/prezto"]
 	path = dependencies/prezto
-	url = git@github.com:kornicameister/prezto.git
+	url = https://github.com/sorin-ionescu/prezto.git
 [submodule "dependencies/zgen"]
 	path = dependencies/zgen
 	url = https://github.com/tarjoilija/zgen.git

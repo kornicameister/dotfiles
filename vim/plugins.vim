@@ -52,9 +52,11 @@ Plug 'rhysd/committia.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " general editor related plugins
+Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
@@ -84,10 +86,11 @@ Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
 " tex
 Plug 'lervag/vimtex', { 'for': ['tex'] }
 
+" undo like mastash
+Plug 'sjl/gundo.vim'
+
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
-Plug 'mhinz/vim-startify'                           " nice start screen
-Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'      " notes taking in VIM
 call plug#end()
 
 " Plugin Customizations
