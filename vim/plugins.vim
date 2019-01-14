@@ -91,8 +91,6 @@ Plug 'sjl/gundo.vim'
 
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
-Plug 'mhinz/vim-startify'                           " nice start screen
-Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc'      " notes taking in VIM
 call plug#end()
 
 " Plugin Customizations
