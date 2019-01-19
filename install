@@ -92,7 +92,7 @@ install_packages() {
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
     # 3. super new neovim
-    sudo add-apt-repository ppa:neovim-ppa/unstable -y
+    sudo add-apt-repository ppa:neovim-ppa/stable -y
     # 4. tlp for battery optimal usage
     sudo add-apt-repository ppa:linrunner/tlp -y
 
@@ -118,7 +118,8 @@ install_packages() {
         terminator \
         autoconf \
         automake \
-        xclip
+        xclip \
+        ppa-purge
 
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
