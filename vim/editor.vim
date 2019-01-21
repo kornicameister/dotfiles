@@ -142,24 +142,7 @@ set undolevels=1000
 cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
-let g:clipboard = {
-      \   'name': 'korni-clipboard',
-      \   'copy': {
-      \      '+': {lines, regtype -> extend(g:, {'foo': [lines, regtype]}) },
-      \      '*': {lines, regtype -> extend(g:, {'foo': [lines, regtype]}) },
-      \    },
-      \   'paste': {
-      \      '+': {-> get(g:, 'foo', [])},
-      \      '*': {-> get(g:, 'foo', [])},
-      \   },
-      \ }
-if has('clipboard')
-  if has('unnamedplus')  " When possible use + register for copy-paste
-    set clipboard=unnamed,unnamedplus
-  else         " On mac and Windows, use * register for copy-paste
-    set clipboard=unnamed
-  endif
-endif
+set clipboard+=unnamedplus
 
 " navigate through the buffers
 nnoremap <silent> <Tab> :bnext<CR>
