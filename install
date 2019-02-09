@@ -119,7 +119,8 @@ install_packages() {
         autoconf \
         automake \
         xclip \
-        ppa-purge
+        ppa-purge \
+        ruby-dev
 
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
@@ -131,6 +132,11 @@ install_packages() {
     sudo aptitude install -y -V -D -Z \
         tlp tlp-rdw indicator-cpufreq && \
         sudo tlp start
+
+    # tool needed by ALE to lint sqls
+    if command -v gem >/dev/null 2>&1; then
+        sudo -EH gem install sqlint
+    fi
 }
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
