@@ -5,4 +5,4 @@ jedi
 pip
 setuptools
 wakatime
-mypy
+mypy; python_version >= '3.0'
