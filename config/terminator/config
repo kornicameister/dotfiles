@@ -18,6 +18,8 @@
 [profiles]
   [[default]]
     background_color = "#262626"
+    background_darkness = 0.9
+    background_type = transparent
     cursor_color = "#bcbcbc"
     cursor_color_fg = False
     cursor_shape = ibeam

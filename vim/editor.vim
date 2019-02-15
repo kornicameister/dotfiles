@@ -94,12 +94,15 @@ autocmd FileType help wincmd L
 filetype plugin indent on
 
 " vim theme settings
-hi Normal ctermbg=none
+colorscheme apprentice
+set background=dark
+
+hi Normal ctermfg=252 ctermbg=none
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE
 if has("termguicolors")
   set termguicolors
 endif
-colorscheme apprentice
-set background=dark
 
 " spelling
 setlocal spell
