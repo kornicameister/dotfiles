@@ -81,13 +81,10 @@ Plug 'elzr/vim-json', {'for': ['json']}
 
 " markdown
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
-Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
+Plug 'gabrielelana/vim-markdown', {'for': ['markdown']}
 
 " tex
 Plug 'lervag/vimtex', { 'for': ['tex'] }
-
-" undo like mastash
-Plug 'sjl/gundo.vim'
 
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
