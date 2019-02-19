@@ -41,7 +41,6 @@ else
 endif
 Plug 'pbogut/deoplete-elm', { 'for': ['elm'] }
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript'], 'do': './install.sh'}
 Plug 'zchee/deoplete-jedi', { 'for': ['python'] }
 
 " asynchronous execution library
@@ -62,7 +61,6 @@ Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
