@@ -1,5 +1,6 @@
 [global_config]
   enabled_plugins = InactivityWatch, TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, Logger, LaunchpadBugURLHandler
+  focus = system
   title_inactive_bg_color = "#444444"
   title_inactive_fg_color = "#bcbcbc"
   title_transmit_bg_color = "#1c1c1c"
@@ -28,5 +29,25 @@
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
     scrollback_infinite = True
     use_system_font = False
-  [[test]]
-    cursor_color = "#aaaaaa"
+  [[material-dark]]
+    background_color = "#2e2e2d"
+    background_darkness = 0.85
+    background_type = transparent
+    cursor_color = "#25C3DC"
+    cursor_shape = ibeam
+    font = Source Code Pro for Powerline 10
+    foreground_color = "#f2f2f2"
+    palette = "#2c2c2c:#c62828:#558b2e:#f9a825:#1565c1:#6a1e9a:#00838f:#ffffff:#969694:#f15250:#86bd47:#f8e63a:#77b2f6:#b963c8:#25c3dc:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[material-light]]
+    background_color = "#eeeeee"
+    background_darkness = 0.85
+    background_type = transparent
+    cursor_color = "#25C3DC"
+    cursor_shape = ibeam
+    font = Source Code Pro for Powerline 10
+    foreground_color = "#3c3c3b"
+    palette = "#f8f8f8:#d7005f:#718c00:#ff8f01:#005f87:#6a1e9a:#3e999f:#2c2c2c:#2c2c2c:#ef5251:#90c94d:#ffa000:#4271ae:#c774c1:#3e999f:#f5f5f5"
+    scrollback_infinite = True
+    use_system_font = False

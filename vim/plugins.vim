@@ -17,7 +17,7 @@ autocmd VimEnter * :call InstallVimPlug()
 call plug#begin('~/.vim/plugged')
 
 " theme
-Plug 'romainl/Apprentice'
+Plug 'NLKNguyen/papercolor-theme'
 
 " fzf
 Plug '~/.fzf'
@@ -107,7 +107,7 @@ let g:tagbar_type_markdown = {
 let g:rainbow_active = 1
 
 " airline plugin settings
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'papercolor'
 
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep='›'          " Slightly fancier than '>'
