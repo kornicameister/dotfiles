@@ -100,7 +100,7 @@ colorscheme PaperColor
 hi Normal ctermfg=252 ctermbg=none
 hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
-if has("termguicolors")
+if has('termguicolors') || !&term=~'linux'
   set termguicolors
 endif
 
