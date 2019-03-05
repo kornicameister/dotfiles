@@ -1,16 +1,18 @@
 [global_config]
   enabled_plugins = InactivityWatch, TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, Logger, LaunchpadBugURLHandler
   focus = system
+  title_font = Source Code Pro for Powerline Heavy Italic 10
   title_inactive_bg_color = "#444444"
   title_inactive_fg_color = "#bcbcbc"
   title_transmit_bg_color = "#1c1c1c"
   title_transmit_fg_color = "#bcbcbc"
+  title_use_system_font = False
 [keybindings]
 [layouts]
   [[default]]
     [[[child1]]]
       parent = window0
-      profile = default
+      profile = material-dark
       type = Terminal
     [[[window0]]]
       parent = ""
