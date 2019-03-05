@@ -165,3 +165,12 @@ let g:pyenv#auto_assign_ctags = 1
 
 " gutter
 let g:gitgutter_diff_args = "-w"    " ignore whitespace changes
+
+" papercolor
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
