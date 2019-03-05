@@ -79,7 +79,6 @@ Plug 'elzr/vim-json', {'for': ['json']}
 
 " markdown
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
-Plug 'gabrielelana/vim-markdown', {'for': ['markdown']}
 
 " tex
 Plug 'lervag/vimtex', { 'for': ['tex'] }
