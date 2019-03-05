@@ -94,8 +94,8 @@ autocmd FileType help wincmd L
 filetype plugin indent on
 
 " vim theme settings
-colorscheme apprentice
 set background=dark
+colorscheme PaperColor
 
 hi Normal ctermfg=252 ctermbg=none
 hi! Normal ctermbg=NONE guibg=NONE
