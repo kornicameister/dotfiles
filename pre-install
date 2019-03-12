@@ -5,6 +5,11 @@ install_ctags() {
     sudo aptitude purge exuberant-ctags -q -y
 
     local shouldInstall=0
+
+    if [ ! -d dependencies/ctags ]; then
+        git submodule update --init --recursive
+    fi
+
     if command -v ctags >/dev/null 2>&1; then
         # already installed check if need to reinstall
         cd ./dependencies/ctags || echo "ctags submodule not fetched"
@@ -25,6 +30,7 @@ install_ctags() {
 
         ./autogen.sh
         ./configure --prefix="${HOME}/.local"
+        make clean
         make
         make install
 
@@ -35,5 +41,6 @@ install_ctags() {
 # install all necessary system packages
 (
     sudo aptitude update -q ;
+    pip install docutils --user ;
     install_ctags ;
 )
