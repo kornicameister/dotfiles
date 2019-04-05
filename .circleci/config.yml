@@ -9,6 +9,10 @@ x-build-steps: &build_steps
           apt-get update -qq
           apt-get install git -y
     - run:
+        name: Supply sudo alias
+        command: |
+          alias sudo=""
+    - run:
         name: Checkout modules
         command: |
           git submodule update --init --recursive --recommend-shallow
