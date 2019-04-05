@@ -24,7 +24,7 @@ jobs:
             git submodule update --init --recursive --recommend-shallow
       - run:
           name: 'Submodules :: status'
-          comamnd: |
+          command: |
             git submodule status
 
 workflows:
