@@ -3,7 +3,7 @@ jobs:
 
   shellcheck:
     docker:
-      - image: nlknguyen/alpine-shellcheck
+      - image: nlknguyen/alpine-shellcheck:latest
     steps:
       - checkout
       - run:
@@ -19,9 +19,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Checkout submodules
+          name: Submodules :: checkout
           command: |
-            git submodule update --init --recursive
+            git submodule update --init --recursive --recommend-shallow
+      - run:
+          name: Submodules :: status
+          comamnd: |
+            git submodule status
 
 workflows:
   version: 2
