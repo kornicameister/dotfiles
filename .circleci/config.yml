@@ -50,6 +50,4 @@ workflows:
       - shellcheck
   build:
     jobs:
-      - build_mint:
-          requires:
-            - submodules
+      - build_mint
