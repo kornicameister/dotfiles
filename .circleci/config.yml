@@ -19,11 +19,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Submodules :: checkout
+          name: 'Submodules :: checkout'
           command: |
             git submodule update --init --recursive --recommend-shallow
       - run:
-          name: Submodules :: status
+          name: 'Submodules :: status'
           comamnd: |
             git submodule status
 
