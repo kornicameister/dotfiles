@@ -48,7 +48,8 @@ workflows:
     jobs:
       - submodules
       - shellcheck
-      - build_ubuntu:
+  build:
+    jobs:
+      - build_mint:
           requires:
             - submodules
-            - shellcheck
