@@ -33,9 +33,22 @@ jobs:
           command: |
             git submodule status
 
+  build_mint:
+    docker:
+      - image: vcatechnology/linux-mint:latest
+    steps:
+      - checkout
+      - run:
+          name: Run an installation
+          command: ./install "${CIRCLE_USERNAME}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"
+
 workflows:
   version: 2
   verify:
     jobs:
       - submodules
       - shellcheck
+      - build_ubuntu:
+          requires:
+            - submodules
+            - shellcheck
