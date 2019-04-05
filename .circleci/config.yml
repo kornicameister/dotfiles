@@ -33,9 +33,7 @@ jobs:
           command: |
             git submodule status
 
-  build_mint:
-    docker:
-      - image: linuxmintd/mint19-amd64:latest
+  build_steps: &build_steps
     steps:
       - checkout
       - run:
@@ -45,7 +43,23 @@ jobs:
       - run:
           name: Run an installation
           command: |
-            ./install "${CIRCLE_USERNAME}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"
+            ./install \
+              "${CIRCLE_USERNAME}" \
+              "${CIRCLE_BUILD_NUM}" \
+              "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"
+
+  build_mint:
+    docker:
+      - image: linuxmintd/mint19-amd64:latest
+    <<: *build_steps
+  build_ubuntu_19:
+    docker:
+      - image: ubuntu/19.04
+    <<: *build_steps
+  build_ubuntu_18_10:
+    docker:
+      - image: ubuntu/18.10
+    <<: *build_steps
 
 workflows:
   version: 2
@@ -56,3 +70,6 @@ workflows:
   build:
     jobs:
       - build_mint
+      - build_ubuntu_18_10
+      - build_ubuntu_19
+
