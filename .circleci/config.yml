@@ -1,12 +1,12 @@
 ---
 
-build_steps: &build_steps
+x-build-steps: &build_steps
   steps:
     - checkout
     - run:
         name: Checkout modules
         command: |
-          git submodules update --init --recursive --recommend-shallow
+          git submodule update --init --recursive --recommend-shallow
     - run:
         name: Run an installation
         command: |
