@@ -11,7 +11,11 @@ x-build-steps: &build_steps
     - run:
         name: Supply sudo alias
         command: |
-          alias sudo=""
+          cat << EOF > ${HOME}/.profile
+          function sudo() {
+            "$@"
+          }
+          EOF
     - run:
         name: Checkout modules
         command: |
