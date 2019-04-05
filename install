@@ -99,7 +99,7 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
         exit 1
     fi
 
-    echo "kornicameister/dotfiles: init"
+    echo "kornicameister/dotfiles: init for ${USERNAME}"
 
     execute_dotbot_pkg_install
     execute_dotbot_config_install

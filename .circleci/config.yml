@@ -39,8 +39,13 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Checkout modules
+          command: |
+            git submodules update --init --recursive --recommend-shallow
+      - run:
           name: Run an installation
-          command: ./install "${CIRCLE_USERNAME}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"
+          command: |
+            ./install "${CIRCLE_USERNAME}" "${CIRCLE_BUILD_NUM}" "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"
 
 workflows:
   version: 2
