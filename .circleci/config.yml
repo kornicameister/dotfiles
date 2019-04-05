@@ -35,7 +35,7 @@ jobs:
 
   build_mint:
     docker:
-      - image: vcatechnology/linux-mint:latest
+      - image: linuxmintd/mint19-amd64:latest
     steps:
       - checkout
       - run:
