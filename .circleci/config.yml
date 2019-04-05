@@ -66,11 +66,11 @@ jobs:
     <<: *build_steps
   build_ubuntu_19:
     docker:
-      - image: ubuntu/19.04
+      - image: ubuntu:19.04
     <<: *build_steps
   build_ubuntu_18_10:
     docker:
-      - image: ubuntu/18.10
+      - image: ubuntu:18.10
     <<: *build_steps
 
 workflows:
