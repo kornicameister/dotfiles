@@ -13,7 +13,10 @@ jobs:
             find bin/ -type f | xargs shellcheck --external-sources
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources
-    submodules:
+
+  submodules:
+    machine: true
+    steps:
       - checkout
       - run:
           name: Checkout submodules
