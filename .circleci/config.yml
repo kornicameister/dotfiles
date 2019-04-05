@@ -13,9 +13,16 @@ jobs:
             find bin/ -type f | xargs shellcheck --external-sources
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources
+    submodules:
+      - checkout
+      - run:
+          name: Checkout submodules
+          command: |
+            git submodule update --init --recursive
 
 workflows:
   version: 2
   verify:
     jobs:
+      - submodules
       - shellcheck
