@@ -6,7 +6,7 @@ x-build-steps: &build_steps
     - run:
         name: Install git, if not there
         command: |
-          sudo apt-get install git -y
+          apt-get install git -y
     - run:
         name: Checkout modules
         command: |
