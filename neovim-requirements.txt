@@ -2,7 +2,7 @@ msgpack==0.6.1
 neovim==0.3.1
 yapf==0.27.0
 jedi==0.13.3
-pip==19..3
+pip==19.0.3
 setuptools==40.9.0
 wakatime==10.8.2
 mypy==0.700; python_version >= '3.0'
