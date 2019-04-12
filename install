@@ -101,6 +101,7 @@ install_packages() {
         wget \
         curl \
         git \
+        git-lfs \
         zsh \
         ccache \
         tree \
