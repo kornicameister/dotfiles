@@ -47,4 +47,6 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 zstyle ':prezto:module:autosuggestions:color' found 'fg=6'
 
 zstyle ':prezto:module:terminal' auto-title 'yes'
+
 zstyle ':prezto:module:utility' safe-ops 'yes'
+zstyle ':prezto:module:utility:ls' dirs-first 'yes'
