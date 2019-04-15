@@ -15,6 +15,7 @@ zstyle ':prezto:load' pmodule \
   'ssh' \
   'completion' \
   'git' \
+  'fasd' \
   'gpg' \
   'python' \
   'node' \
