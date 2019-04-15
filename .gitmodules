@@ -6,7 +6,7 @@
 	url = https://github.com/junegunn/fzf.git
 [submodule "dependencies/prezto"]
 	path = dependencies/prezto
-	url = https://github.com/sorin-ionescu/prezto.git
+	url = https://github.com/kornicameister/prezto.git
 [submodule "dependencies/zgen"]
 	path = dependencies/zgen
 	url = https://github.com/tarjoilija/zgen.git
@@ -25,3 +25,6 @@
 [submodule "dependencies/t"]
 	path = dependencies/t
 	url = https://github.com/sjl/t
+[submodule "dependencies/prezto-contrib"]
+	path = dependencies/prezto-contrib
+	url = https://github.com/belak/prezto-contrib.git
