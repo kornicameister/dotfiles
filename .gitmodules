@@ -25,6 +25,3 @@
 [submodule "dependencies/t"]
 	path = dependencies/t
 	url = https://github.com/sjl/t
-[submodule "dependencies/prezto-contrib"]
-	path = dependencies/prezto-contrib
-	url = https://github.com/belak/prezto-contrib.git
