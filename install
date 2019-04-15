@@ -14,6 +14,13 @@ USERNAME="${1:-""}"
 PASSWORD="${2:-""}"
 EMAIL="${3:-""}"
 
+# CI handling
+CI=${CI:-False}
+if [[ $CI ]]; then
+    sudo() {
+        "$@"
+    }
+fi
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
