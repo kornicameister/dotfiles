@@ -3,6 +3,7 @@ zstyle ':prezto:*:*' color 'yes'
 
 # Set the Prezto modules to load (browse modules).
 # The order matters.
+zstyle ':prezto:load' pmodule-dirs $HOME/.dotfiles/dependencies/prezto-contrib/
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
@@ -13,7 +14,6 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'ssh' \
   'completion' \
-  'fasd' \
   'git' \
   'gpg' \
   'python' \
@@ -23,7 +23,10 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'autosuggestions' \
   'command-not-found' \
-  'prompt'
+  'contrib-clipboard' \
+  'contrib-prompt' \
+  'prompt' \
+  'enhancd'
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -50,3 +53,6 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 
 zstyle ':prezto:module:utility' safe-ops 'yes'
 zstyle ':prezto:module:utility:ls' dirs-first 'yes'
+
+zstyle ':prezto:module:enhancd' command 'cd'
+zstyle ':prezto:module:enhancd' filter 'fzf'
