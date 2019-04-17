@@ -5,4 +5,4 @@ jedi==0.13.3
 pip==19.0.3
 setuptools==41.0.0
 wakatime==10.8.2
-mypy==0.700; python_version >= '3.0'
+mypy==0.701; python_version >= '3.0'
