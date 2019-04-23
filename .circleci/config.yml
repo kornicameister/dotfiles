@@ -9,7 +9,7 @@ jobs:
           name: Install git & openssh
           command: |
             apk update
-            apk add git openssh
+            apk add git openssh-client
       - checkout
       - run:
           name: Check Scripts
