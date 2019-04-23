@@ -2,16 +2,20 @@
 
 x-build-steps: &build_steps
   steps:
-    - checkout
     - run:
         name: Install git, if not there
         command: |
           apt-get update -qq
           apt-get install git -y
+    - checkout
     - run:
         name: Configure timezone
         command: |
           ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+    - run:
+        name: Configure keyboard
+        command: |
+          loadkeys us
     - run:
         name: Checkout modules
         command: |
