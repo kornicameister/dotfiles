@@ -18,6 +18,41 @@ EMAIL="${3:-""}"
 TRUE=1
 FALSE=0
 
+# helper functions
+_is_distro() {
+    local distro_name
+    local expected_distro
+
+    expected_distro=$(echo $1 | tr '[:upper:]' '[:lower:]')
+    distro_name=$(lsb_release -a 2>/dev/null | grep -i Description | tr '[:upper:]' '[:lower:]' | awk -F':' '{print $2}' | tr -d '[:space:]')
+    if [[ $distro_name =~ .*$expected_distro.* ]]; then
+        echo $TRUE
+    else
+        echo $FALSE
+    fi
+}
+
+_welcome_message() {
+    local distro_welcome
+    local first_run_welcome
+
+    if (($IS_LINUX_MINT)); then
+        distro_welcome="[Linux Mint]"
+    elif (($IS_LINUX_UBUNTU)); then
+        distro_welcome="[Linux Ubuntu]"
+    else
+        distro_welcome="[Unknown distro]"
+    fi
+
+    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+        first_run_welcome="kornicameister/dotfiles - first run"
+    else
+        first_run_welcome="kornicameister/dotfiles - updating"
+    fi
+
+    echo "${distro_welcome} : ${first_run_welcome} : ${USERNAME}"
+}
+
 # CI handling
 CI=${CI:-False}
 if [[ $CI ]]; then
@@ -88,41 +123,6 @@ setup_nvim_as_default_editor() {
     sudo update-alternatives --set editor /usr/bin/nvim
 }
 
-# helper functions
-_is_distro() {
-    local distro_name
-    local expected_distro
-
-    expected_distro=$(echo $1 | tr '[:upper:]' '[:lower:]')
-    distro_name=$(lsb_release -a 2>/dev/null | grep -i Description | tr '[:upper:]' '[:lower:]' | awk -F':' '{print $2}' | tr -d '[:space:]')
-    if [[ $distro_name =~ .*$expected_distro.* ]]; then
-        echo $TRUE
-    else
-        echo $FALSE
-    fi
-}
-
-_welcome_message() {
-    local distro_welcome
-    local first_run_welcome
-
-    if (($IS_LINUX_MINT)); then
-        distro_welcome="[Linux Mint]"
-    elif (($IS_LINUX_UBUNTU)); then
-        distro_welcome="[Linux Ubuntu]"
-    else
-        distro_welcome="[Unknown distro]"
-    fi
-
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
-        first_run_welcome="kornicameister/dotfiles - first run"
-    else
-        first_run_welcome="kornicameister/dotfiles - updating"
-    fi
-
-    echo "${distro_welcome} : ${first_run_welcome} : ${USERNAME}"
-}
-
 _welcome_message
 
 if [ ! -d "${BASEDIR}/dependencies" ]; then
@@ -130,8 +130,6 @@ if [ ! -d "${BASEDIR}/dependencies" ]; then
 fi
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
-    echo "kornicameister/dotfiles - first run"
-
     args=("$@")
     argsCount=${#args[@]}
     if [ "${argsCount}" -ne 3 ]; then
