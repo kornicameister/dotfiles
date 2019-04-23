@@ -9,13 +9,9 @@ x-build-steps: &build_steps
           apt-get update -qq
           apt-get install git -y
     - run:
-        name: Supply sudo alias
+        name: Configure timezone
         command: |
-          cat << EOF > ${HOME}/.profile
-          function sudo() {
-            "$@"
-          }
-          EOF
+          ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
     - run:
         name: Checkout modules
         command: |
