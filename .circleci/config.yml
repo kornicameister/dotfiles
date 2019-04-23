@@ -3,10 +3,10 @@
 x-build-steps: &build_steps
   steps:
     - run:
-        name: Install git, if not there
+        name: Install prerequistes
         command: |
           apt-get update -qq
-          apt-get install git -y
+          apt-get install git console-data -y
     - checkout
     - run:
         name: Configure timezone
