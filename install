@@ -121,7 +121,8 @@ install_packages() {
         automake \
         xclip \
         ppa-purge \
-        ruby-dev
+        ruby-dev \
+        bikeshed
 
     # packages needed to build python with pyenv
     sudo aptitude install -y -V -D -Z \
