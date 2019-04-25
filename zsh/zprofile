@@ -3,7 +3,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 export PAGER='less'
-export EDITOR="vim -p"
+export EDITOR="nvim"
 export VISUAL="${EDITOR}"
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
