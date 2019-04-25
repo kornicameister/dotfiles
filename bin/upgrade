@@ -95,7 +95,14 @@ snap_refresh() {
     fi
 }
 
+remove_unwanted_kernels() {
+    if command -v purge-old-kernels 2>&1; then
+        sudo purge-old-kernels -qy
+    fi
+}
+
 os_upgrade
+remove_unwanted_kernels
 docker_compose_upgrade
 hadolint_upgrade
 pyenv_upgrade
