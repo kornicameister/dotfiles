@@ -15,7 +15,8 @@ x-build-steps: &build_steps
     - run:
         name: Configure keyboard
         command: |
-          loadkeys us
+          export LANG=en_US.UTF-8
+          localectl set-keymap us
     - run:
         name: Checkout modules
         command: |
