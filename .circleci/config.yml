@@ -17,6 +17,8 @@ x-build-steps: &build_steps
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
           apt-get install tzdata -yqq
           dpkg-reconfigure -f noninteractive tzdata
+
+          L='us' && sudo sed -i 's/XKBLAYOUT=\"\w*"/XKBLAYOUT=\"'$L'\"/g' /etc/default/keyboard
     - checkout
     - run:
         name: Checkout modules
