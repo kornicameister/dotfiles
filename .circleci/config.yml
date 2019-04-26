@@ -6,17 +6,15 @@ x-build-steps: &build_steps
         name: Install prerequistes
         command: |
           apt-get update -qq
-          apt-get install git locales -y
-          apt-get clean
-    - checkout
+          apt-get install git locales -yqq
+          apt-get autoclean -yqq
+          apt-get autoremove -yqq
     - run:
-        name: Configure timezone
-        command: |
-          ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
-    - run:
-        name: Configure locale
+        name: Configure timezone & timezone
         command: |
           locale-gen en_US.UTF-8
+          ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+    - checkout
     - run:
         name: Checkout modules
         command: |
