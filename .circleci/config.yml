@@ -6,7 +6,7 @@ x-build-steps: &build_steps
         name: Install prerequistes
         command: |
           apt-get update -qq
-          apt-get install git locales -yqq
+          apt-get install git locales tzdata -yqq
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - run:
@@ -14,8 +14,7 @@ x-build-steps: &build_steps
         command: |
           locale-gen en_US.UTF-8
 
-          rm -rf /etc/timezone
-          echo "Europe/Warsaw" > /etc/timezone
+          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
           dpkg-reconfigure -f noninteractive tzdata
     - checkout
     - run:
