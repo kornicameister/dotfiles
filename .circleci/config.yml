@@ -13,7 +13,10 @@ x-build-steps: &build_steps
         name: Configure timezone & timezone
         command: |
           locale-gen en_US.UTF-8
-          ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+
+          rm -rf /etc/timezone
+          echo "Europe/Warsaw" > /etc/timezone
+          dpkg-reconfigure -f noninteractive tzdata
     - checkout
     - run:
         name: Checkout modules
