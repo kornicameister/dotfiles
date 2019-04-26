@@ -6,18 +6,17 @@ x-build-steps: &build_steps
         name: Install prerequistes
         command: |
           apt-get update -qq
-          apt-get install git -y
+          apt-get install git locales -y
+          apt-get clean
     - checkout
     - run:
         name: Configure timezone
         command: |
           ln -s /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
     - run:
-        name: Configure keyboard
+        name: Configure locale
         command: |
-          export LANG=en_US.UTF-8
-          localectl set-locale en_US.utf8
-          localectl set-keymap us
+          locale-gen en_US.UTF-8
     - run:
         name: Checkout modules
         command: |
