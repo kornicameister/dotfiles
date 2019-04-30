@@ -27,7 +27,8 @@ zstyle ':prezto:load' pmodule \
   'contrib-clipboard' \
   'contrib-prompt' \
   'prompt' \
-  'enhancd'
+  'enhancd' \
+  'alias-tips'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
