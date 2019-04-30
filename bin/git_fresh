@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if ! command -v git >/dev/null 2>&1; then
+    echo "git is required to run fshow"
+    exit 1
+fi
+
+git fetch --all ; \
+    git checkout origin/master ; \
+    git branch -D master ; \
+    git checkout -b master ; \
+    git branch -u origin/master ; \
+    git submodule update --init --recursive

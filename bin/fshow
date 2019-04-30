@@ -3,7 +3,7 @@
 # Fancy git commit browser
 
 if ! command -v git >/dev/null 2>&1; then
-    echo "docker is required to run fshow"
+    echo "git is required to run fshow"
     exit 1
 fi
 
