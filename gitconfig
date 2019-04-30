@@ -24,6 +24,7 @@
     remotes = remote -v
     commits = ! fshow
     fixup = commit --fixup
+    fresh =  ! git_fresh
 
 [apply]
 
