@@ -3,6 +3,10 @@
 x-build-steps: &build_steps
   steps:
     - run:
+        name: Set DEBIAN_FRONTEND
+        command: |
+          export DEBIAN_FRONTEND=noninteractive
+    - run:
         name: Install prerequistes
         command: |
           apt-get update -qq
