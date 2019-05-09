@@ -2,7 +2,9 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
+INSTALL_CONFIG="install.conf.yaml"
+PKG_CONFIG="pkg.install.conf.yaml"
+
 DOTBOT_DIR="dotbot"
 
 DOTBOT_BIN="bin/dotbot"
@@ -17,7 +19,18 @@ execute_dotbot() {
     cd "${BASEDIR}"
     git submodule update --init --quiet --recursive "${DOTBOT_DIR}"
 
-    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}"
+    # install APT packages that are needed
+    sudo -EH \
+        "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
+        -v \
+        -d "${BASEDIR}" \
+        -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
+        -c "${PKG_CONFIG}"
+    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
+        -v \
+        -d "${BASEDIR}" \
+        -c "${INSTALL_CONFIG}"
+
 }
 
 setup_git() {
@@ -59,12 +72,6 @@ setup_nvim_as_default_editor() {
 }
 
 install_docker() {
-    sudo aptitude install -y -V -D -Z \
-        apt-transport-https \
-        ca-certificates \
-        curl \
-        software-properties-common
-
     sudo aptitude remove \
         docker-ce \
         docker \
@@ -83,52 +90,15 @@ install_docker() {
 
 install_packages() {
     sudo apt-get update -q
-    sudo apt install aptitude software-properties-common python-software-properties -y -q
 
-    # add some necessary ppas for latest version of packages
-    # 1. git
-    sudo add-apt-repository ppa:git-core/ppa -y
     # 2. google chrome
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
-    # 3. super new neovim
-    sudo add-apt-repository ppa:neovim-ppa/stable -y
-    # 4. tlp for battery optimal usage
-    sudo add-apt-repository ppa:linrunner/tlp -y
 
     sudo aptitude update -q -y
     sudo aptitude install -y -V -D -Z \
-        wget \
-        curl \
-        git \
-        git-lfs \
-        zsh \
-        ccache \
-        tree \
-        neovim \
-        silversearcher-ag \
-        gnupg2 \
-        shellcheck \
-        htop \
-        tig \
-        aria2 \
-        preload \
-        httpie \
         google-chrome-unstable \
-        git-extras \
-        terminator \
-        autoconf \
-        automake \
-        xclip \
-        ppa-purge \
-        ruby-dev \
         bikeshed
-
-    # packages needed to build python with pyenv
-    sudo aptitude install -y -V -D -Z \
-        make build-essential libssl-dev zlib1g-dev libbz2-dev \
-        libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-        xz-utils tk-dev libffi-dev liblzma-dev
 
     # tlp packages & start
     sudo aptitude install -y -V -D -Z \

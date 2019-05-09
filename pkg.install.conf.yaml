@@ -1,0 +1,74 @@
+# must have stuff
+- aptget:
+    [
+      aptitude,
+      software-properties-common,
+      python-software-properties,
+      wget,
+      curl,
+      gnupg2,
+      autoconf,
+      automake,
+      xclip,
+    ]
+
+# docker requires
+- aptget: [apt-transport-https, ca-certificates]
+
+# pyenv requires:
+- aptget:
+    [
+      ccache,
+      make,
+      build-essential,
+      libssl-dev,
+      zlib1g-dev,
+      libbz2-dev,
+      libreadline-dev,
+      libsqlite3-dev,
+      llvm,
+      libncurses5-dev,
+      libncursesw5-dev,
+      xz-utils,
+      tk-dev,
+      libffi-dev,
+      liblzma-dev,
+    ]
+
+# linting sqls requires
+- aptget: ruby-dev
+- shell:
+    description: Install sqlint if 'gem' available
+    command: |
+      if [ command -v gem >/dev/null 2>&1 ]; then
+        gem install sqlint
+      fi
+
+# my stuff - ppa
+- aptget:
+    git:
+      ppa_source: ppa:git-core/ppa
+      upgrade: true
+    neovim:
+      ppa_source: ppa:neovim-ppa/stable
+      upgrade: true
+    tlp:
+      ppa_source: ppa:linrunner/tlp
+      upgrade: true
+# my stuff
+- aptget:
+    [
+      zsh,
+      git-lfs,
+      git-extras,
+      httpie,
+      tree,
+      silversearcher-ag,
+      shellcheck,
+      tig,
+      aria2,
+      preload,
+      terminator,
+      ppa-purge,
+      bikeshed,
+    ]
