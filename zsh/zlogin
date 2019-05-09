@@ -17,5 +17,3 @@
   fi
 
 } >&2
-
-pyenv update

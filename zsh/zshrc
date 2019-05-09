@@ -20,4 +20,3 @@ if ! zgen saved; then
     zgen load sobolevn/wakatime-zsh-plugin
     zgen save
 fi
-
