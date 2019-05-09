@@ -4,5 +4,5 @@ yapf==0.27.0
 jedi==0.13.3
 pip==19.1.1
 setuptools==41.0.1
-wakatime==10.8.4
+wakatime==11.0.0
 mypy==0.701; python_version >= '3.0'
