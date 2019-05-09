@@ -4,12 +4,14 @@ export ZDOTDIR=$HOME
 export TERM="xterm-256color"
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 
+# load all necessary completion and init stuff
 [ -f ~/.zgen/zgen.zsh ] && source ~/.zgen/zgen.zsh
 [ -f ~/.zprezto/init.zsh ] && source ~/.zprezto/init.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf.settings ] && source ~/.fzf.settings
 [ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
 [ -f ~/.t.sh ] && source ~/.t.sh
+
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 # load local customizations
@@ -20,3 +22,4 @@ if ! zgen saved; then
     zgen load sobolevn/wakatime-zsh-plugin
     zgen save
 fi
+
