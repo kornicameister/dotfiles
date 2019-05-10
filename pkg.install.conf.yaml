@@ -1,9 +1,9 @@
+---
 # must have stuff
 - aptget:
     [
       aptitude,
       software-properties-common,
-      python-software-properties,
       wget,
       curl,
       gnupg2,
@@ -14,6 +14,10 @@
 
 # docker requires
 - aptget: [apt-transport-https, ca-certificates]
+- shell:
+    - description: Install docker
+      command: .installer/install_docker.sh
+      quiet: false
 
 # pyenv requires:
 - aptget:
@@ -38,14 +42,21 @@
 # linting sqls requires
 - aptget: ruby-dev
 - shell:
-    description: Install sqlint if 'gem' available
-    command: |
-      if [ command -v gem >/dev/null 2>&1 ]; then
-        gem install sqlint
-      fi
-      
+    - command: command -v gem >/dev/null 2>&1 && gem install sqlint
+      description: Install sqlint if 'gem' available
+      quiet: false
+
 # linting yaml requires
 - aptget: yamllint
+
+# browsers
+- aptget: firefox
+- shell:
+    - description: Install google-chrome-unstable
+      command: .installer/install_chrome.sh
+      quiet: false
+    - description: Install brave-browser-beta
+      command: .installer/install_brave.sh
 
 # my stuff - ppa
 - aptget:
@@ -53,11 +64,12 @@
       ppa_source: ppa:git-core/ppa
       upgrade: true
     neovim:
-      ppa_source: ppa:neovim-ppa/stable
+      ppa_source: ppa:neovim-ppa/unstable
       upgrade: true
     tlp:
       ppa_source: ppa:linrunner/tlp
       upgrade: true
+
 # my stuff
 - aptget:
     [
@@ -74,4 +86,11 @@
       terminator,
       ppa-purge,
       bikeshed,
+      tlp-rdw,
+      indicator-cpufreq,
     ]
+
+# start some services at the end
+- shell:
+    - description: Start TLP service
+      command: command -v tlp >/dev/null 2>&1 && tlp start

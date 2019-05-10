@@ -15,22 +15,24 @@ PASSWORD="${2:-""}"
 EMAIL="${3:-""}"
 
 
-execute_dotbot() {
-    cd "${BASEDIR}"
-    git submodule update --init --quiet --recursive "${DOTBOT_DIR}"
-
-    # install APT packages that are needed
+execute_dotbot_pkg_install() {
+    pushd "${BASEDIR}"
     sudo -EH \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
         -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
         -c "${PKG_CONFIG}"
+    pushd "${BASEDIR}"
+}
+
+execute_dotbot_config_install() {
+    pushd "${BASEDIR}"
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
         -c "${INSTALL_CONFIG}"
-
+    popd
 }
 
 setup_git() {
@@ -71,45 +73,9 @@ setup_nvim_as_default_editor() {
     sudo update-alternatives --set editor /usr/bin/nvim
 }
 
-install_docker() {
-    sudo aptitude remove \
-        docker-ce \
-        docker \
-        docker-engine \
-        docker.io -y -V -D -Z
-
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    wget -qO- https://get.docker.com/ | sh
-
-    local compose_version
-    compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
-
-    sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose"
-    sudo chmod +x /usr/local/bin/docker-compose
-}
-
-install_packages() {
-    sudo apt-get update -q
-
-    # 2. google chrome
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
-
-    sudo aptitude update -q -y
-    sudo aptitude install -y -V -D -Z \
-        google-chrome-unstable \
-        bikeshed
-
-    # tlp packages & start
-    sudo aptitude install -y -V -D -Z \
-        tlp tlp-rdw indicator-cpufreq && \
-        sudo tlp start
-
-    # tool needed by ALE to lint sqls
-    if command -v gem >/dev/null 2>&1; then
-        sudo -EH gem install sqlint
-    fi
-}
+if [ ! -d "${BASEDIR}/dependencies" ]; then
+    git submodule update --init --recursive
+fi
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
     echo "kornicameister/dotfiles - first run"
@@ -135,15 +101,14 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
 
     echo "kornicameister/dotfiles: init"
 
-    install_packages
-    install_docker
     setup_git
     setup_nvim_as_default_editor
-    execute_dotbot
+    execute_dotbot_pkg_install
+    execute_dotbot_config_install
 else
     echo "kornicameister/dotfiles : update"
 
-    execute_dotbot
+    execute_dotbot_config_install
     (pyenv update ; pyenv rehash)
     (nodenv update ; nodenv rehash)
 fi
