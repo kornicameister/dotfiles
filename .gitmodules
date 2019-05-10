@@ -28,3 +28,6 @@
 [submodule "dependencies/prezto-contrib"]
 	path = dependencies/prezto-contrib
 	url = https://github.com/belak/prezto-contrib.git
+[submodule "dependencies/dotbot_plugin_aptget"]
+	path = dependencies/dotbot_plugin_aptget
+	url = https://github.com/dein0s/dotbot_plugin_aptget.git
