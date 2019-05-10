@@ -24,7 +24,7 @@
     ~/.gitconfig:
       path: gitconfig
       if: |
-        [[ ${CI:-False} ]] && exit 1 || exit 0
+        [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
 
     # zsh stuff
