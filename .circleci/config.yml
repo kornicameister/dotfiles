@@ -64,18 +64,18 @@ jobs:
           command: |
             git submodule status
 
-  build_mint:
-    docker:
-      - image: linuxmintd/mint19-amd64:latest
-    <<: *build_steps
   build_ubuntu_19:
     docker:
       - image: ubuntu:19.04
     <<: *build_steps
-  build_ubuntu_18_10:
-    docker:
-      - image: ubuntu:18.10
-    <<: *build_steps
+    # build_ubuntu_18_10:
+    #   docker:
+    #     - image: ubuntu:18.10
+    #   <<: *build_steps
+    # build_mint:
+    #   docker:
+    #     - image: linuxmintd/mint19-amd64:latest
+    #   <<: *build_steps
 
 workflows:
   version: 2
