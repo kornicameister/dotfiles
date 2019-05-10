@@ -39,9 +39,9 @@ _welcome_message() {
     local distro_welcome
     local first_run_welcome
 
-    if (($IS_LINUX_MINT)); then
+    if ((IS_LINUX_MINT)); then
         distro_welcome="[Linux Mint]"
-    elif (($IS_LINUX_UBUNTU)); then
+    elif ((IS_LINUX_UBUNTU)); then
         distro_welcome="[Linux Ubuntu]"
     else
         distro_welcome="[Unknown distro]"
@@ -104,13 +104,13 @@ setup_git() {
 
     # generating GPK key to sign the commits
     cat >"${key_config}" <<EOF
-    Key-Type: ${key_type}
-    Key-Length: ${key_strength}
-    Name-Real: ${GPG_FULL_NAME}
-    Name-Comment: ${USERNAME} GPG key generated with dotfiles
-    Name-Email: ${EMAIL}
-    Expire-Date: 0
-    Passphrase: ${GPG_PASSPHRASE}
+Key-Type: ${key_type}
+Key-Length: ${key_strength}
+Name-Real: ${GPG_FULL_NAME}
+Name-Comment: ${USERNAME} GPG key generated with dotfiles
+Name-Email: ${EMAIL}
+Expire-Date: 0
+Passphrase: ${GPG_PASSPHRASE}
 EOF
     gpg2 --full-gen-key "${key_config}"
     rm -rf "${key_config}"
