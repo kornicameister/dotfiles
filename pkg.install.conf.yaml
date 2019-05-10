@@ -94,4 +94,4 @@
 # start some services at the end
 - shell:
     - description: Start TLP service
-      command: command -v tlp >/dev/null 2>&1 && tlp start
+      command: command -v tlp >/dev/null 2>&1 && tlp start || echo 'Meh...'

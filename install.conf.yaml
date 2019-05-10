@@ -6,8 +6,6 @@
 - clean: ["~"]
 
 - shell:
-    - command: mkdir -p $HOME/.local/bin
-      description: Create directory for local binaries
     - command: ./pre-install
 
 - link:
@@ -21,9 +19,15 @@
     ~/.config/nvim: nvim
 
     # git stuff
-    ~/.gitignore: gitignore
-    ~/.gitconfig: gitconfig
-    ~/.git_template: git_template
+    ~/.gitignore:
+      path: gitignore
+      force: true
+    ~/.gitconfig:
+      path: gitconfig
+      force: true
+    ~/.git_template:
+      path: git_template
+      force: true
 
     # zsh stuff
     ~/.zshrc: zsh/zshrc
@@ -56,11 +60,14 @@
     ~/.local/bin/t: dependencies/t/t.py
 
     # custom application configuration
-    ~/.config/terminator: config/terminator
+    ~/.config/terminator:
+      path: config/terminator
+      create: true
 
     # custom binaries
     ~/.local/bin:
       glob: true
+      create: true
       path: bin/*
 
 - shell:
