@@ -85,6 +85,6 @@ workflows:
       - shellcheck
   build:
     jobs:
-      - build_mint
-      - build_ubuntu_18_10
       - build_ubuntu_19
+        # - build_ubuntu_18_10
+        # - build_mint
