@@ -9,7 +9,8 @@ x-build-steps: &build_steps
         name: Install prerequistes
         command: |
           apt-get update -qq
-          apt-get install git locales python3.7  -yqq
+          apt-get install apt-utils -yqq
+          apt-get install git locales python3 python2  -yqq
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - run:
