@@ -1,6 +1,7 @@
 ---
 x-build-steps: &build_steps
   steps:
+    - checkout
     - run:
         name: Set DEBIAN_FRONTEND
         command: |
@@ -18,7 +19,6 @@ x-build-steps: &build_steps
         name: Configure timezone & timezone
         command: |
           debconf-set-selections .circleci/locale_preset
-    - checkout
     - run:
         name: Checkout modules
         command: |
