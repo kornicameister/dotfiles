@@ -14,6 +14,9 @@ USERNAME="${1:-""}"
 PASSWORD="${2:-""}"
 EMAIL="${3:-""}"
 
+GPG_FULL_NAME="${4:-""}"
+GPG_PASSPHRASE="${5:-""}"
+
 # boolean variables
 TRUE=1
 FALSE=0
@@ -95,12 +98,26 @@ setup_git() {
         -f "${HOME}/.ssh/github" \
         -N "${PASSWORD}"
 
+    key_type="rsa"
+    key_strength=4096
+    key_config=$(mktemp)
+
     # generating GPK key to sign the commits
-    gpg2 --full-gen-key
+    cat >"${key_config}" <<EOF
+    Key-Type: ${key_type}
+    Key-Length: ${key_strength}
+    Name-Real: ${GPG_FULL_NAME}
+    Name-Comment: ${USERNAME} GPG key generated with dotfiles
+    Name-Email: ${EMAIL}
+    Expire-Date: 0
+    Passphrase: ${GPG_PASSPHRASE}
+EOF
+    gpg2 --full-gen-key "${key_config}"
+    rm -rf "${key_config}"
 
     # assumed the highest rsa length:
     local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
+    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
 
     cat > "${HOME}/.gitconfig.local" << EOF
 [user]
