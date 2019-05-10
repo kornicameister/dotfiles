@@ -15,6 +15,10 @@ x-build-steps: &build_steps
             -yqq --no-install-recommends
           apt-get autoclean -yqq
           apt-get autoremove -yqq
+    - run:
+        name: Turn-off GIT certificates
+        command: |
+          git config --global http.sslverify false
     - checkout
     - run:
         name: Configure timezone & timezone
