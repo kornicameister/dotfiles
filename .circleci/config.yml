@@ -1,9 +1,8 @@
 ---
 x-build-steps: &build_steps
   steps:
-    - checkout
     - run:
-        name: Set DEBIAN_FRONTEND
+        name: Set required env variables
         command: |
           export DEBIAN_FRONTEND=noninteractive
           export DEBCONF_NONINTERACTIVE_SEEN=true
@@ -13,9 +12,10 @@ x-build-steps: &build_steps
           apt-get update -qq
           apt-get install apt-utils -yqq
           apt-get install git locales python3 python3-apt python2 \
-            -y --no-install-recommends
+            -yqq --no-install-recommends
           apt-get autoclean -yqq
           apt-get autoremove -yqq
+    - checkout
     - run:
         name: Configure timezone & timezone
         command: |
@@ -31,6 +31,9 @@ x-build-steps: &build_steps
           DEBIAN_FRONTEND=noninteractive \
             DEBCONF_NONINTERACTIVE_SEEN=true \
             apt-get install tzdata -y --no-install-recommends
+
+          apt-get autoclean -yqq
+          apt-get autoremove -yqq
     - run:
         name: Checkout modules
         command: |
