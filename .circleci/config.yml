@@ -29,6 +29,8 @@ x-build-steps: &build_steps
           echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
           echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
 
+          echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | debconf-set-selections
+
           locale-gen en_US.UTF-8
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 
@@ -45,7 +47,9 @@ x-build-steps: &build_steps
     - run:
         name: Run an installation
         command: |
-          ./install \
+          DEBIAN_FRONTEND=noninteractive \
+            DEBCONF_NONINTERACTIVE_SEEN=true \
+            ./install \
             "${CIRCLE_USERNAME}" \
             "${CIRCLE_BUILD_NUM}" \
             "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"

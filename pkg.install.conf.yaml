@@ -57,6 +57,7 @@
       quiet: false
     - description: Install brave-browser-beta
       command: .installer/install_brave.sh
+      quiet: false
 
 # my stuff - ppa
 - aptget:
