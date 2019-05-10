@@ -101,10 +101,10 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
 
     echo "kornicameister/dotfiles: init"
 
-    setup_git
-    setup_nvim_as_default_editor
     execute_dotbot_pkg_install
     execute_dotbot_config_install
+    setup_git
+    setup_nvim_as_default_editor
 else
     echo "kornicameister/dotfiles : update"
 
