@@ -1,5 +1,4 @@
 ---
-
 x-build-steps: &build_steps
   steps:
     - run:
@@ -38,7 +37,6 @@ x-build-steps: &build_steps
 
 version: 2
 jobs:
-
   shellcheck:
     docker:
       - image: nlknguyen/alpine-shellcheck:latest
@@ -66,21 +64,6 @@ jobs:
           command: |
             git submodule status
 
-  build_steps: &build_steps
-    steps:
-      - checkout
-      - run:
-          name: Checkout modules
-          command: |
-            git submodules update --init --recursive --recommend-shallow
-      - run:
-          name: Run an installation
-          command: |
-            ./install \
-              "${CIRCLE_USERNAME}" \
-              "${CIRCLE_BUILD_NUM}" \
-              "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}"
-
   build_mint:
     docker:
       - image: linuxmintd/mint19-amd64:latest
@@ -105,4 +88,3 @@ workflows:
       - build_mint
       - build_ubuntu_18_10
       - build_ubuntu_19
-
