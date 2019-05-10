@@ -1,6 +1,7 @@
 ---
 - defaults:
     link:
+      create: true
       relink: true
 
 - clean: ["~"]
@@ -19,15 +20,12 @@
     ~/.config/nvim: nvim
 
     # git stuff
-    ~/.gitignore:
-      path: gitignore
-      force: true
+    ~/.gitignore: gitignore
     ~/.gitconfig:
       path: gitconfig
-      force: true
-    ~/.git_template:
-      path: git_template
-      force: true
+      if: |
+        [[ ${CI:-False} ]] && exit 1 || exit 0
+    ~/.git_template: git_template
 
     # zsh stuff
     ~/.zshrc: zsh/zshrc
@@ -60,14 +58,11 @@
     ~/.local/bin/t: dependencies/t/t.py
 
     # custom application configuration
-    ~/.config/terminator:
-      path: config/terminator
-      create: true
+    ~/.config/terminator: config/terminator
 
     # custom binaries
     ~/.local/bin:
       glob: true
-      create: true
       path: bin/*
 
 - shell:
