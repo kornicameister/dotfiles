@@ -43,6 +43,9 @@
       if [ command -v gem >/dev/null 2>&1 ]; then
         gem install sqlint
       fi
+      
+# linting yaml requires
+- aptget: yamllint
 
 # my stuff - ppa
 - aptget:
