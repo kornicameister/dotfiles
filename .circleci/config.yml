@@ -5,6 +5,7 @@ x-build-steps: &build_steps
         name: Set DEBIAN_FRONTEND
         command: |
           export DEBIAN_FRONTEND=noninteractive
+          export DEBCONF_NONINTERACTIVE_SEEN=true
     - run:
         name: Install prerequistes
         command: |
@@ -16,8 +17,7 @@ x-build-steps: &build_steps
     - run:
         name: Configure timezone & timezone
         command: |
-          locale-gen en_US.UTF-8
-          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+          debconf-set-selections .circleci/locale_preset
     - checkout
     - run:
         name: Checkout modules
