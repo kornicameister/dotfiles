@@ -67,7 +67,7 @@ IS_LINUX_UBUNTU=$(_is_distro "ubuntu")
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
-    sudo -EH \
+    sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
