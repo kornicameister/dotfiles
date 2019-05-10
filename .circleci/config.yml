@@ -91,14 +91,10 @@ jobs:
     docker:
       - image: ubuntu:18.10
     <<: *build_steps
-  build_debian:
+  build_mint:
     docker:
-      - image: debian:stable
+      - image: linuxmintd/mint19-amd64:latest
     <<: *build_steps
-    # build_mint:
-    #   docker:
-    #     - image: linuxmintd/mint19-amd64:latest
-    #   <<: *build_steps
 
 workflows:
   version: 2
@@ -110,5 +106,4 @@ workflows:
     jobs:
       - build_ubuntu_19
       - build_ubuntu_18_10
-      - build_debian
-        # - build_mint
+      - build_mint
