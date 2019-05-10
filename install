@@ -3,6 +3,7 @@
 set -e
 
 INSTALL_CONFIG="install.conf.yaml"
+INIT_CONFIG="init.install.conf.yaml"
 PKG_CONFIG="pkg.install.conf.yaml"
 
 DOTBOT_DIR="dotbot"
@@ -67,6 +68,11 @@ IS_LINUX_UBUNTU=$(_is_distro "ubuntu")
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
+    sudo \
+        "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
+        -v \
+        -d "${BASEDIR}" \
+        -c "${INIT_CONFIG}"
     sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
