@@ -1,0 +1,96 @@
+---
+# must have stuff
+- aptget:
+    [
+      aptitude,
+      software-properties-common,
+      wget,
+      curl,
+      gnupg2,
+      autoconf,
+      automake,
+      xclip,
+    ]
+
+# docker requires
+- aptget: [apt-transport-https, ca-certificates]
+- shell:
+    - description: Install docker
+      command: .installer/install_docker.sh
+      quiet: false
+
+# pyenv requires:
+- aptget:
+    [
+      ccache,
+      make,
+      build-essential,
+      libssl-dev,
+      zlib1g-dev,
+      libbz2-dev,
+      libreadline-dev,
+      libsqlite3-dev,
+      llvm,
+      libncurses5-dev,
+      libncursesw5-dev,
+      xz-utils,
+      tk-dev,
+      libffi-dev,
+      liblzma-dev,
+    ]
+
+# linting sqls requires
+- aptget: ruby-dev
+- shell:
+    - command: command -v gem >/dev/null 2>&1 && gem install sqlint
+      description: Install sqlint if 'gem' available
+      quiet: false
+
+# linting yaml requires
+- aptget: yamllint
+
+# browsers
+- aptget: firefox
+- shell:
+    - description: Install google-chrome-unstable
+      command: .installer/install_chrome.sh
+      quiet: false
+    - description: Install brave-browser-beta
+      command: .installer/install_brave.sh
+
+# my stuff - ppa
+- aptget:
+    git:
+      ppa_source: ppa:git-core/ppa
+      upgrade: true
+    neovim:
+      ppa_source: ppa:neovim-ppa/unstable
+      upgrade: true
+    tlp:
+      ppa_source: ppa:linrunner/tlp
+      upgrade: true
+
+# my stuff
+- aptget:
+    [
+      zsh,
+      git-lfs,
+      git-extras,
+      httpie,
+      tree,
+      silversearcher-ag,
+      shellcheck,
+      tig,
+      aria2,
+      preload,
+      terminator,
+      ppa-purge,
+      bikeshed,
+      tlp-rdw,
+      indicator-cpufreq,
+    ]
+
+# start some services at the end
+- shell:
+    - description: Start TLP service
+      command: command -v tlp >/dev/null 2>&1 && tlp start

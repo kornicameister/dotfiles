@@ -1,6 +1,6 @@
+---
 version: 2
 jobs:
-
   shellcheck:
     docker:
       - image: nlknguyen/alpine-shellcheck:latest
@@ -16,6 +16,7 @@ jobs:
           command: |
             shellcheck install post-install pre-install --external-sources
             find bin/ -type f | xargs shellcheck --external-sources
+            find .installer/ -type f | xargs shellcheck --external-sources
             find . -type f -name '*.sh' | wc -l
             find . -type f -name '*.sh' | xargs shellcheck --external-sources
 
@@ -24,11 +25,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: 'Submodules :: checkout'
+          name: "Submodules :: checkout"
           command: |
             git submodule update --init --recursive --recommend-shallow
       - run:
-          name: 'Submodules :: status'
+          name: "Submodules :: status"
           command: |
             git submodule status
 
