@@ -3,7 +3,6 @@
 set -e
 
 INSTALL_CONFIG="install.conf.yaml"
-INIT_CONFIG="init.install.conf.yaml"
 PKG_CONFIG="pkg.install.conf.yaml"
 
 DOTBOT_DIR="dotbot"
@@ -24,7 +23,7 @@ _is_distro() {
     local distro_name
     local expected_distro
 
-    expected_distro=$(echo $1 | tr '[:upper:]' '[:lower:]')
+    expected_distro=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
     distro_name=$(lsb_release -a 2>/dev/null | grep -i Description | tr '[:upper:]' '[:lower:]' | awk -F':' '{print $2}' | tr -d '[:space:]')
     if [[ $distro_name =~ .*$expected_distro.* ]]; then
         echo $TRUE
@@ -68,11 +67,6 @@ IS_LINUX_UBUNTU=$(_is_distro "ubuntu")
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
-    sudo \
-        "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
-        -v \
-        -d "${BASEDIR}" \
-        -c "${INIT_CONFIG}"
     sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
