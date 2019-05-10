@@ -16,12 +16,7 @@ x-build-steps: &build_steps
         name: Configure timezone & timezone
         command: |
           locale-gen en_US.UTF-8
-
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
-          apt-get install tzdata x11-xkb-utils -yqq
-          dpkg-reconfigure -f noninteractive tzdata
-
-          setxkbmap us
     - checkout
     - run:
         name: Checkout modules
