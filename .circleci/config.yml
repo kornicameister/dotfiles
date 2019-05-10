@@ -19,8 +19,12 @@ x-build-steps: &build_steps
     - run:
         name: Configure timezone & timezone
         command: |
-          debconf-set-selections .circleci/locale_preset
-          rm -rf /etc/timezone /etc/localtime
+          echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections
+          echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
+
+          echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
+          echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
+
           apt-get install tzdata -y --no-install-recommends
     - run:
         name: Checkout modules
