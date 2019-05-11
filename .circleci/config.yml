@@ -87,11 +87,11 @@ jobs:
 
   build_ubuntu_19:
     docker:
-      - image: ubuntu:19.04
+      - image: ubuntu:latest
     <<: *build_steps
   build_ubuntu_18_10:
     docker:
-      - image: ubuntu:18.10
+      - image: elementary/docker:latest
     <<: *build_steps
   build_mint:
     docker:

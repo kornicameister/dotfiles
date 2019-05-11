@@ -112,7 +112,7 @@ Name-Email: ${EMAIL}
 Expire-Date: 0
 Passphrase: ${GPG_PASSPHRASE}
 EOF
-    gpg2 --full-gen-key "${key_config}"
+    gpg2 --full-generate-key "${key_config}"
     rm -rf "${key_config}"
 
     # assumed the highest rsa length:
