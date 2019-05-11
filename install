@@ -17,38 +17,8 @@ EMAIL="${3:-""}"
 GPG_FULL_NAME="${4:-""}"
 GPG_PASSPHRASE="${5:-""}"
 
-# boolean variables
-TRUE=1
-FALSE=0
-
-# helper functions
-_is_distro() {
-    local distro_name
-    local expected_distro
-
-    expected_distro=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
-    distro_name=$(lsb_release -si)
-    if [[ $distro_name =~ .*$expected_distro.* ]]; then
-        echo $TRUE
-    else
-        echo $FALSE
-    fi
-}
-
 _welcome_message() {
-    local distro_welcome
-    local first_run_welcome
-
-    is_linux_mint=$(_is_distro "mint")
-    is_linux_ubuntu=$(_is_distro "ubuntu")
-
-    if ((is_linux_mint)); then
-        distro_welcome="[Linux Mint]"
-    elif ((is_linux_ubuntu)); then
-        distro_welcome="[Linux Ubuntu]"
-    else
-        distro_welcome="[Unknown distro]"
-    fi
+    distro_name=$(lsb_release -sd 2>&1)
 
     if [ ! -f "${HOME}/.gitconfig.local" ]; then
         first_run_welcome="kornicameister/dotfiles - first run"
@@ -56,7 +26,7 @@ _welcome_message() {
         first_run_welcome="kornicameister/dotfiles - updating"
     fi
 
-    echo "${distro_welcome} : ${first_run_welcome} : ${USERNAME}"
+    echo "${distro_name} : ${first_run_welcome} : ${USERNAME}"
 }
 
 # CI handling
@@ -66,8 +36,6 @@ if [[ $CI ]]; then
         "$@"
     }
 fi
-
-# OS flags
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
