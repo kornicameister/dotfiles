@@ -27,7 +27,7 @@ _is_distro() {
     local expected_distro
 
     expected_distro=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
-    distro_name=$(lsb_release -a 2>/dev/null | grep -i Description | tr '[:upper:]' '[:lower:]' | awk -F':' '{print $2}' | tr -d '[:space:]')
+    distro_name=$(lsb_release -si)
     if [[ $distro_name =~ .*$expected_distro.* ]]; then
         echo $TRUE
     else
@@ -39,9 +39,12 @@ _welcome_message() {
     local distro_welcome
     local first_run_welcome
 
-    if ((IS_LINUX_MINT)); then
+    is_linux_mint=$(_is_distro "mint")
+    is_linux_ubuntu=$(_is_distro "ubuntu")
+
+    if ((is_linux_mint)); then
         distro_welcome="[Linux Mint]"
-    elif ((IS_LINUX_UBUNTU)); then
+    elif ((is_linux_ubuntu)); then
         distro_welcome="[Linux Ubuntu]"
     else
         distro_welcome="[Unknown distro]"
@@ -65,8 +68,6 @@ if [[ $CI ]]; then
 fi
 
 # OS flags
-IS_LINUX_MINT=$(_is_distro "mint")
-IS_LINUX_UBUNTU=$(_is_distro "ubuntu")
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
