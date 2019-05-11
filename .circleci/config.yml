@@ -89,7 +89,7 @@ jobs:
     docker:
       - image: ubuntu:latest
     <<: *build_steps
-  build_ubuntu_18_10:
+  build_elemetary_os:
     docker:
       - image: elementary/docker:latest
     <<: *build_steps
@@ -107,5 +107,5 @@ workflows:
   build:
     jobs:
       - build_ubuntu_19
-      - build_ubuntu_18_10
+      - build_elemetary_os
       - build_mint
