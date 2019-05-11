@@ -1,6 +1,6 @@
 #!/bin/bash
 
-distro=$(lsb_release -a 2>&1 | grep Distributor | awk -F ':\\s' '{print $2}')
+distro=$(lsb_release -si 2>&1)
 
 curl -s https://brave-browser-apt-beta.s3.brave.com/brave-core-nightly.asc |  apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-beta.gpg add -
 
