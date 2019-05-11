@@ -91,7 +91,7 @@ jobs:
     <<: *build_steps
   build_elemetary_os:
     docker:
-      - image: elementary/docker:latest
+      - image: elementary/docker:stable
     <<: *build_steps
   build_mint:
     docker:
