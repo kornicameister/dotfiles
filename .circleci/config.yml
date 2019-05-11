@@ -87,15 +87,7 @@ jobs:
 
   build_ubuntu_19:
     docker:
-      - image: ubuntu:latest
-    <<: *build_steps
-  build_elemetary_os:
-    docker:
-      - image: elementary/docker:stable
-    <<: *build_steps
-  build_mint:
-    docker:
-      - image: linuxmintd/mint19-amd64:latest
+      - image: ubuntu:19.04
     <<: *build_steps
 
 workflows:
@@ -107,5 +99,3 @@ workflows:
   build:
     jobs:
       - build_ubuntu_19
-      - build_elemetary_os
-      - build_mint
