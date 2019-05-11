@@ -142,10 +142,7 @@ setup_nvim_as_default_editor() {
 }
 
 _welcome_message
-
-if [ ! -d "${BASEDIR}/dependencies" ]; then
-    git submodule update --init --recursive
-fi
+git submodule update --init --recursive
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
     args=("$@")
