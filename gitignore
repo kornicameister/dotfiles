@@ -1,6 +1,10 @@
-
+# compiled
 *.swp
 *.swo
+*.class
+*.pyc
+*.so
+*.o
 
 .idea/
 .vscode/
@@ -8,6 +12,7 @@
 .wakatime-project
 .vagrant/
 
+# openstack stuff
 api-guide/build
 api-ref/build
 doc/build
@@ -15,10 +20,8 @@ releasenotes/build
 
 .history/
 
-# python stuff
+# pyenv stuff
 .python-version
-*.pyc
 
-#
-" nvm auto-env file
+# nodenv stuff
 .node-version
