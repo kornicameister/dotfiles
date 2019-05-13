@@ -86,6 +86,8 @@ Plug 'lervag/vimtex', { 'for': ['tex'] }
 
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
+Plug 'ryanoasis/vim-devicons'                       " cool icons
+
 call plug#end()
 
 " Plugin Customizations
@@ -119,6 +121,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep=' '          " Slightly fancier than '>'
 let g:airline#extensions#tabline#left_alt_sep=' '      " Slightly fancier than '<'
+
 
 " commit msg - very nerdy
 let g:committia_hooks = {}
