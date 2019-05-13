@@ -1,10 +1,20 @@
+#!/bin/zsh
+
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
 
 export PAGER='less'
-export EDITOR="nvim"
 export VISUAL="${EDITOR}"
+
+if >/dev/null 2>&1 command -v nvim ; then
+  export EDITOR=nvim
+  nvim -es +'exe !has("nvim-0.3.2")."cq"' && export MANPAGER="nvim +Man!"
+elif >/dev/null 2>&1 command -v vim ; then
+  export EDITOR=vim
+else
+  export EDITOR=vi
+fi
 
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING='UTF-8';
