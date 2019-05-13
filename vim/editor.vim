@@ -93,13 +93,12 @@ autocmd FileType help wincmd L
 " enable filetypes plugins
 filetype plugin indent on
 
-" vim theme settings
-hi Normal ctermbg=none
-if has("termguicolors")
+hi Normal ctermfg=252 ctermbg=none
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE
+if has('termguicolors')
   set termguicolors
 endif
-colorscheme apprentice
-set background=dark
 
 " spelling
 setlocal spell
@@ -143,6 +142,10 @@ cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
 set clipboard+=unnamedplus
+
+" vim theme settings
+colorscheme PaperColor
+set background=dark
 
 " navigate through the buffers
 nnoremap <silent> <Tab> :bnext<CR>

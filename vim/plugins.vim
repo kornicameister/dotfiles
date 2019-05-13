@@ -17,7 +17,7 @@ autocmd VimEnter * :call InstallVimPlug()
 call plug#begin('~/.vim/plugged')
 
 " theme
-Plug 'romainl/Apprentice'
+Plug 'NLKNguyen/papercolor-theme'
 
 " fzf
 Plug '~/.fzf'
@@ -41,7 +41,6 @@ else
 endif
 Plug 'pbogut/deoplete-elm', { 'for': ['elm'] }
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript'], 'do': './install.sh'}
 Plug 'zchee/deoplete-jedi', { 'for': ['python'] }
 
 " asynchronous execution library
@@ -62,7 +61,6 @@ Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
@@ -81,13 +79,10 @@ Plug 'elzr/vim-json', {'for': ['json']}
 
 " markdown
 Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
-Plug 'MikeCoder/markdown-preview.vim', {'for': ['markdown']}
+Plug 'gabrielelana/vim-markdown', {'for': ['markdown']}
 
 " tex
 Plug 'lervag/vimtex', { 'for': ['tex'] }
-
-" undo like mastash
-Plug 'sjl/gundo.vim'
 
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
@@ -112,7 +107,7 @@ let g:tagbar_type_markdown = {
 let g:rainbow_active = 1
 
 " airline plugin settings
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'papercolor'
 
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -167,3 +162,15 @@ call deoplete#custom#option({
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
 let g:pyenv#auto_assign_ctags = 1
+
+" gutter
+let g:gitgutter_diff_args = "-w"    " ignore whitespace changes
+
+" papercolor
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 1
+  \     }
+  \   }
+  \ }
