@@ -87,7 +87,7 @@ jobs:
 
   build_ubuntu_19:
     docker:
-      - image: ubuntu:latest
+      - image: ubuntu:19.04
     <<: *build_steps
 
 workflows:
