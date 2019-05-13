@@ -1,36 +1,48 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+	shallow = true
 [submodule "fzf"]
 	path = dependencies/fzf
 	url = https://github.com/junegunn/fzf.git
+	shallow = true
 [submodule "dependencies/prezto"]
 	path = dependencies/prezto
 	url = https://github.com/kornicameister/prezto.git
+	shallow = true
 [submodule "dependencies/zgen"]
 	path = dependencies/zgen
 	url = https://github.com/tarjoilija/zgen.git
+	shallow = true
 [submodule "dependencies/pyenv"]
 	path = dependencies/pyenv
 	url = https://github.com/pyenv/pyenv.git
+	shallow = true
 [submodule "dependencies/powerline-fonts"]
 	path = dependencies/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+	shallow = true
 [submodule "dependencies/nodenv"]
 	path = dependencies/nodenv
 	url = https://github.com/nodenv/nodenv.git
+	shallow = true
 [submodule "dependencies/ctags"]
 	path = dependencies/ctags
 	url = https://github.com/universal-ctags/ctags.git
+	shallow = true
 [submodule "dependencies/t"]
 	path = dependencies/t
 	url = https://github.com/sjl/t
+	shallow = true
 [submodule "dependencies/prezto-contrib"]
 	path = dependencies/prezto-contrib
 	url = https://github.com/belak/prezto-contrib.git
+	shallow = true
 [submodule "dependencies/dotbot_plugin_aptget"]
 	path = dependencies/dotbot_plugin_aptget
 	url = https://github.com/dein0s/dotbot_plugin_aptget.git
+	shallow = true
 [submodule "dependencies/nerd-fonts"]
 	path = dependencies/nerd-fonts
 	url = https://github.com/ryanoasis/nerd-fonts
+	shallow = true
