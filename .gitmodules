@@ -31,3 +31,6 @@
 [submodule "dependencies/dotbot_plugin_aptget"]
 	path = dependencies/dotbot_plugin_aptget
 	url = https://github.com/dein0s/dotbot_plugin_aptget.git
+[submodule "dependencies/nerd-fonts"]
+	path = dependencies/nerd-fonts
+	url = https://github.com/ryanoasis/nerd-fonts

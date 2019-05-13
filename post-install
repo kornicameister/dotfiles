@@ -88,7 +88,7 @@ post_init_python_system () (
 
 (
     "${PWD}/dependencies/fzf/install" --all ;
-    "${PWD}/dependencies/powerline-fonts/install.sh" ;
+    "${PWD}/dependencies/nerd-fonts/install.sh Hack" ;
     install_pyenv_plugins ;
     install_nodenv_plugins ;
     init_python_system ;

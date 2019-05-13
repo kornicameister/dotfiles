@@ -99,6 +99,9 @@ EOF
 
 [commit]
     gpgsign=true
+
+[github]
+    user=${USERNAME}
 EOF
 
     echo "Remember to upload the GPG and SSH keys to Github"
