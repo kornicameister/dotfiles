@@ -34,6 +34,12 @@ x-build-steps: &build_steps
         command: |
           git submodule update --init --recursive --recommend-shallow
     - run:
+        name: Display project status
+        command: |
+          git status
+          git submodule status
+          ls -ltr
+    - run:
         name: Run an installation
         command: |
           ./install \
