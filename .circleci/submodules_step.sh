@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mods_done=$(git diff --stat --name-only HEAD HEAD~1 | grep -cE '\.gitmodules|dependencies\/')
+mods_done=$(git diff --stat --name-only HEAD..master | grep -cE '\.gitmodules|dependencies\/')
 
 echo "Modifications done to submodules is ${mods_done}"
 
