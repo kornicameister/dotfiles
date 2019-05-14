@@ -86,8 +86,9 @@ post_init_python_system () (
     pip install setuptools pip wakatime --upgrade
 )
 
+
 (
-    "${PWD}/dependencies/fzf/install" --all ;
+    "${PWD}/dependencies/fzf/install" --all --no-bash --nofish --64;
     "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
     install_pyenv_plugins ;
     install_nodenv_plugins ;
