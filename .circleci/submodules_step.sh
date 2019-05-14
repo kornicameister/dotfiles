@@ -2,7 +2,7 @@
 
 git fetch --all && echo "Updated to full state from remote"
 
-mods=$(git diff --stat --name-only HEAD..master)
+mods=$(git diff --stat --name-only HEAD..origin/master)
 mods_count=$(echo "${mods}" | grep -cE '\.gitmodules|dependencies\/')
 
 echo "Mods are :: ${mods}"
