@@ -77,7 +77,7 @@ setup_git() {
     key_config=$(mktemp)
 
     # generating GPK key to sign the commits
-    cat >"${key_config}" <<EOF
+    cat >>"${key_config}" <<EOF
 Key-Type: ${key_type}
 Key-Length: ${key_strength}
 Name-Real: ${GPG_FULL_NAME}
@@ -86,7 +86,7 @@ Name-Email: ${EMAIL}
 Expire-Date: 0
 Passphrase: ${GPG_PASSPHRASE}
 EOF
-    gpg2 --full-generate-key "${key_config}"
+    gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
     rm -rf "${key_config}"
 
     # assumed the highest rsa length:
