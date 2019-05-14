@@ -1,7 +1,6 @@
 ---
 x-build-steps: &build_steps
   steps:
-    - working_directory: dotfiles
     - run:
         name: Install prerequistes
         command: |
