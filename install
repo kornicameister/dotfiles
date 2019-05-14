@@ -2,6 +2,15 @@
 
 set -e
 
+# CI handling
+CI=${CI:-False}
+if [[ $CI ]]; then
+    sudo() {
+        "$@"
+    }
+    set -x
+fi
+
 INSTALL_CONFIG="install.conf.yaml"
 PKG_CONFIG="pkg.install.conf.yaml"
 
@@ -14,10 +23,28 @@ USERNAME="${1:-""}"
 PASSWORD="${2:-""}"
 EMAIL="${3:-""}"
 
+GPG_FULL_NAME="${4:-""}"
+GPG_PASSPHRASE="${5:-""}"
+
+_welcome_message() {
+    if command -v lsb_release >/dev/null 2>&1; then
+        distro_name=$(lsb_release -sd 2>&1)
+    else
+        distro_name="Unknown"
+    fi
+
+    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+        first_run_welcome="kornicameister/dotfiles - first run"
+    else
+        first_run_welcome="kornicameister/dotfiles - updating"
+    fi
+
+    echo "${distro_name} : ${first_run_welcome} : ${USERNAME}"
+}
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
-    sudo -EH \
+    sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
@@ -45,12 +72,26 @@ setup_git() {
         -f "${HOME}/.ssh/github" \
         -N "${PASSWORD}"
 
+    key_type="rsa"
+    key_strength=4096
+    key_config=$(mktemp)
+
     # generating GPK key to sign the commits
-    gpg2 --full-gen-key
+    cat >>"${key_config}" <<EOF
+Key-Type: ${key_type}
+Key-Length: ${key_strength}
+Name-Real: ${GPG_FULL_NAME}
+Name-Comment: ${USERNAME} GPG key generated with dotfiles
+Name-Email: ${EMAIL}
+Expire-Date: 0
+Passphrase: ${GPG_PASSPHRASE}
+EOF
+    gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
+    rm -rf "${key_config}"
 
     # assumed the highest rsa length:
     local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '/rsa4096/{print $3}')
+    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
 
     cat > "${HOME}/.gitconfig.local" << EOF
 [user]
@@ -76,13 +117,10 @@ setup_nvim_as_default_editor() {
     sudo update-alternatives --set editor /usr/bin/nvim
 }
 
-if [ ! -d "${BASEDIR}/dependencies" ]; then
-    git submodule update --init --recursive
-fi
+_welcome_message
+git submodule update --init --recursive
 
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
-    echo "kornicameister/dotfiles - first run"
-
     args=("$@")
     argsCount=${#args[@]}
     if [ "${argsCount}" -ne 3 ]; then
@@ -102,17 +140,17 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
         exit 1
     fi
 
-    echo "kornicameister/dotfiles: init"
-
     execute_dotbot_pkg_install
     execute_dotbot_config_install
     setup_git
     setup_nvim_as_default_editor
 else
-    echo "kornicameister/dotfiles : update"
-
     execute_dotbot_config_install
     (pyenv update ; pyenv rehash)
     (nodenv update ; nodenv rehash)
 fi
 
+if [[ $CI ]]; then
+    set +x
+fi
+set +e
