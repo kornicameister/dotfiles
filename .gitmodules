@@ -18,10 +18,6 @@
 	path = dependencies/pyenv
 	url = https://github.com/pyenv/pyenv.git
 	shallow = true
-[submodule "dependencies/powerline-fonts"]
-	path = dependencies/powerline-fonts
-	url = https://github.com/powerline/fonts.git
-	shallow = true
 [submodule "dependencies/nodenv"]
 	path = dependencies/nodenv
 	url = https://github.com/nodenv/nodenv.git
