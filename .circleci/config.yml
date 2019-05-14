@@ -26,19 +26,7 @@ jobs:
       - checkout
       - run:
           name: "Submodules :: checkout"
-          command: |
-
-            mods_done=$(
-              git diff --stat --name-only HEAD HEAD~1 | \
-                grep -E '\.gitmodules|dependencies\/' | wc -l
-            )
-
-            echo "Modifications done to submodules is ${mods_done}"
-
-            [[ "${mods_done}" -le 1 ]] && {
-              git submodule update --init --recursive --recommend-shallow;
-              git submodule status
-            } || echo "Nothing about submodules have changed, skipping"
+          command: .circleci/submodules_step.sh
 
 workflows:
   version: 2
