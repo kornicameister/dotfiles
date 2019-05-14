@@ -11,6 +11,9 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - checkout
+    - restore_cache:
+        keys:
+          - install_ci_v1_{{ checksum ".gitmodules" }}
     - run:
         name: Configure timezone & timezone
         command: |
@@ -33,6 +36,20 @@ x-build-steps: &build_steps
         name: Checkout modules
         command: |
           git submodule update --init --recursive --recommend-shallow
+    - save_cache:
+        key: install_ci_v1_{{ checksum ".gitmodules" }}
+        paths:
+          - dependencies/ctags
+          - dependencies/dotbot_plugin_aptget
+          - dependencies/fzf
+          - dependencies/nerd-fonts
+          - dependencies/nodenv
+          - dependencies/prezto
+          - dependencies/prezto-contrib
+          - dependencies/pyenv
+          - dependencies/t
+          - dependencies/zgen
+          - dotbot/
     - run:
         name: Display project status
         command: |
