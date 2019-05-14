@@ -90,6 +90,14 @@
       indicator-cpufreq,
     ]
 
+# cleanup fonts:
+- shell:
+    - description: Remove unused non-lating fonts
+      command: |
+        xargs -a "${PWD}/non-latin-fonts.txt" aptitude remove -yq \
+          && aptitude autoclean \
+          && dpkg-reconfigure fontconfig
+
 # start some services at the end
 - shell:
     - description: Start TLP service
