@@ -2,6 +2,15 @@
 
 set -e
 
+# CI handling
+CI=${CI:-False}
+if [[ $CI ]]; then
+    sudo() {
+        "$@"
+    }
+    set -x
+fi
+
 INSTALL_CONFIG="install.conf.yaml"
 PKG_CONFIG="pkg.install.conf.yaml"
 
@@ -18,7 +27,11 @@ GPG_FULL_NAME="${4:-""}"
 GPG_PASSPHRASE="${5:-""}"
 
 _welcome_message() {
-    distro_name=$(lsb_release -sd 2>&1)
+    if command -v lsb_release >/dev/null 2>&1; then
+        distro_name=$(lsb_release -sd 2>&1)
+    else
+        distro_name="Unknown"
+    fi
 
     if [ ! -f "${HOME}/.gitconfig.local" ]; then
         first_run_welcome="kornicameister/dotfiles - first run"
@@ -28,15 +41,6 @@ _welcome_message() {
 
     echo "${distro_name} : ${first_run_welcome} : ${USERNAME}"
 }
-
-# CI handling
-CI=${CI:-False}
-if [[ $CI ]]; then
-    sudo() {
-        "$@"
-    }
-    set -x
-fi
 
 execute_dotbot_pkg_install() {
     pushd "${BASEDIR}"
@@ -146,3 +150,7 @@ else
     (nodenv update ; nodenv rehash)
 fi
 
+if [[ $CI ]]; then
+    set +x
+fi
+set +e
