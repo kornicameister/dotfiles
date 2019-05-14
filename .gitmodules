@@ -1,36 +1,56 @@
 [submodule "dotbot"]
-	path = dotbot
-	url = https://github.com/anishathalye/dotbot
+    path = dotbot
+    url = https://github.com/anishathalye/dotbot
+    shallow = true
+    branch = master
 [submodule "fzf"]
-	path = dependencies/fzf
-	url = https://github.com/junegunn/fzf.git
+    path = dependencies/fzf
+    url = https://github.com/junegunn/fzf.git
+    shallow = true
+    branch = master
 [submodule "dependencies/prezto"]
-	path = dependencies/prezto
-	url = https://github.com/kornicameister/prezto.git
+    path = dependencies/prezto
+    url = https://github.com/kornicameister/prezto.git
+    shallow = true
+    branch = master
 [submodule "dependencies/zgen"]
-	path = dependencies/zgen
-	url = https://github.com/tarjoilija/zgen.git
+    path = dependencies/zgen
+    url = https://github.com/tarjoilija/zgen.git
+    shallow = true
+    branch = master
 [submodule "dependencies/pyenv"]
-	path = dependencies/pyenv
-	url = https://github.com/pyenv/pyenv.git
-[submodule "dependencies/powerline-fonts"]
-	path = dependencies/powerline-fonts
-	url = https://github.com/powerline/fonts.git
+    path = dependencies/pyenv
+    url = https://github.com/pyenv/pyenv.git
+    shallow = true
+    branch = master
 [submodule "dependencies/nodenv"]
-	path = dependencies/nodenv
-	url = https://github.com/nodenv/nodenv.git
+    path = dependencies/nodenv
+    url = https://github.com/nodenv/nodenv.git
+    shallow = true
+    branch = master
 [submodule "dependencies/ctags"]
-	path = dependencies/ctags
-	url = https://github.com/universal-ctags/ctags.git
+    path = dependencies/ctags
+    url = https://github.com/universal-ctags/ctags.git
+    shallow = true
+    ignore = untracked
+    branch = master
 [submodule "dependencies/t"]
-	path = dependencies/t
-	url = https://github.com/sjl/t
+    path = dependencies/t
+    url = https://github.com/sjl/t
+    shallow = true
+    branch = master
 [submodule "dependencies/prezto-contrib"]
-	path = dependencies/prezto-contrib
-	url = https://github.com/belak/prezto-contrib.git
+    path = dependencies/prezto-contrib
+    url = https://github.com/belak/prezto-contrib.git
+    shallow = true
+    branch = master
 [submodule "dependencies/dotbot_plugin_aptget"]
-	path = dependencies/dotbot_plugin_aptget
-	url = https://github.com/dein0s/dotbot_plugin_aptget.git
+    path = dependencies/dotbot_plugin_aptget
+    url = https://github.com/dein0s/dotbot_plugin_aptget.git
+    shallow = true
+    branch = master
 [submodule "dependencies/nerd-fonts"]
-	path = dependencies/nerd-fonts
-	url = https://github.com/ryanoasis/nerd-fonts
+    path = dependencies/nerd-fonts
+    url = https://github.com/ryanoasis/nerd-fonts
+    shallow = true
+    branch = master

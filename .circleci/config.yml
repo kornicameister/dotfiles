@@ -78,12 +78,7 @@ jobs:
       - checkout
       - run:
           name: "Submodules :: checkout"
-          command: |
-            git submodule update --init --recursive --recommend-shallow
-      - run:
-          name: "Submodules :: status"
-          command: |
-            git submodule status
+          command: .circleci/submodules_step.sh
 
   build_ubuntu_19:
     docker:
