@@ -96,7 +96,7 @@
 - shell:
     - description: Remove unused non-lating fonts
       command: |
-        xargs -a "${PWD}/non-latin-fonts.txt" aptitude remove -yq \
+        xargs -a "${PWD}/bad-fonts.txt" aptitude remove -yq \
           && aptitude autoclean \
           && dpkg-reconfigure fontconfig
 
