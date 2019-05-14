@@ -35,6 +35,7 @@ if [[ $CI ]]; then
     sudo() {
         "$@"
     }
+    set -x
 fi
 
 execute_dotbot_pkg_install() {
