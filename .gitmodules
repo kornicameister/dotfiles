@@ -30,6 +30,7 @@
 	path = dependencies/ctags
 	url = https://github.com/universal-ctags/ctags.git
 	shallow = true
+	ignore = untracked
 [submodule "dependencies/t"]
 	path = dependencies/t
 	url = https://github.com/sjl/t
