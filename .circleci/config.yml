@@ -50,7 +50,7 @@ x-build-steps: &build_steps
             "${CIRCLE_BUILD_NUM}" \
             "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}" \
             "Circle Builds" \
-            "$(echo ${CIRCLE_USERNAME} | base64)"
+            "${CIRCLE_SHA1}"
 
 version: 2
 jobs:
