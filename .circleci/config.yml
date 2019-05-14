@@ -1,11 +1,7 @@
 ---
 x-build-steps: &build_steps
   steps:
-    - run:
-        name: Set required env variables
-        command: |
-          export DEBIAN_FRONTEND=noninteractive
-          export DEBCONF_NONINTERACTIVE_SEEN=true
+    - working_directory: dotfiles
     - run:
         name: Install prerequistes
         command: |
@@ -30,9 +26,7 @@ x-build-steps: &build_steps
           locale-gen en_US.UTF-8
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 
-          DEBIAN_FRONTEND=noninteractive \
-            DEBCONF_NONINTERACTIVE_SEEN=true \
-            apt-get install tzdata -y --no-install-recommends
+          apt-get install tzdata -y --no-install-recommends
 
           apt-get autoclean -yqq
           apt-get autoremove -yqq
@@ -43,9 +37,7 @@ x-build-steps: &build_steps
     - run:
         name: Run an installation
         command: |
-          DEBIAN_FRONTEND=noninteractive \
-            DEBCONF_NONINTERACTIVE_SEEN=true \
-            ./install \
+          ./install \
             "${CIRCLE_USERNAME}" \
             "${CIRCLE_BUILD_NUM}" \
             "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}" \
