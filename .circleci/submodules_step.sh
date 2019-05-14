@@ -1,10 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-mods_done=$(git diff --stat --name-only HEAD HEAD~1 | grep -cE '\.gitmodules|dependencies\/')
+git fetch --all && echo "Updated to full state from remote"
 
-echo "Modifications done to submodules is ${mods_done}"
+mods=$(git diff --stat --name-only HEAD.."$(git remote)"/master)
+mods_count=$(echo "${mods}" | grep -cE '\.gitmodules|dependencies\/')
 
-[ "${mods_done}" -le 1 ] && {
+echo "Mods are :: ${mods}"
+
+(( mods_count >= 1)) && {
   git submodule update --init --recursive --recommend-shallow;
   git submodule status
 } || echo "Nothing about submodules have changed, skipping"
