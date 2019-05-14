@@ -13,15 +13,13 @@
 [submodule "dependencies/pyenv"]
 	path = dependencies/pyenv
 	url = https://github.com/pyenv/pyenv.git
-[submodule "dependencies/powerline-fonts"]
-	path = dependencies/powerline-fonts
-	url = https://github.com/powerline/fonts.git
 [submodule "dependencies/nodenv"]
 	path = dependencies/nodenv
 	url = https://github.com/nodenv/nodenv.git
 [submodule "dependencies/ctags"]
 	path = dependencies/ctags
 	url = https://github.com/universal-ctags/ctags.git
+	ignore = untracked
 [submodule "dependencies/t"]
 	path = dependencies/t
 	url = https://github.com/sjl/t
