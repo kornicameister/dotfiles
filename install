@@ -40,23 +40,23 @@ _welcome_message() {
 }
 
 execute_dotbot_pkg_install() {
-    pushd "${BASEDIR}"
+    cd "${BASEDIR}" || exit 1
     sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
         -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
         -c "${PKG_CONFIG}"
-    pushd "${BASEDIR}"
+    cd - || exit 1
 }
 
 execute_dotbot_config_install() {
-    pushd "${BASEDIR}"
+    cd "${BASEDIR}" || exit 1
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
         -c "${INSTALL_CONFIG}"
-    popd
+    cd - || 1
 }
 
 setup_git() {
@@ -120,22 +120,31 @@ git submodule update --init --recursive
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
     args=("$@")
     argsCount=${#args[@]}
-    if [ "${argsCount}" -ne 3 ]; then
-        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email}"
-    fi
 
+    if [ "${argsCount}" -ne 5 ]; then
+        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email} {gpg_full_name} {gpg_passphrase}"
+    fi
     if [ -z "${USERNAME}" ]; then
         echo "git_user must be set"
         exit 1
     fi
     if [ -z "${PASSWORD}" ]; then
         echo "git_password must be set"
-        exit 1
+        exit 2
     fi
     if [ -z "${EMAIL}" ]; then
         echo "git_email must be set"
-        exit 1
+        exit 3
     fi
+    if [ -z "${GPG_FULL_NAME}" ]; then
+        echo "gpg_full_name must be set"
+        exit 4
+    fi
+    if [ -z "${GPG_PASSPHRASE}" ]; then
+        echo "gpg_passphrase must be set"
+        exit 5
+    fi
+
 
     execute_dotbot_pkg_install
     execute_dotbot_config_install
