@@ -40,23 +40,23 @@ _welcome_message() {
 }
 
 execute_dotbot_pkg_install() {
-    pushd "${BASEDIR}"
+    cd "${BASEDIR}" || exit 1
     sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
         -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
         -c "${PKG_CONFIG}"
-    pushd "${BASEDIR}"
+    cd -
 }
 
 execute_dotbot_config_install() {
-    pushd "${BASEDIR}"
+    cd "${BASEDIR}" || exit 1
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
         -d "${BASEDIR}" \
         -c "${INSTALL_CONFIG}"
-    popd
+    cd -
 }
 
 setup_git() {
