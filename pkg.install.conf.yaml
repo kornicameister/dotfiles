@@ -10,6 +10,7 @@
       autoconf,
       automake,
       xclip,
+      lsb-release,
     ]
 
 # docker requires
@@ -57,6 +58,9 @@
       quiet: false
     - description: Install brave-browser-beta
       command: .installer/install_brave.sh
+      quiet: false
+      stderr: true
+      stdout: true
 
 # my stuff - ppa
 - aptget:
@@ -86,11 +90,20 @@
       terminator,
       ppa-purge,
       bikeshed,
+      byobu,
       tlp-rdw,
       indicator-cpufreq,
     ]
 
+# cleanup fonts:
+- shell:
+    - description: Remove unused non-lating fonts
+      command: |
+        xargs -a "${PWD}/bad-fonts.txt" aptitude remove -yq \
+          && aptitude autoclean \
+          && dpkg-reconfigure fontconfig
+
 # start some services at the end
 - shell:
     - description: Start TLP service
-      command: command -v tlp >/dev/null 2>&1 && tlp start
+      command: command -v tlp >/dev/null 2>&1 && tlp start || echo 'Meh...'

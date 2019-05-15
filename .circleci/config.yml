@@ -1,15 +1,77 @@
 ---
+x-build-steps: &build_steps
+  steps:
+    - run:
+        name: Install prerequistes
+        command: |
+          apt-get update -qq
+          apt-get install apt-utils -yqq
+          apt-get install git locales python3 python3-apt ssh lsb-release \
+            -yqq --no-install-recommends
+          apt-get autoclean -yqq
+          apt-get autoremove -yqq
+    - checkout
+    - restore_cache:
+        keys:
+          - install_ci_v1_{{ checksum ".gitmodules" }}
+    - run:
+        name: Configure timezone & timezone
+        command: |
+          echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections
+          echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
+
+          echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
+          echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
+
+          echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | debconf-set-selections
+
+          locale-gen en_US.UTF-8
+          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+
+          apt-get install tzdata -y --no-install-recommends
+
+          apt-get autoclean -yqq
+          apt-get autoremove -yqq
+    - run:
+        name: Checkout modules
+        command: |
+          git submodule update --init --recursive --recommend-shallow
+    - save_cache:
+        key: install_ci_v1_{{ checksum ".gitmodules" }}
+        paths:
+          - dependencies/ctags
+          - dependencies/dotbot_plugin_aptget
+          - dependencies/fzf
+          - dependencies/nerd-fonts
+          - dependencies/nodenv
+          - dependencies/prezto
+          - dependencies/prezto-contrib
+          - dependencies/pyenv
+          - dependencies/t
+          - dependencies/zgen
+          - dotbot/
+    - run:
+        name: Display project status
+        command: |
+          git status
+          git submodule status
+          ls -ltr
+    - run:
+        name: Run an installation
+        command: |
+          ./install \
+            "${CIRCLE_USERNAME}" \
+            "${CIRCLE_BUILD_NUM}" \
+            "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}" \
+            "Circle Builds" \
+            "${CIRCLE_SHA1}"
+
 version: 2
 jobs:
   shellcheck:
     docker:
       - image: nlknguyen/alpine-shellcheck:latest
     steps:
-      - run:
-          name: Install git & openssh
-          command: |
-            apk update
-            apk add git openssh-client
       - checkout
       - run:
           name: Check Scripts
@@ -26,12 +88,12 @@ jobs:
       - checkout
       - run:
           name: "Submodules :: checkout"
-          command: |
-            git submodule update --init --recursive --recommend-shallow
-      - run:
-          name: "Submodules :: status"
-          command: |
-            git submodule status
+          command: .circleci/submodules_step.sh
+
+  build_ubuntu_19:
+    docker:
+      - image: ubuntu:19.04
+    <<: *build_steps
 
 workflows:
   version: 2
@@ -39,3 +101,6 @@ workflows:
     jobs:
       - submodules
       - shellcheck
+  build:
+    jobs:
+      - build_ubuntu_19
