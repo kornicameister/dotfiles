@@ -35,7 +35,7 @@ x-build-steps: &build_steps
     - run:
         name: Checkout modules
         command: |
-          git submodule update --init --recursive --recommend-shallow
+          git submodule update --init --depth 50
     - save_cache:
         key: install_ci_v1_{{ checksum ".gitmodules" }}
         paths:
