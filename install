@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
-
 # CI handling
 CI=${CI:-False}
-if [[ $CI ]]; then
+if [[ -n ${CI} ]]; then
     sudo() {
         "$@"
     }
-    set -x
 fi
 
 INSTALL_CONFIG="install.conf.yaml"
@@ -149,8 +146,3 @@ else
     (pyenv update ; pyenv rehash)
     (nodenv update ; nodenv rehash)
 fi
-
-if [[ $CI ]]; then
-    set +x
-fi
-set +e
