@@ -8,6 +8,6 @@ mods_count=$(echo "${mods}" | grep -cE '\.gitmodules|dependencies\/')
 echo "Mods are :: ${mods}"
 
 (( mods_count >= 1)) && {
-  git submodule update --init --recursive --recommend-shallow;
+  git submodule update --init --recursive --depth 50;
   git submodule status
 } || echo "Nothing about submodules have changed, skipping"
