@@ -10,7 +10,6 @@ install_pyenv_plugins() {
         pyenv-virtualenv
         pyenv-ccache
         pyenv-doctor
-        pyenv-install-latest
     )
 
     mkdir -p "${plugins_dir}"
@@ -19,6 +18,9 @@ install_pyenv_plugins() {
             git clone "git://github.com/pyenv/${plugin}.git" "${plugins_dir}/${plugin}"
         fi
     done
+    if [ ! -d "${plugins_dir}/xxenv-latest" ]; then
+        git clone https://github.com/momo-lab/xxenv-latest "${plugins_dir}/xxenv-latest"
+    fi
 }
 
 install_nodenv_plugins() {
@@ -41,27 +43,39 @@ install_nodenv_plugins() {
             git clone "git://github.com/nodenv/${plugin}.git" "${plugins_dir}/${plugin}"
         fi
     done
+    if [ ! -d "${plugins_dir}/xxenv-latest" ]; then
+        git clone https://github.com/momo-lab/xxenv-latest "${plugins_dir}/xxenv-latest"
+    fi
 }
 
 install_latest_dev() {
-    echo "Installing python & node"
-    pyenv install-latest -s 2.7
-    pyenv install-latest -s 3.7
-    nodenv install -s "$(cat ./node-system-version)"
+    if [ ! -f "$(pyenv root)/version" ]; then
+        echo "Installing latest python"
+
+        pyenv latest install -s 2.7
+        pyenv latest install -s 3.7
+        pyenv latest --print 3.7 >> "$(pyenv root)/version"
+    fi
+    if [ ! -f "$(nodenv root)/version" ]; then
+        echo "Installing latest node"
+
+        nodenv latest install -s 12
+        nodenv latest --print 12 >> "$(nodenv root)/version"
+    fi
 }
 
 init_neovim() (
     echo "Initializing neovim setup"
 
     if [ ! -d "${PYENV_ROOT}/versions/neovim2" ]; then
-        pyenv virtualenv "$(pyenv install-latest -s 2.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim2
+        pyenv virtualenv "$(pyenv latest --print 2.7)" neovim2
         "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
         pyenv rehash
     else
         echo "${PYENV_ROOT}/versions/neovim2 venv already exists"
     fi
     if [ ! -d "${PYENV_ROOT}/versions/neovim3" ]; then
-        pyenv virtualenv "$(pyenv install-latest -s 3.7 | sed s/Install\\s//g | sed s/\\.\\.\\.//g)" neovim3
+        pyenv virtualenv "$(pyenv latest --print 3.7)" neovim3
         "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
         pyenv rehash
     else
@@ -77,23 +91,16 @@ init_neovim() (
 
 )
 
-init_python_system() (
-    rm -rf "${PWD}/dependencies/pyenv/version"
-    echo "system" > "${PWD}/dependencies/pyenv/version"
-)
-
 post_init_python_system () (
     pip install setuptools pip wakatime --upgrade
 )
 
-
 (
-    "${PWD}/dependencies/fzf/install" --all --no-bash --nofish --64;
+    "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
     "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
     install_pyenv_plugins ;
     install_nodenv_plugins ;
-    init_python_system ;
-    post_init_python_system ;
     install_latest_dev ;
+    post_init_python_system ;
     init_neovim
 )
