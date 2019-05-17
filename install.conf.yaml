@@ -43,7 +43,6 @@
 
     # node
     ~/.nodenv: dependencies/nodenv
-    ~/.nodenv/version: node-system-version
     ~/.npmrc.sh: npmrc.sh
 
     # pyenv
