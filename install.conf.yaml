@@ -57,8 +57,9 @@
     ~/.t.sh: t.sh
     ~/.local/bin/t: dependencies/t/t.py
 
-    # custom application configuration
+    # custom application/tools configuration
     ~/.config/terminator: config/terminator
+    ~/.config/yapf: config/yapf
 
     # custom binaries
     ~/.local/bin:
