@@ -71,7 +71,6 @@ Plug 'elmcast/elm-vim', {'for': ['elm']}
 " python
 Plug 'tmhedberg/SimpylFold', { 'for': ['python'] }
 Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
-Plug 'nvie/vim-flake8', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 
 " json
