@@ -83,7 +83,7 @@ init_python_system() (
 )
 
 post_init_python_system () (
-    pip install setuptools pip wakatime --upgrade
+    pip install -r "${PWD}/python-system-requirements.txt"
 )
 
 
