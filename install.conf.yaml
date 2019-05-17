@@ -58,8 +58,9 @@
     ~/.local/bin/t: dependencies/t/t.py
 
     # custom application/tools configuration
-    ~/.config/terminator: config/terminator
-    ~/.config/yapf: config/yapf
+    ~/.config:
+      glob: true
+      path: config/*
 
     # custom binaries
     ~/.local/bin:

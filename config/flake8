@@ -1,0 +1,21 @@
+[flake8]
+statistics = True
+
+select = E,F,W,C,I,B,S,T,Q
+
+import-order-style=appnexus
+application-package-names=iot
+
+format = pylint
+hang-closing = false
+
+max-line-length = 79
+inline-quotes = single
+
+disable-noqa = True
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    swagger.yaml
