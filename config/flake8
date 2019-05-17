@@ -1,10 +1,9 @@
 [flake8]
 statistics = True
 
-select = E,F,W,C,I,B,S,T,Q
+select = E,F,W,C,B,S,T,Q
 
 import-order-style=appnexus
-application-package-names=iot
 
 format = pylint
 hang-closing = false
