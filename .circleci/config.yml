@@ -10,11 +10,11 @@ x-build-steps: &build_steps
             -yqq --no-install-recommends
           apt-get autoclean -yqq
           apt-get autoremove -yqq
+    - checkout
     - restore_cache:
         keys:
           - install-ci-v1-{{ checksum ".gitmodules" }}
           - install-ci-v1-
-    - checkout
     - run:
         name: Checkout modules
         command: |
