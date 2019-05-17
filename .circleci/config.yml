@@ -6,14 +6,41 @@ x-build-steps: &build_steps
         command: |
           apt-get update -qq
           apt-get install apt-utils -yqq
-          apt-get install git locales python3 python3-apt ssh lsb-release \
-            -yqq --no-install-recommends
+
+          apt-get install \
+            git \
+            locales \
+            python3 python3-apt \
+            ssh ca-certificates \
+            lsb-release \
+            -yqq \
+            --no-install-recommends
+
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - checkout
     - restore_cache:
         keys:
-          - install_ci_v1_{{ checksum ".gitmodules" }}
+          - install-ci-v2-{{ checksum ".gitmodules" }}
+          - install-ci-v2-
+    - run:
+        name: Checkout modules
+        command: |
+          git submodule update --init --recursive
+    - save_cache:
+        key: install-ci-v2-{{ checksum ".gitmodules" }}
+        paths:
+          - dependencies/ctags
+          - dependencies/dotbot_plugin_aptget
+          - dependencies/fzf
+          - dependencies/nerd-fonts
+          - dependencies/nodenv
+          - dependencies/prezto
+          - dependencies/prezto-contrib
+          - dependencies/pyenv
+          - dependencies/t
+          - dependencies/zgen
+          - dotbot/
     - run:
         name: Configure timezone & timezone
         command: |
@@ -33,29 +60,12 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - run:
-        name: Checkout modules
-        command: |
-          git submodule update --init --depth 50
-    - save_cache:
-        key: install_ci_v1_{{ checksum ".gitmodules" }}
-        paths:
-          - dependencies/ctags
-          - dependencies/dotbot_plugin_aptget
-          - dependencies/fzf
-          - dependencies/nerd-fonts
-          - dependencies/nodenv
-          - dependencies/prezto
-          - dependencies/prezto-contrib
-          - dependencies/pyenv
-          - dependencies/t
-          - dependencies/zgen
-          - dotbot/
-    - run:
         name: Display project status
         command: |
           git status
           git submodule status
           ls -ltr
+          git submodule status | awk -F '[ ]' '{print $3}' | xargs du -sh
     - run:
         name: Run an installation
         command: |
