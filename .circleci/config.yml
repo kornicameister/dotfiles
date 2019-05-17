@@ -21,14 +21,14 @@ x-build-steps: &build_steps
     - checkout
     - restore_cache:
         keys:
-          - install-ci-v1-{{ checksum ".gitmodules" }}
-          - install-ci-v1-
+          - install-ci-v2-{{ checksum ".gitmodules" }}
+          - install-ci-v2-
     - run:
         name: Checkout modules
         command: |
-          git submodule update --init --depth 25
+          git submodule update --init --recursive --depth 25
     - save_cache:
-        key: install-ci-v1-{{ checksum ".gitmodules" }}
+        key: install-ci-v2-{{ checksum ".gitmodules" }}
         paths:
           - dependencies/ctags
           - dependencies/dotbot_plugin_aptget
