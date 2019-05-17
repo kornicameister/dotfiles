@@ -1,12 +1,17 @@
 [style]
 based_on_style = pep8
+
 column_limit = 79
 spaces_before_comment = 2
 indent_width = 4
+
 split_before_logical_operator = true
 split_before_first_argument = true
+
 allow_multiline_dictionary_keys = false
-dedent_closing_brackets = true
-coalesce_brackets = true
 allow_split_before_dict_value = false
 each_dict_entry_on_separate_line = true
+
+dedent_closing_brackets = true
+coalesce_brackets = true
+

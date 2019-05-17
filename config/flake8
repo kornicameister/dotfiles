@@ -1,0 +1,20 @@
+[flake8]
+statistics = True
+
+select = E,F,W,C,B,S,T,Q
+
+import-order-style=appnexus
+
+format = pylint
+hang-closing = false
+
+max-line-length = 79
+inline-quotes = single
+
+disable-noqa = True
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    swagger.yaml
