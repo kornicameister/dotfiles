@@ -52,9 +52,9 @@ install_latest_dev() {
     if [ ! -f "$(pyenv root)/version" ]; then
         echo "Installing latest python"
 
-        pyenv latest install -s 2.7
-        pyenv latest install -s 3.7
-        pyenv latest --print 3.7 >> "$(pyenv root)/version"
+        pyenv latest install -s 2
+        pyenv latest install -s 3
+        pyenv latest --print 3 >> "$(pyenv root)/version"
     fi
     if [ ! -f "$(nodenv root)/version" ]; then
         echo "Installing latest node"
@@ -67,32 +67,28 @@ install_latest_dev() {
 init_neovim() (
     echo "Initializing neovim setup"
 
-    if [ ! -d "${PYENV_ROOT}/versions/neovim2" ]; then
-        pyenv virtualenv "$(pyenv latest --print 2.7)" neovim2
-        "${PYENV_ROOT}"/versions/neovim2/bin/pip install --upgrade -r ./neovim-requirements.txt
-        pyenv rehash
-    else
-        echo "${PYENV_ROOT}/versions/neovim2 venv already exists"
-    fi
-    if [ ! -d "${PYENV_ROOT}/versions/neovim3" ]; then
-        pyenv virtualenv "$(pyenv latest --print 3.7)" neovim3
-        "${PYENV_ROOT}"/versions/neovim3/bin/pip install --upgrade -r ./neovim-requirements.txt
-        pyenv rehash
-    else
-        echo "${PYENV_ROOT}/versions/neovim3 venv already exists"
-    fi
+    for py_major in {2,3}; do
+        if [ ! -d "${PYENV_ROOT}/versions/neovim${py_major}" ]; then
+            pyenv virtualenv "$(pyenv latest --print ${py_major})" "neovim${py_major}"
+        else
+            echo "${PYENV_ROOT}/versions/neovim${py_major} venv already exists"
+        fi
+        "${PYENV_ROOT}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
+    done
 
     if command -v npm >/dev/null 2>&1; then
         npm install -g neovim typescript
-        if command -v nodenv >/dev/null 2>&1; then
-            nodenv rehash
-        fi
     fi
 
+    pyenv rehash
+    nodenv rehash
 )
 
 post_init_python_system () (
-    pip install -r "${PWD}/python-system-requirements.txt"
+    for py_major in {2,3}; do
+        echo "Installing packages for major python release ${py_major}"
+        "$(pyenv root)/versions/$(pyenv latest --print $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
+    done
 )
 
 (

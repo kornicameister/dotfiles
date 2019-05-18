@@ -1,14 +1,15 @@
 pip==19.1.1
 wakatime==11.0.0
 
-mypy==0.701; --no-binary -U mypy python_version >= '3.0'
+mypy==0.701; python_version >= '3.0' --no-binary -U mypy
 
-flake8==3.7.7
-flake8-bugbear==19.3.0
+flake8==3.7.7;
+flake8-bugbear==19.3.0; python_version >= '3.0'
 flake8-commas==2.0.0
 flake8-quotes==2.0.1
 flake8-print==3.1.0
 flake8-bandit==2.1.0
-flake8-comprehensions==2.1.0
+flake8-comprehensions==2.1.0; python_version >= '3.0'
+flake8-comprehensions==1.4.1; python_version < '3.0'
 
 yapf==0.27.0
