@@ -93,6 +93,7 @@
       byobu,
       tlp-rdw,
       indicator-cpufreq,
+      snapcraft,
     ]
 
 # cleanup fonts:
