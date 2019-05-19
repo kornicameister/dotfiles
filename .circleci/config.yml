@@ -58,6 +58,10 @@ x-build-steps: &build_steps
             "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}" \
             "Circle Builds" \
             "${CIRCLE_SHA1}"
+    - run:
+        name: Verify !
+        command: |
+          command: .circleci/verify_install.sh
 
 version: 2
 jobs:
