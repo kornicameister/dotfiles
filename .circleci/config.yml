@@ -61,7 +61,7 @@ x-build-steps: &build_steps
     - run:
         name: Verify !
         command: |
-          command: .circleci/verify_install.sh
+          .circleci/verify_install.sh
 
 version: 2
 jobs:
