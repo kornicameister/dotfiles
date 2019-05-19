@@ -96,6 +96,12 @@
       snapcraft,
     ]
 
+# whatpulse
+- shell:
+    - description: Install whatpulse
+      command: .installer/install_whatpulse.sh
+      quiet: false
+
 # cleanup fonts:
 - shell:
     - description: Remove unused non-lating fonts
