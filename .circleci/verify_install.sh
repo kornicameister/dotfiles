@@ -37,6 +37,13 @@ validate_bin_accessible() {
     purge-old-kernels
     terminator
     git-extras
+    tig
+    http
+    tree
+    aria2
+    google-chrome-unstable
+    firefox
+    brave-browser-beta
   );
 
   for bin in "${bins_to_check[@]}"; do
