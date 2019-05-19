@@ -61,7 +61,7 @@ x-build-steps: &build_steps
     - run:
         name: Run an upgrade binary
         command: |
-          upgrade
+          zsh -il -c ./bin/upgrade
     - run:
         name: Verify !
         command: |
