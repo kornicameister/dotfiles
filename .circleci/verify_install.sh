@@ -22,29 +22,39 @@ fail () {
 
 validate_bin_accessible() {
   bins_to_check=(
+    # founations
     nvim
+    zsh
+    terminator
+    # containers & stuff
     docker
     docker-compose
-    snap
+    # snap
+    # git & utils
     git
     git-lfs
-    zsh
-    fzf
-    pyenv
-    nodenv
-    python2
-    python3
-    purge-old-kernels
-    terminator
     git-extras
     tig
-    http
-    tree
-    aria2c
+    # dev only with *env
+    pyenv
+    nodenv
+    # gotta have python dawg
+    python2
+    python3
+    # browsers
     google-chrome-unstable
     firefox
     brave-browser-beta
+    # linters matter
     shellcheck
+    yamllint
+    # utilities
+    fzf
+    purge-old-kernels
+    snap
+    http
+    tree
+    aria2c
   );
 
   for bin in "${bins_to_check[@]}"; do
