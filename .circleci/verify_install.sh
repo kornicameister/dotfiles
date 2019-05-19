@@ -44,6 +44,7 @@ validate_bin_accessible() {
     google-chrome-unstable
     firefox
     brave-browser-beta
+    shellcheck
   );
 
   for bin in "${bins_to_check[@]}"; do
