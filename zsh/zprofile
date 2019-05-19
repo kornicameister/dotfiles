@@ -16,8 +16,8 @@ else
   export EDITOR=vi
 fi
 
-# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
-export PYTHONIOENCODING='UTF-8';
+export PYTHONIOENCODING='UTF-8';            # make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+export PYTHONDONTWRITEBYTECODE=1            # prevent Python from making .pyc files that may become stale and cause weird bugs
 
 # Prefer US English and use UTF-8.
 export LANG='en_US.UTF-8';
