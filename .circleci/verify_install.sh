@@ -40,7 +40,7 @@ validate_bin_accessible() {
     tig
     http
     tree
-    aria2
+    aria2c
     google-chrome-unstable
     firefox
     brave-browser-beta
