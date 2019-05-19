@@ -59,6 +59,10 @@ x-build-steps: &build_steps
             "Circle Builds" \
             "${CIRCLE_SHA1}"
     - run:
+        name: Run an upgrade binary
+        command: |
+          upgrade
+    - run:
         name: Verify !
         command: |
           zsh -il -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
