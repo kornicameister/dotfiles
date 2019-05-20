@@ -85,4 +85,4 @@
           zsh -c ./.installer/install_latest_dev.sh,
           "Install latest Python & Node tools",
         ]
-    - command: [zsh -c ./post-install, Execute post install steps']
+    - command: [zsh -c ./post-install, "Execute post install steps"]
