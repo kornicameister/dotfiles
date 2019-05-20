@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 info () {
   printf "\\r  [ \\033[00;34m..\\033[0m ] %s\\n" "${1}"
@@ -29,7 +30,6 @@ validate_bin_accessible() (
     # containers & stuff
     docker
     docker-compose
-    # snap
     # git & utils
     git
     git-lfs
@@ -68,6 +68,10 @@ validate_bin_accessible() (
 
 info 'Validating installation'
 (
+  info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
   validate_bin_accessible;
 )
 info 'Validation successful'
+
+set +x
+set +e
