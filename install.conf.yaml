@@ -54,6 +54,10 @@
     # pyenv
     ~/.pyenv: dependencies/pyenv
     ~/.pyenv.sh: pyenv.sh
+    ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
+    ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
+    ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
+    ~/.pyenv/plugins/pyenv-doctor: dependencies/pyenv-doctor
 
     # ctags
     ~/.ctags: ctags
