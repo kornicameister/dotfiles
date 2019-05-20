@@ -77,4 +77,5 @@
       path: bin/*
 
 - shell:
+    - command: [chsh -s /bin/zsh root, Set ZSH as default shell]
     - command: ./post-install
