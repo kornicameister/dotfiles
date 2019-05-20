@@ -77,6 +77,12 @@
       path: bin/*
 
 - shell:
-    - command: [chsh -s /bin/zsh root, Set ZSH as default shell]
-    - command: [zsh -c ./.installer/install_latest_dev.sh, Install latest Python & Node tools]
-    - command: [zsh -c ./post-install, Execute post install steps'
+    - command: |
+        [[ "${SHELL}" =~ .*"zsh".* ]] || chsh -s $(which zsh)
+      description: "Set ZSH as default shell"
+    - command:
+        [
+          zsh -c ./.installer/install_latest_dev.sh,
+          "Install latest Python & Node tools",
+        ]
+    - command: [zsh -c ./post-install, Execute post install steps']
