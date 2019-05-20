@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 init_neovim() (
     echo "Initializing neovim setup"
 
@@ -33,3 +35,5 @@ post_init_python_system () (
     post_init_python_system ;
     init_neovim
 )
+
+set +x

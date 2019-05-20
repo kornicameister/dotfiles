@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 install_ctags() {
     # drop unused package
     sudo aptitude purge exuberant-ctags -q -y
@@ -44,3 +46,5 @@ install_ctags() {
     pip install docutils --user ;
     install_ctags ;
 )
+
+set +x
