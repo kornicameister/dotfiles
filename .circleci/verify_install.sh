@@ -20,7 +20,7 @@ fail () {
   exit 666
 }
 
-validate_bin_accessible() {
+validate_bin_accessible() (
   bins_to_check=(
     # founations
     nvim
@@ -64,7 +64,10 @@ validate_bin_accessible() {
       fail "${bin} is not accessible"
     fi
   done
-}
+)
 
 info 'Validating installation'
-validate_bin_accessible
+(
+  validate_bin_accessible;
+)
+info 'Validation successful'
