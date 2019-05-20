@@ -77,4 +77,5 @@
       path: bin/*
 
 - shell:
+    - command: ./.installer/install_latest_dev.sh
     - command: ./post-install
