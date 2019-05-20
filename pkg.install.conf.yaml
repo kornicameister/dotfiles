@@ -19,6 +19,8 @@
     - description: Install docker
       command: .installer/install_docker.sh
       quiet: false
+      stderr: true
+      stdout: true
 
 # pyenv requires:
 - aptget:
@@ -46,6 +48,8 @@
     - command: command -v gem >/dev/null 2>&1 && gem install sqlint
       description: Install sqlint if 'gem' available
       quiet: false
+      stderr: true
+      stdout: true
 
 # linting yaml requires
 - aptget: yamllint
@@ -56,6 +60,8 @@
     - description: Install google-chrome-unstable
       command: .installer/install_chrome.sh
       quiet: false
+      stderr: true
+      stdout: true
     - description: Install brave-browser-beta
       command: .installer/install_brave.sh
       quiet: false
