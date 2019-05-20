@@ -84,3 +84,18 @@
     url = https://github.com/nodenv/nodenv-each.git
     shallow = true
     branch = master
+[submodule "dependencies/pyenv-virtualenv"]
+    path = dependencies/pyenv-virtualenv
+    url = https://github.com/pyenv/pyenv-virtualenv.git
+    shallow = true
+    branch = master
+[submodule "dependencies/pyenv-ccache"]
+    path = dependencies/pyenv-ccache
+    url = https://github.com/pyenv/pyenv-ccache.git
+    shallow = true
+    branch = master
+[submodule "dependencies/pyenv-doctor"]
+    path = dependencies/pyenv-doctor
+    url = https://github.com/pyenv/pyenv-doctor.git
+    shallow = true
+    branch = master
