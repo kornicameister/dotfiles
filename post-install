@@ -1,21 +1,5 @@
 #!/usr/bin/env bash
 
-install_latest_dev() {
-    if [ ! -f "$(pyenv root)/version" ]; then
-        echo "Installing latest python"
-
-        pyenv latest install -s 2
-        pyenv latest install -s 3
-        pyenv latest --print 3 >> "$(pyenv root)/version"
-    fi
-    if [ ! -f "$(nodenv root)/version" ]; then
-        echo "Installing latest node"
-
-        nodenv latest install -s 12
-        nodenv latest --print 12 >> "$(nodenv root)/version"
-    fi
-}
-
 init_neovim() (
     echo "Initializing neovim setup"
 
@@ -46,7 +30,6 @@ post_init_python_system () (
 (
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
     "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
-    install_latest_dev ;
     post_init_python_system ;
     init_neovim
 )
