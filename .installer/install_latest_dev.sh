@@ -1,4 +1,6 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
+
+set -x
 
 if [ ! -f "$(pyenv root)/version" ]; then
     echo "Installing latest python"
@@ -13,3 +15,5 @@ if [ ! -f "$(nodenv root)/version" ]; then
     nodenv latest install -s 12
     nodenv latest --print 12 >> "$(nodenv root)/version"
 fi
+
+set +x
