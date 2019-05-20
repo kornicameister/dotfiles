@@ -14,7 +14,13 @@
     ]
 
 # docker requires
-- aptget: [apt-transport-https, ca-certificates]
+- aptget:
+    [
+      apt-transport-https,
+      ca-certificates,
+      gnupg-agent,
+      software-properties-common,
+    ]
 - shell:
     - description: Install docker
       command: .installer/install_docker.sh
