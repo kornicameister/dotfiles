@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 distro=$(lsb_release -si 2>&1)
 
 curl -s https://brave-browser-apt-beta.s3.brave.com/brave-core-nightly.asc |  apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-beta.gpg add -
@@ -13,3 +15,5 @@ fi
 
 aptitude update -q -y
 aptitude install -y -V -D -Z brave-browser-beta
+
+set +x
