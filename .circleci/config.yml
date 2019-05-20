@@ -99,14 +99,6 @@ jobs:
     docker:
       - image: ubuntu:18.04
     <<: *build_steps
-  build_ubuntu_17_10:
-    docker:
-      - image: ubuntu:17.10
-    <<: *build_steps
-  build_ubuntu_17_04:
-    docker:
-      - image: ubuntu:17.04
-    <<: *build_steps
 
 workflows:
   version: 2
@@ -120,5 +112,3 @@ workflows:
       - build_ubuntu_19_04
       - build_ubuntu_18_10
       - build_ubuntu_18_04
-      - build_ubuntu_17_10
-      - build_ubuntu_17_04
