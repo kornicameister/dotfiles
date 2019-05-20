@@ -52,7 +52,7 @@ init_neovim() (
     done
 
     if command -v npm >/dev/null 2>&1; then
-        npm install -g neovim typescript
+        npm install -g neovim typescript prettier
     fi
 
     pyenv rehash
