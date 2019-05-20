@@ -54,3 +54,33 @@
     url = https://github.com/ryanoasis/nerd-fonts
     shallow = true
     branch = master
+[submodule "dependencies/xxenv-latest"]
+    path = dependencies/xxenv-latest
+    url = https://github.com/momo-lab/xxenv-latest
+    shallow = true
+    branch = master
+[submodule "dependencies/node-build"]
+    path = dependencies/node-build
+    url = https://github.com/nodenv/node-build.git
+    shallow = true
+    branch = master
+[submodule "dependencies/nodenv-aliases"]
+    path = dependencies/nodenv-aliases
+    url = https://github.com/nodenv/nodenv-aliases.git
+    shallow = true
+    branch = master
+[submodule "dependencies/nodenv-package-json-engine"]
+    path = dependencies/nodenv-package-json-engine
+    url = https://github.com/nodenv/nodenv-package-json-engine.git
+    shallow = true
+    branch = master
+[submodule "dependencies/nodenv-package-rehash"]
+    path = dependencies/nodenv-package-rehash
+    url = https://github.com/nodenv/nodenv-package-rehash.git
+    shallow = true
+    branch = master
+[submodule "dependencies/nodenv-each"]
+    path = dependencies/nodenv-each
+    url = https://github.com/nodenv/nodenv-each.git
+    shallow = true
+    branch = master

@@ -6,8 +6,6 @@
 
 - clean: ["~"]
 
-- shell:
-    - command: ./pre-install
 
 - link:
     ~/.dotfiles: ""
@@ -44,6 +42,12 @@
     # node
     ~/.nodenv: dependencies/nodenv
     ~/.npmrc.sh: npmrc.sh
+    ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
+    ~/.nodenv/plugins/node-build: dependencies/node-build
+    ~/.nodenv/plugins/nodenv-aliases: dependencies/nodenv-aliases
+    ~/.nodenv/plugins/nodenv-package-json-engine: dependencies/nodenv-package-json-engine
+    ~/.nodenv/plugins/nodenv-package-rehash: dependencies/nodenv-package-rehash
+    ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
 
     # pyenv
     ~/.pyenv: dependencies/pyenv
