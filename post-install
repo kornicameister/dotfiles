@@ -1,28 +1,5 @@
 #!/usr/bin/env bash
 
-install_pyenv_plugins() {
-    local plugins_dir
-    local plugins
-
-    plugins_dir=$(realpath "${PWD}/dependencies/pyenv/plugins/")
-    plugins=(
-        pyenv-update
-        pyenv-virtualenv
-        pyenv-ccache
-        pyenv-doctor
-    )
-
-    mkdir -p "${plugins_dir}"
-    for plugin in ${plugins[*]}; do
-        if [ ! -d "${plugins_dir}/${plugin}" ]; then
-            git clone "git://github.com/pyenv/${plugin}.git" "${plugins_dir}/${plugin}"
-        fi
-    done
-    if [ ! -d "${plugins_dir}/xxenv-latest" ]; then
-        git clone https://github.com/momo-lab/xxenv-latest "${plugins_dir}/xxenv-latest"
-    fi
-}
-
 install_latest_dev() {
     if [ ! -f "$(pyenv root)/version" ]; then
         echo "Installing latest python"
@@ -69,7 +46,6 @@ post_init_python_system () (
 (
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
     "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
-    install_pyenv_plugins ;
     install_latest_dev ;
     post_init_python_system ;
     init_neovim
