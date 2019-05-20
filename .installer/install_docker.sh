@@ -20,7 +20,7 @@ add-apt-repository \
    stable"
 
 aptitude update -q -y
-aptitude install docker -y -V -D -Z
+aptitude install docker-ce docker-ce-cli containerd.io -y -V -D -Z
 
 # docker-compose
 compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
