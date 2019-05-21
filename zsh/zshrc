@@ -5,17 +5,17 @@ export TERM="xterm-256color"
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 
 # load all necessary completion and init stuff
-[ -f ~/.zgen/zgen.zsh ] && source ~/.zgen/zgen.zsh
-[ -f ~/.zprezto/init.zsh ] && source ~/.zprezto/init.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.fzf.settings ] && source ~/.fzf.settings
-[ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
-[ -f ~/.t.sh ] && source ~/.t.sh
+[ -f $HOME/.zgen/zgen.zsh ] && source $HOME/.zgen/zgen.zsh
+[ -f $HOME/.zprezto/init.zsh ] && source $HOME/.zprezto/init.zsh
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+[ -f $HOME/.fzf.settings ] && source $HOME/.fzf.settings
+[ -f $HOME/.npmrc.sh ] && source $HOME/.npmrc.sh
+[ -f $HOME/.t.sh ] && source $HOME/.t.sh
 
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 # load local customizations
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+[ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
 
 if ! zgen saved; then
     zgen prezto
