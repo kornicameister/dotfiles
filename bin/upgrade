@@ -6,6 +6,7 @@ os_upgrade() {
     sudo aptitude safe-upgrade -y
     sudo aptitude autoclean -q -y
     sudo aptitude clean -q -y
+    sudo aptitude purge '~c' -q -y
 }
 
 hadolint_upgrade() {
@@ -13,31 +14,6 @@ hadolint_upgrade() {
         docker pull hadolint/hadolint
     fi
 }
-
-pyenv_upgrade() {
-    if command -v pyenv >/dev/null 2>&1; then
-        pyenv update
-        pyenv rehash
-    fi
-}
-
-npm_upgrade() (
-    if command -v nodenv >/dev/null 2>&1; then
-        # use global system node version
-        local local_version
-        local_version=$(tr -d '\n' < "${HOME}/.nodenv/version")
-        nodenv shell "${local_version}"
-    fi
-
-    # upgrade npm
-    npm install -g npm
-
-    if command -v nodenv >/dev/null 2>&1; then
-        # unset to the previous shell being set here
-        nodenv rehash
-        nodenv shell -
-    fi
-)
 
 neovim_clients_upgrade() (
     if [ -d "${PYENV_ROOT}/versions/neovim2" ]; then
@@ -94,12 +70,17 @@ remove_unwanted_kernels() {
     fi
 }
 
+clear_thumbnails() {
+    if [ -d "${HOME}/.cache/thumbnails" ]; then
+        sudo rm -rf "${HOME}/.cache/thumbnails/*"
+    fi
+}
+
 os_upgrade
 remove_unwanted_kernels
 docker_compose_upgrade
 hadolint_upgrade
-pyenv_upgrade
-npm_upgrade
 neovim_clients_upgrade
 neovim_plugings_upgrade
 snap_refresh
+clear_thumbnails
