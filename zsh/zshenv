@@ -2,16 +2,3 @@
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
-
-if [[ ! -o LOGIN ]] ; then
-    # load nodenv & pyenv for non interactive shell as well
-    if [[ -s "$HOME/.nodenv/bin/nodenv" ]]; then
-        path=("$HOME/.nodenv/bin" $path)
-        eval "$(nodenv init - --no-rehash zsh)"
-    fi
-    if [[ -s "$HOME/.pyenv/bin/pyenv" ]]; then
-        path=("$HOME/.pyenv/bin" $path)
-        eval "$(pyenv init - --no-rehash zsh)"
-        eval "$(pyenv virtualenv-init -)"
-    fi
-fi
