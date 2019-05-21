@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 if [ ! -f "$(pyenv root)/version" ]; then
     echo "Installing latest python"
 
@@ -20,5 +18,3 @@ if [ ! -f "$(nodenv root)/version" ]; then
 else
     echo "nodenv already has system version set at it is $(cat "$(nodenv root)/version")"
 fi
-
-set +x
