@@ -77,11 +77,16 @@ validate_interactive_bins() (
   done
 )
 
+validate_pyenv() (
+  "${HOME}/.pyenv/bin/pyenv" versions
+)
+
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
   validate_bin_accessible;
   validate_interactive_bins;
+  validate_pyenv;
 )
 info 'Validation successful'
 
