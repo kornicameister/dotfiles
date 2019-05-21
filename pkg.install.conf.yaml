@@ -96,13 +96,17 @@
       snapcraft,
     ]
 
-# cleanup fonts:
+# cleanup
 - shell:
     - description: Remove unused non-lating fonts
       command: |
-        xargs -a "${PWD}/bad-fonts.txt" aptitude remove -yq \
+        xargs -a "${PWD}/remove.fonts.txt" aptitude remove -yq \
           && aptitude autoclean \
           && dpkg-reconfigure fontconfig
+    - description: Remove packages that are useless
+      command: |
+        xargs -a "${PWD}/remove.pkgs.txt" aptitude remove -yq \
+          && aptitude autoclean
 
 # start some services at the end
 - shell:
