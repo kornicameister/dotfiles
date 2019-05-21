@@ -42,6 +42,7 @@ endif
 Plug 'pbogut/deoplete-elm', { 'for': ['elm'] }
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
 Plug 'zchee/deoplete-jedi', { 'for': ['python'] }
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 " asynchronous execution library
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
