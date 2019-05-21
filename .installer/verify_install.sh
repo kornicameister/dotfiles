@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -e
-set -x
-
 info () {
   printf "\\r  [ \\033[00;34m..\\033[0m ] %s\\n" "${1}"
 }
@@ -35,9 +32,6 @@ validate_bin_accessible() (
     git-lfs
     git-extras
     tig
-    # dev only with *env
-    pyenv
-    nodenv
     # gotta have python dawg
     python2
     python3
@@ -49,17 +43,34 @@ validate_bin_accessible() (
     shellcheck
     yamllint
     # utilities
-    fzf
     purge-old-kernels
     snap
     http
     tree
     aria2c
   );
-
   for bin in "${bins_to_check[@]}"; do
     if command -v "${bin}" >/dev/null 2>&1; then
       success "${bin} is accessible via $(whereis "${bin}")"
+    else
+      fail "${bin} is not accessible"
+    fi
+  done
+)
+
+validate_interactive_bins() (
+  bins_to_check=(
+    pyenv
+    nodenv
+    fzf
+  );
+
+  for bin in "${bins_to_check[@]}"; do
+    # first part
+    bin_path="${HOME}/.${bin}/bin/${bin}"
+    if [[ -s "${bin_path}" ]]; then
+      v_out=$($bin_path --version | tr "'${bin}'" ' ' | sed -e 's/^[[:space:]]*//')
+      success "${bin} is accessible via ${bin_path} with version ${v_out}"
     else
       fail "${bin} is not accessible"
     fi
@@ -70,8 +81,7 @@ info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
   validate_bin_accessible;
+  validate_interactive_bins;
 )
 info 'Validation successful'
 
-set +x
-set +e
