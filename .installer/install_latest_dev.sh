@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x ; set -e
+
 if command -v pyenv 2>&1; then
   pyenv="${HOME}/.pyenv/bin/pyenv"
 else
@@ -29,3 +31,5 @@ if [ ! -f "$($nodenv root)/version" ]; then
 else
     echo "nodenv already has system version set at it is $(cat "$(nodenv root)/version")"
 fi
+
+set +x ; set +e
