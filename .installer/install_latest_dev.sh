@@ -2,12 +2,12 @@
 
 set -x ; set -e
 
-if command -v pyenv >/dev/null 2>&1; then
+if ! command -v pyenv >/dev/null 2>&1; then
   pyenv="${HOME}/.pyenv/bin/pyenv"
 else
   pyenv=$(which pyenv)
 fi
-if command -v nodenv >/dev/null 2>&1; then
+if ! command -v nodenv >/dev/null 2>&1; then
   nodenv="${HOME}/.nodenv/bin/nodenv"
 else
   nodenv=$(which nodenv)
