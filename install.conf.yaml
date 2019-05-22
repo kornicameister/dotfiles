@@ -58,6 +58,7 @@
     ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
     ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
     ~/.pyenv/plugins/pyenv-doctor: dependencies/pyenv-doctor
+    ~/.pyenv/plugins/pyenv-which-ext: dependencies/pyenv-which-ext
 
     # ctags
     ~/.ctags: ctags
