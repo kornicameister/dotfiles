@@ -67,6 +67,9 @@
     ~/.t.sh: t.sh
     ~/.local/bin/t: dependencies/t/t.py
 
+    # tmux
+    ~/.tmux.conf: tmux.conf
+
     # custom application/tools configuration
     ~/.config:
       glob: true

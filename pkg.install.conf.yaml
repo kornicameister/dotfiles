@@ -90,10 +90,10 @@
       terminator,
       ppa-purge,
       bikeshed,
-      byobu,
       tlp-rdw,
       indicator-cpufreq,
       snapcraft,
+      tmux,
     ]
 
 # cleanup

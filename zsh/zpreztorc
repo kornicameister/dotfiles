@@ -28,7 +28,8 @@ zstyle ':prezto:load' pmodule \
   'contrib-prompt' \
   'prompt' \
   'enhancd' \
-  'alias-tips'
+  'alias-tips' \
+  'tmux'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -62,3 +63,6 @@ zstyle ':prezto:module:utility:ls' dirs-first 'yes'
 
 zstyle ':prezto:module:enhancd' command 'cd'
 zstyle ':prezto:module:enhancd' filter 'fzf'
+
+zstyle ':prezto:module:tmux:auto-start' local 'yes'
+zstyle ':prezto:module:tmux:session' name 'TML'
