@@ -78,7 +78,17 @@ validate_interactive_bins() (
 )
 
 validate_pyenv() (
-  "${HOME}/.pyenv/bin/pyenv" versions
+  venvs_to_check=(
+    neovim2
+    neovim3
+  )
+  for venv in "${venvs_to_check[@]}"; do
+    if ! "${HOME}/.pyenv/bin/pyenv" versions | grep -q "${venv}"; then
+      fail "Virtualenv ${venv} was not installed"
+    else
+      success "Virtualenv ${venv} is installed"
+    fi
+  done
 )
 
 info 'Validating installation'
