@@ -101,11 +101,10 @@
       preload,
       terminator,
       ppa-purge,
-      bikeshed,
       byobu,
       tlp-rdw,
       indicator-cpufreq,
-      snapcraft,
+      snapd,
     ]
 
 # cleanup
