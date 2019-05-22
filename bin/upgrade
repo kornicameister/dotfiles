@@ -24,7 +24,7 @@ neovim_clients_upgrade() (
     fi
 
     if command -v npm >/dev/null 2>&1; then
-        npm upgrade -g neovim
+        npm upgrade -g neovim prettier typescript
         if command -v nodenv >/dev/null 2>&1; then
             nodenv rehash
         fi

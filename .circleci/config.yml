@@ -61,8 +61,8 @@ x-build-steps: &build_steps
     - run:
         name: Verify !
         command: |
-          zsh -c .installer/install_latest_dev.sh
-          zsh -c .installer/verify_install.sh
+          zsh -il -c echo "Veryfying the build ${CIRCLE_BUILD_NUM} :: ${CIRCLE_SHA1}"
+          zsh -il -c .installer/verify_install.sh
 
 version: 2
 jobs:

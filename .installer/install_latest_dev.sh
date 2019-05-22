@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -x ; set -e
+#!/bin/bash
 
 if ! command -v pyenv >/dev/null 2>&1; then
   pyenv="${HOME}/.pyenv/bin/pyenv"
@@ -13,23 +11,49 @@ else
   nodenv=$(which nodenv)
 fi
 
-if [ ! -f "$($pyenv root)/version" ]; then
-    echo "Installing latest python"
+PYENV_ROOT=$($pyenv root)
+NODENV_ROOT=$($nodenv root)
 
-    $pyenv latest install -s 2
-    $pyenv latest install -s 3
-    $pyenv latest --print 3 >> "$(pyenv root)/version"
-else
-    echo "pyenv already has system version set at it is $(cat "$(pyenv root)/version")"
-fi
+install_latest_python_node() (
+  if [ ! -f "${PYENV_ROOT}/version" ]; then
+      echo "Installing latest python"
 
-if [ ! -f "$($nodenv root)/version" ]; then
-    echo "Installing latest node"
+      $pyenv latest install -s 2
+      $pyenv latest install -s 3
+      $pyenv global "$($pyenv latest --print 3)"
+  else
+      echo "pyenv already has system version set at it is $(cat "${PYENV_ROOT}/version")"
+  fi
 
-    $nodenv latest install -s 12
-    $nodenv latest --print 12 >> "$(nodenv root)/version"
-else
-    echo "nodenv already has system version set at it is $(cat "$(nodenv root)/version")"
-fi
+  if [ ! -f "${NODENV_ROOT}/version" ]; then
+      echo "Installing latest node"
 
-set +x ; set +e
+      $nodenv latest install -s 12
+      $nodenv global "$($nodenv latest --print 12)"
+  else
+      echo "nodenv already has system version set at it is $(cat "${NODENV_ROOT}/version")"
+  fi
+)
+
+install_requirements() (
+  for py_major in {2,3}; do
+      if [ ! -d "${PYENV_ROOT}/versions/neovim${py_major}" ]; then
+          echo "Initializing neovim setup for Python ${py_major}"
+          $pyenv virtualenv "$($pyenv latest --print ${py_major})" "neovim${py_major}"
+          "${PYENV_ROOT}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
+      else
+          echo "${PYENV_ROOT}/versions/neovim${py_major} venv already exists"
+      fi
+      $pyenv virtualenvs | grep "neovim${py_major}"
+  done
+
+  $nodenv exec npm install -g neovim typescript prettier
+
+  $pyenv rehash
+  $nodenv rehash
+)
+
+(
+  install_latest_python_node;
+  install_requirements;
+)
