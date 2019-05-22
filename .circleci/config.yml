@@ -61,6 +61,7 @@ x-build-steps: &build_steps
     - run:
         name: Verify !
         command: |
+          zsh -c .installer/install_latest_dev.sh
           zsh -c .installer/verify_install.sh
 
 version: 2
