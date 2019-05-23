@@ -1,3 +1,4 @@
+# Loaded before zshrc
 #!/bin/zsh
 
 if [[ "$OSTYPE" == darwin* ]]; then

@@ -1,24 +1,6 @@
 #!/usr/bin/env bash
 
-init_neovim() (
-    echo "Initializing neovim setup"
-
-    for py_major in {2,3}; do
-        if [ ! -d "${PYENV_ROOT}/versions/neovim${py_major}" ]; then
-            pyenv virtualenv "$(pyenv latest --print ${py_major})" "neovim${py_major}"
-        else
-            echo "${PYENV_ROOT}/versions/neovim${py_major} venv already exists"
-        fi
-        "${PYENV_ROOT}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
-    done
-
-    if command -v npm >/dev/null 2>&1; then
-        npm install -g neovim typescript prettier
-    fi
-
-    pyenv rehash
-    nodenv rehash
-)
+set -x
 
 post_init_python_system () (
     for py_major in {2,3}; do
@@ -33,3 +15,5 @@ post_init_python_system () (
     post_init_python_system ;
     init_neovim
 )
+
+set +x
