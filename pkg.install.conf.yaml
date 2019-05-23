@@ -113,7 +113,8 @@
       command: |
         snap install --edge git-standup && \
           snap install heroku --classic && \
-          snap install --edge jq
+          snap install --edge jq && \
+          snap install slack --classic
 
 # cleanup
 - shell:
