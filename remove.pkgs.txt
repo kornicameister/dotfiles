@@ -1,1 +1,7 @@
 nano
+# taken from https://help.ubuntu.com/community/Diet%20Ubuntu
+mono-common
+gnome-orca
+brltty
+brltty-x11
+gnome-accessibility-themes

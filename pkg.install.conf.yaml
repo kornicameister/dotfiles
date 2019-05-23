@@ -115,9 +115,9 @@
           && aptitude autoclean \
           && dpkg-reconfigure fontconfig
     - description: Remove packages that are useless
-      command: |
-        xargs -a "${PWD}/remove.pkgs.txt" aptitude remove -yq \
-          && aptitude autoclean
+      command: >
+        cat "${PWD}/remove.pkgs.txt" | grep -v '^#' | xargs aptitude remove \
+            && aptitude autoclean
 
 # start some services at the end
 - shell:

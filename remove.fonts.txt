@@ -54,3 +54,9 @@ fonts-tlwg-typist
 fonts-tlwg-typo
 fonts-tlwg-umpush
 fonts-tlwg-waree
+ttf-arabeyes
+ttf-arphic-uming
+ttf-indic-fonts-core
+ttf-malayalam-fonts
+ttf-thai-tlwg
+ttf-unfonts-core
