@@ -64,7 +64,7 @@ x-build-steps: &build_steps
           zsh -il -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
           zsh -il -c .installer/verify_install.sh
 
-version: 2
+version: 2.1
 jobs:
   shellcheck:
     docker:
