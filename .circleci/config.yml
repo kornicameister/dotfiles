@@ -55,13 +55,13 @@ x-build-steps: &build_steps
           ./install \
             "${CIRCLE_USERNAME}" \
             "${CIRCLE_BUILD_NUM}" \
-            "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.${CIRCLE_BUILD_NUM}" \
+            "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
             "Circle Builds" \
             "${CIRCLE_SHA1}"
     - run:
         name: Verify !
         command: |
-          zsh -il -c echo "Veryfying the build ${CIRCLE_BUILD_NUM} :: ${CIRCLE_SHA1}"
+          zsh -il -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
           zsh -il -c .installer/verify_install.sh
 
 version: 2
