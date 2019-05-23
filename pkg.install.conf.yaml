@@ -107,6 +107,14 @@
       snapd,
     ]
 
+# snap binaries
+- shell:
+    - description: Install snap packages
+      command: |
+        snap install --edge git-standup && \
+          snap install heroku --classic && \
+          snap install --edge jq
+
 # cleanup
 - shell:
     - description: Remove unused non-lating fonts
