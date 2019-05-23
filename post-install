@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 post_init_python_system () (
     for py_major in {2,3}; do
         echo "Installing packages for major python release ${py_major}"
@@ -13,7 +11,4 @@ post_init_python_system () (
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
     "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
     post_init_python_system ;
-    init_neovim
 )
-
-set +x
