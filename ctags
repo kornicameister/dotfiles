@@ -18,6 +18,8 @@
 --exclude=db/*
 --exclude=log/*
 
+--exclude=.idea/
+
 --tag-relative=yes
 --recurse=yes
 --sort=yes
