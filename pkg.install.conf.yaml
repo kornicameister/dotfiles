@@ -115,6 +115,7 @@
           snap install heroku --classic --no-wait && \
           snap install --edge jq --no-wait && \
           snap install slack --classic --no-wait
+      quiet: false
 
 # cleanup
 - shell:
