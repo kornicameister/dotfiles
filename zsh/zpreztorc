@@ -33,10 +33,6 @@ zstyle ':prezto:load' pmodule \
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
-zstyle ':prezto:module:editor:info:keymap:primary' format '>>>'
-zstyle ':prezto:module:editor:info:keymap:primary:insert' format '✍'
-zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '✗'
-zstyle ':prezto:module:editor:info:completing' format '🕒'
 
 zstyle ':prezto:module:prompt' theme 'smiley'
 zstyle ':prezto:module:prompt' pwd-length 'short'
