@@ -111,10 +111,10 @@
 - shell:
     - description: Install snap packages
       command: |
-        snap install --edge git-standup && \
-          snap install heroku --classic && \
-          snap install --edge jq && \
-          snap install slack --classic
+        snap install --edge git-standup --no-wait && \
+          snap install heroku --classic --no-wait && \
+          snap install --edge jq --no-wait && \
+          snap install slack --classic --no-wait
 
 # cleanup
 - shell:
