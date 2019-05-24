@@ -1,5 +1,6 @@
-# Loaded before zshrc
 #!/bin/zsh
+
+# Loaded before zshrc
 
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
