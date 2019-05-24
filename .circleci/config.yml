@@ -53,11 +53,11 @@ x-build-steps: &build_steps
         name: Run an installation
         command: |
           ./install \
-            "${CIRCLE_USERNAME}" \
-            "${CIRCLE_BUILD_NUM}" \
-            "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
-            "Circle Builds" \
-            "${CIRCLE_SHA1}"
+            -u "${CIRCLE_USERNAME}" \
+            --password "${CIRCLE_BUILD_NUM}" \
+            -e "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+            --gpg-fullname "Circle Builds" \
+            -gp "${CIRCLE_SHA1}"
     - run:
         name: Verify !
         command: |

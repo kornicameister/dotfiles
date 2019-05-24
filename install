@@ -16,12 +16,81 @@ DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-USERNAME="${1:-""}"
-PASSWORD="${2:-""}"
-EMAIL="${3:-""}"
+USERNAME=""
+PASSWORD=""
+EMAIL=""
 
-GPG_FULL_NAME="${4:-""}"
-GPG_PASSPHRASE="${5:-""}"
+GPG_FULL_NAME=""
+GPG_PASSPHRASE=""
+
+# if there is no .gitconfig.local that is meant to be created
+# to setup git/github configuration user specific way (or rather) machine specific way
+[ ! -f "${HOME}/.gitconfig.local" ] && INSTALL_FULL=True || INSTALL_FULL=False
+
+# if INSTALL_FULL is set that it means that we gotta install packages as well
+[[ "${INSTALL_FULL}" == True ]] && INSTALL_PKGS_ONLY=True || INSTALL_PKGS_ONLY=False
+
+# if INSTALL_CONFIG_ONLY is always set to true by default because I want symlinks to be
+# checked and recreated/created on each run
+INSTALL_CONFIG_ONLY=True
+
+# Force mode actually applies only to a situation where we have already deployed
+# but we wish to reinstall packages thus following things are correct
+# --only pkg --force
+# --force
+FORCE_MODE=False
+
+while [ $# -gt 0 ]; do
+    case "${1}" in
+        '-u'|'--user')
+            shift
+            USERNAME="${1}"
+            shift
+            ;;
+        '-p'|'--password')
+            shift
+            PASSWORD="${1}"
+            shift
+            ;;
+        '-e'|'--email')
+            shift
+            EMAIL="${1}"
+            shift
+            ;;
+        '-gn'|'--gpg-fullname')
+            shift
+            GPG_FULL_NAME="${1}"
+            shift
+            ;;
+        '-gp'|'--gpg-passphrase')
+            shift
+            GPG_PASSPHRASE="${1}"
+            shift
+            ;;
+        '--only')
+            shift
+            case "${1}" in
+                'pkg')
+                    INSTALL_PKGS_ONLY=True
+                    ;;
+                'config')
+                    INSTALL_CONFIG_ONLY=True
+                    ;;
+                esac
+            shift
+            ;;
+        '--force')
+            FORCE_MODE=true
+            shift
+            ;;
+        '--')
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
 
 _welcome_message() {
     if command -v lsb_release >/dev/null 2>&1; then
@@ -30,13 +99,42 @@ _welcome_message() {
         distro_name="Unknown"
     fi
 
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+    if ((INSTALL_FULL)); then
         first_run_welcome="kornicameister/dotfiles - first run"
     else
         first_run_welcome="kornicameister/dotfiles - updating"
     fi
 
     echo "${distro_name} : ${first_run_welcome} : ${USERNAME}"
+}
+
+_validate_args() {
+    if [ -z "${USERNAME}" ]; then
+        echo "git_user must be set"
+        exit 1
+    fi
+    if [ -z "${PASSWORD}" ]; then
+        echo "git_password must be set"
+        exit 2
+    fi
+    if [ -z "${EMAIL}" ]; then
+        echo "git_email must be set"
+        exit 3
+    fi
+    if [ -z "${GPG_FULL_NAME}" ]; then
+        echo "gpg_full_name must be set"
+        exit 4
+    fi
+    if [ -z "${GPG_PASSPHRASE}" ]; then
+        echo "gpg_passphrase must be set"
+        exit 5
+    fi
+}
+
+_parse_args() {
+    if ((INSTALL_FULL); then
+        exit 0
+    fi
 }
 
 execute_dotbot_pkg_install() {
@@ -117,35 +215,8 @@ setup_nvim_as_default_editor() {
 _welcome_message
 git submodule update --init --recursive
 
-if [ ! -f "${HOME}/.gitconfig.local" ]; then
-    args=("$@")
-    argsCount=${#args[@]}
-
-    if [ "${argsCount}" -ne 5 ]; then
-        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email} {gpg_full_name} {gpg_passphrase}"
-    fi
-    if [ -z "${USERNAME}" ]; then
-        echo "git_user must be set"
-        exit 1
-    fi
-    if [ -z "${PASSWORD}" ]; then
-        echo "git_password must be set"
-        exit 2
-    fi
-    if [ -z "${EMAIL}" ]; then
-        echo "git_email must be set"
-        exit 3
-    fi
-    if [ -z "${GPG_FULL_NAME}" ]; then
-        echo "gpg_full_name must be set"
-        exit 4
-    fi
-    if [ -z "${GPG_PASSPHRASE}" ]; then
-        echo "gpg_passphrase must be set"
-        exit 5
-    fi
-
-
+if ((INSTALL_FULL)); then
+    _validate_args
     execute_dotbot_pkg_install
     execute_dotbot_config_install
     setup_git
