@@ -27,7 +27,6 @@ zstyle ':prezto:load' pmodule \
   'contrib-clipboard' \
   'contrib-prompt' \
   'prompt' \
-  'enhancd' \
   'alias-tips'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
@@ -55,6 +54,3 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 
 zstyle ':prezto:module:utility' safe-ops 'yes'
 zstyle ':prezto:module:utility:ls' dirs-first 'yes'
-
-zstyle ':prezto:module:enhancd' command 'cd'
-zstyle ':prezto:module:enhancd' filter 'fzf'
