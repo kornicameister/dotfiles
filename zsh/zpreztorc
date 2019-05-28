@@ -27,14 +27,13 @@ zstyle ':prezto:load' pmodule \
   'contrib-clipboard' \
   'contrib-prompt' \
   'prompt' \
-  'enhancd' \
   'alias-tips'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
 
-zstyle ':prezto:module:prompt' theme 'smiley'
+zstyle ':prezto:module:prompt' theme 'pure'
 zstyle ':prezto:module:prompt' pwd-length 'short'
 zstyle ':prezto:module:prompt' show-return-val 'yes'
 
@@ -56,5 +55,6 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:utility' safe-ops 'yes'
 zstyle ':prezto:module:utility:ls' dirs-first 'yes'
 
-zstyle ':prezto:module:enhancd' command 'cd'
-zstyle ':prezto:module:enhancd' filter 'fzf'
+zstyle ':prezto:module:completion:*:hosts' etc-host-ignores '0.0.0.0' '127.0.0.1'
+
+zstyle ':prezto:module:ssh:load' identities 'github'
