@@ -116,11 +116,18 @@ clear_thumbnails() {
     fi
 }
 
+git_extras_upgrade() {
+    if command -v git-extras >/dev/null 2>&1; then
+        sudo git-extras update
+    fi
+}
+
 exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
 exec_fn docker_compose_upgrade
 exec_fn hadolint_upgrade
 exec_fn neovim_clients_upgrade
 exec_fn neovim_plugings_upgrade
+exec_fn git_extras_upgrade
 exec_fn snap_refresh
 exec_fn clear_thumbnails
