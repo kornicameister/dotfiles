@@ -33,7 +33,6 @@
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
-    ~/.zhooks: zsh/hooks.zsh
     ~/.zprezto: dependencies/prezto
     ~/.zgen: dependencies/zgen
 
