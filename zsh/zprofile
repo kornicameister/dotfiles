@@ -2,6 +2,10 @@
 
 # Loaded before zshrc
 
+# export dir to my dotfiles
+export K_DOTFILES_DIR="${HOME}/.dotfiles"
+
+# this settings covers macOS
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
@@ -51,4 +55,5 @@ if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
+# pure theme settings
 export PURE_GIT_PULL=1
