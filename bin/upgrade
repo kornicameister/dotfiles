@@ -50,7 +50,7 @@ hadolint_upgrade() {
     fi
 }
 
-neovim_clients_upgrade() (
+node_python_pkgs_updata() (
 
     for py_major in {2,3}; do
         venv_name="neovim${py_major}"
@@ -63,12 +63,29 @@ neovim_clients_upgrade() (
         fi
     done
 
-    if command -v npm >/dev/null 2>&1; then
-        npm upgrade -g neovim prettier typescript
-        if command -v nodenv >/dev/null 2>&1; then
-            nodenv rehash
-        fi
+    if command -v nodenv >/dev/null 2>&1; then
+        _npm="$(nodenv root)/versions/$(nodenv latest -P)/bin/npm"
+        _nodenv=nodenv
+    else
+        nodenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/nodenv/version")
+        _npm="${K_DOTFILES_DIR}/dependencies/nodenv/${nodenv_system_ver}/bin/npm"
+        _nodenv="${K_DOTFILES_DIR}/dependencies/nodenv/bin/nodenv"
     fi
+
+    if command -v pyenv >/dev/null 2>&1; then
+        _pip="$(pyenv root)/versions/$(pyenv latest -P)/bin/pip"
+        _pyenv=pyenv
+    else
+        pyenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/pyenv/version")
+        _pip="${K_DOTFILES_DIR}/dependencies/pyenv/${pyenv_system_ver}/bin/pip"
+        _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
+    fi
+
+    $_npm upgrade -g neovim prettier typescript
+    $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt"
+
+    $_nodenv rehash
+    $_pyenv rehash
 )
 
 neovim_plugings_upgrade() {
@@ -126,7 +143,7 @@ exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
 exec_fn docker_compose_upgrade
 exec_fn hadolint_upgrade
-exec_fn neovim_clients_upgrade
+exec_fn node_python_pkgs_updata
 exec_fn neovim_plugings_upgrade
 exec_fn git_extras_upgrade
 exec_fn snap_refresh
