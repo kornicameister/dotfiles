@@ -41,8 +41,10 @@ else
 endif
 Plug 'pbogut/deoplete-elm', { 'for': ['elm'] }
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
-Plug 'zchee/deoplete-jedi', { 'for': ['python'] }
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
+Plug 'deoplete-plugins/deoplete-tag'
+Plug 'deoplete-plugins/deoplete-docker'
+Plug 'deoplete-plugins/deoplete-zsh'
 
 " asynchronous execution library
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
@@ -73,6 +75,7 @@ Plug 'elmcast/elm-vim', {'for': ['elm']}
 Plug 'tmhedberg/SimpylFold', { 'for': ['python'] }
 Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
 " json
 Plug 'elzr/vim-json', {'for': ['json']}
