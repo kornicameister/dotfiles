@@ -23,6 +23,7 @@
 --tag-relative=yes
 --recurse=yes
 --sort=yes
+--fields=+1
 
 --langdef=js
 --langmap=js:.js
@@ -51,11 +52,14 @@
 
 --langdef=Elm
 --langmap=Elm:.elm
---regex-Elm=/^ *([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:].*->.*/\1/f,function,functions/
---regex-Elm=/^ *([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:][^-]+$/\1/c,constant,constants/
---regex-Elm=/^port +([[:lower:]][[:alnum:]_]+)[[:blank:]]*:[^:]/\1/p,port,ports/
---regex-Elm=/^type +([[:upper:]][[:alnum:]_]+)/\1/t,type,types/
---regex-Elm=/^type[[:blank:]]+alias[[:blank:]]+([[:upper:]][[:alnum:]_]+)/\1/a,type-alias,type-aliases/
+--regex-Elm=/^ *([a-z][a-zA-Z0-9_-]+)[ \t ]*:[^:].*->(.*)/\1/f,function,functions type declarations,S:String s/
+--regex-Elm=/^ *([a-z][a-zA-Z0-9_-]+)[ \t ]*:([^:][^-]+)$/\1/c,constant,constants/
+--regex-Elm=/^port *([a-z][a-zA-Z0-9_-]+)[ \t ]*:[^:]/\1/p,port,ports/
+--regex-Elm=/^type *([A-Z][a-zA-Z0-9_-]*)/\1/t,type/
+--regex-Elm=/^type alias *([A-Z][a-zA-Z0-9_-]*)/\1/t,type,Declared types/
+--regex-Elm=/[ \r\n\t][\|=][ \r\n\t]*([A-Z][a-zA-Z0-9_-]*)(.*)/\1/C,constructor,constructors created by types/
+--regex-Elm=/^module *([A-Z][.a-zA-Z0-9_-]*)/\1/m,module,module definitions/
+--regex-Elm=/^import *([A-Z][.a-zA-Z0-9_-]*)(.*as *([A-Z][.a-zA-Z0-9_-]*))?.*(\(.*\))*/\1 (\2)/i,import,imported modules/
 
 --langdef=CoffeeScript
 --langmap=CoffeeScript:.coffee
@@ -83,3 +87,20 @@
 --regex-typescript=/^[ \t]*(export)?[ \t]*(public|private)[ \t]+(static)?[ \t]*([a-zA-Z0-9_]+)/\4/m,members/
 --regex-typescript=/^[ \t]*(export)?[ \t]*interface[ \t]+([a-zA-Z0-9_]+)/\2/i,interfaces/
 --regex-typescript=/^[ \t]*(export)?[ \t]*enum[ \t]+([a-zA-Z0-9_]+)/\2/e,enums/
+
+--langdef=css
+--langmap=css:.css
+--langmap=css:+.scss
+--langmap=css:+.sass
+--langmap=css:+.styl
+--langmap=css:+.less
+--regex-css=/^[ \t]*(([A-Za-z0-9_-]+[ \t\n,]+)+)\{/\1/t,tag,tags/
+--regex-css=/^[ \t]*#([A-Za-z0-9_-]+)/#\1/i,id,ids/
+--regex-css=/^[ \t]*\.([A-Za-z0-9_-]+)/.\1/c,class,classes/
+
+--langdef=less
+--langmap=less:.less
+--regex-less=/^[ t]*.([A-Za-z0-9_-]+)/1/c,class,classes/
+--regex-less=/^[ t]*#([A-Za-z0-9_-]+)/1/i,id,ids/
+--regex-less=/^[ t]*(([A-Za-z0-9_-]+[ tn,]+)+){/1/t,tag,tags/
+--regex-less=/^[ t]*@medias+([A-Za-z0-9_-]+)/1/m,media,medias/

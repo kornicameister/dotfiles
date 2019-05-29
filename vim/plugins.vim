@@ -96,12 +96,46 @@ Plug 'wakatime/vim-wakatime'                        " track what I am doing when
 Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
+Plug 'majutsushi/tagbar'                            " visiting tags as pro
 
 call plug#end()
 
 " Plugin Customizations
 " =====================
 
+augroup tagbar_plugin_settins
+    autocmd!
+    let g:tagbar_ctags_bin='ctags'
+    let g:tagbar_iconchars = ['►', '▼']
+    let g:tagbar_autoclose = 1
+
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+            \ 'h:headings',
+            \ 'l:links',
+            \ 'i:images'
+        \ ],
+        \ 'sort' : 0
+    \ }
+    let g:tagbar_type_elm = {
+        \ 'ctagstype' : 'elm',
+        \ 'kinds'     : [
+            \ 'm:module',
+            \ 'i:imports',
+            \ 't:types',
+            \ 'C:constructors',
+            \ 'c:constants',
+            \ 'f:functions',
+            \ 'p:ports'
+        \ ],
+        \ 'sort': 1
+    \ }
+
+    nmap <F8> :TagbarToggle<CR>
+augroup END
+
+" always color brackets
 let g:rainbow_active = 1
 
 augroup airline_plugin_settings
