@@ -59,7 +59,7 @@ node_python_pkgs_updata() (
         echo "Upgrading requirements for ${venv_name}"
 
         if [ -d "${venv_dir}" ]; then
-            "${venv_dir}"/bin/pip install -r "${K_DOTFILES_DIR}/neovim-requirements.txt"
+            "${venv_dir}"/bin/pip install -r "${K_DOTFILES_DIR}/neovim-requirements.txt" 2>&1
         fi
     done
 
@@ -81,8 +81,8 @@ node_python_pkgs_updata() (
         _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
     fi
 
-    $_npm upgrade -g neovim prettier typescript
-    $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt"
+    $_npm upgrade -g neovim prettier typescript 2>&1
+    $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
 
     $_nodenv rehash
     $_pyenv rehash
@@ -117,7 +117,7 @@ docker_compose_upgrade() {
 
 snap_refresh() {
     if command -v snap >/dev/null 2>&1; then
-        snap refresh
+        sudo snap refresh 2>&1
     fi
 }
 
