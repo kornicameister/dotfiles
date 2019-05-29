@@ -39,7 +39,6 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-Plug 'pbogut/deoplete-elm', { 'for': ['elm'] }
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
 Plug 'deoplete-plugins/deoplete-tag'
