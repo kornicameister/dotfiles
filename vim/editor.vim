@@ -1,7 +1,7 @@
 " Copyright 2018 kornicameister
 
 " leader
-let mapleader=','
+let b:mapleader = ','
 let g:mapleader = ','
 
 " save from typing :
@@ -9,7 +9,10 @@ nnoremap ; :
 
 " general settings for editor
 syntax on
+
 set encoding=utf-8
+scriptencoding utf-8
+
 set smartindent
 set noerrorbells
 set novisualbell
@@ -169,6 +172,3 @@ nmap <A-l> <Plug>(ale_lint)<CR>
 nmap <A-d> <Plug>(ale_detail)<CR>
 nmap <A-k> <Plug>(ale_previous_wrap)
 nmap <A-j> <Plug>(ale_next_wrap)
-
-" gundo
-nnoremap <leader>u :GundoToggle<CR>
