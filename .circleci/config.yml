@@ -22,8 +22,9 @@ x-build-steps: &build_steps
     - run:
         name: Checkout modules
         command: |
-          git submodule init
-          git submodule update
+          git submodule sync --recursive
+          git submodule update --recursive --init \
+            --checkout --no-recommend-shallow --force
     - run:
         name: Configure timezone & timezone
         command: |
