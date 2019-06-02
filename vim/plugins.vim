@@ -89,6 +89,7 @@ Plug 'lervag/vimtex', { 'for': ['tex'] }
 " various
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'ryanoasis/vim-devicons'                       " cool icons
+Plug 'haya14busa/incsearch.vim'                     " incremental searching
 
 call plug#end()
 
@@ -104,7 +105,7 @@ let g:tagbar_type_markdown = {
         \ 'l:links',
         \ 'i:images'
     \ ],
-    \ "sort" : 0
+    \ 'sort' : 0
 \ }
 
 " always color brackets
@@ -179,3 +180,27 @@ let g:PaperColor_Theme_Options = {
   \     }
   \   }
   \ }
+
+augroup incremental_search_options
+    autocmd!
+
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+
+    " automatically turn of hlsearch
+    let g:incsearch#auto_nohlsearch = 1
+    map n  <Plug>(incsearch-nohl-n)
+    map N  <Plug>(incsearch-nohl-N)
+    map *  <Plug>(incsearch-nohl-*)
+    map #  <Plug>(incsearch-nohl-#)
+    map g* <Plug>(incsearch-nohl-g*)
+    map g# <Plug>(incsearch-nohl-g#)
+
+    " do not persist search end
+    let g:incsearch#do_not_save_error_message_history = 1
+
+    " different highlight colors
+    let g:incsearch#separate_highlight = 1
+
+augroup END
