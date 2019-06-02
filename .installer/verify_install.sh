@@ -94,13 +94,16 @@ validate_pyenv() (
 
 validate_default_editor() {
   default_editor="$(update-alternatives --query editor | grep Best | awk '{print $2}')"
-  nvim_which="$(which nvim)"
+  default_view="$(update-alternatives --query view | grep Best | awk '{print $2}')"
+  default_vi="$(update-alternatives --query vi | grep Best | awk '{print $2}')"
 
-  if [[ "${default_editor}" == "${nvim_which}" ]]; then
-    fail "Default editor is not set nvim"
-  else
-    success "Default editor is indeed nvim"
-  fi
+  for default_sth in "${default_editor}" "${default_view}" "${default_vi}"; do
+    if [[ "${default_sth}" =~ *nvim* ]]; then
+      fail "Default ${default_sth} is not set nvim"
+    else
+      success "Default ${default_sth} is indeed nvim"
+    fi
+  done
 }
 
 info 'Validating installation'
