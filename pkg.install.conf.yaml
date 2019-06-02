@@ -74,6 +74,14 @@
       stderr: true
       stdout: true
 
+# ctags
+- shell:
+    - description: Install ctags
+      command: .installer/install_ctags.sh
+      quiet: false
+      stderr: true
+      stdout: true
+
 # my stuff - ppa
 - aptget:
     git:

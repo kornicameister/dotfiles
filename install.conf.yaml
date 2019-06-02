@@ -6,9 +6,6 @@
 
 - clean: ["~"]
 
-- shell:
-    - command: ./pre-install
-
 - link:
     ~/.dotfiles: ""
 
