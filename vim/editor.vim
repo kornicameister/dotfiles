@@ -16,9 +16,6 @@ set novisualbell
 set timeoutlen=500
 
 " searching stuff
-set hlsearch                                " highlight search result
-nnoremap <leader><space> :nohlsearch<CR>    " clear with leader<space>
-set incsearch                               " make it act more modern
 nnoremap n nzzzv                            " center line on next search
 nnoremap N Nzzzv                            " -----------//------------
 
