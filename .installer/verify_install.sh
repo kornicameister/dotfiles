@@ -92,12 +92,24 @@ validate_pyenv() (
   done
 )
 
+validate_default_editor() {
+  default_editor="$(update-alternatives --query editor | grep Best | awk '{print $2}')"
+  nvim_which="$(which nvim)"
+
+  if [[ "${default_editor}" == "${nvim_which}" ]]; then
+    fail "Default editor is not set nvim"
+  else
+    success "Default editor is indeed nvim"
+  fi
+}
+
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
   validate_bin_accessible;
   validate_interactive_bins;
   validate_pyenv;
+  validate_default_editor;
 )
 info 'Validation successful'
 

@@ -107,7 +107,7 @@
       snapd,
     ]
 
-# cleanup
+# post tasks & cleanup
 - shell:
     - description: Remove unused non-lating fonts
       command: |
@@ -118,6 +118,10 @@
       command: |
         xargs -a "${PWD}/remove.pkgs.txt" aptitude remove -yq \
           && aptitude autoclean
+    - description: Make neovim default editor
+      command: |
+        update-alternatives --install /usr/bin/editor editor $(which nvim) 1 \
+        update-alternatives --set editor $(which nvim)
 
 # start some services at the end
 - shell:
