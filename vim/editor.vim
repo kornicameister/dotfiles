@@ -1,7 +1,7 @@
 " Copyright 2018 kornicameister
 
 " leader
-let b:mapleader = ','
+let mapleader = ','
 let g:mapleader = ','
 
 " save from typing :
