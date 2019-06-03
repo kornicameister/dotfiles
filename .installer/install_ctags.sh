@@ -1,7 +1,6 @@
 #!/bin/bash
 
-K_DOTFILES_DIR="${K_DOTFILES_DIR:-${HOME}/.dotfiles}"
-CTAGS_DIR="${K_DOTFILES_DIR}/dependencies/ctags"
+CTAGS_DIR="${PWD}/dependencies/ctags"
 
 [ ! -d "${CTAGS_DIR}" ] && (
   cd "${K_DOTFILES_DIR}" || exit 2;
