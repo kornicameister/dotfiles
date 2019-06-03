@@ -139,6 +139,28 @@ git_extras_upgrade() {
     fi
 }
 
+ctags_upgrade() {
+    CTAGS_DIR="${K_DOTFILES_DIR}/dependencies/ctags"
+    if [ -d "${CTAGS_DIR}" ] && command -v ctags >/dev/null 2>&1; then
+        cd "${CTAGS_DIR}" || exit 1
+
+        CURRENT_VERSION="$(git config --file "${HOME}/.gitconfig.local" --default '-1' --get ctags.version)"
+        REPO_VERSION="$(git log -n 1 --format=oneline | awk '{print $1}')"
+
+        if [[ "${CURRENT_VERSION}" == "${REPO_VERSION}" ]]; then
+          echo "No need to install ctags again"
+        else
+            ./autogen.sh;
+            ./configure --prefix="${HOME}/.local";
+            make clean;
+            make;
+            make install;
+            git config --file="${HOME}/.gitconfig.local" ctags.version "${REPO_VERSION}";
+        fi
+        cd ..
+    fi
+}
+
 exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
 exec_fn docker_compose_upgrade
@@ -148,3 +170,4 @@ exec_fn neovim_plugings_upgrade
 exec_fn git_extras_upgrade
 exec_fn snap_refresh
 exec_fn clear_thumbnails
+exec_fn ctags_upgrade
