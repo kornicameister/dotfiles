@@ -72,7 +72,8 @@ Plug 'mhartington/nvim-typescript', { 'for': ['typescript'], 'do': './install.sh
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
 
 " elm
-Plug 'elmcast/elm-vim', {'for': ['elm']}
+Plug 'elmcast/elm-vim', {'commit': '659d6de8766895d0445f52732e14378c9b9ab6fc', 'for': ['elm']}
+Plug 'antew/vim-elm-language-server', {'for': ['elm']}
 
 " python
 Plug 'tmhedberg/SimpylFold', { 'for': ['python'] }
