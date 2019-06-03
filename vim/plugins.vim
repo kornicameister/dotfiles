@@ -100,27 +100,6 @@ call plug#end()
 " Plugin Customizations
 " =====================
 
-augroup tagbar_plugin_settings
-    autocmd!
-
-    let g:tagbar_ctags_bin='ctags'
-    let g:tagbar_iconchars = ['►', '▼']
-    let g:tagbar_autoclose = 1
-    let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'kinds' : [
-            \ 'h:headings',
-            \ 'l:links',
-            \ 'i:images'
-        \ ],
-        \'sort' : 1
-    \ }
-
-    nmap <F8> :TagbarToggle<CR>
-
-augroup END
-
-" always color brackets
 let g:rainbow_active = 1
 
 augroup airline_plugin_settings
@@ -157,10 +136,6 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
-
-" elm plugin settings
-let g:elm_setup_keybindings = 0
-let g:elm_format_autosave = 0
 
 " ale settings
 let g:ale_fix_on_save = 1                   " run on save
