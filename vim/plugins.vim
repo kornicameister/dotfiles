@@ -94,6 +94,7 @@ Plug 'lervag/vimtex', { 'for': ['tex'] }
 Plug 'wakatime/vim-wakatime'                        " track what I am doing when using vim
 Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
+Plug 'ap/vim-css-color'                             " colors for colors
 
 call plug#end()
 
