@@ -89,7 +89,7 @@ node_python_pkgs_updata() (
 )
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugInstall +PlugClean +PlugUpdate +qall!
+    nvim --headless +PlugUpgrade +PlugInstall +PlugClean +PlugUpdate +qall!
 }
 
 docker_compose_upgrade() {
