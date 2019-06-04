@@ -98,8 +98,8 @@ Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 
 " tags
-Plug 'rafi/vim-tagabana'                            " this utilizes git_template/hooks/ctags
 Plug 'majutsushi/tagbar'                            " visiting tags as pro
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
 
@@ -137,6 +137,12 @@ augroup tagbar_plugin_settins
             \ 'c:constants',
             \ 'f:functions',
             \ 'p:ports'
+        \ ],
+    \ }
+    let g:tagbar_type_ansible = {
+        \ 'ctagstype' : 'ansible',
+        \ 'kinds' : [
+          \ 't:tasks'
         \ ],
     \ }
 
@@ -248,7 +254,7 @@ augroup incremental_search_options
 
 augroup END
 
-augroup tagabana_options
+augroup gutentags_options
   autocmd!
-  let g:tagabana_match_submodule = 1
+  let g:gutentags_ctags_tagfile = '.git/tags'
 augroup END
