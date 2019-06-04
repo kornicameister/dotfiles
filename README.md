@@ -11,11 +11,9 @@ All applications configurations ever used
 - ZSH configuration
 - custom binaries
 - pyenv setup
-  - main [pyenv][./dependencies/pyenv]
   - all of the plugins controlled via [.gitmodules](./.gitmodules)
   - installation of leading `Python` versions inside [here](./.installer/install_latest_dev.sh#L18)
 - nodenv setup
-  - main [nodenv][./dependencies/nodenv]
   - all of the plugins controlled via [.gitmodules](./.gitmodules)
   - installation of leading `Node` versions inside [here](./.installer/install_latest_dev.sh#L28)
 - ctags setup
@@ -44,10 +42,7 @@ All applications configurations ever used
 - refreshes all `snap`
 - removes thumbnails that I create when I need to find something without shell
 - upgrades `ctags` that I built myself for these dotfiles
-
   - version is kept inside [local git](./gitconfig#L19) configuration (sneaky)
-
-    And it can be launched from anywhere in the system :sick:
 
 ### CI system
 
