@@ -242,3 +242,8 @@ augroup incremental_search_options
     let g:incsearch#separate_highlight = 1
 
 augroup END
+
+augroup tagabana_options
+  autocmd!
+  let g:tagabana_match_submodule = 1
+augroup END
