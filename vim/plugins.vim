@@ -119,7 +119,13 @@ augroup tagbar_plugin_settins
             \ 'l:links',
             \ 'i:images'
         \ ],
-        \ 'sort' : 0
+    \ }
+    let g:tagbar_type_sh = {
+        \ 'ctagstype' : 'sh',
+        \ 'kinds' : [
+            \ 'f:functions',
+            \ 'v:variables',
+        \ ],
     \ }
     let g:tagbar_type_elm = {
         \ 'ctagstype' : 'elm',
@@ -132,7 +138,6 @@ augroup tagbar_plugin_settins
             \ 'f:functions',
             \ 'p:ports'
         \ ],
-        \ 'sort': 1
     \ }
 
     nmap <F8> :TagbarToggle<CR>
