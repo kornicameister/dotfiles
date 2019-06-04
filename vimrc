@@ -5,5 +5,4 @@ set shell=/bin/sh
 source ~/.vim/plugins.vim
 source ~/.vim/editor.vim
 source ~/.vim/filetype.vim
-source ~/.vim/tags.vim
 source ~/.vim/session.vim
