@@ -96,6 +96,9 @@ Plug 'wakatime/vim-wakatime'                        " track what I am doing when
 Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
+
+" tags
+Plug 'rafi/vim-tagabana'                            " this utilizes git_template/hooks/ctags
 Plug 'majutsushi/tagbar'                            " visiting tags as pro
 
 call plug#end()
