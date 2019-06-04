@@ -97,11 +97,59 @@ Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 
+" tags
+Plug 'majutsushi/tagbar'                            " visiting tags as pro
+Plug 'ludovicchabant/vim-gutentags'
+
 call plug#end()
 
 " Plugin Customizations
 " =====================
 
+augroup tagbar_plugin_settins
+    autocmd!
+    let g:tagbar_ctags_bin='ctags'
+    let g:tagbar_iconchars = ['►', '▼']
+    let g:tagbar_autoclose = 1
+
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+            \ 'h:headings',
+            \ 'l:links',
+            \ 'i:images'
+        \ ],
+    \ }
+    let g:tagbar_type_sh = {
+        \ 'ctagstype' : 'sh',
+        \ 'kinds' : [
+            \ 'f:functions',
+            \ 'v:variables',
+        \ ],
+    \ }
+    let g:tagbar_type_elm = {
+        \ 'ctagstype' : 'elm',
+        \ 'kinds'     : [
+            \ 'm:module',
+            \ 'i:imports',
+            \ 't:types',
+            \ 'C:constructors',
+            \ 'c:constants',
+            \ 'f:functions',
+            \ 'p:ports'
+        \ ],
+    \ }
+    let g:tagbar_type_ansible = {
+        \ 'ctagstype' : 'ansible',
+        \ 'kinds' : [
+          \ 't:tasks'
+        \ ],
+    \ }
+
+    nmap <F8> :TagbarToggle<CR>
+augroup END
+
+" always color brackets
 let g:rainbow_active = 1
 
 augroup airline_plugin_settings
@@ -204,4 +252,14 @@ augroup incremental_search_options
     " different highlight colors
     let g:incsearch#separate_highlight = 1
 
+augroup END
+
+augroup gutentags_options
+  autocmd!
+  let g:gutentags_ctags_tagfile = '.git/tags'
+  let g:gutentags_file_list_command = {
+    \ 'markers': {
+      \ '.git': 'git grep --cached -I -l -e $""',
+    \ },
+  \ }
 augroup END
