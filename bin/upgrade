@@ -9,15 +9,15 @@ if [[ -n ${CI} ]]; then
 fi
 
 in_progress () {
-  printf "\\r  [ \\033[00;34m⏰\\033[0m ] %s\\r" "${1}"
+  printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
 }
 
 success () {
-  printf "\\r\\033[2K  [ \\033[00;32m👍\\033[0m ] %s\\n" "${1}"
+  printf "\\r\\033[2K  [ \\033[00;32m\\u2713\\033[0m ] %s\\n" "${1}"
 }
 
 error () {
-  printf "\\r\\033[2K  [\\033[0;31m👎\\033[0m ] %s\\n" "${1}"
+  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ]i %s\\n" "${1}"
 }
 
 exec_fn() {
@@ -50,7 +50,7 @@ hadolint_upgrade() {
     fi
 }
 
-node_python_pkgs_updata() (
+node_python_pkgs_update() (
 
     for py_major in {2,3}; do
         venv_name="neovim${py_major}"
@@ -89,7 +89,7 @@ node_python_pkgs_updata() (
 )
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugInstall +PlugClean +PlugUpdate +qall!
+    nvim +PlugUpgrade +PlugInstall +PlugClean! +PlugUpdate +qall!
 }
 
 docker_compose_upgrade() {
@@ -150,22 +150,31 @@ ctags_upgrade() {
         if [[ "${CURRENT_VERSION}" == "${REPO_VERSION}" ]]; then
           echo "No need to install ctags again"
         else
-            ./autogen.sh;
-            ./configure --prefix="${HOME}/.local";
-            make clean;
-            make;
-            make install;
-            git config --file="${HOME}/.gitconfig.local" ctags.version "${REPO_VERSION}";
+            (
+                ./autogen.sh;
+                ./configure --prefix="${HOME}/.local";
+                make clean;
+                make;
+                make install;
+                git config --file="${HOME}/.gitconfig.local" ctags.version "${REPO_VERSION}";
+            ) 2>&1
         fi
         cd ..
+    fi
+}
+
+docker_prune() {
+    if command -v docker >/dev/null 2>&1; then
+        docker system prune -a -f --filter "until=$((24*30))h"
     fi
 }
 
 exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
 exec_fn docker_compose_upgrade
+exec_fn docker_prune
 exec_fn hadolint_upgrade
-exec_fn node_python_pkgs_updata
+exec_fn node_python_pkgs_update
 exec_fn neovim_plugings_upgrade
 exec_fn git_extras_upgrade
 exec_fn snap_refresh
