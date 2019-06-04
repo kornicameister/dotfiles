@@ -11,7 +11,21 @@ All applications configurations ever used
 - ZSH configuration
 - custom binaries
 - pyenv setup
+  - main [pyenv][./dependencies/pyenv]
+  - all of the plugins controlled via [.gitmodules](./.gitmodules)
+  - installation of leading `Python` versions inside [here](./.installer/install_latest_dev.sh#L18)
 - nodenv setup
+  - main [nodenv][./dependencies/nodenv]
+  - all of the plugins controlled via [.gitmodules](./.gitmodules)
+  - installation of leading `Node` versions inside [here](./.installer/install_latest_dev.sh#L28)
+- ctags setup
+  - automatic build from [this](https://github.com/universal-ctags/ctags) that takes place
+    [here](./.installer/install_ctags.sh)
+- docker & docker-compose
+- major browsers
+  - Firefox
+  - Google Chrome
+  - Brave :+1:
 
 ## Most notable
 
