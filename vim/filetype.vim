@@ -5,6 +5,7 @@ set fileformats=unix,dos,mac
 
 augroup git_ft_config
   au!
+  au BufNewFile,BufRead gitconfig setlocal ft=gitconfig nolist nospell ts=4 sw=4 noet
   au BufNewFile,BufRead .gitconfig* setlocal ft=gitconfig nolist nospell ts=4 sw=4 noet
   au BufNewFile,BufRead .git/config setlocal ft=gitconfig nolist nospell ts=4 sw=4 noet
   au FileType gitcommit setlocal spell
