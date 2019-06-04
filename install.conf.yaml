@@ -56,7 +56,7 @@
     ~/.pyenv/plugins/pyenv-which-ext: dependencies/pyenv-which-ext
 
     # ctags
-    ~/.ctags: ctags
+    ~/.ctags.d: ctags.d
 
     # gpg-agent
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf

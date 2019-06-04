@@ -5,8 +5,3 @@ vim/view/
 vim/undodir/
 vim/.netrwhist
 vim/**/*.spl
-
-**/tags
-tags
-*tags
-!/editors/ctags
