@@ -59,8 +59,32 @@
     # show submodules summary by default
     submoduleSummary = true
 
+[rerere]
+	enabled = 1
+
+[merge]
+	summary = true
+	tool = nvimmerge
+	conflictstyle = diff3
+
 [diff]
-    tool = vimdiff
+	tool = nvimdiff
+	guitool = opendiff
+
+[mergetool]
+	prompt = true
+
+[difftool]
+	prompt = true
+
+[mergetool "nvimmerge"]
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[difftool "nvimdiff"]
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[color]
+  ui = true
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
