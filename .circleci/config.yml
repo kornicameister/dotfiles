@@ -54,9 +54,9 @@ x-build-steps: &build_steps
         name: Run an installation
         command: |
           ./install \
-            "${CIRCLE_USERNAME}" \
+            "${CIRCLE_PROJECT_USERNAME}" \
             "${CIRCLE_BUILD_NUM}" \
-            "${CIRCLE_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+            "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
             "Circle Builds" \
             "${CIRCLE_SHA1}"
     - run:
