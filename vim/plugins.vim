@@ -97,6 +97,9 @@ Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 
+" nginx
+Plug 'chr4/nginx.vim'
+
 " tags
 Plug 'majutsushi/tagbar'                            " visiting tags as pro
 Plug 'ludovicchabant/vim-gutentags'
