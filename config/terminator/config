@@ -1,7 +1,7 @@
 [global_config]
   enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   focus = system
-  title_font = Source Code Pro for Powerline Heavy Italic 10
+  title_font = Hack Nerd Font Mono 10
   title_inactive_bg_color = "#444444"
   title_inactive_fg_color = "#bcbcbc"
   title_transmit_bg_color = "#1c1c1c"
@@ -23,7 +23,8 @@
     background_color = "#1e1f29"
     background_darkness = 0.9
     background_type = transparent
-    cursor_color = "#aaaaaa"
+    copy_on_selection = True
+    cursor_color = "#edd400"
     cursor_color_fg = False
     cursor_shape = ibeam
     font = Hack Nerd Font Mono 10
