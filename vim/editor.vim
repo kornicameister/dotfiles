@@ -152,7 +152,7 @@ set wildmode=longest:full,full
 set wildmenu
 
 " vim theme settings
-colorscheme PaperColor
+colorscheme dracula
 set background=dark
 
 " navigate through the buffers

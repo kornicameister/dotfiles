@@ -20,7 +20,7 @@ augroup END
 call plug#begin('~/.vim/plugged')
 
 " theme
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " fzf
 Plug '~/.fzf'
@@ -59,7 +59,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 
 " javascript & typescript plugins
@@ -158,7 +157,7 @@ let g:rainbow_active = 1
 augroup airline_plugin_settings
   autocmd!
 
-  let g:airline_theme = 'ayu_dark'
+  let g:airline_theme = 'dracula'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -224,14 +223,10 @@ let g:pyenv#auto_assign_ctags = 1
 " gutter
 let g:gitgutter_diff_args = '-w'    " ignore whitespace changes
 
-" papercolor
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default': {
-  \       'transparent_background': 1
-  \     }
-  \   }
-  \ }
+augroup dracula_theme_options
+    autocmd!
+    let g:dracula_colorterm = 0
+augroup END
 
 augroup incremental_search_options
     autocmd!
