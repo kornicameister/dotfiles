@@ -48,6 +48,9 @@
       liblzma-dev,
     ]
 
+# terminator-themes requires
+- aptget: python-requests
+
 # linting sqls requires
 - aptget: ruby-dev
 - shell:
