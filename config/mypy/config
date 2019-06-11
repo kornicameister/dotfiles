@@ -1,0 +1,33 @@
+[mypy]
+# error control
+show_column_numbers = True
+show_error_context = True
+
+# import handling
+# must be disabled because not every 3rd part library
+# contains types
+follow_imports = normal
+ignore_missing_imports = True
+
+# no imports, no cache
+cache_dir = /dev/null
+
+# because we ignore imports
+disallow_untyped_calls = True
+warn_return_any = False
+
+# force types
+disallow_untyped_defs=True
+check_untyped_defs=True
+
+# treat Optional per PEP 484
+strict_optional = True
+
+# ensure all execution paths are returning
+warn_no_return = True
+
+# lint-style cleanliness for typing needs to be enabled
+warn_redundant_casts=True
+warn_unused_ignores=True
+warn_unused_configs=True
+warn_incomplete_stub=True
