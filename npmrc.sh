@@ -5,7 +5,7 @@
 
 rm -rf "${HOME}/.npmrc" && touch "${HOME}/.npmrc"
 
-if [[ -z "${http_proxy:-''}" || -z "${HTTP_PROXY:-''}" ]]; then
+if [[ -n "${http_proxy:-''}" || -n "${HTTP_PROXY:-''}" ]]; then
     cat >>"$HOME/.npmrc" <<EOL
 proxy="${HTTP_PROXY:-${http_proxy}}"
 registry="http://registry.npmjs.org/"
