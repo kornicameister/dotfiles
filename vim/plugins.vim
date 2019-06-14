@@ -103,6 +103,9 @@ Plug 'chr4/nginx.vim'
 Plug 'majutsushi/tagbar'                            " visiting tags as pro
 Plug 'ludovicchabant/vim-gutentags'
 
+" testing made fun
+Plug 'janko/vim-test'
+
 call plug#end()
 
 " Plugin Customizations
