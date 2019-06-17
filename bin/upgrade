@@ -165,7 +165,8 @@ ctags_upgrade() {
 
 docker_prune() {
     if command -v docker >/dev/null 2>&1; then
-        docker system prune -a -f --filter "until=$((24*30))h"
+        # remove all artifacts 10 days old
+        docker system prune -a -f --filter "until=$((24*10))h"
     fi
 }
 
