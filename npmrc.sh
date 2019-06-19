@@ -4,10 +4,11 @@
 # if proxy is enabled in the system
 
 rm -rf "${HOME}/.npmrc" && touch "${HOME}/.npmrc"
+proxy_val="${HTTP_PROXY:-${http_proxy:-""}}"
 
-if [[ -n "${http_proxy:-''}" || -n "${HTTP_PROXY:-''}" ]]; then
+if [[ -n "${proxy_val}" ]]; then
     cat >>"$HOME/.npmrc" <<EOL
-proxy="${HTTP_PROXY:-${http_proxy}}"
+proxy="${proxy_val}"
 registry="http://registry.npmjs.org/"
 strict-ssl=false
 EOL
