@@ -26,7 +26,7 @@
     copy_on_selection = True
     cursor_color = "#edd400"
     cursor_color_fg = False
-    cursor_shape = ibeam
+    cursor_shape = underline
     font = Hack Nerd Font Mono 10
     foreground_color = "#f8f8f2"
     palette = "#44475a:#ff5555:#50fa7b:#f1fa8c:#8be9fd:#bd93f9:#ff79c6:#94a3a5:#000000:#ff5555:#50fa7b:#f1fa8c:#8be9fd:#bd93f9:#ff79c6:#ffffff"
