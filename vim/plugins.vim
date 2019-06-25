@@ -65,7 +65,6 @@ Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript'], 'do': './install.sh' }
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
