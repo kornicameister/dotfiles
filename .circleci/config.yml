@@ -1,6 +1,18 @@
 ---
+x-diagnostic-steps: &diagnostic_steps
+  post-steps:
+    - diagnostic-orb/store-report
+  pre-steps:
+    - diagnostic-orb/env-info
+    - diagnostic-orb/memory
+    - diagnostic-orb/test-results
 x-build-steps: &build_steps
   steps:
+    - detect/init
+    - run:
+        name: OS
+        command: |
+          'echo "The current operating system is ${OSD_ID}."'
     - run:
         name: Install prerequistes
         command: |
@@ -66,6 +78,11 @@ x-build-steps: &build_steps
           zsh -il -c .installer/verify_install.sh
 
 version: 2.1
+
+orbs:
+  detect: circleci/os-detect@0.1
+  diagnostic-orb: circleci/diagnostic-orb@1.0.0
+
 jobs:
   shellcheck:
     docker:
@@ -110,6 +127,9 @@ workflows:
       - shellcheck
   build:
     jobs:
-      - build_ubuntu_19_04
-      - build_ubuntu_18_10
-      - build_ubuntu_18_04
+      - build_ubuntu_19_04:
+          <<: *diagnostic_steps
+      - build_ubuntu_18_10:
+          <<: *diagnostic_steps
+      - build_ubuntu_18_04:
+          <<: *diagnostic_steps
