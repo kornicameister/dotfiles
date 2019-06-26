@@ -143,8 +143,16 @@ cmap w!! w !sudo tee % >/dev/null
 " normal OS clipboard interaction
 set clipboard+=unnamedplus
 
+" wilderness
+set wildignore+=*.png,*.PNG,*.JPG,*.jpg,*.JPEG,*.jpeg,*.GIF,*.gif,*.pdf,*.PDF
+set wildignore+=*.BACKUP.*,*.BASE.*,*.LOCAL.*,*.REMOTE.*
+set wildignore+=/tmp/**
+
+set wildmode=longest:full,full
+set wildmenu
+
 " vim theme settings
-colorscheme PaperColor
+colorscheme dracula
 set background=dark
 
 " navigate through the buffers

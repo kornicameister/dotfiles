@@ -20,7 +20,7 @@ augroup END
 call plug#begin('~/.vim/plugged')
 
 " theme
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " fzf
 Plug '~/.fzf'
@@ -59,14 +59,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
 Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
-Plug 'mhartington/nvim-typescript', { 'for': ['typescript'], 'do': './install.sh' }
 
 " docker
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
@@ -86,7 +84,7 @@ Plug 'elzr/vim-json', {'for': ['json']}
 
 " markdown
 Plug 'gabrielelana/vim-markdown', {'for': ['markdown']}
-    Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
+Plug 'mzlogin/vim-markdown-toc', {'for': ['markdown']}
 
 " tex
 Plug 'lervag/vimtex', { 'for': ['tex'] }
@@ -97,17 +95,71 @@ Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 
+" nginx
+Plug 'chr4/nginx.vim'
+
+" tags
+Plug 'majutsushi/tagbar'                            " visiting tags as pro
+Plug 'ludovicchabant/vim-gutentags'
+
+" testing made fun
+Plug 'janko/vim-test'
+
 call plug#end()
 
 " Plugin Customizations
 " =====================
 
+augroup tagbar_plugin_settins
+    autocmd!
+    let g:tagbar_ctags_bin='ctags'
+    let g:tagbar_iconchars = ['►', '▼']
+    let g:tagbar_autoclose = 1
+
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+            \ 'h:headings',
+            \ 'l:links',
+            \ 'i:images'
+        \ ],
+    \ }
+    let g:tagbar_type_sh = {
+        \ 'ctagstype' : 'sh',
+        \ 'kinds' : [
+            \ 'f:functions',
+            \ 'v:variables',
+        \ ],
+    \ }
+    let g:tagbar_type_elm = {
+        \ 'ctagstype' : 'elm',
+        \ 'kinds'     : [
+            \ 'm:module',
+            \ 'i:imports',
+            \ 't:types',
+            \ 'C:constructors',
+            \ 'c:constants',
+            \ 'f:functions',
+            \ 'p:ports'
+        \ ],
+    \ }
+    let g:tagbar_type_ansible = {
+        \ 'ctagstype' : 'ansible',
+        \ 'kinds' : [
+          \ 't:tasks'
+        \ ],
+    \ }
+
+    nmap <F8> :TagbarToggle<CR>
+augroup END
+
+" always color brackets
 let g:rainbow_active = 1
 
 augroup airline_plugin_settings
   autocmd!
 
-  let g:airline_theme = 'ayu_dark'
+  let g:airline_theme = 'dracula'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -173,14 +225,10 @@ let g:pyenv#auto_assign_ctags = 1
 " gutter
 let g:gitgutter_diff_args = '-w'    " ignore whitespace changes
 
-" papercolor
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default': {
-  \       'transparent_background': 1
-  \     }
-  \   }
-  \ }
+augroup dracula_theme_options
+    autocmd!
+    let g:dracula_colorterm = 0
+augroup END
 
 augroup incremental_search_options
     autocmd!
@@ -204,4 +252,14 @@ augroup incremental_search_options
     " different highlight colors
     let g:incsearch#separate_highlight = 1
 
+augroup END
+
+augroup gutentags_options
+  autocmd!
+  let g:gutentags_ctags_tagfile = '.git/tags'
+  let g:gutentags_file_list_command = {
+    \ 'markers': {
+      \ '.git': 'git grep --cached -I -l -e $""',
+    \ },
+  \ }
 augroup END
