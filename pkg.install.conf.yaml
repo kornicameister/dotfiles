@@ -48,6 +48,9 @@
       liblzma-dev,
     ]
 
+# terminator-themes requires
+- aptget: python-requests
+
 # linting sqls requires
 - aptget: ruby-dev
 - shell:
@@ -70,6 +73,14 @@
       stdout: true
     - description: Install brave-browser-beta
       command: .installer/install_brave.sh
+      quiet: false
+      stderr: true
+      stdout: true
+
+# ctags
+- shell:
+    - description: Install ctags
+      command: .installer/install_ctags.sh
       quiet: false
       stderr: true
       stdout: true

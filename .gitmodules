@@ -100,5 +100,7 @@
     shallow = true
     branch = master
 [submodule "dependencies/pyenv-which-ext"]
-	path = dependencies/pyenv-which-ext
-	url = https://github.com/pyenv/pyenv-which-ext.git
+    path = dependencies/pyenv-which-ext
+    url = https://github.com/pyenv/pyenv-which-ext.git
+    shallow = true
+    branch = master

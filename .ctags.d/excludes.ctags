@@ -1,0 +1,6 @@
+--exclude=dependencies
+--exclude=dependencies/*
+--exclude=dotbot/
+--exclude=vim/undodir
+--exclude=vim/plugged
+--exclude=vim/autoload

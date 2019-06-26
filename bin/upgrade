@@ -1,12 +1,47 @@
 #!/usr/bin/env bash
 
+K_DOTFILES_DIR="${K_DOTFILES_DIR:-${HOME}/.dotfiles}"
+
+if [[ -n ${CI} ]]; then
+    sudo() {
+        "$@"
+    }
+fi
+
+in_progress () {
+  printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
+}
+
+success () {
+  printf "\\r\\033[2K  [ \\033[00;32m\\u2713\\033[0m ] %s\\n" "${1}"
+}
+
+error () {
+  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ]i %s\\n" "${1}"
+}
+
+exec_fn() {
+    in_progress "${1}"
+
+    start_time=$(date +%s)
+
+    if $1 >/dev/null; then
+        end_time=$(date +%s)
+        total_time="$(( end_time - start_time ))"
+        success "${1} in ${total_time} seconds"
+    else
+        error "${1}"
+    fi
+}
+
 os_upgrade() {
     sudo true
-    sudo aptitude update -q
-    sudo aptitude safe-upgrade -y
-    sudo aptitude autoclean -q -y
-    sudo aptitude clean -q -y
-    sudo aptitude purge '~c' -q -y
+    sudo aptitude update -yq;
+    sudo aptitude safe-upgrade -yq;
+    sudo aptitude autoclean -yq;
+    sudo aptitude clean -yq;
+    sudo aptitude purge '~c' -yq;
+    sudo aptitude purge --purge-unused -yq;
 }
 
 hadolint_upgrade() {
@@ -15,24 +50,46 @@ hadolint_upgrade() {
     fi
 }
 
-neovim_clients_upgrade() (
-    if [ -d "${PYENV_ROOT}/versions/neovim2" ]; then
-        "${PYENV_ROOT}"/versions/neovim2/bin/pip install -r ./neovim-requirements.txt
-    fi
-    if [ -d "${PYENV_ROOT}/versions/neovim3" ]; then
-        "${PYENV_ROOT}"/versions/neovim3/bin/pip install -r ./neovim-requirements.txt
+node_python_pkgs_update() (
+
+    for py_major in {2,3}; do
+        venv_name="neovim${py_major}"
+        venv_dir="${PYENV_ROOT}/versions/${venv_name}"
+
+        echo "Upgrading requirements for ${venv_name}"
+
+        if [ -d "${venv_dir}" ]; then
+            "${venv_dir}"/bin/pip install -r "${K_DOTFILES_DIR}/neovim-requirements.txt" 2>&1
+        fi
+    done
+
+    if command -v nodenv >/dev/null 2>&1; then
+        _npm="$(nodenv root)/versions/$(nodenv latest -P)/bin/npm"
+        _nodenv=nodenv
+    else
+        nodenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/nodenv/version")
+        _npm="${K_DOTFILES_DIR}/dependencies/nodenv/${nodenv_system_ver}/bin/npm"
+        _nodenv="${K_DOTFILES_DIR}/dependencies/nodenv/bin/nodenv"
     fi
 
-    if command -v npm >/dev/null 2>&1; then
-        npm upgrade -g neovim prettier typescript
-        if command -v nodenv >/dev/null 2>&1; then
-            nodenv rehash
-        fi
+    if command -v pyenv >/dev/null 2>&1; then
+        _pip="$(pyenv root)/versions/$(pyenv latest -P)/bin/pip"
+        _pyenv=pyenv
+    else
+        pyenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/pyenv/version")
+        _pip="${K_DOTFILES_DIR}/dependencies/pyenv/${pyenv_system_ver}/bin/pip"
+        _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
     fi
+
+    $_npm upgrade -g neovim prettier typescript 2>&1
+    $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
+
+    $_nodenv rehash
+    $_pyenv rehash
 )
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugInstall +PlugClean +PlugUpdate +qall!
+    nvim +PlugUpgrade +PlugInstall +PlugClean! +PlugUpdate +qall!
 }
 
 docker_compose_upgrade() {
@@ -60,7 +117,7 @@ docker_compose_upgrade() {
 
 snap_refresh() {
     if command -v snap >/dev/null 2>&1; then
-        snap refresh
+        sudo snap refresh 2>&1
     fi
 }
 
@@ -76,11 +133,51 @@ clear_thumbnails() {
     fi
 }
 
-os_upgrade
-remove_unwanted_kernels
-docker_compose_upgrade
-hadolint_upgrade
-neovim_clients_upgrade
-neovim_plugings_upgrade
-snap_refresh
-clear_thumbnails
+git_extras_upgrade() {
+    if command -v git-extras >/dev/null 2>&1; then
+        sudo git-extras update
+    fi
+}
+
+ctags_upgrade() {
+    CTAGS_DIR="${K_DOTFILES_DIR}/dependencies/ctags"
+    if [ -d "${CTAGS_DIR}" ] && command -v ctags >/dev/null 2>&1; then
+        cd "${CTAGS_DIR}" || exit 1
+
+        CURRENT_VERSION="$(git config --file "${HOME}/.gitconfig.local" --default '-1' --get ctags.version)"
+        REPO_VERSION="$(git log -n 1 --format=oneline | awk '{print $1}')"
+
+        if [[ "${CURRENT_VERSION}" == "${REPO_VERSION}" ]]; then
+          echo "No need to install ctags again"
+        else
+            (
+                ./autogen.sh;
+                ./configure --prefix="${HOME}/.local";
+                make clean;
+                make;
+                make install;
+                git config --file="${HOME}/.gitconfig.local" ctags.version "${REPO_VERSION}";
+            ) 2>&1
+        fi
+        cd ..
+    fi
+}
+
+docker_prune() {
+    if command -v docker >/dev/null 2>&1; then
+        # remove all artifacts 10 days old
+        docker system prune -a -f --filter "until=$((24*10))h"
+    fi
+}
+
+exec_fn os_upgrade
+exec_fn remove_unwanted_kernels
+exec_fn docker_compose_upgrade
+exec_fn docker_prune
+exec_fn hadolint_upgrade
+exec_fn node_python_pkgs_update
+exec_fn neovim_plugings_upgrade
+exec_fn git_extras_upgrade
+exec_fn snap_refresh
+exec_fn clear_thumbnails
+exec_fn ctags_upgrade
