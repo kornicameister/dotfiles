@@ -12,7 +12,7 @@ x-build-steps: &build_steps
     - run:
         name: OS
         command: |
-          echo "Current operating system is ${OSD_ID} / ${OSD_FAMILY} / ${OS_VERSION}"
+          echo "Current operating system is ${OSD_ID} / ${OSD_FAMILY} / ${OSD_VERSION}"
     - run:
         name: Install prerequistes
         command: |
