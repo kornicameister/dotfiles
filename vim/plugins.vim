@@ -30,6 +30,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'octref/rootignore'
+Plug 'rhysd/committia.vim'
+Plug 'tpope/vim-git'
 
 " ale plugin
 Plug 'w0rp/ale'
@@ -52,7 +54,6 @@ Plug 'deoplete-plugins/deoplete-zsh'
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
 " awesome commit message writing
-Plug 'rhysd/committia.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " general editor related plugins
@@ -67,7 +68,7 @@ Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 
 " docker
-Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
+Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
 
 " elm
 Plug 'elmcast/elm-vim', {'commit': '659d6de8766895d0445f52732e14378c9b9ab6fc', 'for': ['elm']}
