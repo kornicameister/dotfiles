@@ -18,9 +18,12 @@ install_latest_python_node() (
   if [ ! -f "${PYENV_ROOT}/version" ]; then
       echo "Installing latest python"
 
-      $pyenv latest install -s 2
-      $pyenv latest install -s 3
+      for py_major in {2,3}; do
+        $pyenv latest install -s "${py_major}"
+        "$(pyenv root)/versions/$(pyenv latest --print $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
+      done
       $pyenv global "$($pyenv latest --print 3)"
+
   else
       echo "pyenv already has system version set at it is $(cat "${PYENV_ROOT}/version")"
   fi
