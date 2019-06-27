@@ -9,6 +9,6 @@ post_init_python_system () (
 
 (
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
-    "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
+    "${PWD}/dependencies/nerd-fonts/install.sh" SourceCodePro;
     post_init_python_system ;
 )
