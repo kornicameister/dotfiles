@@ -14,11 +14,19 @@
     ]
 
 # docker requires
-- aptget: [apt-transport-https, ca-certificates]
+- aptget:
+    [
+      apt-transport-https,
+      ca-certificates,
+      gnupg-agent,
+      software-properties-common,
+    ]
 - shell:
     - description: Install docker
       command: .installer/install_docker.sh
       quiet: false
+      stderr: true
+      stdout: true
 
 # pyenv requires:
 - aptget:
@@ -40,12 +48,17 @@
       liblzma-dev,
     ]
 
+# terminator-themes requires
+- aptget: python-requests
+
 # linting sqls requires
 - aptget: ruby-dev
 - shell:
     - command: command -v gem >/dev/null 2>&1 && gem install sqlint
       description: Install sqlint if 'gem' available
       quiet: false
+      stderr: true
+      stdout: true
 
 # linting yaml requires
 - aptget: yamllint
@@ -56,8 +69,18 @@
     - description: Install google-chrome-unstable
       command: .installer/install_chrome.sh
       quiet: false
+      stderr: true
+      stdout: true
     - description: Install brave-browser-beta
       command: .installer/install_brave.sh
+      quiet: false
+      stderr: true
+      stdout: true
+
+# ctags
+- shell:
+    - description: Install ctags
+      command: .installer/install_ctags.sh
       quiet: false
       stderr: true
       stdout: true
@@ -89,20 +112,23 @@
       preload,
       terminator,
       ppa-purge,
-      bikeshed,
       byobu,
       tlp-rdw,
       indicator-cpufreq,
-      snapcraft,
+      snapd,
     ]
 
-# cleanup fonts:
+# cleanup
 - shell:
     - description: Remove unused non-lating fonts
       command: |
-        xargs -a "${PWD}/bad-fonts.txt" aptitude remove -yq \
+        xargs -a "${PWD}/remove.fonts.txt" aptitude remove -yq \
           && aptitude autoclean \
           && dpkg-reconfigure fontconfig
+    - description: Remove packages that are useless
+      command: |
+        xargs -a "${PWD}/remove.pkgs.txt" aptitude remove -yq \
+          && aptitude autoclean
 
 # start some services at the end
 - shell:

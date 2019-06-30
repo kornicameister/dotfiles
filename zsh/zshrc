@@ -1,8 +1,4 @@
-# If you come from bash you might have to change your $PATH.
-
-export ZDOTDIR=$HOME
-export TERM="xterm-256color"
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+#!/bin/zsh
 
 # load all necessary completion and init stuff
 [ -f ~/.zgen/zgen.zsh ] && source ~/.zgen/zgen.zsh
@@ -22,4 +18,3 @@ if ! zgen saved; then
     zgen load sobolevn/wakatime-zsh-plugin
     zgen save
 fi
-

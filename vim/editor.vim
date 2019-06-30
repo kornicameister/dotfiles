@@ -1,7 +1,7 @@
 " Copyright 2018 kornicameister
 
 " leader
-let mapleader=','
+let mapleader = ','
 let g:mapleader = ','
 
 " save from typing :
@@ -9,16 +9,16 @@ nnoremap ; :
 
 " general settings for editor
 syntax on
+
 set encoding=utf-8
+scriptencoding utf-8
+
 set smartindent
 set noerrorbells
 set novisualbell
 set timeoutlen=500
 
 " searching stuff
-set hlsearch                                " highlight search result
-nnoremap <leader><space> :nohlsearch<CR>    " clear with leader<space>
-set incsearch                               " make it act more modern
 nnoremap n nzzzv                            " center line on next search
 nnoremap N Nzzzv                            " -----------//------------
 
@@ -143,8 +143,16 @@ cmap w!! w !sudo tee % >/dev/null
 " normal OS clipboard interaction
 set clipboard+=unnamedplus
 
+" wilderness
+set wildignore+=*.png,*.PNG,*.JPG,*.jpg,*.JPEG,*.jpeg,*.GIF,*.gif,*.pdf,*.PDF
+set wildignore+=*.BACKUP.*,*.BASE.*,*.LOCAL.*,*.REMOTE.*
+set wildignore+=/tmp/**
+
+set wildmode=longest:full,full
+set wildmenu
+
 " vim theme settings
-colorscheme PaperColor
+colorscheme dracula
 set background=dark
 
 " navigate through the buffers
@@ -172,6 +180,3 @@ nmap <A-l> <Plug>(ale_lint)<CR>
 nmap <A-d> <Plug>(ale_detail)<CR>
 nmap <A-k> <Plug>(ale_previous_wrap)
 nmap <A-j> <Plug>(ale_next_wrap)
-
-" gundo
-nnoremap <leader>u :GundoToggle<CR>

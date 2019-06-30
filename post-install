@@ -1,41 +1,5 @@
 #!/usr/bin/env bash
 
-install_latest_dev() {
-    if [ ! -f "$(pyenv root)/version" ]; then
-        echo "Installing latest python"
-
-        pyenv latest install -s 2
-        pyenv latest install -s 3
-        pyenv latest --print 3 >> "$(pyenv root)/version"
-    fi
-    if [ ! -f "$(nodenv root)/version" ]; then
-        echo "Installing latest node"
-
-        nodenv latest install -s 12
-        nodenv latest --print 12 >> "$(nodenv root)/version"
-    fi
-}
-
-init_neovim() (
-    echo "Initializing neovim setup"
-
-    for py_major in {2,3}; do
-        if [ ! -d "${PYENV_ROOT}/versions/neovim${py_major}" ]; then
-            pyenv virtualenv "$(pyenv latest --print ${py_major})" "neovim${py_major}"
-        else
-            echo "${PYENV_ROOT}/versions/neovim${py_major} venv already exists"
-        fi
-        "${PYENV_ROOT}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
-    done
-
-    if command -v npm >/dev/null 2>&1; then
-        npm install -g neovim typescript prettier
-    fi
-
-    pyenv rehash
-    nodenv rehash
-)
-
 post_init_python_system () (
     for py_major in {2,3}; do
         echo "Installing packages for major python release ${py_major}"
@@ -45,8 +9,6 @@ post_init_python_system () (
 
 (
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
-    "${PWD}/dependencies/nerd-fonts/install.sh" Hack;
-    install_latest_dev ;
+    "${PWD}/dependencies/nerd-fonts/install.sh" SourceCodePro;
     post_init_python_system ;
-    init_neovim
 )
