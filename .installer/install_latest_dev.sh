@@ -20,9 +20,9 @@ install_latest_python_node() (
 
       for py_major in {2,3}; do
         $pyenv latest install -s "${py_major}"
-        "$(pyenv root)/versions/$(pyenv latest --print $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
+        "$(pyenv root)/versions/$(pyenv latest --print-installed $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
       done
-      $pyenv global "$($pyenv latest --print 3)"
+      $pyenv global "$($pyenv latest --print-installed 3)"
 
   else
       echo "pyenv already has system version set at it is $(cat "${PYENV_ROOT}/version")"
@@ -32,7 +32,7 @@ install_latest_python_node() (
       echo "Installing latest node"
 
       $nodenv latest install -s 12
-      $nodenv global "$($nodenv latest --print 12)"
+      $nodenv global "$($nodenv latest --print-installed 12)"
   else
       echo "nodenv already has system version set at it is $(cat "${NODENV_ROOT}/version")"
   fi
