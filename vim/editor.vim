@@ -40,6 +40,10 @@ set smarttab
 set autoindent
 set copyindent
 
+" disable modelines
+set modelines=0
+set nomodeline
+
 " set title
 set title
 
