@@ -4,5 +4,5 @@ msgpack==0.6.1
 neovim==0.3.1
 pynvim==0.3.2
 yapf==0.27.0
-jedi==0.14.0
+jedi==0.14.1
 setuptools==41.0.1
