@@ -1,5 +1,5 @@
 [global_config]
-  enabled_plugins = TerminatorThemes, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  enabled_plugins = TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   focus = system
   title_font = Hack Nerd Font Mono 10
   title_inactive_bg_color = "#444444"
