@@ -36,6 +36,7 @@ zstyle ':prezto:module:editor' ps-context 'yes'
 zstyle ':prezto:module:prompt' theme 'pure'
 zstyle ':prezto:module:prompt' pwd-length 'short'
 zstyle ':prezto:module:prompt' show-return-val 'yes'
+zstyle ':prezto:module:prompt' managed 'yes'
 
 zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
 zstyle ':prezto:module:python:virtualenv' initialize 'yes'
