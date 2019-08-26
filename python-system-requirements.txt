@@ -1,4 +1,4 @@
-pip==19.2.2
+pip==19.2.3
 wakatime==13.0.0
 
 mypy==0.720; python_version >= '3.0' --no-binary -U mypy
