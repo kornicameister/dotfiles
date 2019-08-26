@@ -1,5 +1,5 @@
 pip==19.2.2
-wakatime==12.0.0
+wakatime==13.0.0
 
 mypy==0.720; python_version >= '3.0' --no-binary -U mypy
 
