@@ -30,6 +30,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'octref/rootignore'
+Plug 'rhysd/committia.vim'
+Plug 'tpope/vim-git'
 
 " ale plugin
 Plug 'w0rp/ale'
@@ -52,7 +54,6 @@ Plug 'deoplete-plugins/deoplete-zsh'
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
 " awesome commit message writing
-Plug 'rhysd/committia.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " general editor related plugins
@@ -67,7 +68,7 @@ Plug 'mxw/vim-jsx', { 'for' : ['jsx'] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 
 " docker
-Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile'] }
+Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
 
 " elm
 Plug 'elmcast/elm-vim', {'commit': '659d6de8766895d0445f52732e14378c9b9ab6fc', 'for': ['elm']}
@@ -223,7 +224,17 @@ let g:pyenv#auto_create_ctags = 1
 let g:pyenv#auto_assign_ctags = 1
 
 " gutter
-let g:gitgutter_diff_args = '-w'    " ignore whitespace changes
+augroup gitgutter_options
+    autocmd!
+    let g:gitgutter_diff_args = '-w'    " ignore whitespace changes
+    let g:gitgutter_sign_added = ''
+
+    let g:gitgutter_sign_modified = ''
+    let g:gitgutter_sign_modified_removed = ''
+
+    let g:gitgutter_sign_removed = ''
+    let g:gitgutter_sign_removed_first_line = ''
+augroup END
 
 augroup dracula_theme_options
     autocmd!

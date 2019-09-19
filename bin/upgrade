@@ -17,7 +17,7 @@ success () {
 }
 
 error () {
-  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ]i %s\\n" "${1}"
+  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ] %s\\n" "${1}"
 }
 
 exec_fn() {
@@ -170,6 +170,12 @@ docker_prune() {
     fi
 }
 
+circleci_cli_upgrade() {
+    if command -v circleci >/dev/null 2>&1; then
+        sudo circleci update install
+    fi
+}
+
 exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
 exec_fn docker_compose_upgrade
@@ -181,3 +187,4 @@ exec_fn git_extras_upgrade
 exec_fn snap_refresh
 exec_fn clear_thumbnails
 exec_fn ctags_upgrade
+exec_fn circleci_cli_upgrade
