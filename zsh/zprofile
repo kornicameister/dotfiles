@@ -4,13 +4,14 @@
 
 export ZDOTDIR="${HOME}"
 export K_DOTFILES_DIR="${HOME}/.dotfiles"
-export TERM="xterm-256color"
+export ZPLUG_HOME="${ZPLUG_HOME:-$ZDOTDIR/.zplug}"
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-~/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:-~/.cache}
 
 export PYENV_ROOT="${HOME}/.pyenv"
 export NODENV_ROOT="${HOME}/.nodenv"
 
+export TERM="xterm-256color"
 export PAGER='less'
 export VISUAL="${EDITOR}"
 

@@ -33,13 +33,13 @@
     ~/.git_template: git_template
 
     # zsh stuff
+    ~/.zplug: dependencies/zplug
     ~/.zshrc: zsh/zshrc
     ~/.zpreztorc: zsh/zpreztorc
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
     ~/.zprezto: dependencies/prezto
-    ~/.zgen: dependencies/zgen
 
     # fzf
     ~/.fzf: dependencies/fzf

@@ -1,20 +1,75 @@
 #!/bin/zsh
 
-# load all necessary completion and init stuff
-[ -f ~/.zgen/zgen.zsh ] && source ~/.zgen/zgen.zsh
-[ -f ~/.zprezto/init.zsh ] && source ~/.zprezto/init.zsh
+# load everything
+[ -f ~/.zplug/init.zsh ] && source ~/.zplug/init.zsh
+
+# zsh settings
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(
+    main \
+    brackets \
+    pattern \
+    line \
+    cursor \
+    root \
+)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
+setopt AUTO_CD              # Auto changes to a directory without typing cd.
+setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
+setopt CDABLE_VARS          # Change directory to a path stored in a variable.
+setopt MULTIOS              # Write to multiple descriptors.
+setopt EXTENDED_GLOB        # Use extended globbing syntax.
+unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
+                            # Use >! and >>! to bypass.
+
+# zsh plugins
+zplug zplug/zplug, hook-build:'zplug --self-manage'  # self manage
+
+zplug djui/alias-tips
+
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+
+zplug zsh-users/zsh-completions
+zplug zsh-users/zsh-autosuggestions, defer:1
+zplug zsh-users/zsh-syntax-highlighting, defer:2
+zplug zsh-users/zsh-history-substring-search, defer:3
+
+zplug sobolevn/wakatime-zsh-plugin, defer:2
+
+# prezto stuff via zplug
+zplug modules/environment, from:prezto, defer:1
+
+zplug modules/terminal, from:prezto
+zplug modules/editor, from:prezto
+zplug modules/history, from:prezto
+zplug modules/directory, from:prezto
+zplug modules/spectrum, from:prezto
+zplug modules/utility, from:prezto
+zplug modules/ssh, from:prezto
+zplug modules/completion, from:prezto
+zplug modules/git, from:prezto
+zplug modules/fasd, from:prezto
+zplug modules/gpg, from:prezto
+zplug modules/python, from:prezto
+zplug modules/node, from:prezto
+zplug modules/archive, from:prezto
+zplug modules/command-not-found, from:prezto
+
+zplug $HOME/.zshrc.local, from:local
+
+if ! zplug check; then
+    zplug install
+    zplug clean
+fi
+zplug load
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf.settings ] && source ~/.fzf.settings
 [ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
 [ -f ~/.t.sh ] && source ~/.t.sh
-
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
-
-# load local customizations
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-if ! zgen saved; then
-    zgen prezto
-    zgen load sobolevn/wakatime-zsh-plugin
-    zgen save
-fi

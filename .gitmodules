@@ -99,3 +99,8 @@
     url = https://github.com/pyenv/pyenv-which-ext.git
     shallow = true
     branch = master
+[submodule "dependencies/zplug"]
+    path = dependencies/zplug
+    url = https://github.com/zplug/zplug
+    shallow = true
+    branch = master
