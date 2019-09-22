@@ -34,16 +34,18 @@
 
     # zsh stuff
     ~/.zshrc: zsh/zshrc
-    ~/.zpreztorc: zsh/zpreztorc
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
-    ~/.zprezto: dependencies/prezto
-    ~/.zplug: dependencies/zplug
+    ~/.zplugin: dependencies/zplugin
 
     # fzf
     ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
+
+    # goenv
+    ~/.goenv: dependencies/goenv
+    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
 
     # node
     ~/.npmrc.sh: npmrc.sh

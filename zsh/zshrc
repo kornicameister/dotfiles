@@ -1,75 +1,143 @@
 #!/bin/zsh
 
-# load everything
-[ -f ~/.zplug/init.zsh ] && source ~/.zplug/init.zsh
 
-# zsh settings
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(
-    main \
-    brackets \
-    pattern \
-    line \
-    cursor \
-    root \
-)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-setopt AUTO_CD              # Auto changes to a directory without typing cd.
-setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
-setopt CDABLE_VARS          # Change directory to a path stored in a variable.
-setopt MULTIOS              # Write to multiple descriptors.
-setopt EXTENDED_GLOB        # Use extended globbing syntax.
-unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
-                            # Use >! and >>! to bypass.
+# directory settings
+setopt AUTO_CD                   # Auto changes to a directory without typing cd.
+setopt AUTO_PUSHD                # Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS         # Do not store duplicates in the stack.
+setopt PUSHD_SILENT              # Do not print the directory stack after pushd or popd.
+setopt PUSHD_TO_HOME             # Push to home directory when no argument is given.
+setopt CDABLE_VARS               # Change directory to a path stored in a variable.
+setopt MULTIOS                   # Write to multiple descriptors.
+setopt EXTENDED_GLOB             # Use extended globbing syntax.
+unsetopt CLOBBER                 # Do not overwrite existing files with > and >>. Use >! and >>! to bypass.
 
-# zsh plugins
-zplug zplug/zplug, hook-build:'zplug --self-manage'  # self manage
+# history settings
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing non-existent history.
 
-zplug djui/alias-tips
+HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"  # The path to the history file.
+HISTSIZE=10000                   # The maximum number of events to save in the internal history.
+SAVEHIST=10000                   # The maximum number of events to save in the history file.
 
-zplug mafredri/zsh-async, from:github
-zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+# various settings
+setopt CORRECT                   # correct commands
 
-zplug zsh-users/zsh-completions
-zplug zsh-users/zsh-autosuggestions, defer:1
-zplug zsh-users/zsh-syntax-highlighting, defer:2
-zplug zsh-users/zsh-history-substring-search, defer:3
+# settings for prezto imported stuff
+zstyle ':prezto:*:*' color 'yes'
+zstyle ':prezto:*:*' case-sensitive 'false'
 
-zplug sobolevn/wakatime-zsh-plugin, defer:2
+zstyle ':prezto:module:utility' safe-ops 'yes'
+zstyle ':prezto:module:utility:ls' dirs-first 'yes'
 
-# prezto stuff via zplug
-zplug modules/environment, from:prezto, defer:1
+zstyle ':prezto:module:ssh:load' identities 'github'
 
-zplug modules/terminal, from:prezto
-zplug modules/editor, from:prezto
-zplug modules/history, from:prezto
-zplug modules/directory, from:prezto
-zplug modules/spectrum, from:prezto
-zplug modules/utility, from:prezto
-zplug modules/ssh, from:prezto
-zplug modules/completion, from:prezto
-zplug modules/git, from:prezto
-zplug modules/fasd, from:prezto
-zplug modules/gpg, from:prezto
-zplug modules/python, from:prezto
-zplug modules/node, from:prezto
-zplug modules/archive, from:prezto
-zplug modules/command-not-found, from:prezto
+zstyle ':prezto:module:editor' key-bindings 'emacs'
+zstyle ':prezto:module:editor' dot-expansion 'yes'
+zstyle ':prezto:module:editor' ps-context 'yes'
 
-zplug $HOME/.zshrc.local, from:local
+# load zplugin
 
-if ! zplug check; then
-    zplug install
-    zplug clean
-fi
-zplug load
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.fzf.settings ] && source ~/.fzf.settings
-[ -f ~/.npmrc.sh ] && source ~/.npmrc.sh
-[ -f ~/.t.sh ] && source ~/.t.sh
+[ $commands[goenv] ] && eval "$(goenv init - --no-rehash zsh)"
+[ $commands[pyenv] ] && {
+    eval "$(pyenv init - --no-rehash zsh)";
+    eval "$(pyenv virtualenv-init - zsh)";
+}
+[ $commands[nodenv] ] && eval "$(nodenv init - --no-rehash zsh)"
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
+
+source ~/.zplugin/zplugin.zsh
+source ~/.fzf.zsh
+source ~/.fzf.settings
+source ~/.npmrc.sh
+source ~/.zshrc.local
+
+# prompt
+zplugin ice pick"async.zsh" src"pure.zsh"
+zplugin light sindresorhus/pure
+
+# plugins of all sorts
+zplugin light sobolevn/wakatime-zsh-plugin
+zplugin light djui/alias-tips
+
+# highlighting plugin for cmd
+zplugin ice pick"h.sh"
+zplugin light paoloantinori/hhighlighter
+
+# jq
+zplugin ice from'gh-r' \
+    as'command' \
+    mv'jq* -> jq' \
+    bpick'*linux*'
+zplugin load stedolan/jq
+
+# autojump
+zplugin ice from'gh-r' \
+    as'command' \
+    mv'jump* -> jump' \
+    bpick'*linux*' \
+    atload'eval "$(jump shell)"'
+zplugin load gsamokovarov/jump
+
+# dircolors
+zplugin ice wait"0c" lucid reset \
+    atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
+            \${P}sed -i \
+            '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
+            \${P}dircolors -b LS_COLORS > c.zsh" \
+    atpull'%atclone' pick"c.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zplugin light trapd00r/LS_COLORS
+
+# direnv
+zplugin ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
+    atpull'%atclone' src"zhook.zsh"
+zplugin light direnv/direnv
+
+zplugin ice as"program" pick"bin/git-dsf"
+zplugin light zdharma/zsh-diff-so-fancy
+
+zplugin ice wait"2" lucid
+zplugin load hlissner/zsh-autopair
+
+zplugin ice wait"2" lucid
+zplugin load voronkovich/gitignore.plugin.zsh
+
+zplugin snippet PZT::modules/environment/init.zsh
+zplugin snippet PZT::modules/terminal/init.zsh
+zplugin snippet PZT::modules/editor/init.zsh
+zplugin snippet PZT::modules/utility/init.zsh
+zplugin snippet PZT::modules/helper/init.zsh
+zplugin snippet PZT::modules/git/alias.zsh
+zplugin snippet PZT::modules/docker/alias.zsh
+zplugin snippet PZT::modules/gpg/init.zsh
+zplugin snippet PZT::modules/ssh/init.zsh
+
+# Autosuggestions & fast-syntax-highlighting
+zplugin ice wait"1" lucid \
+    atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zplugin load zdharma/fast-syntax-highlighting
+
+zplugin ice wait"1" lucid \
+    atload"!_zsh_autosuggest_start"
+zplugin load zsh-users/zsh-autosuggestions
+
+zplugin light zsh-users/zsh-history-substring-search
+zplugin light zdharma/history-search-multi-word
+
+zplugin load zsh-users/zsh-completions
+
+autoload -Uz compinit && compinit
+zplugin cdreplay -q
