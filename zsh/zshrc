@@ -72,8 +72,9 @@ zplugin ice pick"async.zsh" src"pure.zsh"
 zplugin light sindresorhus/pure
 
 # plugins of all sorts
-zplugin light sobolevn/wakatime-zsh-plugin
-zplugin light djui/alias-tips
+zplugin load sobolevn/wakatime-zsh-plugin
+zplugin load djui/alias-tips
+zplugin load hlissner/zsh-autopair
 
 # highlighting plugin for cmd
 zplugin ice pick"h.sh"
@@ -111,11 +112,16 @@ zplugin ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
     atpull'%atclone' src"zhook.zsh"
 zplugin light direnv/direnv
 
+# git extra stuff
+zplugin ice wait lucid \
+    as'program' \
+    pick'$ZPFX/bin/git-*' \
+    make'PREFIX=$ZPFX' \
+    nocompile
+zplugin light tj/git-extras
+
 zplugin ice as"program" pick"bin/git-dsf"
 zplugin light zdharma/zsh-diff-so-fancy
-
-zplugin ice wait"2" lucid
-zplugin load hlissner/zsh-autopair
 
 zplugin ice wait"2" lucid
 zplugin load voronkovich/gitignore.plugin.zsh
@@ -147,15 +153,18 @@ zplugin load zsh-users/zsh-autosuggestions
 zplugin load zsh-users/zsh-history-substring-search
 zplugin load zdharma/history-search-multi-word
 
-zplugin ice wait lucid \
-    as"program" \
-    pick"$ZPFX/bin/git-*" \
-    make"PREFIX=$ZPFX" \
-    nocompile
-zplugin light tj/git-extras
+# github issue notifier
+zplugin ice lucid id-as'GitHub-notify' \
+        ice on-update-of'~/.cache/zsh-github-issues/new_titles.log' \
+        notify'New issue: $NOTIFY_MESSAGE'
+zplugin light zdharma/zsh-github-issues
+
+GIT_PROJECTS=aiolibs/aiohttp:kornicameister/axion:kornicameister:dotfiles
+zplugin ice service"GIT" pick"zsh-github-issues.service.zsh" wait'2' lucid
+zplugin light zdharma/zsh-github-issues
 
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh
 
-[[ -s ~/.zshrc.local ]] && source ~/.zshrc.local
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
