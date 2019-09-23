@@ -102,7 +102,6 @@
     [
       zsh,
       git-lfs,
-      git-extras,
       httpie,
       tree,
       silversearcher-ag,
