@@ -85,8 +85,8 @@
     shallow = true
     branch = master
 [submodule "dependencies/zplugin"]
-	path = dependencies/zplugin
-	url = https://github.com/zdharma/zplugin.git
+    path = dependencies/zplugin
+    url = https://github.com/zdharma/zplugin
     shallow = true
     branch = master
     ignore = untracked

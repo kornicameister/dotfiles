@@ -89,12 +89,13 @@ zplugin ice from'gh-r' \
 zplugin load stedolan/jq
 
 # autojump
-zplugin ice from'gh-r' \
+zplugin ice \
+    wait'2' \
     as'command' \
-    mv'jump* -> jump' \
-    bpick'*linux*' \
-    atload'eval "$(jump shell)"'
-zplugin load gsamokovarov/jump
+    pick'fasd' \
+    atpull'!git reseti --hard' \
+    atload'source ~/.dotfiles/mods/fasd.zsh'
+zplugin load clvv/fasd
 
 # dircolors
 zplugin ice wait"0c" lucid reset \
@@ -102,7 +103,7 @@ zplugin ice wait"0c" lucid reset \
             \${P}sed -i \
             '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
             \${P}dircolors -b LS_COLORS > c.zsh" \
-    atpull'%atclone' pick"c.zsh" nocompile'!' \
+    atpull'%atclone ; !git reset --hard' pick"c.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zplugin light trapd00r/LS_COLORS
 
@@ -139,10 +140,8 @@ zplugin ice wait"1" lucid \
     atload"!_zsh_autosuggest_start"
 zplugin load zsh-users/zsh-autosuggestions
 
-zplugin light zsh-users/zsh-history-substring-search
-zplugin light zdharma/history-search-multi-word
-
+zplugin load zsh-users/zsh-history-substring-search
+zplugin load zdharma/history-search-multi-word
 zplugin load zsh-users/zsh-completions
 
 autoload -Uz compinit && compinit
-zplugin cdreplay -q
