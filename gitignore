@@ -29,3 +29,6 @@ releasenotes/build
 
 # nodenv stuff
 .node-version
+
+# goenv stuff
+.go-version
