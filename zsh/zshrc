@@ -44,13 +44,11 @@ zplugin load zdharma/zsh-unique-id
 zplugin ice wait lucid ; zplugin light zdharma/z-p-submods
 zplugin ice wait lucid ; zplugin light sobolevn/wakatime-zsh-plugin
 zplugin ice wait lucid ; zplugin light RobSis/zsh-reentry-hook
-zplugin ice wait'2' lucid ; zplugin light djui/alias-tips
-zplugin ice wait'2' lucid ; zplugin light hlissner/zsh-autopair
-zplugin ice wait'2' lucid ; zplugin load voronkovich/gitignore.plugin.zsh
+zplugin ice wait'1' lucid ; zplugin light hlissner/zsh-autopair
+zplugin ice wait'5' lucid ; zplugin light djui/alias-tips
+zplugin ice wait'5' lucid ; zplugin load voronkovich/gitignore.plugin.zsh
 zplugin ice wait'5' as'program' pick'bin/git-dsf' lucid ; zplugin light zdharma/zsh-diff-so-fancy
-
-# highlighting plugin for cmd
-zplugin ice wait'3' lucid pick"h.sh" ; zplugin light paoloantinori/hhighlighter
+zplugin ice wait'5' lucid pick"h.sh" ; zplugin light paoloantinori/hhighlighter
 
 # jq
 zplugin ice from'gh-r' \
@@ -108,7 +106,7 @@ zplugin ice svn silent ; zplugin snippet PZT::modules/gpg
 zplugin ice svn silent ; zplugin snippet PZT::modules/ssh
 zplugin ice svn silent ; zplugin snippet PZT::modules/git
 zplugin ice svn silent ; zplugin snippet PZT::modules/docker
-zplugin ice svn silent ; zplugin snippet PZT::modules/archive
+zplugin ice svn silent lucid ; zplugin snippet PZT::modules/archive
 
 # autosuggestions, syntax-highlighting & history searching
 zplugin ice wait \
@@ -120,7 +118,7 @@ zplugin ice wait"1" lucid \
     atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
 zplugin load zdharma/fast-syntax-highlighting
 
-zplugin ice wait'1' lucid  atload'!_zsh_autosuggest_start' ; zplugin load zsh-users/zsh-autosuggestions
+zplugin ice wait'1' lucid atload'!_zsh_autosuggest_start' wrap-track'_zsh_autosuggest_start' ; zplugin load zsh-users/zsh-autosuggestions
 zplugin ice atload'source ~/.dotfiles/zsh/history.zsh' ; zplugin load zsh-users/zsh-history-substring-search
 zplugin ice wait'1' lucid ; zplugin load zdharma/history-search-multi-word
 
