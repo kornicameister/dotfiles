@@ -15,8 +15,8 @@
     # https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
 
-	# diff-so-fancy
-	pager = diff-so-fancy | less -FXRi
+    # diff-so-fancy
+    pager = diff-so-fancy | less -FXRi
 
 [include]
     path = ~/.gitconfig.local
