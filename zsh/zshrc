@@ -94,7 +94,7 @@ zplugin ice \
     as'command' \
     pick'fasd' \
     atpull'!git reseti --hard' \
-    atload'source ~/.dotfiles/mods/fasd.zsh'
+    atload'source ~/.dotfiles/zsh/fasd.zsh'
 zplugin load clvv/fasd
 
 # dircolors
@@ -108,8 +108,13 @@ zplugin ice wait"0c" lucid reset \
 zplugin light trapd00r/LS_COLORS
 
 # direnv
-zplugin ice as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
-    atpull'%atclone' src"zhook.zsh"
+zplugin ice \
+    as'program' \
+    make'!' \
+    atclone'./direnv hook zsh > zhook.zsh' \
+    atpull'%atclone'\
+    pick'direnv' \
+    src'zhook.zsh'
 zplugin light direnv/direnv
 
 # git extra stuff
@@ -139,7 +144,7 @@ zplugin snippet PZT::modules/ssh/init.zsh
 # Autosuggestions & fast-syntax-highlighting
 zplugin ice wait \
     lucid \
-    atload'source ~/.dotfiles/mods/comp.zsh'
+    atload'source ~/.dotfiles/zsh/comp.zsh'
 zplugin load zsh-users/zsh-completions
 
 zplugin ice wait"1" lucid \
