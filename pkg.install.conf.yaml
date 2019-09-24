@@ -101,6 +101,7 @@
 - aptget:
     [
       zsh,
+      subversion,
       git-lfs,
       httpie,
       tree,
