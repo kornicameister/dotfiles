@@ -147,6 +147,7 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
     execute_dotbot_config_install
     setup_git
     setup_nvim_as_default_editor
+    zplugin compile --all
 else
     execute_dotbot_config_install
 fi
