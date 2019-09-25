@@ -18,9 +18,22 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
 
 # lazy load definitions for *env
-source ~/.dotfiles/zsh/pyenv.zsh
-source ~/.dotfiles/zsh/nodenv.zsh
-source ~/.dotfiles/zsh/goenv.zsh
+[ $commands[pyenv] ] && {
+    eval "$(pyenv init - --no-rehash zsh)"
+    eval "$(pyenv virtualenv-init -)"
+}
+[ $commands[nodenv] ] && {
+    eval "$(nodenv init - --no-rehash zsh)"
+}
+[ $commands[goenv] ] && {
+    eval "$(goenv init - --no-rehash zsh)"
+    path=(
+        $GOROOT/bin
+        $GOPATH/bin
+        $path
+    )
+    export GOBIN="$GOPATH/bin";
+}
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 source ~/.zplugin/zplugin.zsh
@@ -73,11 +86,11 @@ zplugin light trapd00r/LS_COLORS
 # direnv
 zplugin ice \
     as'program' \
-    make'!' \
     atclone'./direnv hook zsh > zhook.zsh' \
     atpull'%atclone'\
     pick'direnv' \
-    src'zhook.zsh'
+    src'zhook.zsh' \
+    make'!'
 zplugin light direnv/direnv
 
 # git extra stuff
@@ -114,16 +127,6 @@ zplugin load zdharma/fast-syntax-highlighting
 zplugin ice wait'1' lucid atload'!_zsh_autosuggest_start' wrap-track'_zsh_autosuggest_start' ; zplugin load zsh-users/zsh-autosuggestions
 zplugin ice atload'source ~/.dotfiles/zsh/history.zsh' ; zplugin load zsh-users/zsh-history-substring-search
 zplugin ice wait'1' lucid ; zplugin load zdharma/history-search-multi-word
-
-# github issue notifier
-zplugin ice lucid id-as'GitHub-notify' \
-        ice on-update-of'~/.cache/zsh-github-issues/new_titles.log' \
-        notify'New issue: $NOTIFY_MESSAGE'
-zplugin light zdharma/zsh-github-issues
-
-GIT_PROJECTS=aiolibs/aiohttp:kornicameister/axion:kornicameister:dotfiles
-zplugin ice service"GIT" pick"zsh-github-issues.service.zsh" wait'2' lucid
-zplugin light zdharma/zsh-github-issues
 
 source ~/.fzf.zsh
 source ~/.fzf.settings
