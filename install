@@ -117,9 +117,9 @@ setup_nvim() (
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
 
-    nvim --headless +PlugInstall +qall!
+    nvim --headless +PlugInstall! +qall!
     nvim --headless +PlugClean! +qall!
-    nvim --headless +UpdateRemotePlugins +qall!
+    nvim --headless +UpdateRemotePlugins! +qall!
 )
 
 latest_dev_install() (
@@ -225,17 +225,11 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
         exit 5
     fi
 
-
     dotbot_pkg_install
     dotbot_links
     setup_git
     latest_dev_install
     setup_nvim
-
 else
-
     dotbot_links
-    latest_dev_install
-    setup_nvim
-
 fi
