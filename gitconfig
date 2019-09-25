@@ -16,7 +16,7 @@
     untrackedCache = true
 
     # diff-so-fancy
-    pager = diff-so-fancy | less -FXRi
+	pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
 
 [include]
     path = ~/.gitconfig.local
