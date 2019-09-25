@@ -17,7 +17,6 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
 
-# lazy load definitions for *env
 [ $commands[pyenv] ] && {
     eval "$(pyenv init - --no-rehash zsh)"
     eval "$(pyenv virtualenv-init -)"
