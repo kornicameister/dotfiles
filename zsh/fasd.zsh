@@ -1,5 +1,3 @@
-pmodload 'editor'
-
 cache_file="${TMPDIR:-/tmp}/fasd-cache.$UID.zsh"
 
 if [[ "${commands[fasd]}" -nt "$cache_file" || ! -s "$cache_file"  ]]; then

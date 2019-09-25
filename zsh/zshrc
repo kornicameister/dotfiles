@@ -125,7 +125,7 @@ zplugin ice wait"1" lucid \
 zplugin load zdharma/fast-syntax-highlighting
 
 zplugin ice wait'1' lucid atload'!_zsh_autosuggest_start' wrap-track'_zsh_autosuggest_start' ; zplugin load zsh-users/zsh-autosuggestions
-zplugin ice atload'source ~/.dotfiles/zsh/history.zsh' ; zplugin load zsh-users/zsh-history-substring-search
+zplugin ice wait'1' lucid atload'source ~/.dotfiles/zsh/history.zsh' ; zplugin load zsh-users/zsh-history-substring-search
 zplugin ice wait'1' lucid ; zplugin load zdharma/history-search-multi-word
 
 source ~/.fzf.zsh
