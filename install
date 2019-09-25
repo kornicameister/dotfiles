@@ -106,26 +106,24 @@ EOF
     echo "Remember to upload the GPG and SSH keys to Github"
 }
 
-setup_nvim() (
-    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 1
-    sudo update-alternatives --set editor /usr/bin/nvim
-
+setup_nvim() {
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
         aria2c \
             -d ~/.vim/autoload \
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
+    nvim --headless +PlugInstall +qall!
+    nvim --headless +UpdateRemotePlugins +qall!
+}
 
-    nvim --headless +PlugInstall! +qall!
-    nvim --headless +PlugClean! +qall!
-    nvim --headless +UpdateRemotePlugins! +qall!
-)
-
-latest_dev_install() (
+latest_dev_install() {
     local pyenv
+    local pyenv_root
     local nodenv
+    local nodenv_root
     local goenv
+    local goenv_root
 
     if ! command -v pyenv >/dev/null 2>&1; then
       pyenv="${HOME}/.pyenv/bin/pyenv"
@@ -143,56 +141,66 @@ latest_dev_install() (
       goenv=$(command -v goenv)
     fi
 
-    PYENV_ROOT=$($pyenv root)
-    NODENV_ROOT=$($nodenv root)
-    GOENV_ROOT=$($goenv root)
+    pyenv_root=$($pyenv root)
+    nodenv_root=$($nodenv root)
+    goenv_root=$($goenv root)
 
-    if [ ! -f "${PYENV_ROOT}/version" ]; then
+    if [ ! -f "${pyenv_root}/version" ]; then
         echo "Installing latest Python"
 
         for py_major in {2,3}; do
             $pyenv latest install -s "${py_major}"
-            "$(pyenv root)/versions/$(pyenv latest --print-installed $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
+            "${pyenv_root}/versions/$($pyenv latest --print-installed $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
         done
 
-        $pyenv global "$($pyenv latest --print-installed 3)"
+        $pyenv global "$($pyenv latest --print-installed)"
     else
-        echo "pyenv already has system version set at it is $(cat "${PYENV_ROOT}/version")"
+        echo "pyenv already has system version set at it is $(cat "${pyenv_root}/version")"
     fi
 
-    if [ ! -f "${NODENV_ROOT}/version" ]; then
+    if [ ! -f "${nodenv_root}/version" ]; then
         echo "Installing latest Node"
 
-        $nodenv latest install -s 12
-        $nodenv global "$($nodenv latest --print-installed 12)"
+        $nodenv latest install -s 12 && \
+            $nodenv global "$($nodenv latest --print-installed)"
+        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
+            install -g \
+            neovim \
+            prettier \
+            typescript
     else
-        echo "nodenv already has system version set at it is $(cat "${NODENV_ROOT}/version")"
+        echo "nodenv already has system version set at it is $(cat "${nodenv_root}/version")"
     fi
 
-    if [ ! -f "${GOENV_ROOT}/version" ]; then
+    if [ ! -f "${goenv_root}/version" ]; then
         echo "Installing latest GO"
 
-        $goenv latest install -s 1
-        $goenv global "$($goenv latest --print-installed 1)"
+        $goenv latest install -s 1 && \
+            $goenv global "$($goenv latest --print-installed)"
     else
-        echo "goenv already has system version set at it is $(cat "${GOENV_ROOT}/version")"
+        echo "goenv already has system version set at it is $(cat "${goenv_root}/version")"
     fi
 
-
     for py_major in {2,3}; do
-        if [ ! -d "${PYENV_ROOT}/versions/neovim${py_major}" ]; then
+        if [ ! -d "${pyenv_root}/versions/neovim${py_major}" ]; then
             echo "Initializing neovim setup for Python ${py_major}"
             $pyenv virtualenv "$($pyenv latest --print ${py_major})" "neovim${py_major}"
-            "${PYENV_ROOT}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
         else
-            echo "${PYENV_ROOT}/versions/neovim${py_major} venv already exists"
+            echo "$pyenv_root/versions/neovim${py_major} venv already exists"
         fi
-        $pyenv virtualenvs | grep "neovim${py_major}"
     done
 
     $pyenv rehash
     $nodenv rehash
-)
+    $goenv rehash
+}
+
+setup_zplugin() {
+    local zsh_bin
+    zsh_bin=$(command -v zsh)
+    $zsh_bin -il -c 'zpl compile'
+}
 
 _welcome_message
 git submodule update --init --recursive
@@ -230,6 +238,8 @@ if [ ! -f "${HOME}/.gitconfig.local" ]; then
     setup_git
     latest_dev_install
     setup_nvim
+    setup_zplugin
 else
     dotbot_links
+    setup_zplugin
 fi
