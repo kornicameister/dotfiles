@@ -1,6 +1,8 @@
-vim/autoload/
-vim/plugged/
-vim/view/
-vim/undodir/
+vim/autoload/*
+vim/plugged/*
+vim/view/*
+vim/undodir/*
 vim/.netrwhist
 vim/**/*.spl
+
+!vim/autoload/.gitkeep

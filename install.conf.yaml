@@ -43,10 +43,6 @@
     ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
 
-    # goenv
-    ~/.goenv: dependencies/goenv
-    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
-
     # node
     ~/.npmrc.sh: npmrc.sh
     ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
@@ -56,7 +52,7 @@
     ~/.nodenv/plugins/nodenv-package-rehash: dependencies/nodenv-package-rehash
     ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
 
-    # pyenv
+    # python
     ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
     ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
     ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
@@ -80,12 +76,8 @@
       path: bin/*
 
 - shell:
-    - command: |
-        [[ "${SHELL}" =~ .*"zsh".* ]] || chsh -s $(which zsh)
-      description: "Set ZSH as default shell"
     - command:
         [
-          ./.installer/install_latest_dev.sh,
-          "Install latest Python & Node tools",
+          zsh -il -c ./post-install,
+          "Execute post install steps",
         ]
-    - command: [zsh -il -c ./post-install, "Execute post install steps"]
