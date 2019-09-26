@@ -230,22 +230,19 @@ setup_zplugin() {
 
 
 setup_wakatime_configuration() {
-    local wakatime_api_key
-    local wakatime_hostname
-
-    if [[ -n "${wakatime_api_key}" ]]; then
+    if [ -z "${WAKATIME_API_KEY}" ]; then
+        echo "No WAKATIME_API_KEY provided, skipping..."
+        exit 2
+    else
         cd "${BASEDIR}" || exit 1
 
         install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
         sed -e "
-            s|%API_KEY%|${wakatime_api_key}|g;
-            s|%HOSTNAME%|${wakatime_hostname}|g;
+            s|%API_KEY%|${WAKATIME_API_KEY}|g;
+            s|%HOSTNAME%|${WAKATIME_HOSTNAME}|g;
         " -i "${HOME}/.wakatime.cfg"
 
         cd -- || exit 1
-    else
-        echo "No WAKATIME_API_KEY provided, skipping..."
-        exit 2
     fi
 }
 
