@@ -42,7 +42,7 @@ _hello_dude() {
     echo "${distro_name} : ${first_run_welcome} : ${GIT_USERNAME}"
 }
 
-dotbot_pkg_install() {
+_dotbot_pkg_install() {
     cd "${BASEDIR}" || exit 1
     sudo \
         "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
@@ -53,7 +53,7 @@ dotbot_pkg_install() {
     cd - || exit 1
 }
 
-dotbot_links() {
+_dotbot_do_links() {
     cd "${BASEDIR}" || exit 1
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
         -v \
@@ -62,44 +62,44 @@ dotbot_links() {
     cd - || 1
 }
 
-setup_git_configuration() {
+_configure_git() {
+    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+        if [ -z "${GIT_USERNAME}" ]; then
+            echo "GIT_USERNAME must be set"
+            exit 2
+        fi
+        if [ -z "${GIT_PASSWORD}" ]; then
+            echo "GIT_PASSWORD must be set"
+            exit 2
+        fi
+        if [ -z "${GIT_EMAIL}" ]; then
+            echo "GIT_EMAIL must be set"
+            exit 2
+        fi
+        if [ -z "${GPG_FULL_NAME}" ]; then
+            echo "GPG_FULL_NAME must be set"
+            exit 2
+        fi
+        if [ -z "${GPG_PASSPHRASE}" ]; then
+            echo "GPG_PASSPHRASE must be set"
+            exit 2
+        fi
 
-    if [ -z "${GIT_USERNAME}" ]; then
-        echo "GIT_USERNAME must be set"
-        exit 2
-    fi
-    if [ -z "${GIT_PASSWORD}" ]; then
-        echo "GIT_PASSWORD must be set"
-        exit 2
-    fi
-    if [ -z "${GIT_EMAIL}" ]; then
-        echo "GIT_EMAIL must be set"
-        exit 2
-    fi
-    if [ -z "${GPG_FULL_NAME}" ]; then
-        echo "GPG_FULL_NAME must be set"
-        exit 2
-    fi
-    if [ -z "${GPG_PASSPHRASE}" ]; then
-        echo "GPG_PASSPHRASE must be set"
-        exit 2
-    fi
+        # generate ssh key
+        mkdir -p "${HOME}/.ssh"
+        ssh-keygen \
+            -t ed25519 \
+            -b 4096 \
+            -C "${GIT_EMAIL}" \
+            -f "${HOME}/.ssh/github" \
+            -N "${GIT_PASSWORD}"
 
-    # generate ssh key
-    mkdir -p "${HOME}/.ssh"
-    ssh-keygen \
-        -t ed25519 \
-        -b 4096 \
-        -C "${GIT_EMAIL}" \
-        -f "${HOME}/.ssh/github" \
-        -N "${GIT_PASSWORD}"
+        key_type="rsa"
+        key_strength=4096
+        key_config=$(mktemp)
 
-    key_type="rsa"
-    key_strength=4096
-    key_config=$(mktemp)
-
-    # generating GPK key to sign the commits
-    cat >>"${key_config}" <<EOF
+        # generating GPK key to sign the commits
+        cat >>"${key_config}" <<EOF
 Key-Type: ${key_type}
 Key-Length: ${key_strength}
 Name-Real: ${GPG_FULL_NAME}
@@ -108,30 +108,31 @@ Name-Email: ${GIT_EMAIL}
 Expire-Date: 0
 Passphrase: ${GPG_PASSPHRASE}
 EOF
-    gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
-    rm -rf "${key_config}"
+        gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
+        rm -rf "${key_config}"
 
-    # assumed the highest rsa length:
-    local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${GIT_EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
+        # assumed the highest rsa length:
+        local signingKey=""
+        signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${GIT_EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
 
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
-        touch "${HOME}/.gitconfig.local"
+        if [ ! -f "${HOME}/.gitconfig.local" ]; then
+            touch "${HOME}/.gitconfig.local"
+        fi
+
+        (
+            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
+            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
+            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
+            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
+            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
+            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
+        )
+
+        echo "Remember to upload the GPG and SSH keys to Github"
     fi
-
-    (
-        git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
-        git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
-        git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
-        git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
-        git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
-        git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
-    )
-
-    echo "Remember to upload the GPG and SSH keys to Github"
 }
 
-setup_nvim() {
+_configure_nvim() {
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
         aria2c \
             -d ~/.vim/autoload \
@@ -142,7 +143,7 @@ setup_nvim() {
     nvim --headless -es +UpdateRemotePlugins +qall! >/dev/null 2>&1;
 }
 
-latest_dev_install() {
+_install_envs() {
     local pyenv
     local pyenv_root
     local nodenv
@@ -221,45 +222,42 @@ latest_dev_install() {
     $goenv rehash
 }
 
-setup_zplugin() {
+_configure_zsh() {
     cd "${BASEDIR}" || exit 1
     zsh -ml -c 'echo -n "HELLO VIA ZPLUGIN"'
     cd - || 1
 }
 
 
-setup_wakatime_configuration() {
-    if [ -z "${WAKATIME_API_KEY}" ]; then
-        echo "No WAKATIME_API_KEY provided, skipping..."
-        exit 2
-    else
-        cd "${BASEDIR}" || exit 1
+_configure_wakatime() {
+    if [ ! -f "${HOME}/.wakatime.cfg" ]; then
+        if [ -z "${WAKATIME_API_KEY}" ]; then
+            echo "No WAKATIME_API_KEY provided, skipping..."
+            exit 2
+        else
+            cd "${BASEDIR}" || exit 1
 
-        install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
-        sed -e "
-            s|%API_KEY%|${WAKATIME_API_KEY}|g;
-            s|%HOSTNAME%|${WAKATIME_HOSTNAME}|g;
-        " -i "${HOME}/.wakatime.cfg"
+            install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
+            sed -e "
+                s|%API_KEY%|${WAKATIME_API_KEY}|g;
+                s|%HOSTNAME%|${WAKATIME_HOSTNAME}|g;
+            " -i "${HOME}/.wakatime.cfg"
 
-        cd -- || exit 1
+            cd -- || exit 1
+        fi
     fi
 }
 
-_hello_dude
-
-if [ ! -f "${HOME}/.wakatime.cfg" ]; then
-    setup_wakatime_configuration
-fi
-if [ ! -f "${HOME}/.gitconfig.local" ]; then
+_init_submodules() {
     git submodule update --init --recursive -j4
-    setup_git_configuration
-fi
-if [ ! -s "${HOME}/.dotfiles" ]; then
-    dotbot_pkg_install
-    dotbot_links
-    latest_dev_install
-    setup_nvim
-    setup_zplugin
-else
-    dotbot_links
-fi
+}
+
+_hello_dude
+_init_submodules
+_dotbot_pkg_install
+_configure_wakatime
+_configure_git
+_dotbot_do_links
+_install_envs
+_configure_nvim
+_configure_zsh
