@@ -16,12 +16,16 @@ DOTBOT_BIN="bin/dotbot"
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-USERNAME="${1:-""}"
-PASSWORD="${2:-""}"
-EMAIL="${3:-""}"
+GIT_USERNAME=${GIT_USERNAME:-${1:-""}}
+GIT_PASSWORD=${GIT_PASWORD:-${2:-""}}
+GIT_EMAIL=${GIT_EMAIL:-${3:-""}}
 
-GPG_FULL_NAME="${4:-""}"
-GPG_PASSPHRASE="${5:-""}"
+GPG_FULL_NAME=${GPG_FULL_NAME:${4:-""}}
+GPG_PASSPHRASE=${GPG_PASSPHRASE:-${5:-""}}
+
+WAKATIME_API_KEY=${WAKATIME_API_KEY:-${6:-""}}
+WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
+
 
 _welcome_message() {
     if command -v lsb_release >/dev/null 2>&1; then
@@ -30,13 +34,13 @@ _welcome_message() {
         distro_name="Unknown"
     fi
 
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+    if [ ! -s "${HOME}/.dotfiles" ]; then
         first_run_welcome="kornicameister/dotfiles - first run"
     else
         first_run_welcome="kornicameister/dotfiles - updating"
     fi
 
-    echo "${distro_name} : ${first_run_welcome} : ${USERNAME}"
+    echo "${distro_name} : ${first_run_welcome} : ${GIT_USERNAME}"
 }
 
 dotbot_pkg_install() {
@@ -59,15 +63,37 @@ dotbot_links() {
     cd - || 1
 }
 
-setup_git() {
+setup_git_configuration() {
+
+    if [ -z "${GIT_USERNAME}" ]; then
+        echo "GIT_USERNAME must be set"
+        exit 2
+    fi
+    if [ -z "${GIT_PASSWORD}" ]; then
+        echo "GIT_PASSWORD must be set"
+        exit 2
+    fi
+    if [ -z "${GIT_EMAIL}" ]; then
+        echo "GIT_EMAIL must be set"
+        exit 2
+    fi
+    if [ -z "${GPG_FULL_NAME}" ]; then
+        echo "GPG_FULL_NAME must be set"
+        exit 2
+    fi
+    if [ -z "${GPG_PASSPHRASE}" ]; then
+        echo "GPG_PASSPHRASE must be set"
+        exit 2
+    fi
+
     # generate ssh key
     mkdir -p "${HOME}/.ssh"
     ssh-keygen \
         -t ed25519 \
         -b 4096 \
-        -C "${EMAIL}" \
+        -C "${GIT_EMAIL}" \
         -f "${HOME}/.ssh/github" \
-        -N "${PASSWORD}"
+        -N "${GIT_PASSWORD}"
 
     key_type="rsa"
     key_strength=4096
@@ -78,8 +104,8 @@ setup_git() {
 Key-Type: ${key_type}
 Key-Length: ${key_strength}
 Name-Real: ${GPG_FULL_NAME}
-Name-Comment: ${USERNAME} GPG key generated with dotfiles
-Name-Email: ${EMAIL}
+Name-Comment: ${GIT_USERNAME} GPG key generated with dotfiles
+Name-Email: ${GIT_EMAIL}
 Expire-Date: 0
 Passphrase: ${GPG_PASSPHRASE}
 EOF
@@ -88,19 +114,19 @@ EOF
 
     # assumed the highest rsa length:
     local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
+    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${GIT_EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
 
     if [ ! -f "${HOME}/.gitconfig.local" ]; then
         touch "${HOME}/.gitconfig.local"
     fi
 
     (
-        git config --file="${HOME}/.gitconfig.local" user.name "${USERNAME}";
-        git config --file="${HOME}/.gitconfig.local" user.email "${EMAIL}";
+        git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
+        git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
         git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
         git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
         git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
-        git config --file="${HOME}/.gitconfig.local" github.user "${USERNAME}";
+        git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
     )
 
     echo "Remember to upload the GPG and SSH keys to Github"
@@ -113,8 +139,8 @@ setup_nvim() {
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
-    nvim --headless +PlugInstall +qall!
-    nvim --headless +UpdateRemotePlugins +qall!
+    nvim --headless -es +PlugInstall +qall! >/dev/null 2>&1;
+    nvim --headless -es +UpdateRemotePlugins +qall! >/dev/null 2>&1;
 }
 
 latest_dev_install() {
@@ -197,49 +223,47 @@ latest_dev_install() {
 }
 
 setup_zplugin() {
-    local zsh_bin
-    zsh_bin=$(command -v zsh)
-    $zsh_bin -il -c 'zpl compile'
+    cd "${BASEDIR}" || exit 1
+    zsh -ml -c 'sleep 5 && exit 0'
+    cd - || 1
+}
+
+
+setup_wakatime_configuration() {
+    local wakatime_api_key
+    local wakatime_hostname
+
+    if [[ -n "${wakatime_api_key}" ]]; then
+        cd "${BASEDIR}" || exit 1
+
+        install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
+        sed -e "
+            s|%API_KEY%|${wakatime_api_key}|g;
+            s|%HOSTNAME%|${wakatime_hostname}|g;
+        " -i "${HOME}/.wakatime.cfg"
+
+        cd -- || exit 1
+    else
+        echo "No WAKATIME_API_KEY provided, skipping..."
+        exit 2
+    fi
 }
 
 _welcome_message
 git submodule update --init --recursive
 
+if [ ! -f "${HOME}/.wakatime.cfg" ]; then
+    setup_wakatime_configuration
+fi
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
-    args=("$@")
-    argsCount=${#args[@]}
-
-    if [ "${argsCount}" -ne 5 ]; then
-        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email} {gpg_full_name} {gpg_passphrase}"
-    fi
-    if [ -z "${USERNAME}" ]; then
-        echo "git_user must be set"
-        exit 1
-    fi
-    if [ -z "${PASSWORD}" ]; then
-        echo "git_password must be set"
-        exit 2
-    fi
-    if [ -z "${EMAIL}" ]; then
-        echo "git_email must be set"
-        exit 3
-    fi
-    if [ -z "${GPG_FULL_NAME}" ]; then
-        echo "gpg_full_name must be set"
-        exit 4
-    fi
-    if [ -z "${GPG_PASSPHRASE}" ]; then
-        echo "gpg_passphrase must be set"
-        exit 5
-    fi
-
+    setup_git_configuration
+fi
+if [ ! -s "${HOME}/.dotfiles" ]; then
     dotbot_pkg_install
     dotbot_links
-    setup_git
     latest_dev_install
     setup_nvim
     setup_zplugin
 else
     dotbot_links
-    setup_zplugin
 fi

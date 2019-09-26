@@ -59,7 +59,8 @@ x-build-steps: &build_steps
             "${CIRCLE_BUILD_NUM}" \
             "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
             "Circle Builds" \
-            "${CIRCLE_SHA1}"
+            "${CIRCLE_SHA1}" \
+            "555-WAKATIME-BOGUS-API-KEY"
     - run:
         name: Verify !
         command: |
