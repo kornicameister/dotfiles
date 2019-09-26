@@ -20,14 +20,13 @@ GIT_USERNAME=${GIT_USERNAME:-${1:-""}}
 GIT_PASSWORD=${GIT_PASWORD:-${2:-""}}
 GIT_EMAIL=${GIT_EMAIL:-${3:-""}}
 
-GPG_FULL_NAME=${GPG_FULL_NAME:${4:-""}}
+GPG_FULL_NAME=${GPG_FULL_NAME:-${4:-""}}
 GPG_PASSPHRASE=${GPG_PASSPHRASE:-${5:-""}}
 
 WAKATIME_API_KEY=${WAKATIME_API_KEY:-${6:-""}}
 WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
 
-
-_welcome_message() {
+_hello_dude() {
     if command -v lsb_release >/dev/null 2>&1; then
         distro_name=$(lsb_release -sd 2>&1)
     else
@@ -246,13 +245,13 @@ setup_wakatime_configuration() {
     fi
 }
 
-_welcome_message
-git submodule update --init --recursive
+_hello_dude
 
 if [ ! -f "${HOME}/.wakatime.cfg" ]; then
     setup_wakatime_configuration
 fi
 if [ ! -f "${HOME}/.gitconfig.local" ]; then
+    git submodule update --init --recursive -j4
     setup_git_configuration
 fi
 if [ ! -s "${HOME}/.dotfiles" ]; then
