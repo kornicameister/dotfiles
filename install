@@ -178,7 +178,7 @@ _install_envs() {
 
         for py_major in {2,3}; do
             $pyenv latest install -s "${py_major}"
-            "${pyenv_root}/versions/$($pyenv latest --print-installed $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
+            "${pyenv_root}/versions/$($pyenv latest --print-installed $py_major)/bin/pip" install -r "${BASEDIR}/python-system-requirements.txt"
         done
 
         $pyenv global "$($pyenv latest --print-installed)"
@@ -213,7 +213,7 @@ _install_envs() {
         if [ ! -d "${pyenv_root}/versions/neovim${py_major}" ]; then
             echo "Initializing neovim setup for Python ${py_major}"
             $pyenv virtualenv "$($pyenv latest --print ${py_major})" "neovim${py_major}"
-            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r ./neovim-requirements.txt
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/neovim-requirements.txt"
         else
             echo "$pyenv_root/versions/neovim${py_major} venv already exists"
         fi
