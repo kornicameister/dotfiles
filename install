@@ -141,8 +141,8 @@ _configure_nvim() {
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
-    nvim --headless -es +PlugInstall +qall! >/dev/null 2>&1;
-    nvim --headless -es +UpdateRemotePlugins +qall! >/dev/null 2>&1;
+    nvim --headless -es +PlugInstall +qall!
+    nvim --headless -es +UpdateRemotePlugins +qall!
 }
 
 _install_envs() {
@@ -225,9 +225,7 @@ _install_envs() {
 }
 
 _configure_zsh() {
-    cd "${BASEDIR}" || exit 1
-    zsh -ml -c 'echo -n "HELLO VIA ZPLUGIN"'
-    cd - || 1
+    zsh -il -c 'zplugin self-update && zplugin compile && echo -n "Welcome $(zsh --version)"'
 }
 
 
