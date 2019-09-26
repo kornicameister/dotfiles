@@ -117,10 +117,7 @@ EOF
         local signingKey=""
         signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${GIT_EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
 
-        if [ ! -f "${HOME}/.gitconfig.local" ]; then
-            touch "${HOME}/.gitconfig.local"
-        fi
-
+        touch "${HOME}/.gitconfig.local"
         (
             git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
             git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
@@ -129,7 +126,6 @@ EOF
             git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
             git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
         )
-
         echo "Remember to upload the GPG and SSH keys to Github"
     fi
 }
