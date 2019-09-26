@@ -224,7 +224,7 @@ latest_dev_install() {
 
 setup_zplugin() {
     cd "${BASEDIR}" || exit 1
-    zsh -ml -c 'sleep 5 && exit 0'
+    zsh -ml -c 'echo -n "HELLO VIA ZPLUGIN"'
     cd - || 1
 }
 
