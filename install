@@ -2,12 +2,10 @@
 
 # CI handling
 CI=${CI:-False}
-DEBUG=${DEBUG:-False}
 if [[ -n ${CI} ]]; then
     sudo() {
         "$@"
     }
-    DEBUG=True
 fi
 
 INSTALL_CONFIG="install.conf.yaml"
@@ -173,7 +171,7 @@ _install_envs() {
     nodenv_root=$($nodenv root)
     goenv_root=$($goenv root)
 
-    if ((DEBUG)); then
+    if [[ -n ${CI} ]]; then
         verbose='-v'
     else
         verbose=''
@@ -212,7 +210,7 @@ _install_envs() {
         $goenv latest install "${verbose}" -s 1 && \
             $goenv global "$($goenv latest --print-installed)"
 
-        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" -fix \
+        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
             github.com/golangci/golangci-lint/cmd/golangci-lint
@@ -271,4 +269,4 @@ _configure_git
 _dotbot_do_links
 _install_envs
 _configure_nvim
-_configure_zsh
+# _configure_zsh
