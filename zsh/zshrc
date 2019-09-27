@@ -24,8 +24,8 @@ source ~/.zplugin/zplugin.zsh
 
 # prompt
 zplugin ice \
-    pick"async.zsh" \
-    src"pure.zsh" \
+    pick'async.zsh' \
+    src'pure.zsh' \
     atload'source ~/.dotfiles/zsh/prompt.zsh'
 zplugin light sindresorhus/pure
 
@@ -39,13 +39,14 @@ zplugin ice wait'1' lucid ; zplugin light djui/alias-tips
 zplugin ice wait'1' lucid ; zplugin load voronkovich/gitignore.plugin.zsh
 zplugin ice wait'1' as'program' pick'bin/git-dsf' lucid ; zplugin light zdharma/zsh-diff-so-fancy
 zplugin ice wait'1' lucid pick"h.sh" ; zplugin light paoloantinori/hhighlighter
+zplugin ice wait'1' lucid ; zplugin load 'wfxr/forgit'
 
 # jq
 zplugin ice from'gh-r' \
     as'command' \
     mv'jq* -> jq' \
     bpick'*linux*'
-zplugin load stedolan/jq
+zplugin light stedolan/jq
 
 # autojump
 zplugin ice \
@@ -55,7 +56,7 @@ zplugin ice \
     pick'fasd' \
     atpull'!git reseti --hard' \
     atload'source ~/.dotfiles/zsh/fasd.zsh'
-zplugin load clvv/fasd
+zplugin light clvv/fasd
 
 # dircolors
 zplugin ice wait"0c" lucid reset \
@@ -67,23 +68,44 @@ zplugin ice wait"0c" lucid reset \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zplugin light trapd00r/LS_COLORS
 
+# replacement for ls
+zplugin ice \
+    wait'2' \
+    lucid \
+    from'gh-r' \
+    as'program' \
+    mv'exa* -> exa'
+zplugin light ogham/exa
+
+# bat
+zplugin ice \
+    wait'2' \
+    lucid \
+    as'command' \
+    from'gh-r' \
+    mv'bat* -> bat' \
+    pick'bat/bat'
+zplugin light sharkdp/bat
+
 # direnv
 zplugin ice \
     as'program' \
     atclone'./direnv hook zsh > zhook.zsh' \
     atpull'%atclone'\
-    pick'direnv' \
     src'zhook.zsh' \
     make'!'
 zplugin light direnv/direnv
 
 # git extra stuff
-zplugin ice wait lucid \
+zplugin ice \
+    wait \
+    lucid \
     as'program' \
     pick'$ZPFX/bin/git-*' \
     make'PREFIX=$ZPFX' \
     nocompile
 zplugin light tj/git-extras
+zplugin ice as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
 
 zplugin ice svn silent ; zplugin snippet PZT::modules/environment
 zplugin ice svn silent ; zplugin snippet PZT::modules/terminal
@@ -95,7 +117,7 @@ zplugin ice svn silent ; zplugin snippet PZT::modules/helper
 zplugin ice svn silent ; zplugin snippet PZT::modules/gpg
 zplugin ice svn silent ; zplugin snippet PZT::modules/ssh
 zplugin ice svn silent ; zplugin snippet PZT::modules/git
-zplugin ice svn silent ; zplugin snippet PZT::modules/docker
+zplugin ice as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 zplugin ice svn silent lucid ; zplugin snippet PZT::modules/archive
 
 # autosuggestions, syntax-highlighting & history searching
@@ -106,6 +128,9 @@ zplugin ice \
     atpull'zplugin creinstall -q .' \
     atload'source ~/.dotfiles/zsh/comp.zsh'
 zplugin load zsh-users/zsh-completions
+
+zplugin load buonomo/yarn-completion
+zplugin load lukechilds/zsh-better-npm-completion
 
 zplugin ice \
     wait \
@@ -148,5 +173,3 @@ zplugin load zsh-users/zsh-history-substring-search
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh
-
-zplugin ice wait lucid ; zplugin load 'wfxr/forgit'
