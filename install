@@ -2,10 +2,12 @@
 
 # CI handling
 CI=${CI:-False}
+DEBUG=${DEBUG:-False}
 if [[ -n ${CI} ]]; then
     sudo() {
         "$@"
     }
+    DEBUG=True
 fi
 
 INSTALL_CONFIG="install.conf.yaml"
@@ -130,7 +132,7 @@ EOF
     fi
 }
 
-_configure_nvim() {
+_configure_nvim() (
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
         aria2c \
             -d ~/.vim/autoload \
@@ -139,7 +141,7 @@ _configure_nvim() {
     fi
     nvim --headless +PlugInstall +qall!
     nvim --headless +UpdateRemotePlugins +qall!
-}
+)
 
 _install_envs() {
     local pyenv
@@ -148,6 +150,8 @@ _install_envs() {
     local nodenv_root
     local goenv
     local goenv_root
+
+    local verbose
 
     if ! command -v pyenv >/dev/null 2>&1; then
       pyenv="${HOME}/.pyenv/bin/pyenv"
@@ -169,11 +173,17 @@ _install_envs() {
     nodenv_root=$($nodenv root)
     goenv_root=$($goenv root)
 
+    if ((DEBUG)); then
+        verbose='-v'
+    else
+        verbose=''
+    fi
+
     if [ ! -f "${pyenv_root}/version" ]; then
         echo "Installing latest Python"
 
         for py_major in {2,3}; do
-            $pyenv latest install -s "${py_major}"
+            $pyenv latest install "${verbose}" -s "${py_major}"
             "${pyenv_root}/versions/$($pyenv latest --print-installed $py_major)/bin/pip" install -r "${BASEDIR}/python-system-requirements.txt"
         done
 
@@ -185,7 +195,7 @@ _install_envs() {
     if [ ! -f "${nodenv_root}/version" ]; then
         echo "Installing latest Node"
 
-        $nodenv latest install -s 12 && \
+        $nodenv latest install "${verbose}" -s 12 && \
             $nodenv global "$($nodenv latest --print-installed)"
         "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
             install -g \
@@ -199,13 +209,13 @@ _install_envs() {
     if [ ! -f "${goenv_root}/version" ]; then
         echo "Installing latest GO"
 
-        $goenv latest install -s 1 && \
+        $goenv latest install "${verbose}" -s 1 && \
             $goenv global "$($goenv latest --print-installed)"
 
-        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get -v -fix \
+        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" -fix \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
-            github.com/golangci/golangci-lint/cmd/golangci-lint@lastest
+            github.com/golangci/golangci-lint/cmd/golangci-lint
     else
         echo "goenv already has system version set at it is $(cat "${goenv_root}/version")"
     fi
