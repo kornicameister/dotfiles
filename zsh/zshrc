@@ -125,12 +125,18 @@ zplugin ice \
     wait \
     lucid \
     blockf \
-    atpull'zplugin creinstall -q .' \
+    atload'zpcdreplay' \
     atload'source ~/.dotfiles/zsh/comp.zsh'
-zplugin load zsh-users/zsh-completions
+zplugin light zsh-users/zsh-completions
 
-zplugin load buonomo/yarn-completion
-zplugin load lukechilds/zsh-better-npm-completion
+zplugin ice atload'zpcdreplay' atclone'./zplug.zsh'
+zplugin light g-plane/zsh-yarn-autocompletions
+
+zplugin ice atload'zpcdreplay'
+zplugin light lukechilds/zsh-better-npm-completion
+
+zplugin ice atload'zpcdreplay'
+zplugin light srijanshetty/zsh-pandoc-completion
 
 zplugin ice \
     wait \
