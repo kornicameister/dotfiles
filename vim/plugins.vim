@@ -64,9 +64,6 @@ Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 
-" golang
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries','for': ['go']}
-
 " json
 Plug 'elzr/vim-json', {'for': ['json']}
 

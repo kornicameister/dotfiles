@@ -201,6 +201,11 @@ _install_envs() {
 
         $goenv latest install -s 1 && \
             $goenv global "$($goenv latest --print-installed)"
+
+        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get -v -fix \
+            golang.org/x/lint/golint \
+            golang.org/x/tools/gopls \
+            github.com/golangci/golangci-lint/cmd/golangci-lint@lastest
     else
         echo "goenv already has system version set at it is $(cat "${goenv_root}/version")"
     fi
