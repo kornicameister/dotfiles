@@ -233,11 +233,6 @@ _install_envs() {
     $goenv rehash
 }
 
-_configure_zsh() {
-    zsh -il -c 'zplugin self-update && zplugin compile && echo -n "Welcome $(zsh --version)"'
-}
-
-
 _configure_wakatime() {
     if [ ! -f "${HOME}/.wakatime.cfg" ]; then
         if [ -z "${WAKATIME_API_KEY}" ]; then
@@ -269,4 +264,3 @@ _configure_git
 _dotbot_do_links
 _install_envs
 _configure_nvim
-# _configure_zsh

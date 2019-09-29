@@ -1,26 +1,51 @@
 #!/bin/zsh
 
-setopt promptsubst
 
+# settings for prezto imported stuff
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# settings for prezto imported stuff
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=cyan,fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE='yes'
+
 zstyle ':prezto:*:*' color 'yes'
 zstyle ':prezto:*:*' case-sensitive 'false'
-
 zstyle ':prezto:module:utility' correct 'yes'
 zstyle ':prezto:module:utility' safe-ops 'yes'
 zstyle ':prezto:module:utility:ls' dirs-first 'yes'
-
 zstyle ':prezto:module:ssh:load' identities 'github'
 zstyle ':prezto:module:completion:*:hosts' etc-host-ignores '0.0.0.0' '127.0.0.1'
-
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
+zstyle ':prezto:module:autosuggestions:color' found 'fg=6'
+zstyle ':prezto:module:terminal' auto-title 'yes'
+
+# loading *envs
+[ $commands[pyenv] ] && {
+    eval "$(pyenv init - --no-rehash zsh)"
+    eval "$(pyenv virtualenv-init -)"
+}
+[ $commands[nodenv] ] && {
+    eval "$(nodenv init - --no-rehash zsh)"
+}
+[ $commands[goenv] ] && {
+    eval "$(goenv init - --no-rehash zsh)"
+    path=(
+        $GOROOT/bin
+        $GOPATH/bin
+        $path
+    )
+    export GOBIN="$GOPATH/bin";
+}
+[ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 source ~/.zplugin/zplugin.zsh
+
+# zplugin...plugins :)
+zplugin light zdharma/z-p-submods
 
 # prompt
 zplugin ice \
@@ -37,7 +62,6 @@ zplugin ice wait lucid ; zplugin light RobSis/zsh-reentry-hook
 zplugin ice wait'1' lucid ; zplugin light hlissner/zsh-autopair
 zplugin ice wait'1' lucid ; zplugin light djui/alias-tips
 zplugin ice wait'1' lucid ; zplugin load voronkovich/gitignore.plugin.zsh
-zplugin ice wait'1' as'program' pick'bin/git-dsf' lucid ; zplugin light zdharma/zsh-diff-so-fancy
 zplugin ice wait'1' lucid pick"h.sh" ; zplugin light paoloantinori/hhighlighter
 zplugin ice wait'1' lucid ; zplugin load 'wfxr/forgit'
 
@@ -48,15 +72,13 @@ zplugin ice from'gh-r' \
     bpick'*linux*'
 zplugin light stedolan/jq
 
-# autojump
+# diff-s-fancy
 zplugin ice \
-    wait'2' \
     lucid \
-    as'command' \
-    pick'fasd' \
-    atpull'!git reseti --hard' \
-    atload'source ~/.dotfiles/zsh/fasd.zsh'
-zplugin light clvv/fasd
+    wait'1' \
+    as'program' \
+    pick'bin/git-dsf'
+zplugin light zdharma/zsh-diff-so-fancy
 
 # dircolors
 zplugin ice wait"0c" lucid reset \
@@ -105,37 +127,29 @@ zplugin ice \
     make'PREFIX=$ZPFX' \
     nocompile
 zplugin light tj/git-extras
-zplugin ice as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
 
-zplugin ice svn silent ; zplugin snippet PZT::modules/environment
-zplugin ice svn silent ; zplugin snippet PZT::modules/terminal
-zplugin ice svn silent ; zplugin snippet PZT::modules/editor
-zplugin ice svn silent ; zplugin snippet PZT::modules/history
-zplugin ice svn silent ; zplugin snippet PZT::modules/directory
-zplugin ice svn silent ; zplugin snippet PZT::modules/utility
-zplugin ice svn silent ; zplugin snippet PZT::modules/helper
-zplugin ice svn silent ; zplugin snippet PZT::modules/gpg
-zplugin ice svn silent ; zplugin snippet PZT::modules/ssh
-zplugin ice svn silent ; zplugin snippet PZT::modules/git
-zplugin ice as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
-zplugin ice svn silent lucid ; zplugin snippet PZT::modules/archive
-
-# autosuggestions, syntax-highlighting & history searching
 zplugin ice \
+    svn \
     wait \
     lucid \
-    blockf \
-    atload'zpcdreplay' \
-    atload'source ~/.dotfiles/zsh/comp.zsh'
-zplugin light zsh-users/zsh-completions
+    submods'zsh-users/zsh-completions -> external'
+zplugin snippet PZT::modules/completion
 
-zplugin ice atload'zpcdreplay' atclone'./zplug.zsh'
+zplugin ice \
+    wait \
+    blockf \
+    lucid \
+    atclone'./zplug.zsh'
 zplugin light g-plane/zsh-yarn-autocompletions
 
-zplugin ice atload'zpcdreplay'
+zplugin ice \
+    wait \
+    lucid
 zplugin light lukechilds/zsh-better-npm-completion
 
-zplugin ice atload'zpcdreplay'
+zplugin ice \
+    wait \
+    lucid
 zplugin light srijanshetty/zsh-pandoc-completion
 
 zplugin ice \
@@ -145,37 +159,33 @@ zplugin ice \
 zplugin load zdharma/fast-syntax-highlighting
 
 zplugin ice \
+    svn \
     wait \
     lucid \
+    submods'zsh-users/zsh-autosuggestions -> external' \
     atload'!_zsh_autosuggest_start' \
     wrap-track'_zsh_autosuggest_start'
-zplugin load zsh-users/zsh-autosuggestions
+zplugin snippet PZT::modules/autosuggestions
 
-zplugin ice \
-    wait'1' \
-    lucid \
-    atload'source ~/.dotfiles/zsh/history.zsh'
-zplugin load zsh-users/zsh-history-substring-search
+zplugin ice as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
+zplugin ice as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
-[ $commands[pyenv] ] && {
-    eval "$(pyenv init - --no-rehash zsh)"
-    eval "$(pyenv virtualenv-init -)"
-}
-[ $commands[nodenv] ] && {
-    eval "$(nodenv init - --no-rehash zsh)"
-}
-[ $commands[goenv] ] && {
-    eval "$(goenv init - --no-rehash zsh)"
-    path=(
-        $GOROOT/bin
-        $GOPATH/bin
-        $path
-    )
-    export GOBIN="$GOPATH/bin";
-}
-[ $commands[kubectl] ] && source <(kubectl completion zsh)
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/environment
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/terminal
+zplugin ice wait'1' svn silent submods'clvv/fasd -> external' ; zplugin snippet PZT::modules/fasd
+zplugin ice wait'1' svn silent submods'zsh-users/zsh-history-substring-search -> external' ; zplugin snippet PZT::modules/history-substring-search
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/editor
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/history
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/directory
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/utility
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/helper
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/gpg
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/ssh
+zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/git
+zplugin ice wait'1' svn silent pick'' ; zplugin snippet PZT::modules/archive
 
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
