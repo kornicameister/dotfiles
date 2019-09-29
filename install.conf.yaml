@@ -1,10 +1,21 @@
 ---
+
+- clean: ["~"]
+
 - defaults:
     link:
       create: true
       relink: true
 
-- clean: ["~"]
+# main repo
+- link:
+    ~/.dotfiles: ""
+
+# envs have to be set here, otherwise plugins are being linked first
+# which makes ~/.*env created as regular directory
+- link:
+    ~/.nodenv: dependencies/nodenv
+    ~/.pyenv: dependencies/pyenv
 
 - link:
     ~/.dotfiles: ""
@@ -38,7 +49,6 @@
     ~/.fzf.settings: fzf.settings
 
     # node
-    ~/.nodenv: dependencies/nodenv
     ~/.npmrc.sh: npmrc.sh
     ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
     ~/.nodenv/plugins/node-build: dependencies/node-build
@@ -48,7 +58,6 @@
     ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
 
     # pyenv
-    ~/.pyenv: dependencies/pyenv
     ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
     ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
     ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
