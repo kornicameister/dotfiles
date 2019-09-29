@@ -7,7 +7,7 @@
       create: true
       relink: true
 
-# main repo
+# main repo goes first, you know gotta be careful here
 - link:
     ~/.dotfiles: ""
 
@@ -18,8 +18,6 @@
     ~/.pyenv: dependencies/pyenv
 
 - link:
-    ~/.dotfiles: ""
-
     # vim stuff
     ~/.vim: vim
     ~/.vimrc: vimrc
