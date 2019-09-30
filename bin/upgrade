@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+CI=${CI:-False}
 K_DOTFILES_DIR="${K_DOTFILES_DIR:-${HOME}/.dotfiles}"
 
 if [[ -n ${CI} ]]; then
