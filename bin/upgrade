@@ -51,7 +51,18 @@ hadolint_upgrade() {
 }
 
 node_python_pkgs_update() (
-
+    local venv_dir
+    local venv_name
+    
+    local _npm
+    local _nodenv
+    
+    local _pyenv
+    local _pip
+    
+    local pyenv_system_ver
+    local nodenv_system_ver
+    
     for py_major in {2,3}; do
         venv_name="neovim${py_major}"
         venv_dir="${PYENV_ROOT}/versions/${venv_name}"
