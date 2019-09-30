@@ -18,6 +18,10 @@ api-ref/build
 doc/build
 releasenotes/build
 
+# silver searcher
+.ignore
+.agignore
+
 .history/
 
 # pyenv stuff
