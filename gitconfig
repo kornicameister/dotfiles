@@ -22,7 +22,6 @@
     tags = tag -l
     branches = branch -a
     remotes = remote -v
-    commits = ! fshow
     fixup = commit --fixup
     fresh =  ! git_fresh
 
