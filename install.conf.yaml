@@ -1,5 +1,4 @@
 ---
-
 - clean: ["~"]
 
 - defaults:
@@ -67,10 +66,6 @@
 
     # gpg-agent
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
-
-    # t - todos
-    ~/.t.sh: t.sh
-    ~/.local/bin/t: dependencies/t/t.py
 
     # custom application/tools configuration
     ~/.config:
