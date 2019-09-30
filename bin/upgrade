@@ -53,16 +53,16 @@ hadolint_upgrade() {
 node_python_pkgs_update() (
     local venv_dir
     local venv_name
-    
+
     local _npm
     local _nodenv
-    
+
     local _pyenv
     local _pip
-    
+
     local pyenv_system_ver
     local nodenv_system_ver
-    
+
     for py_major in {2,3}; do
         venv_name="neovim${py_major}"
         venv_dir="${PYENV_ROOT}/versions/${venv_name}"
@@ -100,7 +100,17 @@ node_python_pkgs_update() (
 )
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugInstall +PlugClean! +PlugUpdate +qall!
+    if command -v nvim >/dev/null 2>&1; then
+        for cmd in "PlugUpgrade" "PlugInstall" "PlugClean!" "PlugUpdate" "UpdateRemotePlugins"; do
+            nvim \
+                --headless \
+                -es \
+                $cmd \
+                +qall! \
+                >/dev/null \
+                2>&1
+        done
+    fi
 }
 
 docker_compose_upgrade() {
