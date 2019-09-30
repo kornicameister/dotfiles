@@ -44,26 +44,26 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 
 source ~/.zplugin/zplugin.zsh
 
-zplugin light zdharma/zsh-unique-id
-zplugin light zdharma/z-p-submods
-zplugin ice wait svn silent ; zplugin snippet PZT::modules/environment
-zplugin ice wait svn silent ; zplugin snippet PZT::modules/terminal
-zplugin ice wait silent ; zplugin load hlissner/zsh-autopair
-zplugin ice wait silent ; zplugin load djui/alias-tips
-zplugin ice wait silent ; zplugin load voronkovich/gitignore.plugin.zsh
-zplugin ice wait silent pick"h.sh" ; zplugin load paoloantinori/hhighlighter
-zplugin ice wait silent ; zplugin load wfxr/forgit
-zplugin ice wait silent ; zplugin load sobolevn/wakatime-zsh-plugin
-
 # prompt
 zplugin ice \
+    lucid \
     pick'async.zsh' \
     src'pure.zsh' \
     atload'source ~/.dotfiles/zsh/prompt.zsh'
 zplugin light sindresorhus/pure
 
+zplugin light zdharma/zsh-unique-id
+zplugin light zdharma/z-p-submods
+zplugin ice wait lucid ; zplugin load sobolevn/wakatime-zsh-plugin
+zplugin ice wait lucid ; zplugin load hlissner/zsh-autopair
+zplugin ice wait lucid ; zplugin load djui/alias-tips
+zplugin ice wait lucid ; zplugin load wfxr/forgit
+
 # jq
-zplugin ice from'gh-r' \
+zplugin ice \
+    lucid \
+    from'gh-r' \
+    wait'0c' \
     as'command' \
     mv'jq* -> jq' \
     bpick'*linux*'
@@ -72,13 +72,15 @@ zplugin light stedolan/jq
 # diff-s-fancy
 zplugin ice \
     lucid \
-    wait'1' \
+    wait'0c' \
     as'program' \
     pick'bin/git-dsf'
 zplugin light zdharma/zsh-diff-so-fancy
 
 # dircolors
-zplugin ice wait"0c" lucid reset \
+zplugin ice wait'0c'\
+    lucid \
+    reset \
     atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
             \${P}sed -i \
             '/DIR/c\DIR 38;5;63;1' LS_COLORS; \
@@ -89,7 +91,7 @@ zplugin light trapd00r/LS_COLORS
 
 # replacement for ls
 zplugin ice \
-    wait'2' \
+    wait'0c' \
     lucid \
     from'gh-r' \
     as'program' \
@@ -112,12 +114,13 @@ zplugin ice \
     atclone'./direnv hook zsh > zhook.zsh' \
     atpull'%atclone'\
     src'zhook.zsh' \
-    make'!'
+    make'!' \
+    reset
 zplugin light direnv/direnv
 
 # git extra stuff
 zplugin ice \
-    wait \
+    wait'0c' \
     lucid \
     as'program' \
     pick'$ZPFX/bin/git-*' \
@@ -133,54 +136,57 @@ zplugin ice \
 zplugin snippet PZT::modules/completion
 
 zplugin ice \
-    wait \
     blockf \
     lucid \
     atclone'./zplug.zsh'
 zplugin light g-plane/zsh-yarn-autocompletions
 
 zplugin ice \
-    wait \
+    blockf \
     lucid
 zplugin light lukechilds/zsh-better-npm-completion
 
 zplugin ice \
-    wait \
+    blockf \
     lucid
 zplugin light srijanshetty/zsh-pandoc-completion
 
 zplugin ice \
-    wait \
+    blockf \
     lucid \
     atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
 zplugin load zdharma/fast-syntax-highlighting
 
 zplugin ice \
     svn \
-    wait \
     lucid \
     submods'zsh-users/zsh-autosuggestions -> external' \
     atload'!_zsh_autosuggest_start' \
     wrap-track'_zsh_autosuggest_start'
 zplugin snippet PZT::modules/autosuggestions
 
-zplugin ice as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
-zplugin ice as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+zplugin ice blockf as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
+zplugin ice blockf as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
-zplugin ice wait'1' svn silent submods'clvv/fasd -> external' ; zplugin snippet PZT::modules/fasd
-zplugin ice wait'1' svn silent submods'zsh-users/zsh-history-substring-search -> external' ; zplugin snippet PZT::modules/history-substring-search
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/editor
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/history
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/directory
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/utility
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/helper
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/gpg
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/ssh
-zplugin ice wait'1' svn silent ; zplugin snippet PZT::modules/git
-zplugin ice wait'1' svn silent pick'' ; zplugin snippet PZT::modules/archive
+zplugin ice svn silent ; zplugin snippet PZT::modules/environment
+zplugin ice svn silent ; zplugin snippet PZT::modules/terminal
+zplugin ice svn silent submods'clvv/fasd -> external' ; zplugin snippet PZT::modules/fasd
+zplugin ice svn silent submods'zsh-users/zsh-history-substring-search -> external' ; zplugin snippet PZT::modules/history-substring-search
+zplugin ice svn silent ; zplugin snippet PZT::modules/editor
+zplugin ice svn silent ; zplugin snippet PZT::modules/history
+zplugin ice svn silent ; zplugin snippet PZT::modules/directory
+zplugin ice svn silent ; zplugin snippet PZT::modules/utility
+zplugin ice svn silent ; zplugin snippet PZT::modules/helper
+zplugin ice svn silent ; zplugin snippet PZT::modules/gpg
+zplugin ice svn silent ; zplugin snippet PZT::modules/ssh
+zplugin ice svn silent ; zplugin snippet PZT::modules/git
+zplugin ice svn silent pick'' ; zplugin snippet PZT::modules/archive
 
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+autoload -Uz compinit && compinit
+zplugin cdreplay -q
