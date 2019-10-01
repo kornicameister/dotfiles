@@ -64,6 +64,10 @@ Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 
+" go
+Plug 'fatih/vim-go', { 'for': ['go'], 'do': ':GoInstallBinaries' }
+Plug 'deoplete-plugins/deoplete-go', { 'for': ['go'], 'do': 'make' }
+
 " json
 Plug 'elzr/vim-json', {'for': ['json']}
 
@@ -190,18 +194,6 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-" deoplete settings
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_fefresh_always = 1
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-call deoplete#custom#option({
-    \ 'auto_complete_delay': 50,
-    \ 'smart_case': v:true,
-    \ 'max_list': 50,
-    \ })
-
 " python
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
@@ -258,3 +250,43 @@ augroup gutentags_options
     \ },
   \ }
 augroup END
+
+augroup vim_go_options
+    autocmd!
+
+    let g:go_highlight_build_constraints = 1
+    let g:go_highlight_extra_types = 1
+    let g:go_highlight_fields = 1
+    let g:go_highlight_functions = 1
+    let g:go_highlight_methods = 1
+    let g:go_highlight_operators = 1
+    let g:go_highlight_structs = 1
+    let g:go_highlight_types = 1
+
+    let g:go_auto_sameids = 1                 " highlight variable usage
+    let g:go_auto_type_info = 1               " show type information
+
+    let g:go_fmt_command = 'goimports'        " run goimports along with gofmt
+augroup END
+
+" deoplete settings
+augroup deoplete_options
+    autocmd!
+
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_fefresh_always = 1
+
+    if !exists('g:deoplete#omni#input_patterns')
+        let g:deoplete#omni#input_patterns = {}
+    endif
+
+    call deoplete#custom#option({
+        \ 'auto_complete_delay': 50,
+        \ 'smart_case': v:true,
+        \ 'max_list': 50,
+        \ })
+
+    let g:deoplete#sources#go#gocode_binary = $HOME.'/go/bin/gocode'
+    let g:deoplete#sources#go#source_importer = 1
+augroup END
+

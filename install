@@ -247,7 +247,8 @@ _install_envs() {
         "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
-            github.com/golangci/golangci-lint/cmd/golangci-lint
+            github.com/golangci/golangci-lint/cmd/golangci-lint \
+            github.com/stamblerre/gocode
     else
         _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
     fi
