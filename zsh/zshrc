@@ -103,6 +103,15 @@ zplugin ice svn silent submods'zsh-users/zsh-history-substring-search -> externa
 [ $commands[nodenv] ] && {
     eval "$(nodenv init - --no-rehash zsh)"
 }
+[ $commands[goenv] ] && {
+    eval "$(goenv init - --no-rehash zsh)"
+    path=(
+        $GOROOT/bin
+        $GOPATH/bin
+        $path
+    )
+    export GOBIN="$GOPATH/bin";
+}
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh

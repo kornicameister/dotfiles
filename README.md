@@ -16,6 +16,9 @@ All applications configurations ever used
 - nodenv setup
   - all of the plugins controlled via [.gitmodules](./.gitmodules)
   - installation of leading `Node` versions inside [here](./install#L162)
+- goenv setup
+  - all of the plugins controlled via [.gitmodules](./.gitmodules)
+  - installation of leading `Go` versions inside [here](./install#L162)
 - ctags setup
   - automatic build from [this](https://github.com/universal-ctags/ctags) that takes place
     [here](./.installer/install_ctags.sh)

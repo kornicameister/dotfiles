@@ -13,6 +13,11 @@
     url = https://github.com/pyenv/pyenv.git
     shallow = true
     branch = master
+[submodule "dependencies/goenv"]
+	path = dependencies/goenv
+	url = https://github.com/syndbg/goenv.git
+    shallow = true
+    branch = master
 [submodule "dependencies/nodenv"]
     path = dependencies/nodenv
     url = https://github.com/nodenv/nodenv.git

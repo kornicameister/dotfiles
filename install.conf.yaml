@@ -15,6 +15,7 @@
 - link:
     ~/.nodenv: dependencies/nodenv
     ~/.pyenv: dependencies/pyenv
+    ~/.goenv: dependencies/goenv
 
 - link:
     # vim stuff
@@ -42,6 +43,9 @@
     # fzf
     ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
+
+    # go
+    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
 
     # node
     ~/.npmrc.sh: npmrc.sh
@@ -76,8 +80,4 @@
       path: bin/*
 
 - shell:
-    - command:
-        [
-          zsh -il -c ./post-install,
-          "Execute post install steps",
-        ]
+    - command: [zsh -il -c ./post-install, "Execute post install steps"]
