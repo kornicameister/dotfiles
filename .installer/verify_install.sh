@@ -35,6 +35,10 @@ validate_bin_accessible() (
     # gotta have python dawg
     python2
     python3
+    # node should be provided as well
+    node
+    # do not forget golang
+    go
     # browsers
     google-chrome-unstable
     firefox
