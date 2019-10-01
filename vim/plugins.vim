@@ -18,7 +18,7 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-git'
 
 " ale plugin
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " deoplete
 if has('nvim')
