@@ -92,9 +92,27 @@ validate_pyenv() (
   done
 )
 
+validate_git_config() {
+  if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
+    fail "Local git configuration not set";
+  else
+    success "git configured"
+  fi
+}
+
+validate_wakatime_config() {
+  if [[ ! -f "${HOME}/.wakatime.cfg" ]]; then
+    fail "Local wakatime configuration not set";
+  else
+    success "wakatime configured"
+  fi
+}
+
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
+  validate_git_config;
+  validate_wakatime_config;
   validate_bin_accessible;
   validate_interactive_bins;
   validate_pyenv;
