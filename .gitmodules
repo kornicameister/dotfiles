@@ -14,8 +14,8 @@
     shallow = true
     branch = master
 [submodule "dependencies/goenv"]
-    path = dependencies/goenv
-    url = https://github.com/syndbg/goenv.git
+	path = dependencies/goenv
+	url = https://github.com/syndbg/goenv.git
     shallow = true
     branch = master
 [submodule "dependencies/nodenv"]
