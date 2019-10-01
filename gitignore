@@ -26,6 +26,3 @@
 
 # nodenv stuff
 .node-version
-
-# goenv stuff
-.go-version

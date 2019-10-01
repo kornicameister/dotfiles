@@ -164,8 +164,6 @@ _install_envs() {
     local pyenv_root
     local nodenv
     local nodenv_root
-    local goenv
-    local goenv_root
 
     local verbose
 
@@ -179,15 +177,9 @@ _install_envs() {
     else
       nodenv=$(command -v nodenv)
     fi
-    if ! command -v goenv >/dev/null 2>&1; then
-      goenv="${HOME}/.goenv/bin/goenv"
-    else
-      goenv=$(command -v goenv)
-    fi
 
     pyenv_root=$($pyenv root)
     nodenv_root=$($nodenv root)
-    goenv_root=$($goenv root)
 
     if [[ -n ${CI} ]]; then
         verbose='-v'
@@ -238,23 +230,8 @@ _install_envs() {
         _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
 
-    if [ ! -f "${goenv_root}/version" ]; then
-        echo "Installing latest GO"
-
-        $goenv latest install "${verbose}" -s 1 && \
-            $goenv global "$($goenv latest --print-installed)"
-
-        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" \
-            golang.org/x/lint/golint \
-            golang.org/x/tools/gopls \
-            github.com/golangci/golangci-lint/cmd/golangci-lint
-    else
-        _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
-    fi
-
     $pyenv rehash
     $nodenv rehash
-    $goenv rehash
 }
 
 _configure_wakatime() {
