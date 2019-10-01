@@ -63,6 +63,7 @@ validate_interactive_bins() (
   bins_to_check=(
     pyenv
     nodenv
+    goenv
     fzf
   );
 
@@ -79,17 +80,42 @@ validate_interactive_bins() (
 )
 
 validate_pyenv() (
-  venvs_to_check=(
-    neovim2
-    neovim3
-  )
-  for venv in "${venvs_to_check[@]}"; do
-    if ! "${HOME}/.pyenv/bin/pyenv" versions | grep -q "${venv}"; then
-      fail "Virtualenv ${venv} was not installed"
-    else
-      success "Virtualenv ${venv} is installed"
-    fi
-  done
+  if [[ ! -s "${HOME}/.pyenv" ]]; then
+    fail "Failed to locate pyenv directory in \$HOME"
+  else
+    success "pyenv directory set"
+
+    local venvs_to_check
+    venvs_to_check=(
+      neovim2
+      neovim3
+    )
+
+    for venv in "${venvs_to_check[@]}"; do
+      if ! "${HOME}/.pyenv/bin/pyenv" versions | grep -q "${venv}"; then
+        fail "Virtualenv ${venv} was not installed"
+      else
+        success "Virtualenv ${venv} is installed"
+      fi
+    done
+
+  fi
+)
+
+validate_nodenv() (
+  if [[ ! -s "${HOME}/.nodenv" ]]; then
+    fail "Failed to locate nodenv directory in \$HOME"
+  else
+    success "nodenv directory set"
+  fi
+)
+
+validate_goenv() (
+  if [[ ! -s "${HOME}/.goenv" ]]; then
+    fail "Failed to locate goenv directory in \$HOME"
+  else
+    success "goenv directory set"
+  fi
 )
 
 validate_git_config() {
@@ -116,6 +142,8 @@ info 'Validating installation'
   validate_bin_accessible;
   validate_interactive_bins;
   validate_pyenv;
+  validate_nodenv;
+  validate_goenv;
 )
 info 'Validation successful'
 
