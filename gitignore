@@ -12,11 +12,8 @@
 .wakatime-project
 .vagrant/
 
-# openstack stuff
-api-guide/build
-api-ref/build
-doc/build
-releasenotes/build
+# direnv
+.envrc
 
 # silver searcher
 .ignore

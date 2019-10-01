@@ -1,21 +1,5 @@
 scriptencoding utf-8
 
-" Contains settings for all of the plugins
-
-function! InstallVimPlug()
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    PlugInstall --sync | source $MYVIMRC
-  endif
-endfunction
-
-" initialize vim plug
-augroup vimplug
-  autocmd!
-  autocmd VimEnter * :call InstallVimPlug()
-augroup END
-
 " define the plugins
 call plug#begin('~/.vim/plugged')
 
@@ -34,7 +18,7 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-git'
 
 " ale plugin
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " deoplete
 if has('nvim')
@@ -75,7 +59,7 @@ Plug 'elmcast/elm-vim', {'commit': '659d6de8766895d0445f52732e14378c9b9ab6fc', '
 Plug 'antew/vim-elm-language-server', {'for': ['elm']}
 
 " python
-Plug 'tmhedberg/SimpylFold', { 'for': ['python'] }
+Plug 'tmhedberg/SimpylFold', {'for': ['python']}
 Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}

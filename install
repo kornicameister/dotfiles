@@ -12,141 +12,260 @@ INSTALL_CONFIG="install.conf.yaml"
 PKG_CONFIG="pkg.install.conf.yaml"
 
 DOTBOT_DIR="dotbot"
-
 DOTBOT_BIN="bin/dotbot"
+
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-USERNAME="${1:-""}"
-PASSWORD="${2:-""}"
-EMAIL="${3:-""}"
+GIT_USERNAME=${GIT_USERNAME:-${1:-""}}
+GIT_PASSWORD=${GIT_PASWORD:-${2:-""}}
+GIT_EMAIL=${GIT_EMAIL:-${3:-""}}
 
-GPG_FULL_NAME="${4:-""}"
-GPG_PASSPHRASE="${5:-""}"
+GPG_FULL_NAME=${GPG_FULL_NAME:-${4:-""}}
+GPG_PASSPHRASE=${GPG_PASSPHRASE:-${5:-""}}
 
-_welcome_message() {
+WAKATIME_API_KEY=${WAKATIME_API_KEY:-${6:-""}}
+WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
+
+_done () {
+    local icon
+    icon="${2:-"[  ]"}"
+    printf "\\r  \\033[00;34m${icon} %s\\n" "${1}"
+}
+
+_hello_dude() {
     if command -v lsb_release >/dev/null 2>&1; then
         distro_name=$(lsb_release -sd 2>&1)
     else
         distro_name="Unknown"
     fi
 
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+    if [ ! -s "${HOME}/.dotfiles" ]; then
         first_run_welcome="kornicameister/dotfiles - first run"
     else
         first_run_welcome="kornicameister/dotfiles - updating"
     fi
 
-    echo "${distro_name} : ${first_run_welcome} : ${USERNAME}"
+    _done "${distro_name} : ${first_run_welcome} : ${GIT_USERNAME}"
 }
 
-execute_dotbot_pkg_install() {
-    cd "${BASEDIR}" || exit 1
-    sudo \
-        "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
-        -v \
-        -d "${BASEDIR}" \
-        -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
-        -c "${PKG_CONFIG}"
-    cd - || exit 1
+_dotbot_pkg_install() {
+    # TODO Figure out better way to handle that situation
+    # I do no want repeated installation and stuff
+    # but there are scripts inside of $PKG_CONFIG that are
+    # uninstalling things (i.e. docker). It makes installing here harderd
+    if [ ! -s "${HOME}/.dotfiles" ]; then
+        cd "${BASEDIR}" || exit 1
+        sudo apt-get install python3 python3-apt -y -qq
+        sudo \
+            "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
+            -q \
+            -d "${BASEDIR}" \
+            -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
+            -c "${PKG_CONFIG}"
+        sudo apt-get remove python3-apt -y -qq
+        cd - || exit 1
+    else
+        _done "${PKG_CONFIG} already done"
+    fi
 }
 
-execute_dotbot_config_install() {
+_dotbot_do_links() {
     cd "${BASEDIR}" || exit 1
     "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
-        -v \
+        -q \
         -d "${BASEDIR}" \
         -c "${INSTALL_CONFIG}"
     cd - || 1
 }
 
-setup_git() {
-    # generate ssh key
-    mkdir -p "${HOME}/.ssh"
-    ssh-keygen \
-        -t ed25519 \
-        -b 4096 \
-        -C "${EMAIL}" \
-        -f "${HOME}/.ssh/github" \
-        -N "${PASSWORD}"
+_configure_git() {
+    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+        if [ -z "${GIT_USERNAME}" ]; then
+            echo "GIT_USERNAME must be set"
+            exit 2
+        fi
+        if [ -z "${GIT_PASSWORD}" ]; then
+            echo "GIT_PASSWORD must be set"
+            exit 2
+        fi
+        if [ -z "${GIT_EMAIL}" ]; then
+            echo "GIT_EMAIL must be set"
+            exit 2
+        fi
+        if [ -z "${GPG_FULL_NAME}" ]; then
+            echo "GPG_FULL_NAME must be set"
+            exit 2
+        fi
+        if [ -z "${GPG_PASSPHRASE}" ]; then
+            echo "GPG_PASSPHRASE must be set"
+            exit 2
+        fi
 
-    key_type="rsa"
-    key_strength=4096
-    key_config=$(mktemp)
+        # generate ssh key
+        mkdir -p "${HOME}/.ssh"
+        ssh-keygen \
+            -t ed25519 \
+            -b 4096 \
+            -C "${GIT_EMAIL}" \
+            -f "${HOME}/.ssh/github" \
+            -N "${GIT_PASSWORD}"
 
-    # generating GPK key to sign the commits
-    cat >>"${key_config}" <<EOF
+        key_type="rsa"
+        key_strength=4096
+        key_config=$(mktemp)
+
+        # generating GPK key to sign the commits
+        cat >>"${key_config}" <<EOF
 Key-Type: ${key_type}
 Key-Length: ${key_strength}
 Name-Real: ${GPG_FULL_NAME}
-Name-Comment: ${USERNAME} GPG key generated with dotfiles
-Name-Email: ${EMAIL}
+Name-Comment: ${GIT_USERNAME} GPG key generated with dotfiles
+Name-Email: ${GIT_EMAIL}
 Expire-Date: 0
 Passphrase: ${GPG_PASSPHRASE}
 EOF
-    gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
-    rm -rf "${key_config}"
+        gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
+        rm -rf "${key_config}"
 
-    # assumed the highest rsa length:
-    local signingKey=""
-    signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
+        # assumed the highest rsa length:
+        local signingKey=""
+        signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${GIT_EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
 
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
         touch "${HOME}/.gitconfig.local"
+        (
+            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
+            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
+            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
+            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
+            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
+            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
+        )
+        echo "Remember to upload the GPG and SSH keys to Github"
+    else
+        _done "Git already configured" "[  ]"
     fi
-
-    (
-        git config --file="${HOME}/.gitconfig.local" user.name "${USERNAME}";
-        git config --file="${HOME}/.gitconfig.local" user.email "${EMAIL}";
-        git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
-        git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
-        git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
-        git config --file="${HOME}/.gitconfig.local" github.user "${USERNAME}";
-    )
-
-    echo "Remember to upload the GPG and SSH keys to Github"
 }
 
-setup_nvim_as_default_editor() {
-    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 1
-    sudo update-alternatives --set editor /usr/bin/nvim
+_configure_nvim() (
+    if [ ! -f ~/.vim/autoload/plug.vim ]; then
+        aria2c \
+            -d ~/.vim/autoload \
+            -o plug.vim \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        nvim --headless +PlugInstall +qall!
+        nvim --headless +UpdateRemotePlugins +qall!
+    else
+        _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
+    fi
+)
+
+_install_envs() {
+    local pyenv
+    local pyenv_root
+    local nodenv
+    local nodenv_root
+
+    local verbose
+
+    if ! command -v pyenv >/dev/null 2>&1; then
+      pyenv="${HOME}/.pyenv/bin/pyenv"
+    else
+      pyenv=$(command -v pyenv)
+    fi
+    if ! command -v nodenv >/dev/null 2>&1; then
+      nodenv="${HOME}/.nodenv/bin/nodenv"
+    else
+      nodenv=$(command -v nodenv)
+    fi
+
+    pyenv_root=$($pyenv root)
+    nodenv_root=$($nodenv root)
+
+    if [[ -n ${CI} ]]; then
+        verbose='-v'
+    else
+        verbose=''
+    fi
+
+    if [ ! -f "${pyenv_root}/version" ]; then
+        echo "Installing latest Python"
+
+        for py_major in {2,3}; do
+            $pyenv latest install "${verbose}" -s "${py_major}"
+            "${pyenv_root}/versions/$($pyenv latest --print-installed $py_major)/bin/pip" install -r "${BASEDIR}/python-system-requirements.txt"
+        done
+
+        $pyenv global "$($pyenv latest --print-installed)"
+    else
+        _done "Python -> $(cat "${pyenv_root}/version")" "[  ]"
+    fi
+    for py_major in {2,3}; do
+        if [ ! -d "${pyenv_root}/versions/neovim${py_major}" ]; then
+            echo "Initializing neovim setup for Python ${py_major}"
+            $pyenv virtualenv "$($pyenv latest --print ${py_major})" "neovim${py_major}"
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/neovim-requirements.txt"
+        else
+            local neovim_py_version
+            neovim_py_version="$(
+                "${pyenv_root}"/versions/neovim${py_major}/bin/python \
+                    --version \
+                    2>&1 \
+                    | awk '{print $2}'
+            )"
+            _done "neovim${py_major} -> ${neovim_py_version}" "         "
+        fi
+    done
+
+    if [ ! -f "${nodenv_root}/version" ]; then
+        echo "Installing latest Node"
+
+        $nodenv latest install "${verbose}" -s 12 && \
+            $nodenv global "$($nodenv latest --print-installed)"
+        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
+            install -g \
+            neovim \
+            prettier \
+            typescript
+    else
+        _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
+    fi
+
+    $pyenv rehash
+    $nodenv rehash
 }
 
-_welcome_message
-git submodule update --init --recursive
+_configure_wakatime() {
+    if [ ! -f "${HOME}/.wakatime.cfg" ]; then
+        if [ -z "${WAKATIME_API_KEY}" ]; then
+            echo "No WAKATIME_API_KEY provided, skipping..."
+            exit 2
+        else
+            cd "${BASEDIR}" || exit 1
 
-if [ ! -f "${HOME}/.gitconfig.local" ]; then
-    args=("$@")
-    argsCount=${#args[@]}
+            install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
+            sed -e "
+                s|%API_KEY%|${WAKATIME_API_KEY}|g;
+                s|%HOSTNAME%|${WAKATIME_HOSTNAME}|g;
+            " -i "${HOME}/.wakatime.cfg"
 
-    if [ "${argsCount}" -ne 5 ]; then
-        echo "Invalid arguments, example: ./install {git_user} {git_password} {git_email} {gpg_full_name} {gpg_passphrase}"
+            cd -- || exit 1
+        fi
+    else
+        _done "Wakatime already configured" "[  ]"
     fi
-    if [ -z "${USERNAME}" ]; then
-        echo "git_user must be set"
-        exit 1
-    fi
-    if [ -z "${PASSWORD}" ]; then
-        echo "git_password must be set"
-        exit 2
-    fi
-    if [ -z "${EMAIL}" ]; then
-        echo "git_email must be set"
-        exit 3
-    fi
-    if [ -z "${GPG_FULL_NAME}" ]; then
-        echo "gpg_full_name must be set"
-        exit 4
-    fi
-    if [ -z "${GPG_PASSPHRASE}" ]; then
-        echo "gpg_passphrase must be set"
-        exit 5
-    fi
+}
 
+_init_submodules() {
+    git submodule \
+        update --init --recursive --jobs 4 \
+        >/dev/null
+}
 
-    execute_dotbot_pkg_install
-    execute_dotbot_config_install
-    setup_git
-    setup_nvim_as_default_editor
-else
-    execute_dotbot_config_install
-fi
+_hello_dude
+_init_submodules
+_dotbot_pkg_install
+_dotbot_do_links
+_configure_wakatime
+_configure_git
+_install_envs
+_configure_nvim
