@@ -29,27 +29,7 @@
     fresh =  ! git_fresh
 
 [apply]
-<<<<<<< HEAD
-    whitespace = fix # detect whitespace errors when applying a patch
-||||||| merged common ancestors
-
-    # Detect whitespace errors when applying a patch
-    whitespace = fix
-
-[url "https://github.com/"]
-    insteadof = git://github.com/
-
-[url "https://git.openstack.org/"]
-    insteadof = git://git.openstack.org/
-=======
-    whitespace = fix # detect whitespace errors when applying a patch
-
-[url "https://github.com/"]
-    insteadof = git://github.com/
-
-[url "https://git.openstack.org/"]
-    insteadof = git://git.openstack.org/
->>>>>>> better git config
+    whitespace = fix         # detect whitespace errors when applying a patch
 
 [gc]
     auto = 1
@@ -70,32 +50,14 @@
 [status]
     submoduleSummary = true  # show submodules summary by default
 
-<<<<<<< HEAD
 [rerere]
-<<<<<<< HEAD
-     enabled = 1
-
-||||||| merged common ancestors
-=======
-[rerere]
-     enabled = 1
-
->>>>>>> Update gitconfig
-[branch]
-    autosetupmerge = true    # auto track branches
-    autoseituprebase = always
-||||||| merged common ancestors
-	enabled = 1
-=======
     enabled = 1
 
 [branch]
     autosetupmerge = true    # auto track branches
     autoseituprebase = always
->>>>>>> better git config
 
 [merge]
-<<<<<<< HEAD
     summary = true
     status = true
     tool = nvimmerge
@@ -104,19 +66,8 @@
     prompt = true
 [mergetool "nvimmerge"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-||||||| merged common ancestors
-	summary = true
-	tool = nvimmerge
-	conflictstyle = diff3
-=======
-    summary = true
-    status = true
-    tool = nvimmerge
-    conflictstyle = diff3
->>>>>>> better git config
 
 [diff]
-<<<<<<< HEAD
     algorithm = patience
     renames = copies         # try to spot renaming of files
     tool = nvimdiff
@@ -125,74 +76,21 @@
     prompt = true
 [difftool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-||||||| merged common ancestors
-	tool = nvimdiff
-	guitool = opendiff
-=======
-    algorithm = patience
-    renames = copies         # try to spot renaming of files
-    tool = nvimdiff
-    guitool = opendiff
 
-[help]
-    autocorrect = 1
-
-[color]
-  ui = true
-
-[credential]
-    helper = cache --timeout=28800
->>>>>>> better git config
-
-<<<<<<< HEAD
 [color]
     ui = true
-||||||| merged common ancestors
-[mergetool]
-	prompt = true
-=======
-[mergetool]
-    prompt = true
->>>>>>> better git config
 
-<<<<<<< HEAD
 [help]
     autocorrect = 1
-||||||| merged common ancestors
-[difftool]
-	prompt = true
-=======
-[difftool]
-    prompt = true
->>>>>>> better git config
 
-<<<<<<< HEAD
 [credential]
     helper = cache --timeout=28800
-||||||| merged common ancestors
-[mergetool "nvimmerge"]
-	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-=======
-[mergetool "nvimmerge"]
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
->>>>>>> better git config
 
-<<<<<<< HEAD
 [url "https://github.com/"]
     insteadof = git://github.com/
 
 [url "https://git.openstack.org/"]
     insteadof = git://git.openstack.org/
-||||||| merged common ancestors
-[difftool "nvimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[color]
-  ui = true
-=======
-[difftool "nvimdiff"]
-    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
->>>>>>> better git config
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
