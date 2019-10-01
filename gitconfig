@@ -70,10 +70,17 @@
 [status]
     submoduleSummary = true  # show submodules summary by default
 
+<<<<<<< HEAD
 [rerere]
 <<<<<<< HEAD
      enabled = 1
 
+||||||| merged common ancestors
+=======
+[rerere]
+     enabled = 1
+
+>>>>>>> Update gitconfig
 [branch]
     autosetupmerge = true    # auto track branches
     autoseituprebase = always
