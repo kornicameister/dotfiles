@@ -102,7 +102,7 @@ node_python_pkgs_update() (
 
 neovim_plugings_upgrade() {
     if command -v nvim >/dev/null 2>&1; then
-        for cmd in "PlugUpgrade" "PlugInstall" "PlugClean!" "PlugUpdate" "UpdateRemotePlugins"; do
+        for cmd in "PlugClean!" "PlugUpdate!" "PlugInstall" "UpdateRemotePlugins" "PlugUpgrade"; do
             nvim \
                 --headless \
                 -es \
