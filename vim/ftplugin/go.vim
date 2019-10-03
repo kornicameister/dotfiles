@@ -4,7 +4,7 @@ endif
 
 let b:did_ftplugin = 1
 
-let b:ale_linters = ['go build', 'gometalinter']
+let b:ale_linters = ['go build', 'gometalinter', 'gopls']
 let b:ale_fixers = ['gofmt', 'goimports', 'trim_whitespace']
 
 setlocal noexpandtab
@@ -14,3 +14,6 @@ setlocal tabstop=4
 setlocal nolisp
 setlocal autoindent
 setlocal nospell
+
+" point :make to go binary
+set makeprg=go
