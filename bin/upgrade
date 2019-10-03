@@ -51,7 +51,7 @@ hadolint_upgrade() {
     fi
 }
 
-node_python_pkgs_update() (
+node_python_pkgs_update() {
     local venv_dir
     local venv_name
 
@@ -98,7 +98,7 @@ node_python_pkgs_update() (
 
     $_nodenv rehash
     $_pyenv rehash
-)
+}
 
 neovim_plugings_upgrade() {
     if command -v nvim >/dev/null 2>&1; then
