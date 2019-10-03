@@ -3,7 +3,9 @@ if exists('b:did_ftplugin')
 endif
 
 let b:did_ftplugin = 1
-let b:ale_fixers = ['gofmt', 'goimports', 'trim_whitespace', 'remove_trailing_lines']
+
+let b:ale_linters = ['go build', 'gometalinter']
+let b:ale_fixers = ['gofmt', 'goimports', 'trim_whitespace']
 
 setlocal noexpandtab
 setlocal shiftwidth=4

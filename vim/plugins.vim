@@ -65,7 +65,7 @@ Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 
 " go
-Plug 'fatih/vim-go', { 'for': ['go'], 'do': ':GoInstallBinaries' }
+Plug 'arp242/gopher.vim', { 'for': ['go'] }
 Plug 'deoplete-plugins/deoplete-go', { 'for': ['go'], 'do': 'make' }
 
 " json
@@ -253,20 +253,15 @@ augroup END
 
 augroup vim_go_options
     autocmd!
-
-    let g:go_highlight_build_constraints = 1
-    let g:go_highlight_extra_types = 1
-    let g:go_highlight_fields = 1
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_types = 1
-
-    let g:go_auto_sameids = 1                 " highlight variable usage
-    let g:go_auto_type_info = 1               " show type information
-
-    let g:go_fmt_command = 'goimports'        " run goimports along with gofmt
+    let g:gopher_highlight = ['string-spell', 'string-fmt']
+    let g:gometalinter_fast = ''
+          \ . ' --enable=vet'
+          \ . ' --enable=errcheck'
+          \ . ' --enable=ineffassign'
+          \ . ' --enable=goimports'
+          \ . ' --enable=misspell'
+          \ . ' --enable=lll --line-length=120'
+    let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
 augroup END
 
 " deoplete settings
