@@ -1,17 +1,23 @@
 ---
+- clean: ["~"]
+
 - defaults:
     link:
       create: true
       relink: true
 
-- clean: ["~"]
-
-- shell:
-    - command: ./pre-install
-
+# main repo goes first, you know gotta be careful here
 - link:
     ~/.dotfiles: ""
 
+# envs have to be set here, otherwise plugins are being linked first
+# which makes ~/.*env created as regular directory
+- link:
+    ~/.nodenv: dependencies/nodenv
+    ~/.pyenv: dependencies/pyenv
+    ~/.goenv: dependencies/goenv
+
+- link:
     # vim stuff
     ~/.vim: vim
     ~/.vimrc: vimrc
@@ -29,32 +35,39 @@
 
     # zsh stuff
     ~/.zshrc: zsh/zshrc
-    ~/.zpreztorc: zsh/zpreztorc
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
-    ~/.zhooks: zsh/hooks.zsh
-    ~/.zprezto: dependencies/prezto
-    ~/.zgen: dependencies/zgen
+    ~/.zplugin: dependencies/zplugin
 
     # fzf
     ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
 
-    # node
-    ~/.nodenv: dependencies/nodenv
-    ~/.npmrc.sh: npmrc.sh
+    # go
+    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
 
-    # pyenv
-    ~/.pyenv: dependencies/pyenv
-    ~/.pyenv.sh: pyenv.sh
+    # node
+    ~/.npmrc.sh: npmrc.sh
+    ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
+    ~/.nodenv/plugins/node-build: dependencies/node-build
+    ~/.nodenv/plugins/nodenv-aliases: dependencies/nodenv-aliases
+    ~/.nodenv/plugins/nodenv-package-json-engine: dependencies/nodenv-package-json-engine
+    ~/.nodenv/plugins/nodenv-package-rehash: dependencies/nodenv-package-rehash
+    ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
+
+    # python
+    ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
+    ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
+    ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
+    ~/.pyenv/plugins/pyenv-doctor: dependencies/pyenv-doctor
+    ~/.pyenv/plugins/pyenv-which-ext: dependencies/pyenv-which-ext
 
     # ctags
-    ~/.ctags: ctags
+    ~/.ctags.d: ctags.d
 
-    # t - todos
-    ~/.t.sh: t.sh
-    ~/.local/bin/t: dependencies/t/t.py
+    # gpg-agent
+    ~/.gnupg/gpg-agent.conf: gpg-agent.conf
 
     # custom application/tools configuration
     ~/.config:
@@ -67,4 +80,4 @@
       path: bin/*
 
 - shell:
-    - command: ./post-install
+    - command: [zsh -il -c ./post-install, "Execute post install steps"]

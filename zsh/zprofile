@@ -1,9 +1,18 @@
 #!/bin/zsh
 
-if [[ "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
-fi
+# Loaded before zshrc
 
+export ZDOTDIR="${HOME}"
+export K_DOTFILES_DIR="${HOME}/.dotfiles"
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-~/.config}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:-~/.cache}
+export GOENV_ROOT="${K_DOTFILES_DIR}/dependencies/goenv"
+
+export PYENV_ROOT="${HOME}/.pyenv"
+export GOENV_ROOT="${HOME}/.goenv"
+export NODENV_ROOT="${HOME}/.nodenv"
+
+export TERM="xterm-256color"
 export PAGER='less'
 export VISUAL="${EDITOR}"
 
@@ -31,12 +40,13 @@ typeset -gU cdpath fpath mailpath path
 path=(
   /usr/local/{bin,sbin}
   $HOME/.local/bin
+  $PYENV_ROOT/bin
+  $NODENV_ROOT/bin
+  $GOENV_ROOT/bin
   $path
 )
 
-#
 # Less
-#
 
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
@@ -48,3 +58,6 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 if (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
+
+# pure theme settings
+export PURE_GIT_PULL=1

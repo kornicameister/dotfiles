@@ -1,15 +1,17 @@
-pip==19.1.1
-wakatime==11.0.0
+pip==19.2.3
+wakatime==13.0.0
 
-mypy==0.701; python_version >= '3.0' --no-binary -U mypy
+mypy==0.730; python_version >= '3.0' --no-binary -U mypy
 
-flake8==3.7.7;
-flake8-bugbear==19.3.0; python_version >= '3.0'
+flake8==3.7.8;
+flake8-bugbear==19.8.0; python_version >= '3.0'
 flake8-commas==2.0.0
-flake8-quotes==2.0.1
+flake8-quotes==2.1.0
 flake8-print==3.1.0
-flake8-bandit==2.1.0
-flake8-comprehensions==2.1.0; python_version >= '3.0'
+flake8-bandit==2.1.1
+flake8-comprehensions==2.2.0; python_version >= '3.0'
 flake8-comprehensions==1.4.1; python_version < '3.0'
 
-yapf==0.27.0
+yapf==0.28.0
+
+vim-vint==0.3.21
