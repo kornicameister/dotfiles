@@ -232,8 +232,11 @@ augroup incremental_search_options
     map ?  <Plug>(incsearch-backward)
     map g/ <Plug>(incsearch-stay)
 
-    " automatically turn of hlsearch
+    " automatically turn off hlsearch
+    set hlsearch
     let g:incsearch#auto_nohlsearch = 1
+    
+    " and deal in some mappings
     map n  <Plug>(incsearch-nohl-n)
     map N  <Plug>(incsearch-nohl-N)
     map *  <Plug>(incsearch-nohl-*)
