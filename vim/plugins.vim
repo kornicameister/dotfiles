@@ -281,7 +281,20 @@ augroup deoplete_options
         \ 'max_list': 50,
         \ })
 
-    let g:deoplete#sources#go#gocode_binary = $HOME.'/go/bin/gocode'
-    let g:deoplete#sources#go#source_importer = 1
+    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+
+    let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
+    let g:deoplete#sources#go#builtin_objects = 1      " might be useful
+
+    let g:deoplete#sources#go#sort_class = [
+          \ 'package',
+          \ 'func',
+          \ 'type',
+          \ 'var',
+          \ 'const'
+    \]                                                  " sorting matters
+
+    let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
+    let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
 augroup END
 
