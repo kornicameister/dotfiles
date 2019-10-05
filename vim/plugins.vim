@@ -64,6 +64,10 @@ Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 
+" go
+Plug 'arp242/gopher.vim', { 'for': ['go'] }
+Plug 'deoplete-plugins/deoplete-go', { 'for': ['go'], 'do': 'make' }
+
 " json
 Plug 'elzr/vim-json', {'for': ['json']}
 
@@ -190,18 +194,6 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-" deoplete settings
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_fefresh_always = 1
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-call deoplete#custom#option({
-    \ 'auto_complete_delay': 50,
-    \ 'smart_case': v:true,
-    \ 'max_list': 50,
-    \ })
-
 " python
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
@@ -261,3 +253,51 @@ augroup gutentags_options
     \ },
   \ }
 augroup END
+
+augroup vim_go_options
+    autocmd!
+    let g:gopher_highlight = ['string-spell', 'string-fmt']
+    let g:gometalinter_fast = ''
+          \ . ' --enable=vet'
+          \ . ' --enable=errcheck'
+          \ . ' --enable=ineffassign'
+          \ . ' --enable=goimports'
+          \ . ' --enable=misspell'
+          \ . ' --enable=lll --line-length=120'
+    let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
+augroup END
+
+" deoplete settings
+augroup deoplete_options
+    autocmd!
+
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_fefresh_always = 1
+
+    if !exists('g:deoplete#omni#input_patterns')
+        let g:deoplete#omni#input_patterns = {}
+    endif
+
+    call deoplete#custom#option({
+        \ 'auto_complete_delay': 50,
+        \ 'smart_case': v:true,
+        \ 'max_list': 50,
+        \ })
+
+    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+
+    let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
+    let g:deoplete#sources#go#builtin_objects = 1      " might be useful
+
+    let g:deoplete#sources#go#sort_class = [
+          \ 'package',
+          \ 'func',
+          \ 'type',
+          \ 'var',
+          \ 'const'
+    \]                                                  " sorting matters
+
+    let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
+    let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
+augroup END
+
