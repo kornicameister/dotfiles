@@ -281,8 +281,6 @@ _install_envs() {
         )
         archiveName=$(echo "${downloadUrl}" | awk -F "/" '{print $NF}')
 
-        echo "${downloadUrl} :: ${archiveName}"
-
         if [ ! -f "/tmp/${archiveName}" ]; then
             aria2c \
                 -d "/tmp" \
