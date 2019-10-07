@@ -1,10 +1,5 @@
 #!/bin/zsh
 
-
-# settings for prezto imported stuff
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=cyan,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
@@ -20,7 +15,6 @@ zstyle ':prezto:module:completion:*:hosts' etc-host-ignores '0.0.0.0' '127.0.0.1
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
-zstyle ':prezto:module:autosuggestions:color' found 'fg=6'
 zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # loading *envs
@@ -71,13 +65,16 @@ zplugin ice \
     atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
 zplugin load zdharma/fast-syntax-highlighting
 
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=191,bold'
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 zplugin ice \
-    svn \
     lucid \
-    submods'zsh-users/zsh-autosuggestions -> external' \
+    wait'0' \
     atload'!_zsh_autosuggest_start' \
     wrap-track'_zsh_autosuggest_start'
-zplugin snippet PZT::modules/autosuggestions
+zplugin light zsh-users/zsh-autosuggestions
 
 zplugin ice blockf as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
 zplugin ice blockf as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
