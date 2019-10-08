@@ -67,6 +67,7 @@ validate_interactive_bins() (
     pyenv
     nodenv
     goenv
+    jenv
     fzf
   );
 
@@ -123,6 +124,14 @@ validate_goenv() (
   fi
 )
 
+validate_jenv() (
+  if [[ ! -s "${HOME}/.jenv" ]]; then
+    fail "Failed to locate jenv directory in \$HOME"
+  else
+    success "jenv directory set"
+  fi
+)
+
 validate_git_config() {
   if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
     fail "Local git configuration not set";
@@ -149,6 +158,7 @@ info 'Validating installation'
   validate_pyenv;
   validate_nodenv;
   validate_goenv;
+  validate_jenv;
 )
 info 'Validation successful'
 

@@ -302,6 +302,8 @@ _install_envs() {
                 $jenv add "${default_java_home}"
             fi
         fi
+
+        $jenv enable-plugin export >/dev/null
     else
         _done "Java -> $(cat "${jenv_root}/version")" "[  ]"
     fi

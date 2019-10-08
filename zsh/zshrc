@@ -111,7 +111,6 @@ zplugin ice svn silent submods'zsh-users/zsh-history-substring-search -> externa
 }
 [ $commands[jenv] ] && {
     eval "$(jenv init - --no-rehash zsh)"
-    jenv enable-plugin export >/dev/null
 }
 source ~/.fzf.zsh
 source ~/.fzf.settings
