@@ -68,6 +68,10 @@ Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 Plug 'arp242/gopher.vim', { 'for': ['go'] }
 Plug 'deoplete-plugins/deoplete-go', { 'for': ['go'], 'do': 'make' }
 
+" java
+Plug 'NLKNguyen/vim-maven-syntax'
+Plug 'mikelue/vim-maven-plugin', { 'for': ['xml.maven'] }
+
 " json
 Plug 'elzr/vim-json', {'for': ['json']}
 
@@ -227,7 +231,7 @@ augroup incremental_search_options
     " automatically turn off hlsearch
     set hlsearch
     let g:incsearch#auto_nohlsearch = 1
-    
+
     " and deal in some mappings
     map n  <Plug>(incsearch-nohl-n)
     map N  <Plug>(incsearch-nohl-N)
