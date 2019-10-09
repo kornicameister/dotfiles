@@ -102,6 +102,7 @@ validate_pyenv() (
       fi
     done
 
+    zsh -mil -c "pyenv doctor"
   fi
 )
 
@@ -110,6 +111,7 @@ validate_nodenv() (
     fail "Failed to locate nodenv directory in \$HOME"
   else
     success "nodenv directory set"
+    zsh -mil -c "npx -p @nodenv/nodenv-installer nodenv-doctor"
   fi
 )
 
