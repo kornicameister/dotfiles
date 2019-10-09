@@ -53,16 +53,15 @@ _dotbot_pkg_install() {
     # I do no want repeated installation and stuff
     # but there are scripts inside of $PKG_CONFIG that are
     # uninstalling things (i.e. docker). It makes installing here harderd
+    sudo apt-get install python3 python3-apt -y -qq --no-install-recommends
     if [ ! -s "${HOME}/.dotfiles" ]; then
         cd "${BASEDIR}" || exit 1
-        sudo apt-get install python3 python3-apt -y -qq
         sudo \
             "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
             -q \
             -d "${BASEDIR}" \
             -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
             -c "${PKG_CONFIG}"
-        sudo apt-get remove python3-apt -y -qq
         cd - || exit 1
     else
         _done "${PKG_CONFIG} already done"
