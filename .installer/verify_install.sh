@@ -129,6 +129,7 @@ validate_jenv() (
     fail "Failed to locate jenv directory in \$HOME"
   else
     success "jenv directory set"
+    jenv doctor
   fi
 )
 
