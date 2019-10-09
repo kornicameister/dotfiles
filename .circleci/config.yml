@@ -8,7 +8,6 @@ x-build-steps: &build_steps
           apt-get install apt-utils -yqq
 
           apt-get install \
-            git \
             locales \
             ssh ca-certificates \
             lsb-release \
@@ -18,13 +17,6 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - checkout
-    - run:
-        name: Checkout modules
-        command: |
-          git submodule sync --recursive
-          git submodule update --recursive --init \
-            --checkout --no-recommend-shallow --force \
-            --jobs 4
     - run:
         name: Configure timezone & timezone
         command: |
