@@ -103,6 +103,7 @@
       zsh,
       subversion,
       git-lfs,
+      git-extras,
       httpie,
       tree,
       silversearcher-ag,
