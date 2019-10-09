@@ -53,7 +53,6 @@ _dotbot_pkg_install() {
     # I do no want repeated installation and stuff
     # but there are scripts inside of $PKG_CONFIG that are
     # uninstalling things (i.e. docker). It makes installing here harderd
-    sudo apt-get install python3 python3-apt -y -qq --no-install-recommends
     if [ ! -s "${HOME}/.dotfiles" ]; then
         cd "${BASEDIR}" || exit 1
         sudo \
@@ -284,7 +283,15 @@ _init_submodules() {
         >/dev/null
 }
 
+_install_dependencies() {
+    sudo apt-get install \
+        git \
+        python3 python3-apt \
+        -y -qq --no-install-recommends
+}
+
 _hello_dude
+_install_dependencies
 _init_submodules
 _dotbot_pkg_install
 _dotbot_do_links
