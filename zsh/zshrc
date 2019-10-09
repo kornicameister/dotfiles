@@ -173,15 +173,5 @@ zplugin ice \
     reset
 zplugin light direnv/direnv
 
-# git extra stuff
-zplugin ice \
-    wait'0c' \
-    lucid \
-    as'program' \
-    pick'$ZPFX/bin/git-*' \
-    make'PREFIX=$ZPFX' \
-    nocompile
-zplugin light tj/git-extras
-
 # has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
