@@ -2,20 +2,17 @@
 
 # Loaded before zshrc
 
-# export dir to my dotfiles
+export ZDOTDIR="${HOME}"
 export K_DOTFILES_DIR="${HOME}/.dotfiles"
-
-# and rest of the dirs
-export ZDOTDIR=~
-export TERM="xterm-256color"
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-~/.config}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:-~/.cache}
+export GOENV_ROOT="${K_DOTFILES_DIR}/dependencies/goenv"
 
-# this settings covers macOS
-if [[ "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
-fi
+export PYENV_ROOT="${HOME}/.pyenv"
+export GOENV_ROOT="${HOME}/.goenv"
+export NODENV_ROOT="${HOME}/.nodenv"
 
+export TERM="xterm-256color"
 export PAGER='less'
 export VISUAL="${EDITOR}"
 
@@ -43,12 +40,13 @@ typeset -gU cdpath fpath mailpath path
 path=(
   /usr/local/{bin,sbin}
   $HOME/.local/bin
+  $PYENV_ROOT/bin
+  $NODENV_ROOT/bin
+  $GOENV_ROOT/bin
   $path
 )
 
-#
 # Less
-#
 
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).

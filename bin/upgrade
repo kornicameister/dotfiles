@@ -51,6 +51,17 @@ hadolint_upgrade() {
 }
 
 node_python_pkgs_update() (
+    local venv_dir
+    local venv_name
+
+    local _npm
+    local _nodenv
+
+    local _pyenv
+    local _pip
+
+    local pyenv_system_ver
+    local nodenv_system_ver
 
     for py_major in {2,3}; do
         venv_name="neovim${py_major}"
@@ -89,7 +100,17 @@ node_python_pkgs_update() (
 )
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugInstall +PlugClean! +PlugUpdate +qall!
+    if command -v nvim >/dev/null 2>&1; then
+        for cmd in "PlugClean!" "PlugUpdate!" "PlugInstall" "UpdateRemotePlugins" "PlugUpgrade"; do
+            nvim \
+                --headless \
+                -es \
+                $cmd \
+                +qall! \
+                >/dev/null \
+                2>&1
+        done
+    fi
 }
 
 docker_compose_upgrade() {
@@ -131,6 +152,13 @@ clear_thumbnails() {
     if [ -d "${HOME}/.cache/thumbnails" ]; then
         sudo rm -rf "${HOME}/.cache/thumbnails/*"
     fi
+}
+
+zplugin_upgrade() {
+    zsh -mil -c "
+        zplugin update --all --quiet --reset;
+        zplugin self-update
+    " 2>/dev/null
 }
 
 git_extras_upgrade() {
@@ -183,8 +211,9 @@ exec_fn docker_prune
 exec_fn hadolint_upgrade
 exec_fn node_python_pkgs_update
 exec_fn neovim_plugings_upgrade
-exec_fn git_extras_upgrade
 exec_fn snap_refresh
 exec_fn clear_thumbnails
 exec_fn ctags_upgrade
 exec_fn circleci_cli_upgrade
+exec_fn zplugin_upgrade
+exec_fn git_extras_upgrade

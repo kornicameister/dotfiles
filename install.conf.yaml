@@ -1,14 +1,23 @@
 ---
+- clean: ["~"]
+
 - defaults:
     link:
       create: true
       relink: true
 
-- clean: ["~"]
-
+# main repo goes first, you know gotta be careful here
 - link:
     ~/.dotfiles: ""
 
+# envs have to be set here, otherwise plugins are being linked first
+# which makes ~/.*env created as regular directory
+- link:
+    ~/.nodenv: dependencies/nodenv
+    ~/.pyenv: dependencies/pyenv
+    ~/.goenv: dependencies/goenv
+
+- link:
     # vim stuff
     ~/.vim: vim
     ~/.vimrc: vimrc
@@ -26,19 +35,19 @@
 
     # zsh stuff
     ~/.zshrc: zsh/zshrc
-    ~/.zpreztorc: zsh/zpreztorc
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
-    ~/.zprezto: dependencies/prezto
-    ~/.zgen: dependencies/zgen
+    ~/.zplugin: dependencies/zplugin
 
     # fzf
     ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
 
+    # go
+    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
+
     # node
-    ~/.nodenv: dependencies/nodenv
     ~/.npmrc.sh: npmrc.sh
     ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
     ~/.nodenv/plugins/node-build: dependencies/node-build
@@ -47,8 +56,7 @@
     ~/.nodenv/plugins/nodenv-package-rehash: dependencies/nodenv-package-rehash
     ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
 
-    # pyenv
-    ~/.pyenv: dependencies/pyenv
+    # python
     ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
     ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
     ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
@@ -61,10 +69,6 @@
     # gpg-agent
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
 
-    # t - todos
-    ~/.t.sh: t.sh
-    ~/.local/bin/t: dependencies/t/t.py
-
     # custom application/tools configuration
     ~/.config:
       glob: true
@@ -76,12 +80,4 @@
       path: bin/*
 
 - shell:
-    - command: |
-        [[ "${SHELL}" =~ .*"zsh".* ]] || chsh -s $(which zsh)
-      description: "Set ZSH as default shell"
-    - command:
-        [
-          ./.installer/install_latest_dev.sh,
-          "Install latest Python & Node tools",
-        ]
     - command: [zsh -il -c ./post-install, "Execute post install steps"]

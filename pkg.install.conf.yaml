@@ -101,13 +101,13 @@
 - aptget:
     [
       zsh,
+      subversion,
       git-lfs,
       git-extras,
       httpie,
       tree,
       silversearcher-ag,
       shellcheck,
-      tig,
       aria2,
       preload,
       terminator,

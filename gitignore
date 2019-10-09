@@ -12,11 +12,12 @@
 .wakatime-project
 .vagrant/
 
-# openstack stuff
-api-guide/build
-api-ref/build
-doc/build
-releasenotes/build
+# direnv
+.envrc
+
+# silver searcher
+.ignore
+.agignore
 
 .history/
 
@@ -25,3 +26,6 @@ releasenotes/build
 
 # nodenv stuff
 .node-version
+
+# goenv stuff
+.go-version

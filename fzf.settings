@@ -1,19 +1,28 @@
 #!/usr/bin/env bash
 
 _gen_fzf_default_opts() {
-    local fzf_theme="--color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254 --color info:254,prompt:37,spinner:108,pointer:235,marker:235"
-    local output_settings="--ansi --no-height --no-reverse --border"
+    local fzf_theme='
+        --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
+        --color info:254,prompt:37,spinner:108,pointer:235,marker:235
+    '
+    local output_settings='
+        --ansi
+        --no-height
+        --no-reverse
+        --border
+        --inline-info
+    '
 
-    export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-    export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-    export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-
-    # default command to utilize cvs ignoring
     export FZF_DEFAULT_COMMAND='ag --follow --nocolor --ignore build --ignore .venv --ignore .git --ignore dist --ignore node_modules --ignore elm-stuff -g ""'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_DEFAULT_OPTS="
+        ${fzf_theme}
+        ${output_settings}
+    "
+    export FZF_COMPLETION_OPTS='+c -x'
 
-    # full opts
-    export FZF_DEFAULT_OPTS="${output_settings} ${fzf_theme}"
+    export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+    export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+    export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 }
 
 _gen_fzf_default_opts

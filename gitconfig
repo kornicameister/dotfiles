@@ -15,6 +15,9 @@
     # https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
 
+    # diff-so-fancy
+    pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
+
 [include]
     path = ~/.gitconfig.local
 
@@ -22,20 +25,11 @@
     tags = tag -l
     branches = branch -a
     remotes = remote -v
-    commits = ! fshow
     fixup = commit --fixup
     fresh =  ! git_fresh
 
 [apply]
-
-    # Detect whitespace errors when applying a patch
-    whitespace = fix
-
-[url "https://github.com/"]
-    insteadof = git://github.com/
-
-[url "https://git.openstack.org/"]
-    insteadof = git://git.openstack.org/
+    whitespace = fix         # detect whitespace errors when applying a patch
 
 [gc]
     auto = 1
@@ -47,44 +41,56 @@
     default = simple
 
 [fetch]
-    # delete local state repositories that no longer exists
-    # in remote
-    prune = true
+    prune = true             # delete local branches if remotes are gone
 
 [rebase]
-    # auto squash fixups by default
-    autosquash = true
+    autosquash = true        # auto squash fixups by default
+    autostash = true         # auto git stash ; git stash pop when rebasing
 
 [status]
-    # show submodules summary by default
-    submoduleSummary = true
+    submoduleSummary = true  # show submodules summary by default
 
 [rerere]
-	enabled = 1
+    enabled = 1
+
+[branch]
+    autosetupmerge = true    # auto track branches
+    autoseituprebase = always
 
 [merge]
-	summary = true
-	tool = nvimmerge
-	conflictstyle = diff3
+    summary = true
+    status = true
+    tool = nvimmerge
+    conflictstyle = diff3
+[mergetool]
+    prompt = true
+[mergetool "nvimmerge"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [diff]
-	tool = nvimdiff
-	guitool = opendiff
-
-[mergetool]
-	prompt = true
-
+    algorithm = patience
+    renames = copies         # try to spot renaming of files
+    tool = nvimdiff
+    guitool = opendiff
 [difftool]
-	prompt = true
-
-[mergetool "nvimmerge"]
-	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
+    prompt = true
 [difftool "nvimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [color]
-  ui = true
+    ui = true
+
+[help]
+    autocorrect = 1
+
+[credential]
+    helper = cache --timeout=28800
+
+[url "https://github.com/"]
+    insteadof = git://github.com/
+
+[url "https://git.openstack.org/"]
+    insteadof = git://git.openstack.org/
 
 [filter "lfs"]
     clean = git-lfs clean -- %f

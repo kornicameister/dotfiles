@@ -31,10 +31,13 @@ validate_bin_accessible() (
     git
     git-lfs
     git-extras
-    tig
     # gotta have python dawg
     python2
     python3
+    # node should be provided as well
+    node
+    # do not forget golang
+    go
     # browsers
     google-chrome-unstable
     firefox
@@ -63,6 +66,7 @@ validate_interactive_bins() (
   bins_to_check=(
     pyenv
     nodenv
+    goenv
     fzf
   );
 
@@ -79,25 +83,72 @@ validate_interactive_bins() (
 )
 
 validate_pyenv() (
-  venvs_to_check=(
-    neovim2
-    neovim3
-  )
-  for venv in "${venvs_to_check[@]}"; do
-    if ! "${HOME}/.pyenv/bin/pyenv" versions | grep -q "${venv}"; then
-      fail "Virtualenv ${venv} was not installed"
-    else
-      success "Virtualenv ${venv} is installed"
-    fi
-  done
+  if [[ ! -s "${HOME}/.pyenv" ]]; then
+    fail "Failed to locate pyenv directory in \$HOME"
+  else
+    success "pyenv directory set"
+
+    local venvs_to_check
+    venvs_to_check=(
+      neovim2
+      neovim3
+    )
+
+    for venv in "${venvs_to_check[@]}"; do
+      if ! "${HOME}/.pyenv/bin/pyenv" versions | grep -q "${venv}"; then
+        fail "Virtualenv ${venv} was not installed"
+      else
+        success "Virtualenv ${venv} is installed"
+      fi
+    done
+
+    zsh -mil -c "pyenv doctor"
+  fi
 )
+
+validate_nodenv() (
+  if [[ ! -s "${HOME}/.nodenv" ]]; then
+    fail "Failed to locate nodenv directory in \$HOME"
+  else
+    success "nodenv directory set"
+    zsh -mil -c "npx -p @nodenv/nodenv-installer nodenv-doctor"
+  fi
+)
+
+validate_goenv() (
+  if [[ ! -s "${HOME}/.goenv" ]]; then
+    fail "Failed to locate goenv directory in \$HOME"
+  else
+    success "goenv directory set"
+  fi
+)
+
+validate_git_config() {
+  if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
+    fail "Local git configuration not set";
+  else
+    success "git configured"
+  fi
+}
+
+validate_wakatime_config() {
+  if [[ ! -f "${HOME}/.wakatime.cfg" ]]; then
+    fail "Local wakatime configuration not set";
+  else
+    success "wakatime configured"
+  fi
+}
 
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
+  validate_git_config;
+  validate_wakatime_config;
   validate_bin_accessible;
   validate_interactive_bins;
   validate_pyenv;
+  validate_nodenv;
+  validate_goenv;
 )
 info 'Validation successful'
 
