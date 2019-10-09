@@ -162,6 +162,12 @@ zplugin_upgrade() {
     " 2>/dev/null
 }
 
+git_extras_upgrade() {
+    if command -v git-extras >/dev/null 2>&1; then
+        sudo git-extras update
+    fi
+}
+
 ctags_upgrade() {
     CTAGS_DIR="${K_DOTFILES_DIR}/dependencies/ctags"
     if [ -d "${CTAGS_DIR}" ] && command -v ctags >/dev/null 2>&1; then
@@ -211,3 +217,4 @@ exec_fn clear_thumbnails
 exec_fn ctags_upgrade
 exec_fn circleci_cli_upgrade
 exec_fn zplugin_upgrade
+exec_fn git_extras_upgrade
