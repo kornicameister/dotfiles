@@ -36,13 +36,6 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - run:
-        name: Display project status
-        command: |
-          git status
-          git submodule status
-          ls -ltr
-          git submodule status | awk -F '[ ]' '{print $3}' | xargs du -sh
-    - run:
         name: Run an installation
         command: |
           ./install \
