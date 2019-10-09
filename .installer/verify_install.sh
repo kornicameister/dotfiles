@@ -31,7 +31,6 @@ validate_bin_accessible() (
     git
     git-lfs
     git-extras
-    tig
     # gotta have python dawg
     python2
     python3
