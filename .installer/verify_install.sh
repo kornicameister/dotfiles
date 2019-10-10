@@ -139,6 +139,20 @@ validate_wakatime_config() {
   fi
 }
 
+validate_docker() (
+  docker info
+  docker version
+  
+  local helloWorld
+  helloWorld=$(docker run hello-world)
+  if [[ "${helloWorld}" ~= *"Hello from Docker!"* ]]; then
+    success "docker accessible"
+  else
+    fail "docker does not seem to work"
+  fi
+
+)
+
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
@@ -149,6 +163,7 @@ info 'Validating installation'
   validate_pyenv;
   validate_nodenv;
   validate_goenv;
+  validate_docker;
 )
 info 'Validation successful'
 
