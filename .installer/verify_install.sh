@@ -82,6 +82,7 @@ validate_bin_accessible() (
     jq
     slack
     intellij-idea-community
+    pycharm-community
     heroku
   );
 
