@@ -28,7 +28,7 @@ exists() {
 
 retry() {
   local n=1
-  local max=5
+  local max=10
   local delay=2
 
   while true; do
