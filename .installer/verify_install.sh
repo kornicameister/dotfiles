@@ -17,8 +17,7 @@ in_progress () {
 }
 
 fail () {
-  printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}"
-  echo ''
+  printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}" >&2
   exit 666
 }
 
@@ -39,8 +38,7 @@ retry() {
         ((n++))
         sleep $delay;
       else
-        echo "The command has failed after $n attempts." >&2
-        exit 1
+        fail "The command has failed after $n attempts."
       fi
     fi
   done
