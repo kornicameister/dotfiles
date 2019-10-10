@@ -116,6 +116,7 @@
       tlp-rdw,
       indicator-cpufreq,
       snapd,
+      htop,
     ]
 
 # cleanup
