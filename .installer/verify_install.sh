@@ -52,6 +52,11 @@ validate_bin_accessible() (
     tree
     aria2c
     ctags
+    # snap binaries
+    jq
+    slack
+    intellij-idea-community
+    heroku
   );
   for bin in "${bins_to_check[@]}"; do
     if command -v "${bin}" >/dev/null 2>&1; then
