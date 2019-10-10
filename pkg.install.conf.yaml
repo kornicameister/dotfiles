@@ -122,9 +122,10 @@
 - shell:
     - description: Install snap packages
       command: |
-        snap install heroku --classic --no-wait && \
-          snap install --edge jq --no-wait && \
-          snap install slack --classic --no-wait
+        snap install heroku --classic --color=never && \
+          snap install jq --edge --color=never && \
+          snap install slack --classic --color=never && \
+          snap install intellij-idea-community --edge --classic --color=never
       quiet: false
 
 # cleanup
