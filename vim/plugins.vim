@@ -68,10 +68,6 @@ Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 Plug 'arp242/gopher.vim', { 'for': ['go'] }
 Plug 'deoplete-plugins/deoplete-go', { 'for': ['go'], 'do': 'make' }
 
-" java
-Plug 'NLKNguyen/vim-maven-syntax'
-Plug 'mikelue/vim-maven-plugin', { 'for': ['xml.maven'] }
-
 " json
 Plug 'elzr/vim-json', {'for': ['json']}
 
