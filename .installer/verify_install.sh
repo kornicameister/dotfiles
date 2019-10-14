@@ -186,11 +186,13 @@ validate_snaps() {
   )
   for snappy in "${snaps_to_check[@]}"; do
     in_progress "${snappy}"
-    if [[ -f "/snap/bin/${snappy}" ]]; then
-      success "${snappy} is accessible via $(whereis "${snappy}")"
-    else
-      fail "${snappy} binary is not accessible in /snap/bin/"
-    fi
+    sleep 5 && {
+      if [[ -f "/snap/bin/${snappy}" ]]; then
+        success "${snappy} is accessible via $(whereis "${snappy}")"
+      else
+        fail "${snappy} binary is not accessible in /snap/bin/"
+      fi
+    }
   done
 }
 
