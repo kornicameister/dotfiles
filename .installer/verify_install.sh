@@ -97,6 +97,7 @@ validate_interactive_bins() (
     pyenv
     nodenv
     goenv
+    jenv
     fzf
   );
 
@@ -141,6 +142,9 @@ validate_pyenv() (
     done
 
     zsh -mil -c "pyenv doctor"
+    if [[ ! -f "${HOME}/.pyenv/version" ]]; then
+      fail "pyenv did not set global system version"
+    fi
   fi
 )
 
@@ -150,6 +154,9 @@ validate_nodenv() (
   else
     success "nodenv directory set"
     zsh -mil -c "npx -p @nodenv/nodenv-installer nodenv-doctor"
+    if [[ ! -f "${HOME}/.nodenv/version" ]]; then
+      fail "nodenv did not set global system version"
+    fi
   fi
 )
 
@@ -158,6 +165,21 @@ validate_goenv() (
     fail "Failed to locate goenv directory in \$HOME"
   else
     success "goenv directory set"
+    if [[ ! -f "${HOME}/.goenv/version" ]]; then
+      fail "goenv did not set global system version"
+    fi
+  fi
+)
+
+validate_jenv() (
+  if [[ ! -s "${HOME}/.jenv" ]]; then
+    fail "Failed to locate jenv directory in \$HOME"
+  else
+    success "jenv directory set"
+    jenv doctor
+    if [[ ! -f "${HOME}/.jenv/version" ]]; then
+      fail "jenv did not set global system version"
+    fi
   fi
 )
 
@@ -187,6 +209,7 @@ info 'Validating installation'
   validate_pyenv;
   validate_nodenv;
   validate_goenv;
+  validate_jenv;
 )
 info 'Validation successful'
 

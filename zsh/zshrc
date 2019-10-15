@@ -109,6 +109,9 @@ zplugin ice svn silent submods'zsh-users/zsh-history-substring-search -> externa
     )
     export GOBIN="$GOPATH/bin";
 }
+[ $commands[jenv] ] && {
+    eval "$(jenv init - --no-rehash zsh)"
+}
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh
