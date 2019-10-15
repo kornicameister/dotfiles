@@ -117,6 +117,7 @@
       indicator-cpufreq,
       snapd,
       htop,
+      jq,
     ]
 
 # snap binaries
