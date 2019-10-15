@@ -145,7 +145,7 @@ validate_docker() (
   
   local helloWorld
   helloWorld=$(docker run hello-world)
-  if [[ "${helloWorld}" ~= *"Hello from Docker!"* ]]; then
+  if [[ "${helloWorld}" == *"Hello from Docker!"* ]]; then
     success "docker accessible"
   else
     fail "docker does not seem to work"
