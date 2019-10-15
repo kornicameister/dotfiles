@@ -116,7 +116,19 @@
       tlp-rdw,
       indicator-cpufreq,
       snapd,
+      htop,
+      jq,
     ]
+
+# snap binaries
+- shell:
+    - description: Install snap packages
+      command: |
+        snap install heroku --classic --no-wait && \
+          snap install slack --classic --no-wait && \
+          snap install intellij-idea-community --edge --classic --no-wait && \
+          snap install pycharm-community --edge --classic --no-wait
+      quiet: false
 
 # cleanup
 - shell:

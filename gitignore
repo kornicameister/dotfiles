@@ -21,11 +21,8 @@
 
 .history/
 
-# pyenv stuff
+# *env stuff
 .python-version
-
-# nodenv stuff
 .node-version
-
-# goenv stuff
 .go-version
+.java-version
