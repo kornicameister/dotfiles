@@ -124,7 +124,6 @@
     - description: Install snap packages
       command: |
         snap install heroku --classic --no-wait && \
-          snap install jq --edge --no-wait && \
           snap install slack --classic --no-wait && \
           snap install intellij-idea-community --edge --classic --no-wait && \
           snap install pycharm-community --edge --classic --no-wait
