@@ -95,3 +95,9 @@
     shallow = true
     branch = master
     ignore = untracked
+[submodule "dependencies/jenv"]
+    path = dependencies/jenv
+    url = https://github.com/jenv/jenv.git
+    shallow = true
+    branch = master
+    ignore = untracked
