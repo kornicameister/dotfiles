@@ -175,25 +175,6 @@ validate_wakatime_config() {
   fi
 }
 
-validate_snaps() {
-  local snaps_to_check
-  snaps_to_check=(
-    jq
-    slack
-    intellij-idea-community
-    pycharm-community
-    heroku
-  )
-  for snappy in "${snaps_to_check[@]}"; do
-    in_progress "${snappy}"
-    if snap list  | awk '{print $1}' | tail -n +2 | grep "${snappy}"; then
-      success "${snappy} is accessible via $(whereis "${snappy}")"
-    else
-      fail "${snappy} binary is not accessible in /snap/bin/"
-    fi
-  done
-}
-
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
@@ -204,7 +185,6 @@ info 'Validating installation'
   validate_pyenv;
   validate_nodenv;
   validate_goenv;
-  validate_snaps;
 )
 info 'Validation successful'
 
