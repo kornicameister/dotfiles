@@ -100,7 +100,6 @@
 # my stuff
 - aptget:
     [
-      jq,
       zsh,
       subversion,
       git-lfs,
