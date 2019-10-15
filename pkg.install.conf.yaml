@@ -118,6 +118,7 @@
       indicator-cpufreq,
       snapd,
       htop,
+      jq,
     ]
 
 # cleanup
