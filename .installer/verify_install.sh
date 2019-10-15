@@ -12,10 +12,36 @@ success () {
   printf "\\r\\033[2K  [ \\033[00;32mOK\\033[0m ] %s\\n" "${1}"
 }
 
+in_progress () {
+  printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
+}
+
 fail () {
-  printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}"
-  echo ''
+  printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}" >&2
   exit 666
+}
+
+exists() {
+  command -v "$1" &> /dev/null;
+}
+
+retry() {
+  local n=1
+  local max=50
+  local delay=2
+
+  while true; do
+    if "$@"; then
+      break
+    else
+      if [[ $n -lt $max ]]; then
+        ((n++))
+        sleep $delay;
+      else
+        fail "The command has failed after $n attempts."
+      fi
+    fi
+  done
 }
 
 validate_bin_accessible() (
@@ -55,8 +81,10 @@ validate_bin_accessible() (
     htop
     jq
   );
+
   for bin in "${bins_to_check[@]}"; do
-    if command -v "${bin}" >/dev/null 2>&1; then
+    in_progress "${bin}"
+    if retry exists "${bin}"; then
       success "${bin} is accessible via $(whereis "${bin}")"
     else
       fail "${bin} is not accessible"
@@ -73,11 +101,19 @@ validate_interactive_bins() (
   );
 
   for bin in "${bins_to_check[@]}"; do
-    # first part
     bin_path="${HOME}/.${bin}/bin/${bin}"
+
+    in_progress "${bin_path}"
     if [[ -s "${bin_path}" ]]; then
       v_out=$($bin_path --version | tr "'${bin}'" ' ' | sed -e 's/^[[:space:]]*//')
       success "${bin} is accessible via ${bin_path} with version ${v_out}"
+    else
+      fail "${bin} is not accessible"
+    fi
+
+    in_progress "${bin}"
+    if retry exists "${bin}"; then
+      success "${bin} is accessible via $(whereis "${bin}")"
     else
       fail "${bin} is not accessible"
     fi
