@@ -78,6 +78,7 @@ validate_bin_accessible() (
     tree
     aria2c
     ctags
+    htop
   );
 
   for bin in "${bins_to_check[@]}"; do
