@@ -53,6 +53,7 @@ validate_bin_accessible() (
     aria2c
     ctags
     htop
+    jq
   );
   for bin in "${bins_to_check[@]}"; do
     if command -v "${bin}" >/dev/null 2>&1; then
