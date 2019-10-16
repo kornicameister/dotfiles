@@ -352,6 +352,10 @@ _install_dependencies() {
         >/dev/null
 }
 
+_install_zplugin (
+    zsh -mil -c -- '-zplg-scheduler burst || true'
+)
+
 _hello_dude
 _install_dependencies
 _init_submodules
@@ -360,4 +364,5 @@ _dotbot_do_links
 _configure_wakatime
 _configure_git
 _install_envs
+_install_zplugin
 _configure_nvim
