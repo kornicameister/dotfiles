@@ -1,7 +1,7 @@
-pip==19.3
+pip==19.3.1
 wakatime==13.0.0
 
-mypy==0.730; python_version >= '3.0' --no-binary -U mypy
+mypy==0.740; python_version >= '3.0' --no-binary -U mypy
 
 flake8==3.7.8;
 flake8-bugbear==19.8.0; python_version >= '3.0'
