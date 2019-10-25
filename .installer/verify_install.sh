@@ -212,4 +212,5 @@ info 'Validating installation'
   validate_jenv;
 )
 info 'Validation successful'
+screenfetch
 
