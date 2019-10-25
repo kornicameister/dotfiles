@@ -118,6 +118,7 @@
       snapd,
       htop,
       jq,
+      screenfetch,
     ]
 
 # snap binaries
