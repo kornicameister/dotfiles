@@ -109,20 +109,13 @@ zplugin ice svn silent submods'zsh-users/zsh-history-substring-search -> externa
     )
     export GOBIN="$GOPATH/bin";
 }
+[ $commands[jenv] ] && {
+    eval "$(jenv init - --no-rehash zsh)"
+}
 source ~/.fzf.zsh
 source ~/.fzf.settings
 source ~/.npmrc.sh
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-# programs
-zplugin ice \
-    lucid \
-    from'gh-r' \
-    wait'0c' \
-    as'program' \
-    mv'jq* -> jq' \
-    bpick'*linux*'
-zplugin light stedolan/jq
 
 # diff-s-fancy
 zplugin ice \
