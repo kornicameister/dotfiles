@@ -83,7 +83,6 @@ validate_bin_accessible() (
   );
 
   for bin in "${bins_to_check[@]}"; do
-    in_progress "${bin}"
     if retry exists "${bin}"; then
       success "${bin} is accessible via $(whereis "${bin}")"
     else
@@ -104,7 +103,6 @@ validate_interactive_bins() (
   for bin in "${bins_to_check[@]}"; do
     bin_path="${HOME}/.${bin}/bin/${bin}"
 
-    in_progress "${bin_path}"
     if [[ -s "${bin_path}" ]]; then
       v_out=$($bin_path --version | tr "'${bin}'" ' ' | sed -e 's/^[[:space:]]*//')
       success "${bin} is accessible via ${bin_path} with version ${v_out}"
@@ -112,7 +110,6 @@ validate_interactive_bins() (
       fail "${bin} is not accessible"
     fi
 
-    in_progress "${bin}"
     if retry exists "${bin}"; then
       success "${bin} is accessible via $(whereis "${bin}")"
     else
@@ -183,21 +180,21 @@ validate_jenv() (
   fi
 )
 
-validate_git_config() {
+validate_git_config() (
   if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
     fail "Local git configuration not set";
   else
     success "git configured"
   fi
-}
+)
 
-validate_wakatime_config() {
+validate_wakatime_config() (
   if [[ ! -f "${HOME}/.wakatime.cfg" ]]; then
     fail "Local wakatime configuration not set";
   else
     success "wakatime configured"
   fi
-}
+)
 
 validate_docker() (
   docker info
@@ -227,4 +224,5 @@ info 'Validating installation'
   validate_docker;
 )
 info 'Validation successful'
+screenfetch
 
