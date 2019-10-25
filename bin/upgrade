@@ -21,7 +21,7 @@ error () {
   printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ] %s\\n" "${1}"
 }
 
-exec_fn() {
+exec_fn() (
     in_progress "${1}"
 
     start_time=$(date +%s)
@@ -33,9 +33,9 @@ exec_fn() {
     else
         error "${1}"
     fi
-}
+)
 
-os_upgrade() {
+os_upgrade() (
     sudo true
     sudo aptitude update -yq;
     sudo aptitude safe-upgrade -yq;
@@ -43,15 +43,15 @@ os_upgrade() {
     sudo aptitude clean -yq;
     sudo aptitude purge '~c' -yq;
     sudo aptitude purge --purge-unused -yq;
-}
+)
 
-hadolint_upgrade() {
+hadolint_upgrade() (
     if command -v docker >/dev/null 2>&1; then
         docker pull hadolint/hadolint
     fi
-}
+)
 
-node_python_pkgs_update() {
+node_python_pkgs_update() (
     local venv_dir
     local venv_name
 
@@ -98,9 +98,9 @@ node_python_pkgs_update() {
 
     $_nodenv rehash
     $_pyenv rehash
-}
+)
 
-neovim_plugings_upgrade() {
+neovim_plugings_upgrade() (
     if command -v nvim >/dev/null 2>&1; then
         for cmd in "PlugClean!" "PlugUpdate!" "PlugInstall" "UpdateRemotePlugins" "PlugUpgrade"; do
             nvim \
@@ -112,9 +112,9 @@ neovim_plugings_upgrade() {
                 2>&1
         done
     fi
-}
+)
 
-docker_compose_upgrade() {
+docker_compose_upgrade() (
     if command -v docker >/dev/null 2>&1; then
         local remote_compose_version
         local local_compose_version
@@ -135,40 +135,40 @@ docker_compose_upgrade() {
             sudo chmod +x /usr/local/bin/docker-compose
         fi
     fi
-}
+)
 
-snap_refresh() {
+snap_refresh() (
     if command -v snap >/dev/null 2>&1; then
         sudo snap refresh 2>&1
     fi
-}
+)
 
-remove_unwanted_kernels() {
+remove_unwanted_kernels() (
     if command -v purge-old-kernels 2>&1; then
         sudo purge-old-kernels -qy
     fi
-}
+)
 
-clear_thumbnails() {
+clear_thumbnails() (
     if [ -d "${HOME}/.cache/thumbnails" ]; then
         sudo rm -rf "${HOME}/.cache/thumbnails/*"
     fi
-}
+)
 
-zplugin_upgrade() {
+zplugin_upgrade() (
     zsh -mil -c "
         zplugin update --all --quiet --reset;
         zplugin self-update
     " 2>/dev/null
-}
+)
 
-git_extras_upgrade() {
+git_extras_upgrade() (
     if command -v git-extras >/dev/null 2>&1; then
         sudo git-extras update
     fi
-}
+)
 
-ctags_upgrade() {
+ctags_upgrade() (
     CTAGS_DIR="${K_DOTFILES_DIR}/dependencies/ctags"
     if [ -d "${CTAGS_DIR}" ] && command -v ctags >/dev/null 2>&1; then
         cd "${CTAGS_DIR}" || exit 1
@@ -190,20 +190,20 @@ ctags_upgrade() {
         fi
         cd ..
     fi
-}
+)
 
-docker_prune() {
+docker_prune() (
     if command -v docker >/dev/null 2>&1; then
         # remove all artifacts 10 days old
         docker system prune -a -f --filter "until=$((24*10))h"
     fi
-}
+)
 
-circleci_cli_upgrade() {
+circleci_cli_upgrade() (
     if command -v circleci >/dev/null 2>&1; then
         sudo circleci update install
     fi
-}
+)
 
 exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
