@@ -7,6 +7,7 @@ aptitude install -y -qq \
   libqt5widgets5 \
   libqt5sql5-sqlite \
   libqt5script5 \
+  libqt5xml5 \
   libssl-dev
 
 download_url="https://whatpulse.org/downloads/${version}/{$arch}bit/"
