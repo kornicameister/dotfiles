@@ -6,7 +6,8 @@ version="313"  # for ubuntu derivates
 aptitude install -y -qq \
   libqt5widgets5 \
   libqt5sql5-sqlite \
-  libqt5script5
+  libqt5script5 \
+  libssl-dev
 
 download_url="https://whatpulse.org/downloads/${version}/{$arch}bit/"
 
