@@ -8,6 +8,7 @@
 
 .idea/
 .vscode/
+*.iml
 
 .wakatime-project
 .vagrant/
