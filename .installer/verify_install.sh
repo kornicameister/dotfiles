@@ -12,10 +12,36 @@ success () {
   printf "\\r\\033[2K  [ \\033[00;32mOK\\033[0m ] %s\\n" "${1}"
 }
 
+in_progress () {
+  printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
+}
+
 fail () {
-  printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}"
-  echo ''
+  printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}" >&2
   exit 666
+}
+
+exists() {
+  command -v "$1" &> /dev/null;
+}
+
+retry() {
+  local n=1
+  local max=50
+  local delay=2
+
+  while true; do
+    if "$@"; then
+      break
+    else
+      if [[ $n -lt $max ]]; then
+        ((n++))
+        sleep $delay;
+      else
+        fail "The command has failed after $n attempts."
+      fi
+    fi
+  done
 }
 
 validate_bin_accessible() (
@@ -31,7 +57,6 @@ validate_bin_accessible() (
     git
     git-lfs
     git-extras
-    tig
     # gotta have python dawg
     python2
     python3
@@ -53,9 +78,12 @@ validate_bin_accessible() (
     tree
     aria2c
     ctags
+    htop
+    jq
   );
+
   for bin in "${bins_to_check[@]}"; do
-    if command -v "${bin}" >/dev/null 2>&1; then
+    if retry exists "${bin}"; then
       success "${bin} is accessible via $(whereis "${bin}")"
     else
       fail "${bin} is not accessible"
@@ -68,15 +96,22 @@ validate_interactive_bins() (
     pyenv
     nodenv
     goenv
+    jenv
     fzf
   );
 
   for bin in "${bins_to_check[@]}"; do
-    # first part
     bin_path="${HOME}/.${bin}/bin/${bin}"
+
     if [[ -s "${bin_path}" ]]; then
       v_out=$($bin_path --version | tr "'${bin}'" ' ' | sed -e 's/^[[:space:]]*//')
       success "${bin} is accessible via ${bin_path} with version ${v_out}"
+    else
+      fail "${bin} is not accessible"
+    fi
+
+    if retry exists "${bin}"; then
+      success "${bin} is accessible via $(whereis "${bin}")"
     else
       fail "${bin} is not accessible"
     fi
@@ -103,6 +138,10 @@ validate_pyenv() (
       fi
     done
 
+    zsh -mil -c "pyenv doctor"
+    if [[ ! -f "${HOME}/.pyenv/version" ]]; then
+      fail "pyenv did not set global system version"
+    fi
   fi
 )
 
@@ -111,6 +150,10 @@ validate_nodenv() (
     fail "Failed to locate nodenv directory in \$HOME"
   else
     success "nodenv directory set"
+    zsh -mil -c "npx -p @nodenv/nodenv-installer nodenv-doctor"
+    if [[ ! -f "${HOME}/.nodenv/version" ]]; then
+      fail "nodenv did not set global system version"
+    fi
   fi
 )
 
@@ -119,24 +162,39 @@ validate_goenv() (
     fail "Failed to locate goenv directory in \$HOME"
   else
     success "goenv directory set"
+    if [[ ! -f "${HOME}/.goenv/version" ]]; then
+      fail "goenv did not set global system version"
+    fi
   fi
 )
 
-validate_git_config() {
+validate_jenv() (
+  if [[ ! -s "${HOME}/.jenv" ]]; then
+    fail "Failed to locate jenv directory in \$HOME"
+  else
+    success "jenv directory set"
+    jenv doctor
+    if [[ ! -f "${HOME}/.jenv/version" ]]; then
+      fail "jenv did not set global system version"
+    fi
+  fi
+)
+
+validate_git_config() (
   if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
     fail "Local git configuration not set";
   else
     success "git configured"
   fi
-}
+)
 
-validate_wakatime_config() {
+validate_wakatime_config() (
   if [[ ! -f "${HOME}/.wakatime.cfg" ]]; then
     fail "Local wakatime configuration not set";
   else
     success "wakatime configured"
   fi
-}
+)
 
 info 'Validating installation'
 (
@@ -148,6 +206,8 @@ info 'Validating installation'
   validate_pyenv;
   validate_nodenv;
   validate_goenv;
+  validate_jenv;
 )
 info 'Validation successful'
+screenfetch
 

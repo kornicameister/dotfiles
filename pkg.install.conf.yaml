@@ -103,6 +103,7 @@
       zsh,
       subversion,
       git-lfs,
+      git-extras,
       httpie,
       tree,
       silversearcher-ag,
@@ -115,10 +116,18 @@
       tlp-rdw,
       indicator-cpufreq,
       snapd,
+      htop,
+      jq,
+      screenfetch,
     ]
-
-# whatpulse
 - shell:
+    - description: Install snap packages
+      command: |
+        snap install heroku --classic --no-wait && \
+          snap install slack --classic --no-wait && \
+          snap install intellij-idea-community --edge --classic --no-wait && \
+          snap install pycharm-community --edge --classic --no-wait
+      quiet: false
     - description: Install whatpulse
       command: .installer/install_whatpulse.sh
       quiet: false

@@ -8,9 +8,7 @@ x-build-steps: &build_steps
           apt-get install apt-utils -yqq
 
           apt-get install \
-            git \
             locales \
-            python3 python3-apt \
             ssh ca-certificates \
             lsb-release \
             -yqq \
@@ -19,13 +17,6 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - checkout
-    - run:
-        name: Checkout modules
-        command: |
-          git submodule sync --recursive
-          git submodule update --recursive --init \
-            --checkout --no-recommend-shallow --force \
-            --jobs 4
     - run:
         name: Configure timezone & timezone
         command: |
@@ -45,13 +36,6 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - run:
-        name: Display project status
-        command: |
-          git status
-          git submodule status
-          ls -ltr
-          git submodule status | awk -F '[ ]' '{print $3}' | xargs du -sh
-    - run:
         name: Run an installation
         command: |
           ./install \
@@ -64,8 +48,8 @@ x-build-steps: &build_steps
     - run:
         name: Verify !
         command: |
-          zsh -il -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
-          zsh -il -c .installer/verify_install.sh
+          zsh -mil -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
+          zsh -mil -c .installer/verify_install.sh
 
 version: 2.1
 jobs:

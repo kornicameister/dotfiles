@@ -55,14 +55,12 @@ _dotbot_pkg_install() {
     # uninstalling things (i.e. docker). It makes installing here harderd
     if [ ! -s "${HOME}/.dotfiles" ]; then
         cd "${BASEDIR}" || exit 1
-        sudo apt-get install python3 python3-apt -y -qq
         sudo \
             "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
             -q \
             -d "${BASEDIR}" \
             -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
             -c "${PKG_CONFIG}"
-        sudo apt-get remove python3-apt -y -qq
         cd - || exit 1
     else
         _done "${PKG_CONFIG} already done"
@@ -184,10 +182,16 @@ _install_envs() {
     else
       goenv=$(command -v goenv)
     fi
+    if ! command -v jenv >/dev/null 2>&1; then
+      jenv="${HOME}/.jenv/bin/jenv"
+    else
+      jenv=$(command -v jenv)
+    fi
 
     pyenv_root=$($pyenv root)
     nodenv_root=$($nodenv root)
     goenv_root=$($goenv root)
+    jenv_root=$($jenv root)
 
     if [[ -n ${CI} ]]; then
         verbose='-v'
@@ -247,14 +251,67 @@ _install_envs() {
         "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
-            github.com/golangci/golangci-lint/cmd/golangci-lint
+            github.com/golangci/golangci-lint/cmd/golangci-lint \
+            github.com/stamblerre/gocode
     else
         _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
+    fi
+
+    if [ ! -d "${jenv_root}/_versions/" ]; then
+        mkdir "${jenv_root}/_versions/"
+    fi
+    if [ ! -f "${jenv_root}/version" ]; then
+        echo "Installing latest Java"
+
+        local javaVersion
+        local downloadUrl
+        local archiveName
+        local jdkVersion
+
+        javaVersion="openjdk13"
+        downloadUrl=$(
+            http \
+                "https://api.adoptopenjdk.net/v2/info/releases/${javaVersion}" \
+                openjdk_impl==hotspot \
+                os==linux \
+                arch==x64 \
+                type==jdk \
+            | jq '.[0]["binaries"][0]["binary_link"]' \
+            | sed -e 's|"||g'
+        )
+        archiveName=$(echo "${downloadUrl}" | awk -F "/" '{print $NF}')
+
+        if [ ! -f "/tmp/${archiveName}" ]; then
+            aria2c \
+                -d "/tmp" \
+                -o "${archiveName}" \
+                -j 5 \
+                "${downloadUrl}"
+        fi
+
+        jdkVersion=$(tar -tf "/tmp/${archiveName}" | head -n 1 | sed -e 's|/||gi')
+        tar -xzf "/tmp/${archiveName}" -C "${jenv_root}/_versions/" && {
+            $jenv global "$($jenv add "${jenv_root}/_versions/${jdkVersion}" | head -n 1 | awk -F " " '{print $2}')"
+        }
+
+        if command -v java >/dev/null 2>&1; then
+            echo "Enabling default java"
+            local default_java_home
+            default_java_home=$(update-alternatives --query java | grep Best | awk '{print $2}' | sed -e 's|bin/java||g')
+            if [ -d "${default_java_home}" ]; then
+                $jenv add "${default_java_home}"
+            fi
+        fi
+
+        $jenv enable-plugin export >/dev/null
+    else
+        _done "Java -> $(cat "${jenv_root}/version")" "[  ]"
     fi
 
     $pyenv rehash
     $nodenv rehash
     $goenv rehash
+    $jenv rehash
 }
 
 _configure_wakatime() {
@@ -279,12 +336,24 @@ _configure_wakatime() {
 }
 
 _init_submodules() {
-    git submodule \
-        update --init --recursive --jobs 4 \
+    git submodule sync --recursive >/dev/null
+    git submodule update \
+        --recursive --init \
+        --checkout --no-recommend-shallow --force \
+        --jobs 4 \
+        >/dev/null
+}
+
+_install_dependencies() {
+    sudo apt-get install \
+        git \
+        python3 python3-apt \
+        -y -qq --no-install-recommends \
         >/dev/null
 }
 
 _hello_dude
+_install_dependencies
 _init_submodules
 _dotbot_pkg_install
 _dotbot_do_links
