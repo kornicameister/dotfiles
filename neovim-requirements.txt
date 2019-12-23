@@ -5,4 +5,4 @@ neovim==0.3.1
 pynvim==0.3.2
 yapf==0.28.0
 jedi==0.15.1
-setuptools==41.4.0
+setuptools==41.6.0
