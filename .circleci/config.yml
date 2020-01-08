@@ -61,6 +61,8 @@ jobs:
       - run:
           name: Install vim-vint
           command: |
+            sudo chown -R circleci:circleci /usr/local/bin
+            sudo chown -R circleci:circleci /usr/local/lib/python$(python --version | sed -e 's/Python\s//g' | awk -F'.' '{print $1"."$2}')/site-packages
             pip install vim-vint==$(grep vim-vint < python-system-requirements.txt | awk -F'==' '{print $2}')
       - run:
           name: Lint vim configuration files
