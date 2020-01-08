@@ -53,6 +53,19 @@ x-build-steps: &build_steps
 
 version: 2.1
 jobs:
+  vint:
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - checkout
+      - run:
+          name: Install vim-vint
+          command: |
+            pip install vim-vint==$(grep vim-vint < python-system-requirements.txt | awk -F'==' '{print $2}')
+      - run:
+          name: Lint vim configuration files
+          command: |
+            vint -c -s -t --enable-neovim $(git ls-files -- 'vim/*.vim' 'nvim/*.vim' vimrc)
   shellcheck:
     docker:
       - image: nlknguyen/alpine-shellcheck:latest
@@ -94,6 +107,7 @@ workflows:
     jobs:
       - submodules
       - shellcheck
+      - vint
   build:
     jobs:
       - build_ubuntu_19_04
