@@ -156,7 +156,10 @@ set wildmode=longest:full,full
 set wildmenu
 
 " vim theme settings
-colorscheme dracula
+colorscheme edge
+let g:edge_style = 'neon'
+let g:edge_disable_italic_comment = 0
+let g:edge_transparent_background = 1
 set background=dark
 
 " navigate through the buffers
