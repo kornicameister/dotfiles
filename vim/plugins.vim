@@ -10,7 +10,6 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'sainnhe/edge'
 
 " fzf
@@ -241,11 +240,6 @@ augroup gitgutter_options
 
     let g:gitgutter_sign_removed = ''
     let g:gitgutter_sign_removed_first_line = ''
-augroup END
-
-augroup dracula_theme_options
-    autocmd!
-    let g:dracula_colorterm = 0
 augroup END
 
 augroup incremental_search_options
