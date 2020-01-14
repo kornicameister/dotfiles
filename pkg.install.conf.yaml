@@ -119,6 +119,7 @@
       htop,
       jq,
       screenfetch,
+      lnav,
     ]
 
 # snap binaries

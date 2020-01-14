@@ -3,8 +3,14 @@ scriptencoding utf-8
 " define the plugins
 call plug#begin('~/.vim/plugged')
 
+" vim compatibility
+if !has('nvim')
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
 " theme
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'sainnhe/edge'
 
 " fzf
 Plug '~/.fzf'
@@ -21,13 +27,13 @@ Plug 'tpope/vim-git'
 Plug 'dense-analysis/ale'
 
 " deoplete
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
 Plug 'deoplete-plugins/deoplete-tag'
@@ -63,6 +69,11 @@ Plug 'tmhedberg/SimpylFold', {'for': ['python']}
 Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
+if has('nvim')
+    Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
+else
+    Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
+endif
 
 " go
 Plug 'arp242/gopher.vim', { 'for': ['go'] }
@@ -98,6 +109,25 @@ call plug#end()
 
 " Plugin Customizations
 " =====================
+
+augroup vim_test_settings
+  autocmd!
+  let g:test#strategy = 'neovim'
+  let g:test#neovim#term_position = 'vertical'
+
+  " integrate with coverage tool
+  let g:test#python#pytest#options = '--cov-branch --cov-context=test'
+
+  " disable vim-projectionist
+  let g:test#no_alternate = 1
+
+  nmap <silent> <C-t>n :TestNearest<CR>
+  nmap <silent> <C-t>f :TestFile<CR>
+  nmap <silent> <C-t>s :TestSuite<CR>
+  nmap <silent> <C-t>l :TestLast<CR>
+  nmap <silent> <C-t>v :TestVisit<CR>
+
+augroup end
 
 augroup tagbar_plugin_settins
     autocmd!
@@ -148,7 +178,7 @@ let g:rainbow_active = 1
 augroup airline_plugin_settings
   autocmd!
 
-  let g:airline_theme = 'dracula'
+  let g:airline_theme = 'edge'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -210,11 +240,6 @@ augroup gitgutter_options
 
     let g:gitgutter_sign_removed = ''
     let g:gitgutter_sign_removed_first_line = ''
-augroup END
-
-augroup dracula_theme_options
-    autocmd!
-    let g:dracula_colorterm = 0
 augroup END
 
 augroup incremental_search_options
