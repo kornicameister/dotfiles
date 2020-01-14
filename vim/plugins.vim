@@ -10,7 +10,7 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'sainnhe/edge'
 
 " fzf
 Plug '~/.fzf'
@@ -178,7 +178,7 @@ let g:rainbow_active = 1
 augroup airline_plugin_settings
   autocmd!
 
-  let g:airline_theme = 'dracula'
+  let g:airline_theme = 'edge'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -240,11 +240,6 @@ augroup gitgutter_options
 
     let g:gitgutter_sign_removed = ''
     let g:gitgutter_sign_removed_first_line = ''
-augroup END
-
-augroup dracula_theme_options
-    autocmd!
-    let g:dracula_colorterm = 0
 augroup END
 
 augroup incremental_search_options
