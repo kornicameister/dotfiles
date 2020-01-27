@@ -2,6 +2,6 @@
 
 msgpack==0.6.2
 neovim==0.3.1
-pynvim==0.4.0
+pynvim==0.4.1
 jedi==0.16.0
 setuptools==45.1.0
