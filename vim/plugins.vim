@@ -326,3 +326,20 @@ augroup deoplete_options
     let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
 augroup END
 
+augroup fzf_settings
+  autocmd!
+
+  " fzf mappings
+  nmap <Leader>t  :Tags<CR>
+  nmap <Leader>bt :BTags<CR>
+  nmap <Leader>f  :GFiles<CR>
+  nmap <Leader>F  :Files<CR>
+  nmap <Leader>c  :Commits<CR>
+  nmap <Leader>b  :Buffers<CR>
+  nmap <leader><tab> <plug>(fzf-maps-n)
+  xmap <leader><tab> <plug>(fzf-maps-x)
+  omap <leader><tab> <plug>(fzf-maps-o)
+
+  " floating window
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+augroup END
