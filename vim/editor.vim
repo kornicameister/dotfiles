@@ -1,9 +1,5 @@
 " Copyright 2018 kornicameister
 
-" leader
-let mapleader = ','
-let g:mapleader = ','
-
 " save from typing :
 nnoremap ; :
 
@@ -169,17 +165,6 @@ nnoremap <silent> <leader>q :bd<cr>gT
 nnoremap <silent> <leader>Q :bufdo bd<CR>
 nnoremap <silent> <leader>r :e<CR>
 nnoremap <silent> <leader>R :e!<CR>
-
-" fzf mappings
-nmap <Leader>t  :Tags<CR>
-nmap <Leader>bt :BTags<CR>
-nmap <Leader>f  :GFiles<CR>
-nmap <Leader>F  :Files<CR>
-nmap <Leader>c  :Commits<CR>
-nmap <Leader>b  :Buffers<CR>
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
 
 " ale mapping
 nmap <A-f> <Plug>(ale_fix)<CR>
