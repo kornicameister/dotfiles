@@ -24,10 +24,10 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-git'
 
 " ale plugin
+Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
 Plug 'dense-analysis/ale'
 
 " deoplete
-
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
