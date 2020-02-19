@@ -1,6 +1,6 @@
 -r python-system-requirements.txt
 
-msgpack==0.6.2
+msgpack==1.0.0
 neovim==0.3.1
 pynvim==0.4.1
 jedi==0.16.0
