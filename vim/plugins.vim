@@ -61,7 +61,8 @@ Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
 
 " elm
-Plug 'elmcast/elm-vim', {'for': ['elm']}
+" per recommendation at: https://github.com/elm-tooling/elm-vim/blob/master/README.md
+Plug 'andys8/vim-elm-syntax', {'for': ['elm']}
 
 " python
 Plug 'tmhedberg/SimpylFold', {'for': ['python']}
