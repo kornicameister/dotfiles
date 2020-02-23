@@ -92,7 +92,11 @@ node_python_pkgs_update() (
         _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
     fi
 
-    $_npm upgrade -g neovim prettier typescript 2>&1
+    $_npm upgrade -g \
+        neovim \
+        prettier \
+        typescript \
+        @elm-tooling/elm-language-server 2>&1
     $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
 
     $_nodenv rehash
