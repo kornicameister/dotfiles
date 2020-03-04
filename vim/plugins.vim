@@ -210,20 +210,6 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-" ale settings
-let g:ale_fix_on_save = 1                   " run on save
-let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 1                 " lint when entering the buffer
-let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
-let g:ale_sign_error = '✖'                  " error sign
-let g:ale_sign_warning = '⚠'                " warning sign
-let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
-
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
 " python
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
@@ -342,4 +328,34 @@ augroup fzf_settings
 
   " floating window
   let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+augroup END
+
+" ale settings
+augroup ale_plugin_settings
+  autocmd!
+
+  let g:ale_fix_on_save = 1                   " run on save
+  let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_enter = 1                 " lint when entering the buffer
+  let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
+  let g:ale_sign_error = '✖'                  " error sign
+  let g:ale_sign_warning = '⚠'                " warning sign
+  let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
+
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+  if has('nvim')
+    autocmd VimEnter *
+      \ set updatetime=1000 |
+      \ let g:ale_lint_on_text_changed = 0
+    autocmd CursorHold * call ale#Queue(0)
+    autocmd CursorHoldI * call ale#Queue(0)
+    autocmd InsertEnter * call ale#Queue(0)
+    autocmd InsertLeave * call ale#Queue(0)
+  else
+    echoerr 'only neovim can handle kornicameister dotfiles'
+  endif
 augroup END
