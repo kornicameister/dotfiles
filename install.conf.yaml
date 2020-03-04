@@ -28,6 +28,7 @@
 
     # git stuff
     ~/.gitignore: gitignore
+    ~/.gitattributes: gitattributes
     ~/.gitconfig:
       path: gitconfig
       if: |
