@@ -114,10 +114,17 @@ map <C-right> :tabn<cr>
 " splitting windows settings
 set splitbelow
 set splitright
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+" quicker navigation
+nnoremap <silent> <C-J> <C-W><C-J>
+nnoremap <silent> <C-K> <C-W><C-K>
+nnoremap <silent> <C-L> <C-W><C-L>
+nnoremap <silent> <C-H> <C-W><C-H>
+" quicker resizing with arrows
+nnoremap <silent> <C-Left> :vertical resize +2<CR>
+nnoremap <silent> <C-Right> :vertical resize -2<CR>
+nnoremap <silent> <C-Up> :resize +2<CR>
+nnoremap <silent> <C-Down> :resize -2<CR>
 
 " Enable folding
 set foldmethod=indent
