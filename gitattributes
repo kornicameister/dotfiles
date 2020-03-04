@@ -1,3 +1,3 @@
-*.png diff=exif
-*.jpg diff=exif
-*.jpeg diff=exif
+*.png  binary diff=exif
+*.jpg  binary diff=exif
+*.jpeg binary diff=exif
