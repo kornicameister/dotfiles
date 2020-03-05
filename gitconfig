@@ -48,6 +48,7 @@
     prune = true             # delete local branches if remotes are gone
 
 [rebase]
+	stat = true
     autosquash = true        # auto squash fixups by default
     autostash = true         # auto git stash ; git stash pop when rebasing
 
