@@ -4,7 +4,6 @@
 [core]
     editor = nvim
     excludesfile = ~/.gitignore
-	attributesfile = ~/.gitattributes
 
     # dont ignore case
     ignorecase = false
@@ -78,10 +77,6 @@
 [difftool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
-# diffing tools
-[diff "exif"]
-	textconv = exiftool
-
 [color]
     ui = true
 
@@ -97,6 +92,11 @@
 [url "https://git.openstack.org/"]
     insteadof = git://git.openstack.org/
 
+# gitattributes configuration
+[core]
+	attributesfile = ~/.gitattributes
+[diff "exif"]
+	textconv = exiftool
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
