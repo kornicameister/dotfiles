@@ -1,6 +1,10 @@
 [init]
     templatedir = ~/.git_template
 
+[feature]
+	experimental = true
+	manyFiles = true
+
 [core]
     editor = nvim
     excludesfile = ~/.gitignore
