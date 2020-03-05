@@ -57,7 +57,8 @@
     submoduleSummary = true  # show submodules summary by default
 
 [rerere]
-    enabled = 1
+    enabled = true			 # rere has power
+	autoUpdate = true		 # update index (always)
 
 [branch]
     autosetupmerge = true    # auto track branches
