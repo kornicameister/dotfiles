@@ -49,8 +49,9 @@
 
 [rebase]
 	stat = true
-    autosquash = true        # auto squash fixups by default
-    autostash = true         # auto git stash ; git stash pop when rebasing
+	abbreviateCommands =  true # to hell with longer rebase output
+    autosquash = true          # auto squash fixups by default
+    autostash = true           # auto git stash ; git stash pop when rebasing
 
 [status]
     submoduleSummary = true  # show submodules summary by default
