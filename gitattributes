@@ -1,3 +1,4 @@
 *.png  binary diff=exif
 *.jpg  binary diff=exif
 *.jpeg binary diff=exif
+
