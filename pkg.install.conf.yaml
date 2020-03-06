@@ -104,7 +104,6 @@
       subversion,
       git-lfs,
       git-extras,
-      exiftool,
       httpie,
       tree,
       silversearcher-ag,
