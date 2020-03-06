@@ -96,6 +96,9 @@
     tlp:
       ppa_source: ppa:linrunner/tlp
       upgrade: true
+    exiftool:
+      ppa_source: ppa:jschwender/libimage-exiftool-perl
+      upgrade: true
 
 # my stuff
 - aptget:
