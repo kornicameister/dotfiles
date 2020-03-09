@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 
-post_init_python_system () (
-    for py_major in {2,3}; do
-        echo "Installing packages for major python release ${py_major}"
-        "$(pyenv root)/versions/$(pyenv latest --print $py_major)/bin/pip" install -r "${PWD}/python-system-requirements.txt"
-    done
-)
-
 (
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
     "${PWD}/dependencies/nerd-fonts/install.sh" SourceCodePro;
-    post_init_python_system ;
 )

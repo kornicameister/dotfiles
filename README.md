@@ -1,5 +1,6 @@
-[![CircleCI](https://circleci.com/gh/kornicameister/dotfiles/tree/master.svg?style=svg)](https://circleci.com/gh/kornicameister/dotfiles/tree/master)
+[![CircleCI](https://circleci.com/gh/kornicameister/dotfiles/tree/master.svg?style=shield)](https://circleci.com/gh/kornicameister/dotfiles/tree/master)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=kornicameister/dotfiles)](https://dependabot.com)
+[![time tracker](https://wakatime.com/badge/github/kornicameister/dotfiles.svg)](https://wakatime.com/badge/github/kornicameister/dotfiles)
 
 # dotfiles
 
@@ -12,10 +13,13 @@ All applications configurations ever used
 - custom binaries
 - pyenv setup
   - all of the plugins controlled via [.gitmodules](./.gitmodules)
-  - installation of leading `Python` versions inside [here](./.installer/install_latest_dev.sh#L18)
+  - installation of leading `Python` versions inside [here](./install#L162)
 - nodenv setup
   - all of the plugins controlled via [.gitmodules](./.gitmodules)
-  - installation of leading `Node` versions inside [here](./.installer/install_latest_dev.sh#L28)
+  - installation of leading `Node` versions inside [here](./install#L162)
+- goenv setup
+  - all of the plugins controlled via [.gitmodules](./.gitmodules)
+  - installation of leading `Go` versions inside [here](./install#L162)
 - ctags setup
   - automatic build from [this](https://github.com/universal-ctags/ctags) that takes place
     [here](./.installer/install_ctags.sh)

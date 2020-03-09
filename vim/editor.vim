@@ -1,9 +1,5 @@
 " Copyright 2018 kornicameister
 
-" leader
-let mapleader = ','
-let g:mapleader = ','
-
 " save from typing :
 nnoremap ; :
 
@@ -39,6 +35,10 @@ set smarttab
 " indentation settings
 set autoindent
 set copyindent
+
+" disable modelines
+set modelines=0
+set nomodeline
 
 " set title
 set title
@@ -114,10 +114,17 @@ map <C-right> :tabn<cr>
 " splitting windows settings
 set splitbelow
 set splitright
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+" quicker navigation
+nnoremap <silent> <C-J> <C-W><C-J>
+nnoremap <silent> <C-K> <C-W><C-K>
+nnoremap <silent> <C-L> <C-W><C-L>
+nnoremap <silent> <C-H> <C-W><C-H>
+" quicker resizing with arrows
+nnoremap <silent> <C-Left> :vertical resize +2<CR>
+nnoremap <silent> <C-Right> :vertical resize -2<CR>
+nnoremap <silent> <C-Up> :resize +2<CR>
+nnoremap <silent> <C-Down> :resize -2<CR>
 
 " Enable folding
 set foldmethod=indent
@@ -152,7 +159,10 @@ set wildmode=longest:full,full
 set wildmenu
 
 " vim theme settings
-colorscheme dracula
+colorscheme edge
+let g:edge_style = 'neon'
+let g:edge_disable_italic_comment = 0
+let g:edge_transparent_background = 1
 set background=dark
 
 " navigate through the buffers
@@ -162,17 +172,6 @@ nnoremap <silent> <leader>q :bd<cr>gT
 nnoremap <silent> <leader>Q :bufdo bd<CR>
 nnoremap <silent> <leader>r :e<CR>
 nnoremap <silent> <leader>R :e!<CR>
-
-" fzf mappings
-nmap <Leader>t  :Tags<CR>
-nmap <Leader>bt :BTags<CR>
-nmap <Leader>f  :GFiles<CR>
-nmap <Leader>F  :Files<CR>
-nmap <Leader>c  :Commits<CR>
-nmap <Leader>b  :Buffers<CR>
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
 
 " ale mapping
 nmap <A-f> <Plug>(ale_fix)<CR>

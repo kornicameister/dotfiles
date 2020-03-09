@@ -8,20 +8,22 @@
 
 .idea/
 .vscode/
+*.iml
 
 .wakatime-project
 .vagrant/
 
-# openstack stuff
-api-guide/build
-api-ref/build
-doc/build
-releasenotes/build
+# direnv
+.envrc
+
+# silver searcher
+.ignore
+.agignore
 
 .history/
 
-# pyenv stuff
+# *env stuff
 .python-version
-
-# nodenv stuff
 .node-version
+.go-version
+.java-version

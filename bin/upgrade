@@ -17,7 +17,7 @@ success () {
 }
 
 error () {
-  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ]i %s\\n" "${1}"
+  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ] %s\\n" "${1}"
 }
 
 exec_fn() {
@@ -51,6 +51,17 @@ hadolint_upgrade() {
 }
 
 node_python_pkgs_update() (
+    local venv_dir
+    local venv_name
+
+    local _npm
+    local _nodenv
+
+    local _pyenv
+    local _pip
+
+    local pyenv_system_ver
+    local nodenv_system_ver
 
     for py_major in {2,3}; do
         venv_name="neovim${py_major}"
@@ -81,7 +92,11 @@ node_python_pkgs_update() (
         _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
     fi
 
-    $_npm upgrade -g neovim prettier typescript 2>&1
+    $_npm upgrade -g \
+        neovim \
+        prettier \
+        typescript \
+        @elm-tooling/elm-language-server 2>&1
     $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
 
     $_nodenv rehash
@@ -89,7 +104,17 @@ node_python_pkgs_update() (
 )
 
 neovim_plugings_upgrade() {
-    nvim +PlugUpgrade +PlugInstall +PlugClean! +PlugUpdate +qall!
+    if command -v nvim >/dev/null 2>&1; then
+        for cmd in "PlugClean!" "PlugUpdate!" "PlugInstall" "UpdateRemotePlugins" "PlugUpgrade"; do
+            nvim \
+                --headless \
+                -es \
+                $cmd \
+                +qall! \
+                >/dev/null \
+                2>&1
+        done
+    fi
 }
 
 docker_compose_upgrade() {
@@ -109,7 +134,7 @@ docker_compose_upgrade() {
             uname_s=$(uname -s)
             uname_m=$(uname -m)
 
-            sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${remote_compose_version}/docker-compose-${uname_s}-${uname_m} > /usr/local/bin/docker-compose"
+            sudo sh -c "curl -L https://github.com/docker/compose/releases/download/v${remote_compose_version}/docker-compose-${uname_s}-${uname_m} > /usr/local/bin/docker-compose"
             sudo chmod +x /usr/local/bin/docker-compose
         fi
     fi
@@ -131,6 +156,13 @@ clear_thumbnails() {
     if [ -d "${HOME}/.cache/thumbnails" ]; then
         sudo rm -rf "${HOME}/.cache/thumbnails/*"
     fi
+}
+
+zplugin_upgrade() {
+    zsh -mil -c "
+        zplugin update --all --quiet --reset;
+        zplugin self-update
+    " 2>/dev/null
 }
 
 git_extras_upgrade() {
@@ -170,6 +202,12 @@ docker_prune() {
     fi
 }
 
+circleci_cli_upgrade() {
+    if command -v circleci >/dev/null 2>&1; then
+        sudo circleci update install
+    fi
+}
+
 exec_fn os_upgrade
 exec_fn remove_unwanted_kernels
 exec_fn docker_compose_upgrade
@@ -177,7 +215,9 @@ exec_fn docker_prune
 exec_fn hadolint_upgrade
 exec_fn node_python_pkgs_update
 exec_fn neovim_plugings_upgrade
-exec_fn git_extras_upgrade
 exec_fn snap_refresh
 exec_fn clear_thumbnails
 exec_fn ctags_upgrade
+exec_fn circleci_cli_upgrade
+exec_fn zplugin_upgrade
+exec_fn git_extras_upgrade
