@@ -20,8 +20,8 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 # loading *envs
 source ~/.zplugin/zplugin.zsh
 
-zplugin light zdharma/zsh-unique-id
-zplugin light zdharma/z-p-submods
+zinit light zdharma/zsh-unique-id
+zinit light zinit-zsh/z-a-submods
 
 # prompt
 zplugin ice \
