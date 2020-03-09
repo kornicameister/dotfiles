@@ -120,6 +120,7 @@
       jq,
       screenfetch,
       lnav,
+      libimage-exiftool-perl,
     ]
 
 # snap binaries

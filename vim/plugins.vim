@@ -24,10 +24,10 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-git'
 
 " ale plugin
+Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
 Plug 'dense-analysis/ale'
 
 " deoplete
-
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -61,8 +61,8 @@ Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
 
 " elm
-Plug 'elmcast/elm-vim', {'commit': '659d6de8766895d0445f52732e14378c9b9ab6fc', 'for': ['elm']}
-Plug 'antew/vim-elm-language-server', {'for': ['elm']}
+" per recommendation at: https://github.com/elm-tooling/elm-vim/blob/master/README.md
+Plug 'andys8/vim-elm-syntax', {'for': ['elm']}
 
 " python
 Plug 'tmhedberg/SimpylFold', {'for': ['python']}
@@ -210,20 +210,6 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-" ale settings
-let g:ale_fix_on_save = 1                   " run on save
-let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 1                 " lint when entering the buffer
-let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
-let g:ale_sign_error = '✖'                  " error sign
-let g:ale_sign_warning = '⚠'                " warning sign
-let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
-
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
 " python
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
@@ -326,3 +312,50 @@ augroup deoplete_options
     let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
 augroup END
 
+augroup fzf_settings
+  autocmd!
+
+  " fzf mappings
+  nmap <Leader>t  :Tags<CR>
+  nmap <Leader>bt :BTags<CR>
+  nmap <Leader>f  :GFiles<CR>
+  nmap <Leader>F  :Files<CR>
+  nmap <Leader>c  :Commits<CR>
+  nmap <Leader>b  :Buffers<CR>
+  nmap <leader><tab> <plug>(fzf-maps-n)
+  xmap <leader><tab> <plug>(fzf-maps-x)
+  omap <leader><tab> <plug>(fzf-maps-o)
+
+  " floating window
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+augroup END
+
+" ale settings
+augroup ale_plugin_settings
+  autocmd!
+
+  let g:ale_fix_on_save = 1                   " run on save
+  let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_enter = 1                 " lint when entering the buffer
+  let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
+  let g:ale_sign_error = '✖'                  " error sign
+  let g:ale_sign_warning = '⚠'                " warning sign
+  let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
+
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+  if has('nvim')
+    autocmd VimEnter *
+      \ set updatetime=1000 |
+      \ let g:ale_lint_on_text_changed = 0
+    autocmd CursorHold * call ale#Queue(0)
+    autocmd CursorHoldI * call ale#Queue(0)
+    autocmd InsertEnter * call ale#Queue(0)
+    autocmd InsertLeave * call ale#Queue(0)
+  else
+    echoerr 'only neovim can handle kornicameister dotfiles'
+  endif
+augroup END

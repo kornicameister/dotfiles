@@ -1,7 +1,8 @@
 -r python-system-requirements.txt
 
-msgpack==0.6.2
+msgpack==1.0.0
 neovim==0.3.1
-pynvim==0.4.0
-jedi==0.15.2
-setuptools==45.0.0
+pynvim==0.4.1
+jedi==0.16.0
+setuptools==46.0.0 ; python_version > '3.0'
+setuptools==44.0.0 ; python_version < '3.0'
