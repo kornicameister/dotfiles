@@ -80,6 +80,9 @@ validate_bin_accessible() (
     ctags
     htop
     jq
+    # git
+    git
+    exiftool
   );
 
   for bin in "${bins_to_check[@]}"; do
