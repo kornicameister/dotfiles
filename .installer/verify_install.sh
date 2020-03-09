@@ -57,6 +57,7 @@ validate_bin_accessible() (
     git
     git-lfs
     git-extras
+    exiftool
     # gotta have python dawg
     python2
     python3
@@ -80,9 +81,6 @@ validate_bin_accessible() (
     ctags
     htop
     jq
-    # git
-    git
-    exiftool
   );
 
   for bin in "${bins_to_check[@]}"; do
