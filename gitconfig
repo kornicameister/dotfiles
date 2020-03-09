@@ -1,9 +1,8 @@
+[include]
+    path = ~/.gitconfig.local
+
 [init]
     templatedir = ~/.git_template
-
-[feature]
-	experimental = true
-	manyFiles = true
 
 [core]
     editor = nvim
@@ -22,8 +21,12 @@
     # diff-so-fancy
     pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
 
-[include]
-    path = ~/.gitconfig.local
+[add "interactive"]
+	useBuiltin = true
+
+[feature]
+	experimental = true
+	manyFiles = true
 
 [alias]
     tags = tag -l
