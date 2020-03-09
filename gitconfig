@@ -65,7 +65,7 @@
 
 [branch]
     autosetupmerge = true    # auto track branches
-    autosetuprebase = true
+    autosetuprebase = always
 
 [merge]
     summary = true
