@@ -342,6 +342,7 @@ _init_submodules() {
         --recursive --init \
         --checkout --no-recommend-shallow --force \
         --jobs 4 \
+        --progress \
         >/dev/null
 }
 
