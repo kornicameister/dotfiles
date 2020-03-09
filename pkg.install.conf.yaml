@@ -96,9 +96,6 @@
     tlp:
       ppa_source: ppa:linrunner/tlp
       upgrade: true
-    libimage-exiftool-perl:
-      ppa_source: ppa:jschwender/libimage-exiftool-perl
-      upgrade: true
 
 # my stuff
 - aptget:
@@ -123,6 +120,7 @@
       jq,
       screenfetch,
       lnav,
+      libimage-exiftool-perl,
     ]
 
 # snap binaries
