@@ -91,7 +91,7 @@
     branch = master
 [submodule "dependencies/zplugin"]
     path = dependencies/zplugin
-    url = https://github.com/zdharma/zplugin
+    url = https://github.com/zdharma/zinit
     shallow = true
     branch = master
     ignore = untracked

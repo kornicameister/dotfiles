@@ -92,7 +92,11 @@ node_python_pkgs_update() (
         _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
     fi
 
-    $_npm upgrade -g neovim prettier typescript 2>&1
+    $_npm upgrade -g \
+        neovim \
+        prettier \
+        typescript \
+        @elm-tooling/elm-language-server 2>&1
     $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
 
     $_nodenv rehash
@@ -130,7 +134,7 @@ docker_compose_upgrade() {
             uname_s=$(uname -s)
             uname_m=$(uname -m)
 
-            sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${remote_compose_version}/docker-compose-${uname_s}-${uname_m} > /usr/local/bin/docker-compose"
+            sudo sh -c "curl -L https://github.com/docker/compose/releases/download/v${remote_compose_version}/docker-compose-${uname_s}-${uname_m} > /usr/local/bin/docker-compose"
             sudo chmod +x /usr/local/bin/docker-compose
         fi
     fi

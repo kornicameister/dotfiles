@@ -237,7 +237,8 @@ _install_envs() {
             install -g \
             neovim \
             prettier \
-            typescript
+            typescript \
+            @elm-tooling/elm-language-server
     else
         _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
@@ -341,6 +342,7 @@ _init_submodules() {
         --recursive --init \
         --checkout --no-recommend-shallow --force \
         --jobs 4 \
+        --progress \
         >/dev/null
 }
 
