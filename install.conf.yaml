@@ -40,7 +40,7 @@
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
-    ~/.zplugin: dependencies/zplugin
+    ~/.zplugin: dependencies/zinit
 
     # fzf
     ~/.fzf: dependencies/fzf
