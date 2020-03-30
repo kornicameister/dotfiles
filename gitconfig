@@ -51,8 +51,8 @@
     prune = true             # delete local branches if remotes are gone
 
 [rebase]
-	stat = true
-	abbreviateCommands =  true # to hell with longer rebase output
+    stat = true
+    abbreviateCommands =  true # to hell with longer rebase output
     autosquash = true          # auto squash fixups by default
     autostash = true           # auto git stash ; git stash pop when rebasing
 
@@ -61,11 +61,11 @@
 
 [rerere]
     enabled = true			 # rere has power
-	autoUpdate = true		 # update index (always)
+    autoUpdate = true		 # update index (always)
 
 [branch]
     autosetupmerge = true    # auto track branches
-    autoseituprebase = always
+    autosetuprebase = always
 
 [merge]
     summary = true
