@@ -199,7 +199,7 @@ docker_prune() {
     if command -v docker >/dev/null 2>&1; then
         # remove all artifacts 10 days old
         docker system prune -a -f --filter "until=$((24*10))h"
-        docker volume pruine -f --filter "until=$((24*10))h"
+        docker volume prune -f
     fi
 }
 
