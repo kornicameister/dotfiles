@@ -50,7 +50,7 @@ hadolint_upgrade() {
     fi
 }
 
-node_python_pkgs_update() (
+node_python_pkgs_update() {
     local venv_dir
     local venv_name
 
@@ -96,12 +96,13 @@ node_python_pkgs_update() (
         neovim \
         prettier \
         typescript \
+        bash-language-server \
         @elm-tooling/elm-language-server 2>&1
     $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
 
     $_nodenv rehash
     $_pyenv rehash
-)
+}
 
 neovim_plugings_upgrade() {
     if command -v nvim >/dev/null 2>&1; then
