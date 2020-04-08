@@ -144,7 +144,7 @@ EOF
     fi
 }
 
-_configure_nvim() (
+_configure_nvim() {
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
         aria2c \
             -d ~/.vim/autoload \
@@ -155,7 +155,7 @@ _configure_nvim() (
     else
         _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
     fi
-)
+}
 
 _install_envs() {
     local pyenv
@@ -238,7 +238,8 @@ _install_envs() {
             neovim \
             prettier \
             typescript \
-            @elm-tooling/elm-language-server
+            @elm-tooling/elm-language-server \
+            bash-language-server
     else
         _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
