@@ -2,15 +2,13 @@
 
 # docker
 aptitude remove \
-    docker-ce \
-    docker \
-    docker-engine \
-    docker.io \
-    runc \
-    containerd \
-    -y -V -D -Z
-
-
+  docker-ce \
+  docker \
+  docker-engine \
+  docker.io \
+  runc \
+  containerd \
+  -y -V -D -Z
 
 distro=$(lsb_release -cs)
 

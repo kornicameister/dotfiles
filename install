@@ -26,7 +26,7 @@ GPG_PASSPHRASE=${GPG_PASSPHRASE:-${5:-""}}
 WAKATIME_API_KEY=${WAKATIME_API_KEY:-${6:-""}}
 WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
 
-_done () {
+_done() {
     local icon
     icon="${2:-"[  ]"}"
     printf "\\r  \\033[00;34m${icon} %s\\n" "${1}"
@@ -131,12 +131,12 @@ EOF
 
         touch "${HOME}/.gitconfig.local"
         (
-            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
-            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
-            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
-            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
-            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
-            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
+            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}"
+            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}"
+            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}"
+            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2
+            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true
+            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}"
         )
         echo "Remember to upload the GPG and SSH keys to Github"
     else
@@ -168,24 +168,24 @@ _install_envs() {
     local verbose
 
     if ! command -v pyenv >/dev/null 2>&1; then
-      pyenv="${HOME}/.pyenv/bin/pyenv"
+        pyenv="${HOME}/.pyenv/bin/pyenv"
     else
-      pyenv=$(command -v pyenv)
+        pyenv=$(command -v pyenv)
     fi
     if ! command -v nodenv >/dev/null 2>&1; then
-      nodenv="${HOME}/.nodenv/bin/nodenv"
+        nodenv="${HOME}/.nodenv/bin/nodenv"
     else
-      nodenv=$(command -v nodenv)
+        nodenv=$(command -v nodenv)
     fi
     if ! command -v goenv >/dev/null 2>&1; then
-      goenv="${HOME}/.goenv/bin/goenv"
+        goenv="${HOME}/.goenv/bin/goenv"
     else
-      goenv=$(command -v goenv)
+        goenv=$(command -v goenv)
     fi
     if ! command -v jenv >/dev/null 2>&1; then
-      jenv="${HOME}/.jenv/bin/jenv"
+        jenv="${HOME}/.jenv/bin/jenv"
     else
-      jenv=$(command -v jenv)
+        jenv=$(command -v jenv)
     fi
 
     pyenv_root=$($pyenv root)
@@ -221,8 +221,8 @@ _install_envs() {
             neovim_py_version="$(
                 "${pyenv_root}"/versions/neovim${py_major}/bin/python \
                     --version \
-                    2>&1 \
-                    | awk '{print $2}'
+                    2>&1 |
+                    awk '{print $2}'
             )"
             _done "neovim${py_major} -> ${neovim_py_version}" "         "
         fi
@@ -231,7 +231,7 @@ _install_envs() {
     if [ ! -f "${nodenv_root}/version" ]; then
         echo "Installing latest Node"
 
-        $nodenv latest install "${verbose}" -s 12 && \
+        $nodenv latest install "${verbose}" -s 12 &&
             $nodenv global "$($nodenv latest --print-installed)"
         "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
             install -g \
@@ -246,14 +246,17 @@ _install_envs() {
     if [ ! -f "${goenv_root}/version" ]; then
         echo "Installing latest GO"
 
-        $goenv latest install "${verbose}" -s 1 && \
+        $goenv latest install "${verbose}" -s 1 &&
             $goenv global "$($goenv latest --print-installed)"
 
-        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" \
+        go="${goenv_root}/versions/$($goenv latest --print-installed)/bin/go"
+
+        $go get "${verbose}" \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
             github.com/golangci/golangci-lint/cmd/golangci-lint \
             github.com/stamblerre/gocode
+        GO111MODULE=on $go get mvdan.cc/sh/v3/cmd/shfmt
     else
         _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
     fi
@@ -276,9 +279,9 @@ _install_envs() {
                 openjdk_impl==hotspot \
                 os==linux \
                 arch==x64 \
-                type==jdk \
-            | jq '.[0]["binaries"][0]["binary_link"]' \
-            | sed -e 's|"||g'
+                type==jdk |
+                jq '.[0]["binaries"][0]["binary_link"]' |
+                sed -e 's|"||g'
         )
         archiveName=$(echo "${downloadUrl}" | awk -F "/" '{print $NF}')
 
