@@ -75,7 +75,7 @@ node_python_pkgs_update() (
     done
 
     if command -v nodenv >/dev/null 2>&1; then
-        _npm="$(nodenv root)/versions/$(nodenv latest -P)/bin/npm"
+        _npm="$(nodenv root)/versions/$(nodenv global)/bin/npm"
         _nodenv=nodenv
     else
         nodenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/nodenv/version")
@@ -84,7 +84,7 @@ node_python_pkgs_update() (
     fi
 
     if command -v pyenv >/dev/null 2>&1; then
-        _pip="$(pyenv root)/versions/$(pyenv latest -P)/bin/pip"
+        _pip="$(pyenv root)/versions/$(pyenv global)/bin/pip"
         _pyenv=pyenv
     else
         pyenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/pyenv/version")
