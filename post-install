@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 (
-    "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64;
-    "${PWD}/dependencies/nerd-fonts/install.sh" SourceCodePro;
+	"${PWD}/dependencies/fzf/install" --all --no-bash --no-fish --64
+	"${PWD}/dependencies/nerd-fonts/install.sh" SourceCodePro
 )
