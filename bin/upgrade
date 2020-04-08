@@ -158,10 +158,10 @@ clear_thumbnails() {
     fi
 }
 
-zplugin_upgrade() {
+zinit_upgrade() {
     zsh -mil -c "
-        zplugin update --all --quiet --reset;
-        zplugin self-update
+        zinit update --all --quiet --reset;
+        zinit self-update
     " 2>/dev/null
 }
 
@@ -220,5 +220,5 @@ exec_fn snap_refresh
 exec_fn clear_thumbnails
 exec_fn ctags_upgrade
 exec_fn circleci_cli_upgrade
-exec_fn zplugin_upgrade
+exec_fn zinit_upgrade
 exec_fn git_extras_upgrade
