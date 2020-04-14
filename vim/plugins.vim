@@ -226,6 +226,12 @@ augroup gitgutter_options
 
     let g:gitgutter_sign_removed = ''
     let g:gitgutter_sign_removed_first_line = ''
+
+    let g:gitgutter_highlight_linenrs = 1
+
+    nmap <A-,> <Plug>(GitGutterUndoHunk)
+    nmap <A-.> <Plug>(GitGutterStageHunk)
+    nmap <A-/> <Plug>(GitGutterPreviewHunk)
 augroup END
 
 augroup incremental_search_options
