@@ -14,8 +14,8 @@
     shallow = true
     branch = master
 [submodule "dependencies/goenv"]
-	path = dependencies/goenv
-	url = https://github.com/syndbg/goenv.git
+    path = dependencies/goenv
+    url = https://github.com/syndbg/goenv.git
     shallow = true
     branch = master
 [submodule "dependencies/nodenv"]
@@ -89,15 +89,15 @@
     url = https://github.com/pyenv/pyenv-which-ext.git
     shallow = true
     branch = master
-[submodule "dependencies/zplugin"]
-    path = dependencies/zplugin
-    url = https://github.com/zdharma/zplugin
-    shallow = true
-    branch = master
-    ignore = untracked
 [submodule "dependencies/jenv"]
     path = dependencies/jenv
     url = https://github.com/jenv/jenv.git
+    shallow = true
+    branch = master
+    ignore = untracked
+[submodule "dependencies/zinit"]
+    path = dependencies/zinit
+    url = https://github.com/zdharma/zinit
     shallow = true
     branch = master
     ignore = untracked

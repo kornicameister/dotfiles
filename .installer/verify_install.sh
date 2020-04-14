@@ -1,28 +1,28 @@
 #!/bin/bash
 
-info () {
+info() {
   printf "\\r  [ \\033[00;34m..\\033[0m ] %s\\n" "${1}"
 }
 
-user () {
+user() {
   printf "\\r  [ \\033[0;33m??\\033[0m ] %s\\n" "${1}"
 }
 
-success () {
+success() {
   printf "\\r\\033[2K  [ \\033[00;32mOK\\033[0m ] %s\\n" "${1}"
 }
 
-in_progress () {
+in_progress() {
   printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
 }
 
-fail () {
+fail() {
   printf "\\r\\033[2K  [\\033[0;31mFAIL\\033[0m] %s\\n" "${1}" >&2
   exit 666
 }
 
 exists() {
-  command -v "$1" &> /dev/null;
+  command -v "$1" &>/dev/null
 }
 
 retry() {
@@ -36,7 +36,7 @@ retry() {
     else
       if [[ $n -lt $max ]]; then
         ((n++))
-        sleep $delay;
+        sleep $delay
       else
         fail "The command has failed after $n attempts."
       fi
@@ -57,6 +57,7 @@ validate_bin_accessible() (
     git
     git-lfs
     git-extras
+    exiftool
     # gotta have python dawg
     python2
     python3
@@ -80,7 +81,7 @@ validate_bin_accessible() (
     ctags
     htop
     jq
-  );
+  )
 
   for bin in "${bins_to_check[@]}"; do
     if retry exists "${bin}"; then
@@ -98,7 +99,7 @@ validate_interactive_bins() (
     goenv
     jenv
     fzf
-  );
+  )
 
   for bin in "${bins_to_check[@]}"; do
     bin_path="${HOME}/.${bin}/bin/${bin}"
@@ -182,7 +183,7 @@ validate_jenv() (
 
 validate_git_config() (
   if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
-    fail "Local git configuration not set";
+    fail "Local git configuration not set"
   else
     success "git configured"
   fi
@@ -190,7 +191,7 @@ validate_git_config() (
 
 validate_wakatime_config() (
   if [[ ! -f "${HOME}/.wakatime.cfg" ]]; then
-    fail "Local wakatime configuration not set";
+    fail "Local wakatime configuration not set"
   else
     success "wakatime configured"
   fi
@@ -199,15 +200,14 @@ validate_wakatime_config() (
 info 'Validating installation'
 (
   info "Path is [ $(echo "${PATH}" | tr ':' '\t\r\n') ]"
-  validate_git_config;
-  validate_wakatime_config;
-  validate_bin_accessible;
-  validate_interactive_bins;
-  validate_pyenv;
-  validate_nodenv;
-  validate_goenv;
-  validate_jenv;
+  validate_git_config
+  validate_wakatime_config
+  validate_bin_accessible
+  validate_interactive_bins
+  validate_pyenv
+  validate_nodenv
+  validate_goenv
+  validate_jenv
 )
 info 'Validation successful'
 screenfetch
-

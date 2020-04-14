@@ -28,6 +28,7 @@
 
     # git stuff
     ~/.gitignore: gitignore
+    ~/.gitattributes: gitattributes
     ~/.gitconfig:
       path: gitconfig
       if: |
@@ -39,7 +40,7 @@
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
-    ~/.zplugin: dependencies/zplugin
+    ~/.zinit: dependencies/zinit
 
     # fzf
     ~/.fzf: dependencies/fzf

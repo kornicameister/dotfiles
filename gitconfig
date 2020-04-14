@@ -1,3 +1,6 @@
+[include]
+    path = ~/.gitconfig.local
+
 [init]
     templatedir = ~/.git_template
 
@@ -18,8 +21,15 @@
     # diff-so-fancy
     pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
 
-[include]
-    path = ~/.gitconfig.local
+	# no more CRLF
+	autocrlf = input
+
+[add "interactive"]
+	useBuiltin = true
+
+[feature]
+	experimental = true
+	manyFiles = true
 
 [alias]
     tags = tag -l
@@ -44,18 +54,21 @@
     prune = true             # delete local branches if remotes are gone
 
 [rebase]
-    autosquash = true        # auto squash fixups by default
-    autostash = true         # auto git stash ; git stash pop when rebasing
+    stat = true
+    abbreviateCommands =  true # to hell with longer rebase output
+    autosquash = true          # auto squash fixups by default
+    autostash = true           # auto git stash ; git stash pop when rebasing
 
 [status]
     submoduleSummary = true  # show submodules summary by default
 
 [rerere]
-    enabled = 1
+    enabled = true			 # rere has power
+    autoUpdate = true		 # update index (always)
 
 [branch]
     autosetupmerge = true    # auto track branches
-    autoseituprebase = always
+    autosetuprebase = always
 
 [merge]
     summary = true
@@ -70,6 +83,7 @@
 [diff]
     algorithm = patience
     renames = copies         # try to spot renaming of files
+	indentHeuristic = true	 # experimental to make patches easier to read
     tool = nvimdiff
     guitool = opendiff
 [difftool]
@@ -92,6 +106,11 @@
 [url "https://git.openstack.org/"]
     insteadof = git://git.openstack.org/
 
+# gitattributes configuration
+[core]
+	attributesfile = ~/.gitattributes
+[diff "exif"]
+	textconv = exiftool
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f

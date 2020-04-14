@@ -53,34 +53,6 @@ x-build-steps: &build_steps
 
 version: 2.1
 jobs:
-  vint:
-    docker:
-      - image: circleci/python:latest
-    steps:
-      - checkout
-      - run:
-          name: Install vim-vint
-          command: |
-            sudo chown -R circleci:circleci /usr/local/bin
-            sudo chown -R circleci:circleci /usr/local/lib/python$(python --version | sed -e 's/Python\s//g' | awk -F'.' '{print $1"."$2}')/site-packages
-            pip install vim-vint==$(grep vim-vint < python-system-requirements.txt | awk -F'==' '{print $2}')
-      - run:
-          name: Lint vim configuration files
-          command: |
-            vint -c -s -t --enable-neovim $(git ls-files -- 'vim/*.vim' 'nvim/*.vim' vimrc)
-  shellcheck:
-    docker:
-      - image: nlknguyen/alpine-shellcheck:latest
-    steps:
-      - checkout
-      - run:
-          name: Check Scripts
-          command: |
-            shellcheck install post-install --external-sources
-            find bin/ -type f | xargs shellcheck --external-sources
-            find .installer/ -type f | xargs shellcheck --external-sources
-            find . -type f -name '*.sh' | wc -l
-            find . -type f -name '*.sh' | xargs shellcheck --external-sources
 
   submodules:
     machine: true
@@ -90,17 +62,13 @@ jobs:
           name: "Submodules :: checkout"
           command: .circleci/submodules_step.sh
 
+  build_ubuntu_19_10:
+    docker:
+      - image: ubuntu:19.10
+    <<: *build_steps
   build_ubuntu_19_04:
     docker:
       - image: ubuntu:19.04
-    <<: *build_steps
-  build_ubuntu_18_10:
-    docker:
-      - image: ubuntu:18.10
-    <<: *build_steps
-  build_ubuntu_18_04:
-    docker:
-      - image: ubuntu:18.04
     <<: *build_steps
 
 workflows:
@@ -108,10 +76,7 @@ workflows:
   verify:
     jobs:
       - submodules
-      - shellcheck
-      - vint
   build:
     jobs:
       - build_ubuntu_19_04
-      - build_ubuntu_18_10
-      - build_ubuntu_18_04
+      - build_ubuntu_19_10
