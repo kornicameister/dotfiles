@@ -55,15 +55,8 @@ set smartcase
 set ttyfast
 set timeout timeoutlen=1000 ttimeoutlen=50
 
-" always safe on focus lost
-au FocusLost * :wa
-set autoread
-
 " backspace fix
 set backspace=indent,eol,start
-if ! has('nvim')
-  fixdel
-endif
 
 " wrap movement
 set whichwrap+=<,>,h,l,[,]
@@ -78,17 +71,15 @@ augroup END
 set ruler
 
 " make whitespaces, tabs visible
-exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-highlight BadWhitespace ctermbg=red guibg=red
 set list
+set listchars-=nbsp:+
+set listchars-=trail-
+set listchars+=trail:•,nbsp:~,eol:↵
+highlight BadWhitespace ctermbg=red guibg=red
 
 " always display status line
 set laststatus=2
 set cmdheight=1
-
-" open help vertically
-command! -nargs=* -complete=help Help vertical belowright help <args>
-autocmd FileType help wincmd L
 
 " enable filetypes plugins
 filetype plugin indent on
@@ -179,3 +170,15 @@ nmap <A-l> <Plug>(ale_lint)<CR>
 nmap <A-d> <Plug>(ale_detail)<CR>
 nmap <A-k> <Plug>(ale_previous_wrap)
 nmap <A-j> <Plug>(ale_next_wrap)
+
+augroup save_on_focus_out
+  autocmd!
+  au FocusLost * :wa
+  set autoread
+augroup END
+
+augroup help_vertical
+  autocmd!
+  command! -nargs=* -complete=help Help vertical belowright help <args>
+  autocmd FileType help wincmd L
+augroup END

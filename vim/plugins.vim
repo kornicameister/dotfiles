@@ -365,3 +365,9 @@ augroup ale_plugin_settings
     echoerr 'only neovim can handle kornicameister dotfiles'
   endif
 augroup END
+
+augroup float_preview_settings
+    autocmd!
+    let g:float_preview#docked = 0
+    let g:float_preview#auto_close = 1
+augroup END
