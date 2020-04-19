@@ -96,6 +96,7 @@ Plug 'wakatime/vim-wakatime'                        " track what I am doing when
 Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
+Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 
 " nginx
 Plug 'chr4/nginx.vim'
