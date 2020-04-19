@@ -1,5 +1,6 @@
-" Copyright 2018 @ kornicameister
+scriptencoding utf-8
 
+" Copyright 2018-2020 @ kornicameister
 " Contains useful stuff for handling the sessions in Vim
 
 " persistent undo, for making more 'u' operations

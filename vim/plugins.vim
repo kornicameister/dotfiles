@@ -1,5 +1,7 @@
 scriptencoding utf-8
 
+" Copyright 2018-2020 @ kornicameister
+
 " define the plugins
 call plug#begin('~/.vim/plugged')
 

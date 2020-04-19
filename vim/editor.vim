@@ -1,4 +1,6 @@
-" Copyright 2018 kornicameister
+scriptencoding utf-8
+
+" Copyright 2018-2020 @ kornicameister
 
 " save from typing :
 nnoremap ; :
@@ -6,8 +8,6 @@ nnoremap ; :
 " general settings for editor
 syntax on
 
-set encoding=utf-8
-scriptencoding utf-8
 
 set smartindent
 set noerrorbells
