@@ -4,6 +4,18 @@ name: Verify
 "on": [push]
 
 jobs:
+  vint:
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v2
+     - uses: actions/setup-python@v1.2.0
+     - name: Install dependencies
+       run: |
+         pip install --upgrade pip
+         pip install vim-vint==$(grep vim-vint < python-system-requirements.txt | awk -F'==' '{print $2}')
+     - name: vint
+       run: |
+         vint -c -s -t --enable-neovim $(git ls-files -- 'vim/*.vim' 'nvim/*.vim' vimrc)
   shellcheck:
     runs-on: ubuntu-latest
     steps:

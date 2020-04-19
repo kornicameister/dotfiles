@@ -1,4 +1,6 @@
-" Copyright 2018 @ kornicameister
+scriptencoding utf-8
+
+" Copyright 2018-2020 @ kornicameister
 
 " unix as the standard file type
 set fileformats=unix,dos,mac

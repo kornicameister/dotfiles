@@ -18,12 +18,12 @@ function! GetYamlIndent()
   let prevline = substitute(getline(prevlnum),'\s\+$','','')
 
   let indent = indent(prevlnum)
-  let increase = indent + &sw
-  let decrease = indent - &sw
+  let increase = indent + &shiftwidth
+  let decrease = indent - &shiftwidth
 
-  if prevline =~ ':$'
+  if prevline =~# ':$'
     return increase
-  elseif prevline =~ '^\s\+\-' && line =~ '^\s\+[^-]\+:'
+  elseif prevline =~# '^\s\+\-' && line =~# '^\s\+[^-]\+:'
     return decrease
   else
     return indent
