@@ -1,3 +1,4 @@
+set encoding=utf-8
 set fileencoding=utf-8     " utf-8 forever
 set fileencodings=utf-8
 
