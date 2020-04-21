@@ -1,8 +1,6 @@
-" Copyright 2018 kornicameister
+scriptencoding utf-8
 
-" leader
-let mapleader = ','
-let g:mapleader = ','
+" Copyright 2018-2020 @ kornicameister
 
 " save from typing :
 nnoremap ; :
@@ -10,8 +8,6 @@ nnoremap ; :
 " general settings for editor
 syntax on
 
-set encoding=utf-8
-scriptencoding utf-8
 
 set smartindent
 set noerrorbells
@@ -59,15 +55,8 @@ set smartcase
 set ttyfast
 set timeout timeoutlen=1000 ttimeoutlen=50
 
-" always safe on focus lost
-au FocusLost * :wa
-set autoread
-
 " backspace fix
 set backspace=indent,eol,start
-if ! has('nvim')
-  fixdel
-endif
 
 " wrap movement
 set whichwrap+=<,>,h,l,[,]
@@ -82,17 +71,15 @@ augroup END
 set ruler
 
 " make whitespaces, tabs visible
-exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-highlight BadWhitespace ctermbg=red guibg=red
 set list
+set listchars-=nbsp:+
+set listchars-=trail-
+set listchars+=trail:•,nbsp:~,eol:↵
+highlight BadWhitespace ctermbg=red guibg=red
 
 " always display status line
 set laststatus=2
 set cmdheight=1
-
-" open help vertically
-command! -nargs=* -complete=help Help vertical belowright help <args>
-autocmd FileType help wincmd L
 
 " enable filetypes plugins
 filetype plugin indent on
@@ -118,10 +105,17 @@ map <C-right> :tabn<cr>
 " splitting windows settings
 set splitbelow
 set splitright
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+" quicker navigation
+nnoremap <silent> <C-J> <C-W><C-J>
+nnoremap <silent> <C-K> <C-W><C-K>
+nnoremap <silent> <C-L> <C-W><C-L>
+nnoremap <silent> <C-H> <C-W><C-H>
+" quicker resizing with arrows
+nnoremap <silent> <C-Left> :vertical resize +2<CR>
+nnoremap <silent> <C-Right> :vertical resize -2<CR>
+nnoremap <silent> <C-Up> :resize +2<CR>
+nnoremap <silent> <C-Down> :resize -2<CR>
 
 " Enable folding
 set foldmethod=indent
@@ -156,7 +150,10 @@ set wildmode=longest:full,full
 set wildmenu
 
 " vim theme settings
-colorscheme dracula
+colorscheme edge
+let g:edge_style = 'neon'
+let g:edge_disable_italic_comment = 0
+let g:edge_transparent_background = 1
 set background=dark
 
 " navigate through the buffers
@@ -167,20 +164,21 @@ nnoremap <silent> <leader>Q :bufdo bd<CR>
 nnoremap <silent> <leader>r :e<CR>
 nnoremap <silent> <leader>R :e!<CR>
 
-" fzf mappings
-nmap <Leader>t  :Tags<CR>
-nmap <Leader>bt :BTags<CR>
-nmap <Leader>f  :GFiles<CR>
-nmap <Leader>F  :Files<CR>
-nmap <Leader>c  :Commits<CR>
-nmap <Leader>b  :Buffers<CR>
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
-
 " ale mapping
 nmap <A-f> <Plug>(ale_fix)<CR>
 nmap <A-l> <Plug>(ale_lint)<CR>
 nmap <A-d> <Plug>(ale_detail)<CR>
 nmap <A-k> <Plug>(ale_previous_wrap)
 nmap <A-j> <Plug>(ale_next_wrap)
+
+augroup save_on_focus_out
+  autocmd!
+  au FocusLost * :wa
+  set autoread
+augroup END
+
+augroup help_vertical
+  autocmd!
+  command! -nargs=* -complete=help Help vertical belowright help <args>
+  autocmd FileType help wincmd L
+augroup END

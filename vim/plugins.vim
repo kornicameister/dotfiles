@@ -1,10 +1,18 @@
 scriptencoding utf-8
 
+" Copyright 2018-2020 @ kornicameister
+
 " define the plugins
 call plug#begin('~/.vim/plugged')
 
+" vim compatibility
+if !has('nvim')
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
 " theme
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'sainnhe/edge'
 
 " fzf
 Plug '~/.fzf'
@@ -18,6 +26,7 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-git'
 
 " ale plugin
+Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
 Plug 'dense-analysis/ale'
 
 " deoplete
@@ -25,9 +34,8 @@ if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
 Plug 'deoplete-plugins/deoplete-tag'
@@ -55,14 +63,19 @@ Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript'] }
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'docker-compose', 'Dockerfile'], 'do': 'make install' }
 
 " elm
-Plug 'elmcast/elm-vim', {'commit': '659d6de8766895d0445f52732e14378c9b9ab6fc', 'for': ['elm']}
-Plug 'antew/vim-elm-language-server', {'for': ['elm']}
+" per recommendation at: https://github.com/elm-tooling/elm-vim/blob/master/README.md
+Plug 'andys8/vim-elm-syntax', {'for': ['elm']}
 
 " python
 Plug 'tmhedberg/SimpylFold', {'for': ['python']}
 Plug 'lambdalisue/vim-pyenv', {'for': ['python']}
 Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
+if has('nvim')
+    Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
+else
+    Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
+endif
 
 " go
 Plug 'arp242/gopher.vim', { 'for': ['go'] }
@@ -83,6 +96,7 @@ Plug 'wakatime/vim-wakatime'                        " track what I am doing when
 Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
+Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -98,6 +112,25 @@ call plug#end()
 
 " Plugin Customizations
 " =====================
+
+augroup vim_test_settings
+  autocmd!
+  let g:test#strategy = 'neovim'
+  let g:test#neovim#term_position = 'vertical'
+
+  " integrate with coverage tool
+  let g:test#python#pytest#options = '--cov-branch --cov-context=test'
+
+  " disable vim-projectionist
+  let g:test#no_alternate = 1
+
+  nmap <silent> <C-t>n :TestNearest<CR>
+  nmap <silent> <C-t>f :TestFile<CR>
+  nmap <silent> <C-t>s :TestSuite<CR>
+  nmap <silent> <C-t>l :TestLast<CR>
+  nmap <silent> <C-t>v :TestVisit<CR>
+
+augroup end
 
 augroup tagbar_plugin_settins
     autocmd!
@@ -148,7 +181,7 @@ let g:rainbow_active = 1
 augroup airline_plugin_settings
   autocmd!
 
-  let g:airline_theme = 'dracula'
+  let g:airline_theme = 'edge'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -180,20 +213,6 @@ function! g:committia_hooks.edit_open(info)
     imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-" ale settings
-let g:ale_fix_on_save = 1                   " run on save
-let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 1                 " lint when entering the buffer
-let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
-let g:ale_sign_error = '✖'                  " error sign
-let g:ale_sign_warning = '⚠'                " warning sign
-let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
-
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
 " python
 let python_highlight_all = 1
 let g:pyenv#auto_create_ctags = 1
@@ -210,11 +229,12 @@ augroup gitgutter_options
 
     let g:gitgutter_sign_removed = ''
     let g:gitgutter_sign_removed_first_line = ''
-augroup END
 
-augroup dracula_theme_options
-    autocmd!
-    let g:dracula_colorterm = 0
+    let g:gitgutter_highlight_linenrs = 1
+
+    nmap <A-,> <Plug>(GitGutterUndoHunk)
+    nmap <A-.> <Plug>(GitGutterStageHunk)
+    nmap <A-/> <Plug>(GitGutterPreviewHunk)
 augroup END
 
 augroup incremental_search_options
@@ -301,3 +321,50 @@ augroup deoplete_options
     let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
 augroup END
 
+augroup fzf_settings
+  autocmd!
+
+  " fzf mappings
+  nmap <Leader>t  :Tags<CR>
+  nmap <Leader>bt :BTags<CR>
+  nmap <Leader>f  :GFiles<CR>
+  nmap <Leader>F  :Files<CR>
+  nmap <Leader>c  :Commits<CR>
+  nmap <Leader>b  :Buffers<CR>
+  nmap <leader><tab> <plug>(fzf-maps-n)
+  xmap <leader><tab> <plug>(fzf-maps-x)
+  omap <leader><tab> <plug>(fzf-maps-o)
+
+  " floating window
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+augroup END
+
+" ale settings
+augroup ale_plugin_settings
+  autocmd!
+
+  let g:ale_fix_on_save = 1                   " run on save
+  let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_enter = 1                 " lint when entering the buffer
+  let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
+  let g:ale_sign_error = '✖'                  " error sign
+  let g:ale_sign_warning = '⚠'                " warning sign
+  let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
+
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+  if has('nvim')
+    autocmd VimEnter *
+      \ set updatetime=1000 |
+      \ let g:ale_lint_on_text_changed = 0
+    autocmd CursorHold * call ale#Queue(0)
+    autocmd CursorHoldI * call ale#Queue(0)
+    autocmd InsertEnter * call ale#Queue(0)
+    autocmd InsertLeave * call ale#Queue(0)
+  else
+    echoerr 'only neovim can handle kornicameister dotfiles'
+  endif
+augroup END

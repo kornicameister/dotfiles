@@ -57,20 +57,6 @@ x-build-steps: &build_steps
 
 version: 2.1
 jobs:
-  shellcheck:
-    docker:
-      - image: nlknguyen/alpine-shellcheck:latest
-    steps:
-      - checkout
-      - run:
-          name: Check Scripts
-          command: |
-            shellcheck install post-install --external-sources
-            find bin/ -type f | xargs shellcheck --external-sources
-            find .installer/ -type f | xargs shellcheck --external-sources
-            find . -type f -name '*.sh' | wc -l
-            find . -type f -name '*.sh' | xargs shellcheck --external-sources
-
   submodules:
     machine: true
     steps:
@@ -79,17 +65,13 @@ jobs:
           name: "Submodules :: checkout"
           command: .circleci/submodules_step.sh
 
-  build_ubuntu_19_04:
-    docker:
-      - image: ubuntu:19.04
-    <<: *build_steps
-  build_ubuntu_18_10:
-    docker:
-      - image: ubuntu:18.10
-    <<: *build_steps
   build_ubuntu_18_04:
     docker:
       - image: ubuntu:18.04
+    <<: *build_steps
+  build_ubuntu_19_10:
+    docker:
+      - image: ubuntu:19.10
     <<: *build_steps
 
 workflows:
@@ -97,9 +79,7 @@ workflows:
   verify:
     jobs:
       - submodules
-      - shellcheck
   build:
     jobs:
-      - build_ubuntu_19_04
-      - build_ubuntu_18_10
       - build_ubuntu_18_04
+      - build_ubuntu_19_10

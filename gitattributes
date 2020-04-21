@@ -1,0 +1,10 @@
+*       text=auto
+
+*.png   binary  diff=exif
+*.jpg   binary  diff=exif
+*.jpeg  binary  diff=exif
+*.pdf   -text
+
+*.tex	        diff=tex
+*.py            diff=python
+
