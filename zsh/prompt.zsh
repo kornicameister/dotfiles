@@ -4,6 +4,7 @@
 zstyle :prompt:pure:path color white
 zstyle :prompt:pure:prompt:success color green
 zstyle :prompt:pure:prompt:error color red
+zstyle :prompt:pure:git:stash show yes
 
 # tweak symbols
 PURE_PROMPT_SYMBOL='>>'
