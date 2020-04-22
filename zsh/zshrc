@@ -64,6 +64,7 @@ zinit ice \
     lucid \
     atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
 zinit load zdharma/fast-syntax-highlighting
+zinit snippet https://github.com/sainnhe/edge/raw/master/zsh/.zsh-theme-edge-dark
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=191,bold'
