@@ -96,6 +96,16 @@
     tlp:
       ppa_source: ppa:linrunner/tlp
       upgrade: true
+# required to enable libsecret for git
+- aptget:
+    [
+      libsecret-1-0,
+      libsecret-1-dev
+    ]
+- shell:
+    description: Creates git-credential-libsecret
+    command: |
+      make --directory=/usr/share/doc/git/contrib/credential/libsecret
 
 # my stuff
 - aptget:
