@@ -12,6 +12,6 @@ flake8-bandit==2.1.2
 flake8-comprehensions==3.2.2; python_version >= '3.0'
 flake8-comprehensions==1.4.1; python_version < '3.0'
 
-yapf==0.29.0
+yapf==0.30.0
 
 vim-vint==0.3.21

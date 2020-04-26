@@ -45,14 +45,12 @@ Plug 'deoplete-plugins/deoplete-zsh'
 " asynchronous execution library
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
-" awesome commit message writing
-Plug 'scrooloose/nerdcommenter'
-
 " general editor related plugins
 Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
