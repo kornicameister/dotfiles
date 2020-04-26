@@ -96,6 +96,7 @@ Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
+Plug 'Yggdroot/indentLine'                          " visualize indents
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -302,10 +303,8 @@ augroup deoplete_options
         \ })
 
     let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-
     let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
     let g:deoplete#sources#go#builtin_objects = 1      " might be useful
-
     let g:deoplete#sources#go#sort_class = [
           \ 'package',
           \ 'func',
@@ -313,7 +312,6 @@ augroup deoplete_options
           \ 'var',
           \ 'const'
     \]                                                  " sorting matters
-
     let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
     let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
 augroup END
@@ -364,4 +362,10 @@ augroup ale_plugin_settings
   else
     echoerr 'only neovim can handle kornicameister dotfiles'
   endif
+augroup END
+
+augroup indent_line
+  au!
+  let g:indentLine_setColors = 0
+  let g:indentLine_char = '¦'
 augroup END
