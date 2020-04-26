@@ -100,15 +100,15 @@
 [credential]
   # libsecret is an alternative here, already installed and compiled
   # just put a path here or --local for the certain repositories
-  helper = cache --timeout=28800
-  useHttpPath = true
+	helper = cache --timeout=28800
+	useHttpPath = true
 
 [url "https://github.com/"]
 	insteadof = git://github.com/
 
 [url "https://git.openstack.org/"]
 	insteadof = git://git.openstack.org/
-    
+
 # gitattributes configuration
 [core]
 	attributesfile = ~/.gitattributes
