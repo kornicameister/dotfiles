@@ -38,7 +38,7 @@ x-build-steps: &build_steps
     - run:
         name: Add non-root user
         command: |
-          adduser ${CIRCLE_PROJECT_USERNAME}
+          useradd -ms /bin/bash ${CIRCLE_PROJECT_USERNAME}
           usermod -aG sudo ${CIRCLE_PROJECT_USERNAME}
     - run:
         name: Run an installation
