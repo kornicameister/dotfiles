@@ -30,7 +30,7 @@ jobs:
           --build-arg K_GPG_PASSPHRASE=${{ github.run_id }} \
           --build-arg K_WAKATIME_API_KEY=${{ github.run_id }} \
           --file Dockerfile \
-          --tag kornicameister/dotfiles:{{ matrix.ubuntu_version }} . \
+          --tag kornicameister/dotfiles:${{ matrix.ubuntu_version }} . \
           | tee build.log
     - name: Upload build.log
       uses: actions/upload-artifact@v1.0.0
