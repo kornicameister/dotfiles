@@ -187,6 +187,11 @@ validate_git_config() (
   else
     success "git configured"
   fi
+  if [[ ! -f /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret ]]; then
+    fail "git-credential-libsecret not available"
+  else
+    success "git-credential-libsecret available"
+  fi
 )
 
 validate_wakatime_config() (
