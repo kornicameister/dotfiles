@@ -12,7 +12,7 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'sainnhe/edge'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " fzf
 Plug '~/.fzf'
@@ -179,8 +179,6 @@ let g:rainbow_active = 1
 
 augroup airline_plugin_settings
   autocmd!
-
-  let g:airline_theme = 'edge'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
