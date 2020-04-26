@@ -2,7 +2,7 @@
 x-build-steps: &build_steps
   steps:
     - run:
-        name: Install prerequistes
+        name: Install prerequisites
         command: |
           apt-get update -qq
           apt-get install apt-utils -yqq
@@ -36,15 +36,22 @@ x-build-steps: &build_steps
           apt-get autoclean -yqq
           apt-get autoremove -yqq
     - run:
+        name: Add non-root user
+        command: |
+          adduser ${CIRCLE_PROJECT_USERNAME}
+          usermod -aG sudo ${CIRCLE_PROJECT_USERNAME}
+    - run:
         name: Run an installation
         command: |
-          ./install \
-            "${CIRCLE_PROJECT_USERNAME}" \
-            "${CIRCLE_BUILD_NUM}" \
-            "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
-            "Circle Builds" \
-            "${CIRCLE_SHA1}" \
-            "555-WAKATIME-BOGUS-API-KEY"
+          su - ${CIRCLE_PROJECT_USERNAME} -c '
+            ./install \
+              "${CIRCLE_PROJECT_USERNAME}" \
+              "${CIRCLE_BUILD_NUM}" \
+              "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+              "Circle Builds" \
+              "${CIRCLE_SHA1}" \
+              "555-WAKATIME-BOGUS-API-KEY"
+          '
     - run:
         name: Verify !
         command: |
