@@ -8,7 +8,6 @@ nnoremap ; :
 " general settings for editor
 syntax on
 
-
 set smartindent
 set noerrorbells
 set novisualbell
@@ -84,13 +83,6 @@ set cmdheight=1
 " enable filetypes plugins
 filetype plugin indent on
 
-hi Normal ctermfg=252 ctermbg=none
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE
-if has('termguicolors')
-  set termguicolors
-endif
-
 " spelling
 setlocal spell
 map <silent> <leader>ss :setlocal spell!<cr>
@@ -131,9 +123,8 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " markers, undo etc
 set hidden
 
-" increase history sized
-set history=1000
-set undolevels=1000
+set history=1000                      " increase history size
+set undolevels=1000                   " ----------//---------
 
 " in case we forgot sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -148,13 +139,6 @@ set wildignore+=/tmp/**
 
 set wildmode=longest:full,full
 set wildmenu
-
-" vim theme settings
-colorscheme edge
-let g:edge_style = 'neon'
-let g:edge_disable_italic_comment = 0
-let g:edge_transparent_background = 1
-set background=dark
 
 " navigate through the buffers
 nnoremap <silent> <Tab> :bnext<CR>
@@ -178,7 +162,30 @@ augroup save_on_focus_out
 augroup END
 
 augroup help_vertical
-  autocmd!
+  au!
   command! -nargs=* -complete=help Help vertical belowright help <args>
   autocmd FileType help wincmd L
+augroup END
+
+augroup colorscheme_customization
+  au!
+
+  if has('termguicolors')
+    set termguicolors
+  endif
+
+  if has_key(g:plugs, 'dracula')
+    if has_key(g:plugs, 'vim-airline')
+      let g:airline_theme = 'dracula'
+      call airline#load_theme() | call airline#update_statusline()
+    endif
+
+    let g:dracula_bold = 1
+    let g:dracula_italic = 1
+    let g:dracula_colorterm = 0
+
+    set background=dark
+    colorscheme dracula
+  endif
+
 augroup END
