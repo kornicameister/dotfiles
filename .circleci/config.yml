@@ -9,8 +9,10 @@ x-build-steps: &build_steps
 
           apt-get install \
             locales \
-            ssh ca-certificates \
+            ssh \
+            ca-certificates \
             lsb-release \
+            build-essential \
             -yqq \
             --no-install-recommends
 
