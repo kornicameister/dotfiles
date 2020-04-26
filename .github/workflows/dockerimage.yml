@@ -1,0 +1,32 @@
+name: "dotfiles&docker"
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 3
+      matrix:
+        ubuntu_version: ["18.04", "19.10", "20.04"]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        docker build . \
+          --build-arg OS_NAME=ubuntu \
+          --build-arg OS_VERSION=${ubuntu_version} \
+          --build-arg K_USERNAME=kornicameister \
+          --build-arg K_PASSWORD=$(echo "kornicameister" | md5sum) \
+          --build-arg K_EMAIL=kornicameister@dotfiles.git \
+          --build-arg K_GPG_FULLNAME="kornicameister gpg" \
+          --build-arg K_GPG_PASSPHRASE="" \
+          --file Dockerfile \
+          --tag kornicameister/dotfiles:$(date +%s) | tee build.log
