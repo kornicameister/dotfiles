@@ -131,9 +131,8 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " markers, undo etc
 set hidden
 
-" increase history sized
-set history=1000
-set undolevels=1000
+set history=1000                      " increase history size
+set undolevels=1000                   " ----------//---------
 
 " in case we forgot sudo
 cmap w!! w !sudo tee % >/dev/null
