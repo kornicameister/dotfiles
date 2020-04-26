@@ -22,11 +22,17 @@ jobs:
       run: |
         docker build . \
           --build-arg OS_NAME=ubuntu \
-          --build-arg OS_VERSION=${ubuntu_version} \
+          --build-arg OS_VERSION=${{ matrix.ubuntu_version }} \
           --build-arg K_USERNAME=kornicameister \
           --build-arg K_PASSWORD=$(echo "kornicameister" | md5sum) \
           --build-arg K_EMAIL=kornicameister@dotfiles.git \
           --build-arg K_GPG_FULLNAME="kornicameister gpg" \
-          --build-arg K_GPG_PASSPHRASE="" \
+          --build-arg K_GPG_PASSPHRASE=${{ github.run_id }} \
+          --build-arg K_WAKATIME_API_KEY=${{ github.run_id }} \
           --file Dockerfile \
-          --tag kornicameister/dotfiles:$(date +%s) | tee build.log
+          --tag kornicameister/dotfiles:{{ matrix.ubuntu_version }} | tee build.log
+    - name: Upload build.log
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: build.log
+        path: build.log
