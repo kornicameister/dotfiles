@@ -64,7 +64,7 @@ zinit light srijanshetty/zsh-pandoc-completion
 zinit ice \
     blockf \
     lucid \
-    atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
+    atinit'ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
 zinit load zdharma/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
