@@ -15,3 +15,6 @@ match BadWhitespace /\s\+$/
 let b:comment_leader = '#'
 let b:ale_fix_on_save = 0
 let b:ale_fixers = ['trim_whitespace', 'remove_trailing_lines', 'yapf']
+
+" if enabled, it makes flake8 loose its configuration file in project root
+let b:ale_python_flake8_change_directory = 0
