@@ -96,7 +96,6 @@ Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
-Plug 'Yggdroot/indentLine'                          " visualize indents
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -364,8 +363,3 @@ augroup ale_plugin_settings
   endif
 augroup END
 
-augroup indent_line
-  au!
-  let g:indentLine_setColors = 0
-  let g:indentLine_char = '¦'
-augroup END
