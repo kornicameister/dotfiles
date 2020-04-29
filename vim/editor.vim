@@ -84,7 +84,7 @@ set cmdheight=1
 filetype plugin indent on
 
 " spelling
-setlocal spell
+setlocal nospell
 map <silent> <leader>ss :setlocal spell!<cr>
 hi SpellBad cterm=underline,bold ctermfg=red
 
