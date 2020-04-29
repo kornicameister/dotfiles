@@ -5,6 +5,9 @@ setlocal tabstop=4
 setlocal shiftwidth=4
 setlocal textwidth=99
 
+" spellcheck
+setlocal spell
+
 " generate TOC quicker
 nmap <buffer> <silent> <Leader>toc :GenTocGFM<CR>
 
