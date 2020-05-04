@@ -33,7 +33,7 @@
 
 [alias]
 	tags = tag -l
-	branches = branch -a
+	branches = branch -l -v -a
 	remotes = remote -v
 	fixup = commit --fixup
 	fresh =  ! git_fresh
