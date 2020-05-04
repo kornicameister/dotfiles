@@ -171,7 +171,7 @@ augroup END
 
 augroup help_vertical
   au!
-  command! -nargs=* -complete=help Help vertical belowright help <args>
+command! -nargs=* -complete=help Help vertical belowright help <args>
   autocmd FileType help wincmd L
 augroup END
 
