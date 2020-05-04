@@ -167,7 +167,7 @@ _configure_nvim() {
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-        local goenv pyenv nodenv
+        local goenv pyenv nodenv jenv
 
         goenv=$(_env_binary "goenv")
         pyenv=$(_env_binary "pyenv")
@@ -185,6 +185,7 @@ _configure_nvim() {
         unset goenv
         unset pyenv
         unset nodenv
+        unset jenv
     else
         _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
     fi
