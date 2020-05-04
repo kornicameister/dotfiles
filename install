@@ -174,10 +174,10 @@ _configure_nvim() {
         nodenv=$(_env_binary "nodenv")
         jenv=$(_env_binary "jenv")
 
-        $goenv shell "$($goenv version-name)"
-        $pyenv shell "$($pyenv version-name)"
-        $nodenv shell "$($nodenv version-name)"
-        $jenv shell "$($jenv version-name)"
+        eval "$($goenv init -)" && $goenv shell "$($goenv version-name)"
+        eval "$($pyenv init -)" && $pyenv shell "$($pyenv version-name)"
+        eval "$($nodenv init -)" && $nodenv shell "$($nodenv version-name)"
+        eval "$($jenv init -)" && $jenv shell "$($jenv version-name)"
 
         nvim --headless +PlugInstall +qall!
         nvim --headless +UpdateRemotePlugins +qall!
