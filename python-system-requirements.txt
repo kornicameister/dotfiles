@@ -1,4 +1,4 @@
-pip==20.0.2
+pip==20.1
 wakatime==13.0.7
 
 mypy==0.770; python_version >= '3.0' --no-binary mypy
@@ -12,6 +12,6 @@ flake8-bandit==2.1.2
 flake8-comprehensions==3.2.2; python_version >= '3.0'
 flake8-comprehensions==1.4.1; python_version < '3.0'
 
-yapf==0.29.0
+yapf==0.30.0
 
 vim-vint==0.3.21

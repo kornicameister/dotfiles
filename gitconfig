@@ -1,25 +1,25 @@
 [include]
-    path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 
 [init]
-    templatedir = ~/.git_template
+	templatedir = ~/.git_template
 
 [core]
-    editor = nvim
-    excludesfile = ~/.gitignore
+	editor = nvim
+	excludesfile = ~/.gitignore
 
-    # dont ignore case
-    ignorecase = false
+	# dont ignore case
+	ignorecase = false
 
-    # Treat spaces before tabs and all kinds of trailing whitespace as an error
-    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 
-    # Speed up commands involving untracked files such as `git status`.
-    # https://git-scm.com/docs/git-update-index#_untracked_cache
-    untrackedCache = true
+	# Speed up commands involving untracked files such as `git status`.
+	# https://git-scm.com/docs/git-update-index#_untracked_cache
+	untrackedCache = true
 
-    # diff-so-fancy
-    pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
+	# diff-so-fancy
+	pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
 
 	# no more CRLF
 	autocrlf = input
@@ -32,79 +32,77 @@
 	manyFiles = true
 
 [alias]
-    tags = tag -l
-    branches = branch -a
-    remotes = remote -v
-    fixup = commit --fixup
-    fresh =  ! git_fresh
+	tags = tag -l
+	branches = branch -l -v -a
+	remotes = remote -v
+	fixup = commit --fixup
+	fresh =  ! git_fresh
 
 [apply]
-    whitespace = fix         # detect whitespace errors when applying a patch
+	whitespace = fix         # detect whitespace errors when applying a patch
 
 [gc]
-    auto = 1
+	auto = 1
 
 [pull]
-    rebase = true
+	rebase = true
 
 [push]
-    default = simple
+	default = simple
 
 [fetch]
-    prune = true             # delete local branches if remotes are gone
+	prune = true             # delete local branches if remotes are gone
 
 [rebase]
-    stat = true
-    abbreviateCommands =  true # to hell with longer rebase output
-    autosquash = true          # auto squash fixups by default
-    autostash = true           # auto git stash ; git stash pop when rebasing
+	stat = true
+	abbreviateCommands =  true # to hell with longer rebase output
+	autosquash = true          # auto squash fixups by default
+	autostash = true           # auto git stash ; git stash pop when rebasing
 
 [status]
-    submoduleSummary = true  # show submodules summary by default
+	submoduleSummary = true  # show submodules summary by default
 
 [rerere]
-    enabled = true			 # rere has power
-    autoUpdate = true		 # update index (always)
+	enabled = true			 # rere has power
+	autoUpdate = true		 # update index (always)
 
 [branch]
-    autosetupmerge = true    # auto track branches
-    autosetuprebase = always
+	autosetupmerge = true    # auto track branches
+	autosetuprebase = always
 
 [merge]
-    summary = true
-    status = true
-    tool = nvimmerge
-    conflictstyle = diff3
+	summary = true
+	status = true
+	tool = nvimmerge
+	conflictstyle = diff3
 [mergetool]
-    prompt = true
+	prompt = true
 [mergetool "nvimmerge"]
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [diff]
-    algorithm = patience
-    renames = copies         # try to spot renaming of files
+	algorithm = patience
+	renames = copies         # try to spot renaming of files
 	indentHeuristic = true	 # experimental to make patches easier to read
-    tool = nvimdiff
-    guitool = opendiff
+	tool = nvimdiff
+	guitool = opendiff
 [difftool]
-    prompt = true
+	prompt = true
 [difftool "nvimdiff"]
-    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [color]
-    ui = true
+	ui = true
 
 [help]
-    autocorrect = 1
+	autocorrect = 1
 
 [credential]
-    helper = cache --timeout=28800
+	helper = cache --timeout=28800
+	useHttpPath = true
 
 [url "https://github.com/"]
-    insteadof = git://github.com/
-
-[url "https://git.openstack.org/"]
-    insteadof = git://git.openstack.org/
+	insteadof = git://github.com/
 
 # gitattributes configuration
 [core]
@@ -112,7 +110,7 @@
 [diff "exif"]
 	textconv = exiftool
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -12,7 +12,7 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'sainnhe/edge'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " fzf
 Plug '~/.fzf'
@@ -45,14 +45,12 @@ Plug 'deoplete-plugins/deoplete-zsh'
 " asynchronous execution library
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
-" awesome commit message writing
-Plug 'scrooloose/nerdcommenter'
-
 " general editor related plugins
 Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
@@ -97,6 +95,7 @@ Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 Plug 'farmergreg/vim-lastplace'                     " open editor where it was
+Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -180,8 +179,6 @@ let g:rainbow_active = 1
 
 augroup airline_plugin_settings
   autocmd!
-
-  let g:airline_theme = 'edge'
 
   let g:airline_powerline_fonts = 1
   let g:airline_left_sep='›'          " Slightly fancier than '>'
@@ -305,10 +302,8 @@ augroup deoplete_options
         \ })
 
     let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-
     let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
     let g:deoplete#sources#go#builtin_objects = 1      " might be useful
-
     let g:deoplete#sources#go#sort_class = [
           \ 'package',
           \ 'func',
@@ -316,7 +311,6 @@ augroup deoplete_options
           \ 'var',
           \ 'const'
     \]                                                  " sorting matters
-
     let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
     let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
 augroup END
@@ -368,3 +362,4 @@ augroup ale_plugin_settings
     echoerr 'only neovim can handle kornicameister dotfiles'
   endif
 augroup END
+
