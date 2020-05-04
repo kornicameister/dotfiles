@@ -144,14 +144,47 @@ EOF
     fi
 }
 
+_env_binary() {
+    # fetches path to binary of given *env
+    # nodenv, jenv etc etc etc
+
+    local env
+    env="${1}"
+
+    if ! command -v "${env}" >/dev/null 2>&1; then
+        env_bin="${HOME}/.${env}/bin/${env}"
+    else
+        env_bin=$(command -v "${env}")
+    fi
+
+    echo "${env_bin}"
+}
+
 _configure_nvim() {
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
         aria2c \
             -d ~/.vim/autoload \
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+        local goenv pyenv nodenv
+
+        goenv=$(_env_binary "goenv")
+        pyenv=$(_env_binary "pyenv")
+        nodenv=$(_env_binary "nodenv")
+        jenv=$(_env_binary "jenv")
+
+        $goenv shell "$($goenv version-name)"
+        $pyenv shell "$($pyenv version-name)"
+        $nodenv shell "$($nodenv version-name)"
+        $jenv shell "$($jenv version-name)"
+
         nvim --headless +PlugInstall +qall!
         nvim --headless +UpdateRemotePlugins +qall!
+
+        unset goenv
+        unset pyenv
+        unset nodenv
     else
         _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
     fi
@@ -164,33 +197,18 @@ _install_envs() {
     local nodenv_root
     local goenv
     local goenv_root
-
     local verbose
 
-    if ! command -v pyenv >/dev/null 2>&1; then
-        pyenv="${HOME}/.pyenv/bin/pyenv"
-    else
-        pyenv=$(command -v pyenv)
-    fi
-    if ! command -v nodenv >/dev/null 2>&1; then
-        nodenv="${HOME}/.nodenv/bin/nodenv"
-    else
-        nodenv=$(command -v nodenv)
-    fi
-    if ! command -v goenv >/dev/null 2>&1; then
-        goenv="${HOME}/.goenv/bin/goenv"
-    else
-        goenv=$(command -v goenv)
-    fi
-    if ! command -v jenv >/dev/null 2>&1; then
-        jenv="${HOME}/.jenv/bin/jenv"
-    else
-        jenv=$(command -v jenv)
-    fi
-
-    pyenv_root=$($pyenv root)
-    nodenv_root=$($nodenv root)
+    goenv=$(_env_binary "goenv")
     goenv_root=$($goenv root)
+
+    pyenv=$(_env_binary "pyenv")
+    pyenv_root=$($pyenv root)
+
+    nodenv=$(_env_binary "nodenv")
+    nodenv_root=$($nodenv root)
+
+    jenv=$(_env_binary "jenv")
     jenv_root=$($jenv root)
 
     if [[ -n ${CI} ]]; then
