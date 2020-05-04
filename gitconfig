@@ -104,9 +104,6 @@
 [url "https://github.com/"]
 	insteadof = git://github.com/
 
-[url "https://git.openstack.org/"]
-	insteadof = git://git.openstack.org/
-
 # gitattributes configuration
 [core]
 	attributesfile = ~/.gitattributes
