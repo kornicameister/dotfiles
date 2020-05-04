@@ -8,11 +8,12 @@
   title_transmit_fg_color = "#bcbcbc"
   title_use_system_font = False
 [keybindings]
+  layout_launcher = None
 [layouts]
   [[default]]
     [[[child1]]]
       parent = window0
-      profile = default
+      profile = Elementary
       type = Terminal
     [[[window0]]]
       parent = ""
@@ -20,15 +21,15 @@
 [plugins]
 [profiles]
   [[default]]
-    background_color = "#1e1f29"
-    background_darkness = 0.85
+    background_color = "#181818"
+    background_darkness = 0.9
     background_type = transparent
     copy_on_selection = True
-    cursor_color = "#edd400"
+    cursor_color = "#bbbbbb"
     cursor_color_fg = False
     cursor_shape = underline
     font = SauceCodePro Nerd Font 10
-    foreground_color = "#f8f8f2"
-    palette = "#44475a:#ff5555:#50fa7b:#f1fa8c:#8be9fd:#bd93f9:#ff79c6:#94a3a5:#000000:#ff5555:#50fa7b:#f1fa8c:#8be9fd:#bd93f9:#ff79c6:#ffffff"
+    foreground_color = "#efefef"
+    palette = "#242424:#d71c15:#5aa513:#fdb40c:#063b8c:#e40038:#2595e1:#efefef:#4b4b4b:#fc1c18:#6bc219:#fec80e:#0955ff:#fb0050:#3ea8fc:#8c00ec"
     scrollback_infinite = True
     use_system_font = False

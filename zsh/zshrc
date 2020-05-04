@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=cyan,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
@@ -18,80 +25,75 @@ zstyle ':prezto:module:editor' ps-context 'yes'
 zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # loading *envs
-source ~/.zplugin/zplugin.zsh
+source ~/.zinit/zinit.zsh
 
-zplugin light zdharma/zsh-unique-id
-zplugin light zdharma/z-p-submods
+zinit light zdharma/zsh-unique-id
+zinit light zinit-zsh/z-a-submods
 
-# prompt
-zplugin ice \
-    lucid \
-    pick'async.zsh' \
-    src'pure.zsh' \
-    atload'source ~/.dotfiles/zsh/prompt.zsh'
-zplugin light sindresorhus/pure
+zinit ice lucid depth=1 atload='[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
+zinit light romkatv/powerlevel10k
 
-zplugin ice wait lucid ; zplugin load sobolevn/wakatime-zsh-plugin
-zplugin ice wait lucid ; zplugin load hlissner/zsh-autopair
-zplugin ice wait lucid ; zplugin load djui/alias-tips
-zplugin ice wait lucid ; zplugin load wfxr/forgit
+zinit ice wait lucid ; zinit load sobolevn/wakatime-zsh-plugin
+zinit ice wait lucid ; zinit load hlissner/zsh-autopair
+zinit ice wait lucid ; zinit load djui/alias-tips
+zinit ice wait lucid ; zinit load wfxr/forgit
 
-zplugin ice \
+zinit ice \
     svn \
     wait \
     lucid \
     submods'zsh-users/zsh-completions -> external'
-zplugin snippet PZT::modules/completion
+zinit snippet PZT::modules/completion
 
-zplugin ice \
+zinit ice \
     blockf \
     lucid \
     atclone'./zplug.zsh'
-zplugin light g-plane/zsh-yarn-autocompletions
+zinit light g-plane/zsh-yarn-autocompletions
 
-zplugin ice \
+zinit ice \
     blockf \
     lucid
-zplugin light lukechilds/zsh-better-npm-completion
+zinit light lukechilds/zsh-better-npm-completion
 
-zplugin ice \
+zinit ice \
     blockf \
     lucid
-zplugin light srijanshetty/zsh-pandoc-completion
+zinit light srijanshetty/zsh-pandoc-completion
 
-zplugin ice \
+zinit ice \
     blockf \
     lucid \
-    atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
-zplugin load zdharma/fast-syntax-highlighting
+    atinit'ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
+zinit load zdharma/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=191,bold'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-zplugin ice \
+zinit ice \
     lucid \
     wait'0' \
     atload'!_zsh_autosuggest_start' \
     wrap-track'_zsh_autosuggest_start'
-zplugin light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-autosuggestions
 
-zplugin ice blockf as'completion' ; zplugin snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
-zplugin ice blockf as'completion' ; zplugin snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+zinit ice blockf as'completion' ; zinit snippet https://raw.githubusercontent.com/tj/git-extras/master/etc/git-extras-completion.zsh
+zinit ice blockf as'completion' ; zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
-zplugin ice svn silent ; zplugin snippet PZT::modules/environment
-zplugin ice svn silent ; zplugin snippet PZT::modules/terminal
-zplugin ice svn silent ; zplugin snippet PZT::modules/editor
-zplugin ice svn silent ; zplugin snippet PZT::modules/history
-zplugin ice svn silent ; zplugin snippet PZT::modules/directory
-zplugin ice svn silent ; zplugin snippet PZT::modules/utility
-zplugin ice svn silent ; zplugin snippet PZT::modules/helper
-zplugin ice svn silent ; zplugin snippet PZT::modules/gpg
-zplugin ice svn silent ; zplugin snippet PZT::modules/ssh
-zplugin ice svn silent ; zplugin snippet PZT::modules/git
-zplugin ice svn silent pick'' ; zplugin snippet PZT::modules/archive
-zplugin ice svn silent submods'clvv/fasd -> external' ; zplugin snippet PZT::modules/fasd
-zplugin ice svn silent submods'zsh-users/zsh-history-substring-search -> external' ; zplugin snippet PZT::modules/history-substring-search
+zinit ice svn silent ; zinit snippet PZT::modules/environment
+zinit ice svn silent ; zinit snippet PZT::modules/terminal
+zinit ice svn silent ; zinit snippet PZT::modules/editor
+zinit ice svn silent ; zinit snippet PZT::modules/history
+zinit ice svn silent ; zinit snippet PZT::modules/directory
+zinit ice svn silent ; zinit snippet PZT::modules/utility
+zinit ice svn silent ; zinit snippet PZT::modules/helper
+zinit ice svn silent ; zinit snippet PZT::modules/gpg
+zinit ice svn silent ; zinit snippet PZT::modules/ssh
+zinit ice svn silent ; zinit snippet PZT::modules/git
+zinit ice svn silent pick'' ; zinit snippet PZT::modules/archive
+zinit ice svn silent submods'clvv/fasd -> external' ; zinit snippet PZT::modules/fasd
+zinit ice svn silent submods'zsh-users/zsh-history-substring-search -> external' ; zinit snippet PZT::modules/history-substring-search
 
 [ $commands[pyenv] ] && {
     eval "$(pyenv init - --no-rehash zsh)"
@@ -118,15 +120,15 @@ source ~/.npmrc.sh
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # diff-s-fancy
-zplugin ice \
+zinit ice \
     lucid \
     wait'0c' \
     as'program' \
     pick'bin/git-dsf'
-zplugin light zdharma/zsh-diff-so-fancy
+zinit light zdharma/zsh-diff-so-fancy
 
 # dircolors
-zplugin ice wait'0c'\
+zinit ice wait'0c'\
     lucid \
     reset \
     atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
@@ -135,36 +137,48 @@ zplugin ice wait'0c'\
             \${P}dircolors -b LS_COLORS > c.zsh" \
     atpull'%atclone ; !git reset --hard' pick"c.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zplugin light trapd00r/LS_COLORS
+zinit light trapd00r/LS_COLORS
 
 # replacement for ls
-zplugin ice \
+zinit ice \
     wait'0c' \
     lucid \
     from'gh-r' \
     as'program' \
     mv'exa* -> exa'
-zplugin light ogham/exa
+zinit light ogham/exa
 
 # bat
-zplugin ice \
+zinit ice \
     wait'2' \
     lucid \
     as'command' \
     from'gh-r' \
     mv'bat* -> bat' \
     pick'bat/bat'
-zplugin light sharkdp/bat
+zinit light sharkdp/bat
+
+# youtube-dl
+zinit ice \
+    wait'2' \
+    lucid \
+    as'command' \
+    pick'$ZPFX/youtube-dl' \
+    id-as'youtube-dl' \
+    run-atpull \
+    atclone'aria2c -o $ZPFX/youtube-dl https://yt-dl.org/downloads/latest/youtube-dl' \
+    atpull'chmod a+x $ZPFX/youtube-dl'
+zinit light zdharma/null
 
 # direnv
-zplugin ice \
+zinit ice \
     as'program' \
     atclone'./direnv hook zsh > zhook.zsh' \
     atpull'%atclone'\
     src'zhook.zsh' \
     make'!' \
     reset
-zplugin light direnv/direnv
+zinit light direnv/direnv
 
 # has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)

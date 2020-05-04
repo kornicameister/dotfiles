@@ -119,6 +119,8 @@
       htop,
       jq,
       screenfetch,
+      lnav,
+      libimage-exiftool-perl,
     ]
 - shell:
     - description: Install snap packages

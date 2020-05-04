@@ -8,16 +8,16 @@ if [[ -n ${CI} ]]; then
     }
 fi
 
-in_progress () {
-  printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
+in_progress() {
+    printf "\\r  [ \\033[00;34m\\u23F0\\033[0m ] %s\\r" "${1}"
 }
 
-success () {
-  printf "\\r\\033[2K  [ \\033[00;32m\\u2713\\033[0m ] %s\\n" "${1}"
+success() {
+    printf "\\r\\033[2K  [ \\033[00;32m\\u2713\\033[0m ] %s\\n" "${1}"
 }
 
-error () {
-  printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ] %s\\n" "${1}"
+error() {
+    printf "\\r\\033[2K  [\\033[0;31m\\u274C\\033[0m ] %s\\n" "${1}"
 }
 
 exec_fn() {
@@ -27,7 +27,7 @@ exec_fn() {
 
     if $1 >/dev/null; then
         end_time=$(date +%s)
-        total_time="$(( end_time - start_time ))"
+        total_time="$((end_time - start_time))"
         success "${1} in ${total_time} seconds"
     else
         error "${1}"
@@ -36,12 +36,12 @@ exec_fn() {
 
 os_upgrade() {
     sudo true
-    sudo aptitude update -yq;
-    sudo aptitude safe-upgrade -yq;
-    sudo aptitude autoclean -yq;
-    sudo aptitude clean -yq;
-    sudo aptitude purge '~c' -yq;
-    sudo aptitude purge --purge-unused -yq;
+    sudo aptitude update -yq
+    sudo aptitude safe-upgrade -yq
+    sudo aptitude autoclean -yq
+    sudo aptitude clean -yq
+    sudo aptitude purge '~c' -yq
+    sudo aptitude purge --purge-unused -yq
 }
 
 hadolint_upgrade() {
@@ -50,7 +50,7 @@ hadolint_upgrade() {
     fi
 }
 
-node_python_pkgs_update() (
+node_python_pkgs_update() {
     local venv_dir
     local venv_name
 
@@ -75,7 +75,7 @@ node_python_pkgs_update() (
     done
 
     if command -v nodenv >/dev/null 2>&1; then
-        _npm="$(nodenv root)/versions/$(nodenv latest -P)/bin/npm"
+        _npm="$(nodenv root)/versions/$(nodenv global)/bin/npm"
         _nodenv=nodenv
     else
         nodenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/nodenv/version")
@@ -84,7 +84,7 @@ node_python_pkgs_update() (
     fi
 
     if command -v pyenv >/dev/null 2>&1; then
-        _pip="$(pyenv root)/versions/$(pyenv latest -P)/bin/pip"
+        _pip="$(pyenv root)/versions/$(pyenv global)/bin/pip"
         _pyenv=pyenv
     else
         pyenv_system_ver=$(cat "${K_DOTFILES_DIR}/dependencies/pyenv/version")
@@ -92,12 +92,17 @@ node_python_pkgs_update() (
         _pyenv="${K_DOTFILES_DIR}/dependencies/pyenv/bin/pyenv"
     fi
 
-    $_npm upgrade -g neovim prettier typescript 2>&1
+    $_npm upgrade -g \
+        neovim \
+        prettier \
+        typescript \
+        bash-language-server \
+        @elm-tooling/elm-language-server 2>&1
     $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
 
     $_nodenv rehash
     $_pyenv rehash
-)
+}
 
 neovim_plugings_upgrade() {
     if command -v nvim >/dev/null 2>&1; then
@@ -130,7 +135,7 @@ docker_compose_upgrade() {
             uname_s=$(uname -s)
             uname_m=$(uname -m)
 
-            sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${remote_compose_version}/docker-compose-${uname_s}-${uname_m} > /usr/local/bin/docker-compose"
+            sudo sh -c "curl -L https://github.com/docker/compose/releases/download/v${remote_compose_version}/docker-compose-${uname_s}-${uname_m} > /usr/local/bin/docker-compose"
             sudo chmod +x /usr/local/bin/docker-compose
         fi
     fi
@@ -154,10 +159,10 @@ clear_thumbnails() {
     fi
 }
 
-zplugin_upgrade() {
+zinit_upgrade() {
     zsh -mil -c "
-        zplugin update --all --quiet --reset;
-        zplugin self-update
+        zinit update --all --quiet --reset;
+        zinit self-update
     " 2>/dev/null
 }
 
@@ -176,15 +181,15 @@ ctags_upgrade() {
         REPO_VERSION="$(git log -n 1 --format=oneline | awk '{print $1}')"
 
         if [[ "${CURRENT_VERSION}" == "${REPO_VERSION}" ]]; then
-          echo "No need to install ctags again"
+            echo "No need to install ctags again"
         else
             (
-                ./autogen.sh;
-                ./configure --prefix="${HOME}/.local";
-                make clean;
-                make;
-                make install;
-                git config --file="${HOME}/.gitconfig.local" ctags.version "${REPO_VERSION}";
+                ./autogen.sh
+                ./configure --prefix="${HOME}/.local"
+                make clean
+                make
+                make install
+                git config --file="${HOME}/.gitconfig.local" ctags.version "${REPO_VERSION}"
             ) 2>&1
         fi
         cd ..
@@ -194,7 +199,8 @@ ctags_upgrade() {
 docker_prune() {
     if command -v docker >/dev/null 2>&1; then
         # remove all artifacts 10 days old
-        docker system prune -a -f --filter "until=$((24*10))h"
+        docker system prune -a -f --filter "until=$((24 * 10))h"
+        docker volume prune -f
     fi
 }
 
@@ -215,5 +221,5 @@ exec_fn snap_refresh
 exec_fn clear_thumbnails
 exec_fn ctags_upgrade
 exec_fn circleci_cli_upgrade
-exec_fn zplugin_upgrade
+exec_fn zinit_upgrade
 exec_fn git_extras_upgrade
