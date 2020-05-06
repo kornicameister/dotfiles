@@ -167,25 +167,26 @@ _configure_nvim() {
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-        local goenv pyenv nodenv jenv
+        local goenv pyenv nodenv jenv new_path old_path
 
         goenv=$(_env_binary "goenv")
         pyenv=$(_env_binary "pyenv")
         nodenv=$(_env_binary "nodenv")
         jenv=$(_env_binary "jenv")
 
-        eval "$($goenv init -)" && $goenv shell "$($goenv version-name)"
-        eval "$($pyenv init -)" && $pyenv shell "$($pyenv version-name)"
-        eval "$($nodenv init -)" && $nodenv shell "$($nodenv version-name)"
-        eval "$($jenv init -)" && $jenv shell "$($jenv version-name)"
+        old_path="${PATH}"
+        new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
 
-        nvim --headless +PlugInstall +qall!
-        nvim --headless +UpdateRemotePlugins +qall!
+        export PATH="${new_path}"
+        nvim --headless +PlugInstall +qall! ;
+        nvim --headless +UpdateRemotePlugins +qall! ;
+        export PATH="${old_path}"
 
         unset goenv
         unset pyenv
         unset nodenv
         unset jenv
+        unset new_path
     else
         _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
     fi
@@ -377,6 +378,7 @@ _install_dependencies() {
         >/dev/null
 }
 
+[[ -n ${CI} ]] && set -x
 _hello_dude
 _install_dependencies
 _init_submodules
@@ -386,3 +388,4 @@ _configure_wakatime
 _configure_git
 _install_envs
 _configure_nvim
+[[ -n ${CI} ]] && set +x
