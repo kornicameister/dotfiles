@@ -72,6 +72,7 @@ validate_bin_accessible() (
     # linters matter
     shellcheck
     yamllint
+    shfmt
     # utilities
     purge-old-kernels
     snap
