@@ -251,7 +251,7 @@ _install_envs() {
     if [ ! -f "${nodenv_root}/version" ]; then
         echo "Installing latest Node"
 
-        $nodenv latest install "${verbose}" -s 12 &&
+        $nodenv latest install "${verbose}" -s 14 &&
             $nodenv global "$($nodenv latest --print-installed)"
         "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
             install -g \
