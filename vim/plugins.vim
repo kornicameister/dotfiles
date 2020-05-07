@@ -1,5 +1,7 @@
 scriptencoding utf-8
 
+" Copyright 2018-2020 @ kornicameister
+
 " define the plugins
 call plug#begin('~/.vim/plugged')
 
@@ -10,7 +12,7 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'sainnhe/edge'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " fzf
 Plug '~/.fzf'
@@ -43,14 +45,12 @@ Plug 'deoplete-plugins/deoplete-zsh'
 " asynchronous execution library
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
 
-" awesome commit message writing
-Plug 'scrooloose/nerdcommenter'
-
 " general editor related plugins
 Plug 'luochen1990/rainbow'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
 
 " javascript & typescript plugins
 Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
@@ -94,6 +94,8 @@ Plug 'wakatime/vim-wakatime'                        " track what I am doing when
 Plug 'ryanoasis/vim-devicons'                       " cool icons
 Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
+Plug 'farmergreg/vim-lastplace'                     " open editor where it was
+Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -175,25 +177,24 @@ augroup END
 " always color brackets
 let g:rainbow_active = 1
 
-augroup airline_plugin_settings
-  autocmd!
+if has_key(g:plugs, 'vim-airline')
+  augroup airline_plugin_settings
+    autocmd!
 
-  let g:airline_theme = 'edge'
+    let g:airline_powerline_fonts = 1
+    let g:airline_left_sep='›'          " Slightly fancier than '>'
+    let g:airline_right_sep='‹'         " Slightly fancier than '<'
 
-  let g:airline_powerline_fonts = 1
-  let g:airline_left_sep='›'          " Slightly fancier than '>'
-  let g:airline_right_sep='‹'         " Slightly fancier than '<'
+    let g:airline#extensions#ale#enabled = 1
 
-  let g:airline#extensions#ale#enabled = 1
-
-  let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#left_sep=' '
-  let g:airline#extensions#tabline#left_alt_sep=' '
-  let g:airline#extensions#tabline#buffer_nr_format = '%s '
-  let g:airline#extensions#tabline#buffer_nr_show = 1
-
-augroup END
+    let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#left_sep=' '
+    let g:airline#extensions#tabline#left_alt_sep=' '
+    let g:airline#extensions#tabline#buffer_nr_format = '%s '
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+  augroup END
+endif
 
 augroup elm_plugin_settings
   autocmd!
@@ -226,6 +227,12 @@ augroup gitgutter_options
 
     let g:gitgutter_sign_removed = ''
     let g:gitgutter_sign_removed_first_line = ''
+
+    let g:gitgutter_highlight_linenrs = 1
+
+    nmap <A-,> <Plug>(GitGutterUndoHunk)
+    nmap <A-.> <Plug>(GitGutterStageHunk)
+    nmap <A-/> <Plug>(GitGutterPreviewHunk)
 augroup END
 
 augroup incremental_search_options
@@ -279,83 +286,82 @@ augroup vim_go_options
 augroup END
 
 " deoplete settings
-augroup deoplete_options
+if has_key(g:plugs, 'deoplete.nvim')
+  augroup deoplete_options
+      autocmd!
+
+      let g:deoplete#enable_at_startup = 1
+      let g:deoplete#enable_fefresh_always = 1
+
+      call deoplete#custom#var('omni', 'input_patterns', {})
+      call deoplete#custom#option({
+          \ 'auto_complete_delay': 50,
+          \ 'smart_case': v:true,
+          \ 'max_list': 50,
+          \ })
+
+      let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+      let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
+      let g:deoplete#sources#go#builtin_objects = 1      " might be useful
+      let g:deoplete#sources#go#sort_class = [
+            \ 'package',
+            \ 'func',
+            \ 'type',
+            \ 'var',
+            \ 'const'
+      \]                                                  " sorting matters
+      let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
+      let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
+  augroup END
+endif
+
+if has_key(g:plugs, 'fzf.vim')
+  augroup fzf_settings
     autocmd!
 
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_fefresh_always = 1
+    " fzf mappings
+    nmap <Leader>t  :Tags<CR>
+    nmap <Leader>bt :BTags<CR>
+    nmap <Leader>f  :GFiles<CR>
+    nmap <Leader>F  :Files<CR>
+    nmap <Leader>c  :Commits<CR>
+    nmap <Leader>b  :Buffers<CR>
+    nmap <leader><tab> <plug>(fzf-maps-n)
+    xmap <leader><tab> <plug>(fzf-maps-x)
+    omap <leader><tab> <plug>(fzf-maps-o)
 
-    if !exists('g:deoplete#omni#input_patterns')
-        let g:deoplete#omni#input_patterns = {}
+    " floating window
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+  augroup END
+
+  " ale settings
+  augroup ale_plugin_settings
+    autocmd!
+
+    let g:ale_fix_on_save = 1                   " run on save
+    let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_enter = 1                 " lint when entering the buffer
+    let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
+    let g:ale_sign_error = '✖'                  " error sign
+    let g:ale_sign_warning = '⚠'                " warning sign
+    let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
+
+    let g:ale_echo_msg_error_str = 'E'
+    let g:ale_echo_msg_warning_str = 'W'
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+    if has('nvim')
+      autocmd VimEnter *
+        \ set updatetime=1000 |
+        \ let g:ale_lint_on_text_changed = 0
+      autocmd CursorHold * call ale#Queue(0)
+      autocmd CursorHoldI * call ale#Queue(0)
+      autocmd InsertEnter * call ale#Queue(0)
+      autocmd InsertLeave * call ale#Queue(0)
+    else
+      echoerr 'only neovim can handle kornicameister dotfiles'
     endif
+  augroup END
+endif
 
-    call deoplete#custom#option({
-        \ 'auto_complete_delay': 50,
-        \ 'smart_case': v:true,
-        \ 'max_list': 50,
-        \ })
-
-    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-
-    let g:deoplete#sources#go#source_importer = 0      " that one is deprecated
-    let g:deoplete#sources#go#builtin_objects = 1      " might be useful
-
-    let g:deoplete#sources#go#sort_class = [
-          \ 'package',
-          \ 'func',
-          \ 'type',
-          \ 'var',
-          \ 'const'
-    \]                                                  " sorting matters
-
-    let g:deoplete#sources#go#pointer = 1               " Enable completing of go pointers
-    let g:deoplete#sources#go#unimported_packages = 1   " autocomplete unimported packages
-augroup END
-
-augroup fzf_settings
-  autocmd!
-
-  " fzf mappings
-  nmap <Leader>t  :Tags<CR>
-  nmap <Leader>bt :BTags<CR>
-  nmap <Leader>f  :GFiles<CR>
-  nmap <Leader>F  :Files<CR>
-  nmap <Leader>c  :Commits<CR>
-  nmap <Leader>b  :Buffers<CR>
-  nmap <leader><tab> <plug>(fzf-maps-n)
-  xmap <leader><tab> <plug>(fzf-maps-x)
-  omap <leader><tab> <plug>(fzf-maps-o)
-
-  " floating window
-  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-augroup END
-
-" ale settings
-augroup ale_plugin_settings
-  autocmd!
-
-  let g:ale_fix_on_save = 1                   " run on save
-  let g:ale_lint_on_save  = 1                 " 2 options allow to lint only when file is saved
-  let g:ale_lint_on_text_changed = 'never'
-  let g:ale_lint_on_enter = 1                 " lint when entering the buffer
-  let g:ale_completion_enabled = 0            " do not mix up stuff with deoplete
-  let g:ale_sign_error = '✖'                  " error sign
-  let g:ale_sign_warning = '⚠'                " warning sign
-  let g:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
-
-  let g:ale_echo_msg_error_str = 'E'
-  let g:ale_echo_msg_warning_str = 'W'
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-  if has('nvim')
-    autocmd VimEnter *
-      \ set updatetime=1000 |
-      \ let g:ale_lint_on_text_changed = 0
-    autocmd CursorHold * call ale#Queue(0)
-    autocmd CursorHoldI * call ale#Queue(0)
-    autocmd InsertEnter * call ale#Queue(0)
-    autocmd InsertLeave * call ale#Queue(0)
-  else
-    echoerr 'only neovim can handle kornicameister dotfiles'
-  endif
-augroup END

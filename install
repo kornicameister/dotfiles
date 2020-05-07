@@ -26,7 +26,7 @@ GPG_PASSPHRASE=${GPG_PASSPHRASE:-${5:-""}}
 WAKATIME_API_KEY=${WAKATIME_API_KEY:-${6:-""}}
 WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
 
-_done () {
+_done() {
     local icon
     icon="${2:-"[  ]"}"
     printf "\\r  \\033[00;34m${icon} %s\\n" "${1}"
@@ -131,12 +131,12 @@ EOF
 
         touch "${HOME}/.gitconfig.local"
         (
-            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}";
-            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}";
-            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}";
-            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2;
-            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true;
-            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}";
+            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}"
+            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}"
+            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}"
+            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2
+            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true
+            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}"
         )
         echo "Remember to upload the GPG and SSH keys to Github"
     else
@@ -144,18 +144,53 @@ EOF
     fi
 }
 
-_configure_nvim() (
+_env_binary() {
+    # fetches path to binary of given *env
+    # nodenv, jenv etc etc etc
+
+    local env
+    env="${1}"
+
+    if ! command -v "${env}" >/dev/null 2>&1; then
+        env_bin="${HOME}/.${env}/bin/${env}"
+    else
+        env_bin=$(command -v "${env}")
+    fi
+
+    echo "${env_bin}"
+}
+
+_configure_nvim() {
     if [ ! -f ~/.vim/autoload/plug.vim ]; then
         aria2c \
             -d ~/.vim/autoload \
             -o plug.vim \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        nvim --headless +PlugInstall +qall!
-        nvim --headless +UpdateRemotePlugins +qall!
+
+        local goenv pyenv nodenv jenv new_path old_path
+
+        goenv=$(_env_binary "goenv")
+        pyenv=$(_env_binary "pyenv")
+        nodenv=$(_env_binary "nodenv")
+        jenv=$(_env_binary "jenv")
+
+        old_path="${PATH}"
+        new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
+
+        export PATH="${new_path}"
+        nvim --headless +PlugInstall +qall! ;
+        nvim --headless +UpdateRemotePlugins +qall! ;
+        export PATH="${old_path}"
+
+        unset goenv
+        unset pyenv
+        unset nodenv
+        unset jenv
+        unset new_path
     else
         _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
     fi
-)
+}
 
 _install_envs() {
     local pyenv
@@ -164,33 +199,18 @@ _install_envs() {
     local nodenv_root
     local goenv
     local goenv_root
-
     local verbose
 
-    if ! command -v pyenv >/dev/null 2>&1; then
-      pyenv="${HOME}/.pyenv/bin/pyenv"
-    else
-      pyenv=$(command -v pyenv)
-    fi
-    if ! command -v nodenv >/dev/null 2>&1; then
-      nodenv="${HOME}/.nodenv/bin/nodenv"
-    else
-      nodenv=$(command -v nodenv)
-    fi
-    if ! command -v goenv >/dev/null 2>&1; then
-      goenv="${HOME}/.goenv/bin/goenv"
-    else
-      goenv=$(command -v goenv)
-    fi
-    if ! command -v jenv >/dev/null 2>&1; then
-      jenv="${HOME}/.jenv/bin/jenv"
-    else
-      jenv=$(command -v jenv)
-    fi
-
-    pyenv_root=$($pyenv root)
-    nodenv_root=$($nodenv root)
+    goenv=$(_env_binary "goenv")
     goenv_root=$($goenv root)
+
+    pyenv=$(_env_binary "pyenv")
+    pyenv_root=$($pyenv root)
+
+    nodenv=$(_env_binary "nodenv")
+    nodenv_root=$($nodenv root)
+
+    jenv=$(_env_binary "jenv")
     jenv_root=$($jenv root)
 
     if [[ -n ${CI} ]]; then
@@ -221,8 +241,8 @@ _install_envs() {
             neovim_py_version="$(
                 "${pyenv_root}"/versions/neovim${py_major}/bin/python \
                     --version \
-                    2>&1 \
-                    | awk '{print $2}'
+                    2>&1 |
+                    awk '{print $2}'
             )"
             _done "neovim${py_major} -> ${neovim_py_version}" "         "
         fi
@@ -231,14 +251,15 @@ _install_envs() {
     if [ ! -f "${nodenv_root}/version" ]; then
         echo "Installing latest Node"
 
-        $nodenv latest install "${verbose}" -s 12 && \
+        $nodenv latest install "${verbose}" -s 14 &&
             $nodenv global "$($nodenv latest --print-installed)"
         "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
             install -g \
             neovim \
             prettier \
             typescript \
-            @elm-tooling/elm-language-server
+            @elm-tooling/elm-language-server \
+            bash-language-server
     else
         _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
@@ -246,14 +267,17 @@ _install_envs() {
     if [ ! -f "${goenv_root}/version" ]; then
         echo "Installing latest GO"
 
-        $goenv latest install "${verbose}" -s 1 && \
+        $goenv latest install "${verbose}" -s 1 &&
             $goenv global "$($goenv latest --print-installed)"
 
-        "${goenv_root}/versions/$($goenv latest --print-installed)/bin/go" get "${verbose}" \
+        go="${goenv_root}/versions/$($goenv latest --print-installed)/bin/go"
+
+        $go get "${verbose}" \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
             github.com/golangci/golangci-lint/cmd/golangci-lint \
             github.com/stamblerre/gocode
+        GO111MODULE=on $go get mvdan.cc/sh/v3/cmd/shfmt
     else
         _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
     fi
@@ -276,9 +300,9 @@ _install_envs() {
                 openjdk_impl==hotspot \
                 os==linux \
                 arch==x64 \
-                type==jdk \
-            | jq '.[0]["binaries"][0]["binary_link"]' \
-            | sed -e 's|"||g'
+                type==jdk |
+                jq '.[0]["binaries"][0]["binary_link"]' |
+                sed -e 's|"||g'
         )
         archiveName=$(echo "${downloadUrl}" | awk -F "/" '{print $NF}')
 
@@ -354,6 +378,7 @@ _install_dependencies() {
         >/dev/null
 }
 
+[[ -n ${CI} ]] && set -x
 _hello_dude
 _install_dependencies
 _init_submodules
@@ -363,3 +388,4 @@ _configure_wakatime
 _configure_git
 _install_envs
 _configure_nvim
+[[ -n ${CI} ]] && set +x
