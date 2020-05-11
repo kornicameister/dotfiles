@@ -183,17 +183,18 @@ augroup colorscheme_customization
   endif
 
   if has_key(g:plugs, 'dracula')
-    if has_key(g:plugs, 'vim-airline')
-      let g:airline_theme = 'dracula'
-      call airline#load_theme() | call airline#update_statusline()
-    endif
-
     let g:dracula_bold = 1
     let g:dracula_italic = 1
     let g:dracula_colorterm = 0
 
     set background=dark
     colorscheme dracula
+
+    if has_key(g:plugs, 'vim-airline')
+      let g:airline_theme = 'dracula'
+      call airline#load_theme() | call airline#update_statusline()
+    endif
+
   endif
 
 augroup END

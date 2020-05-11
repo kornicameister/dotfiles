@@ -13,6 +13,13 @@
       lsb-release,
     ]
 
+# mainly neovim plugin compilation
+- aptget:
+    [
+      python3-distutils,
+      python3-dev,
+    ]
+
 # docker requires
 - aptget:
     [
