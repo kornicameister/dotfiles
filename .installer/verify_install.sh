@@ -81,6 +81,7 @@ validate_bin_accessible() (
     ctags
     htop
     jq
+    whatpulse
   )
 
   for bin in "${bins_to_check[@]}"; do
