@@ -14,11 +14,7 @@
     ]
 
 # mainly neovim plugin compilation
-- aptget:
-    [
-      python3-distutils,
-      python3-dev,
-    ]
+- aptget: [python3-distutils, python3-dev]
 
 # docker requires
 - aptget:
@@ -137,6 +133,9 @@
           snap install intellij-idea-community --edge --classic --no-wait && \
           snap install pycharm-community --edge --classic --no-wait
       quiet: false
+
+# whatpulse
+- shell:
     - description: Install whatpulse
       command: .installer/install_whatpulse.sh
       quiet: false

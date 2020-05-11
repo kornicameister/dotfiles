@@ -55,7 +55,9 @@ _dotbot_pkg_install() {
     # uninstalling things (i.e. docker). It makes installing here harderd
     if [ ! -s "${HOME}/.dotfiles" ]; then
         cd "${BASEDIR}" || exit 1
-        sudo \
+        WHATPULSE_USER=$(whoami) \
+            sudo \
+            -E \
             "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
             -q \
             -d "${BASEDIR}" \
@@ -178,8 +180,8 @@ _configure_nvim() {
         new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
 
         export PATH="${new_path}"
-        nvim --headless +PlugInstall +qall! ;
-        nvim --headless +UpdateRemotePlugins +qall! ;
+        nvim --headless +PlugInstall +qall!
+        nvim --headless +UpdateRemotePlugins +qall!
         export PATH="${old_path}"
 
         unset goenv
