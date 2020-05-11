@@ -4,6 +4,10 @@
 CI=${CI:-False}
 if [[ -n ${CI} ]]; then
     sudo() {
+        for i; do
+            [ "$i" = -E ] || set -- "$@" "$i"
+            shift
+        done
         "$@"
     }
 fi
