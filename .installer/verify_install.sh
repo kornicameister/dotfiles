@@ -135,7 +135,7 @@ validate_pyenv() (
       if ! "${HOME}/.pyenv/bin/pyenv" versions | grep -q "${venv}"; then
         fail "Virtualenv ${venv} was not installed"
       else
-        success "Virtualenv ${venv} is installed"
+        success "Virtualenv ${venv} :: $(${HOME}/.pyenv/bin/pyenv shell ${venv} | python --version) is installed"
       fi
     done
 
