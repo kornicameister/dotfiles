@@ -4,22 +4,31 @@
 aptitude remove \
   docker-ce \
   docker \
-  docker-engine \
   docker.io \
   runc \
   containerd \
   -y -V -D -Z
 
-distro=$(lsb_release -cs)
+normal_install() {
+  aptitude install docker.io -y -V -D -Z
+}
 
-if [ "${distro}" != "eoan" ]; then
+custom_install() {
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu ${distro} stable"
+  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu ${1} stable"
   aptitude update -q -y
   aptitude install docker-ce docker-ce-cli containerd.io -y -V -D -Z
-else
-  aptitude install docker.io -y -V -D -Z
-fi
+}
+
+distro=$(lsb_release -cs)
+case "${distro}" in
+  "focal") normal_install ;;
+  "eoan") normal_install ;;
+  *) custom_install "${distro}"
+esac
+
+# enable service
+systemctl enable --now docker
 
 # docker-compose
 compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
