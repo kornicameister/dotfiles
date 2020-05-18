@@ -16,7 +16,7 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        ubuntu_version: ["18.04", "19.10", "20.04"]
+        ubuntu_version: ["18.04", "19.10", "20.04", "20.10"]
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
