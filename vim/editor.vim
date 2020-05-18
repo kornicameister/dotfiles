@@ -8,7 +8,6 @@ nnoremap ; :
 " general settings for editor
 syntax on
 
-
 set smartindent
 set noerrorbells
 set novisualbell
@@ -84,15 +83,8 @@ set cmdheight=1
 " enable filetypes plugins
 filetype plugin indent on
 
-hi Normal ctermfg=252 ctermbg=none
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE
-if has('termguicolors')
-  set termguicolors
-endif
-
 " spelling
-setlocal spell
+setlocal nospell
 map <silent> <leader>ss :setlocal spell!<cr>
 hi SpellBad cterm=underline,bold ctermfg=red
 
@@ -148,12 +140,13 @@ set wildignore+=/tmp/**
 set wildmode=longest:full,full
 set wildmenu
 
-" vim theme settings
-colorscheme edge
-let g:edge_style = 'neon'
-let g:edge_disable_italic_comment = 0
-let g:edge_transparent_background = 1
-set background=dark
+" netrw (file browser)
+let g:netrw_banner=0                              " disable annoying banner
+let g:netrw_browse_split=4                        " open in prior window
+let g:netrw_altv=1                                " open splits to the right
+let g:netrw_liststyle=3                           " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 " navigate through the buffers
 nnoremap <silent> <Tab> :bnext<CR>
@@ -177,7 +170,31 @@ augroup save_on_focus_out
 augroup END
 
 augroup help_vertical
-  autocmd!
+  au!
   command! -nargs=* -complete=help Help vertical belowright help <args>
   autocmd FileType help wincmd L
+augroup END
+
+augroup colorscheme_customization
+  au!
+
+  if has('termguicolors')
+    set termguicolors
+  endif
+
+  if has_key(g:plugs, 'dracula')
+    let g:dracula_bold = 1
+    let g:dracula_italic = 1
+    let g:dracula_colorterm = 0
+
+    set background=dark
+    colorscheme dracula
+
+    if has_key(g:plugs, 'vim-airline')
+      let g:airline_theme = 'dracula'
+      call airline#load_theme() | call airline#update_statusline()
+    endif
+
+  endif
+
 augroup END

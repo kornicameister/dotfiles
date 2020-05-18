@@ -8,6 +8,7 @@
   title_transmit_fg_color = "#bcbcbc"
   title_use_system_font = False
 [keybindings]
+  layout_launcher = None
 [layouts]
   [[default]]
     [[[child1]]]
