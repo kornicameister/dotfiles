@@ -15,7 +15,7 @@ RUN apt-get -qq update && \
     apt-get -yqq autoremove && \
     rm -rf /var/apt/cache/**
     
-FROM base AS tz_configuration
+FROM prerequisites AS tz_configuration
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections && \
