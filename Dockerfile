@@ -34,7 +34,7 @@ RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections && \
 FROM tz_configuration AS user_add
 
 ARG K_USERNAME
-RUN useradd -ms /bin/bash ${K_USERNAME} && groupadd ${K_USERNAME}
+RUN groupadd ${K_USERNAME} && useradd -ms /bin/bash ${K_USERNAME}
 
 FROM user_add AS clone
 
