@@ -43,7 +43,7 @@ x-build-steps: &build_steps
     - run:
         name: Run an installation
         command: |
-          su - ${CIRCLE_PROJECT_USERNAME} -c '
+          su -l -p -c '
             ./install \
               "${CIRCLE_PROJECT_USERNAME}" \
               "${CIRCLE_BUILD_NUM}" \
@@ -51,7 +51,7 @@ x-build-steps: &build_steps
               "Circle Builds" \
               "${CIRCLE_SHA1}" \
               "555-WAKATIME-BOGUS-API-KEY"
-          '
+          ' ${CIRCLE_PROJECT_USERNAME}
     - run:
         name: Verify !
         command: |
