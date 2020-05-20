@@ -182,3 +182,6 @@ zinit light direnv/direnv
 
 # has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
+
+# handy aliases section ;-)
+alias cat="bat -pp"
