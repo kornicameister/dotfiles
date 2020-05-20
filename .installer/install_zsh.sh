@@ -24,7 +24,10 @@ cd "${dir}" && {
 
   make clean
   make -j
-  make install
+  make install.bin
+  make install.modules
+  make install.fns
+  make install.info
 
   cd ... || exit 1
 
