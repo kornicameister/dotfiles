@@ -44,7 +44,7 @@ retry() {
   done
 }
 
-validate_bin_accessible() (
+validate_bin_accessible() {
   bins_to_check=(
     # founations
     nvim
@@ -90,9 +90,9 @@ validate_bin_accessible() (
       fail "${bin} is not accessible"
     fi
   done
-)
+}
 
-validate_interactive_bins() (
+validate_interactive_bins() {
   bins_to_check=(
     pyenv
     nodenv
@@ -117,9 +117,9 @@ validate_interactive_bins() (
       fail "${bin} is not accessible"
     fi
   done
-)
+}
 
-validate_pyenv() (
+validate_pyenv() {
   if [[ ! -s "${HOME}/.pyenv" ]]; then
     fail "Failed to locate pyenv directory in \$HOME"
   else
@@ -144,9 +144,9 @@ validate_pyenv() (
       fail "pyenv did not set global system version"
     fi
   fi
-)
+}
 
-validate_nodenv() (
+validate_nodenv() {
   if [[ ! -s "${HOME}/.nodenv" ]]; then
     fail "Failed to locate nodenv directory in \$HOME"
   else
@@ -156,9 +156,9 @@ validate_nodenv() (
       fail "nodenv did not set global system version"
     fi
   fi
-)
+}
 
-validate_goenv() (
+validate_goenv() {
   if [[ ! -s "${HOME}/.goenv" ]]; then
     fail "Failed to locate goenv directory in \$HOME"
   else
@@ -167,9 +167,9 @@ validate_goenv() (
       fail "goenv did not set global system version"
     fi
   fi
-)
+}
 
-validate_jenv() (
+validate_jenv() {
   if [[ ! -s "${HOME}/.jenv" ]]; then
     fail "Failed to locate jenv directory in \$HOME"
   else
@@ -179,23 +179,33 @@ validate_jenv() (
       fail "jenv did not set global system version"
     fi
   fi
-)
+}
 
-validate_git_config() (
+validate_git_config() {
   if [[ ! -f "${HOME}/.gitconfig.local" ]]; then
     fail "Local git configuration not set"
   else
     success "git configured"
   fi
-)
+}
 
-validate_wakatime_config() (
+validate_wakatime_config() {
   if [[ ! -f "${HOME}/.wakatime.cfg" ]]; then
     fail "Local wakatime configuration not set"
   else
     success "wakatime configured"
   fi
-)
+}
+
+validate_zsh() {
+  test "$(command -v zsh)"=/usr/local/bin/zsh || fail "zsh should be installed in /usr/local/bin/zsh"
+  test -L /bin/zsh || fail "/bin/zsh should exist"
+  test "$(/usr/local/bin/zsh --version)"="$(zsh --version)" || fail "version output differ"
+  test "$(/bin/zsh --version)"="$(zsh --version)" || fail "version output differ"
+  grep /bin/zsh /etc/shells >/dev/null || fail "/bin/zsh ought to be in /etc/shells"
+
+  success "zsh $(command -v zsh) :: $(zsh --version) configured correctly"
+}
 
 info 'Validating installation'
 (
@@ -208,6 +218,7 @@ info 'Validating installation'
   validate_nodenv
   validate_goenv
   validate_jenv
+  validate_zsh
 )
 info 'Validation successful'
 screenfetch

@@ -14,11 +14,7 @@
     ]
 
 # mainly neovim plugin compilation
-- aptget:
-    [
-      python3-distutils,
-      python3-dev,
-    ]
+- aptget: [python3-distutils, python3-dev]
 
 # docker requires
 - aptget:
@@ -107,7 +103,6 @@
 # my stuff
 - aptget:
     [
-      zsh,
       subversion,
       git-lfs,
       git-extras,
@@ -129,6 +124,14 @@
       lnav,
       libimage-exiftool-perl,
     ]
+
+# custom zsh
+- shell:
+    - description: Install ZSH
+      command: .installer/install_zsh.sh
+      quiet: false
+      stderr: true
+      stdout: true
 
 # snap binaries
 - shell:
