@@ -20,7 +20,8 @@ cd "${dir}" && {
     --enable-multibyte \
     --enable-zsh-mem \
     --enable-pcre \
-    --enable-cap
+    --enable-cap \
+    --enable-gdbm
 
   make clean
   make -j
