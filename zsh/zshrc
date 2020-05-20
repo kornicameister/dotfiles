@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=cyan,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
@@ -23,13 +30,8 @@ source ~/.zinit/zinit.zsh
 zinit light zdharma/zsh-unique-id
 zinit light zinit-zsh/z-a-submods
 
-# prompt
-zinit ice \
-    lucid \
-    pick'async.zsh' \
-    src'pure.zsh' \
-    atload'source ~/.dotfiles/zsh/prompt.zsh'
-zinit light sindresorhus/pure
+zinit ice lucid depth=1 atload='[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh'
+zinit light romkatv/powerlevel10k
 
 zinit ice wait lucid ; zinit load sobolevn/wakatime-zsh-plugin
 zinit ice wait lucid ; zinit load hlissner/zsh-autopair
@@ -62,7 +64,7 @@ zinit light srijanshetty/zsh-pandoc-completion
 zinit ice \
     blockf \
     lucid \
-    atinit'ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
+    atinit'ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
 zinit load zdharma/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
@@ -180,3 +182,6 @@ zinit light direnv/direnv
 
 # has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
+
+# handy aliases section ;-)
+alias cat="bat -pp"
