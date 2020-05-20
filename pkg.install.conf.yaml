@@ -126,6 +126,7 @@
     ]
 
 # custom zsh
+- aptget: [install-info]
 - shell:
     - description: Install ZSH
       command: .installer/install_zsh.sh
