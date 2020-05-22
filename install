@@ -29,7 +29,7 @@ WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
 _done() {
     local icon
     icon="${2:-"[  ]"}"
-    printf "\\r  \\033[00;34m${icon} %s\\n" "${1}"
+    printf "\\r  \\033[00;40m${icon} %s\\n" "${1}"
 }
 
 _hello_dude() {
@@ -178,8 +178,8 @@ _configure_nvim() {
         new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
 
         export PATH="${new_path}"
-        nvim --headless +PlugInstall +qall! ;
-        nvim --headless +UpdateRemotePlugins +qall! ;
+        nvim --headless +PlugInstall +qall!
+        nvim --headless +UpdateRemotePlugins +qall!
         export PATH="${old_path}"
 
         unset goenv
@@ -378,7 +378,7 @@ _install_dependencies() {
         >/dev/null
 }
 
-[[ -n ${CI} ]] && set -x
+[[ -z ${CI} ]] && set -x
 _hello_dude
 _install_dependencies
 _init_submodules
@@ -388,4 +388,4 @@ _configure_wakatime
 _configure_git
 _install_envs
 _configure_nvim
-[[ -n ${CI} ]] && set +x
+[[ -z ${CI} ]] && set +x
