@@ -9,7 +9,7 @@ flake8-commas==2.0.0
 flake8-quotes==3.2.0
 flake8-print==3.1.4
 flake8-bandit==2.1.2
-flake8-comprehensions==3.2.2; python_version >= '3.0'
+flake8-comprehensions==3.2.3; python_version >= '3.0'
 flake8-comprehensions==1.4.1; python_version < '3.0'
 
 yapf==0.30.0
