@@ -31,7 +31,7 @@ if isdirectory($VIRTUAL_ENV)
   endif
 elseif executable('yapf')
   call add(b:ale_fixers, 'yapf')
-elseif executable(s:black_bin)
+elseif executable('black')
   call add(b:ale_fixers, 'black')
 endif
 
