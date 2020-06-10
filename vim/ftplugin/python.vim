@@ -24,13 +24,15 @@ let b:ale_fixers = ['trim_whitespace', 'remove_trailing_lines']
 if isdirectory($VIRTUAL_ENV)
   let s:yapf_bin = expand($VIRTUAL_ENV.'/bin/yapf')
   let s:black_bin = expand($VIRTUAL_ENV.'/bin/black')
-  if executable(s:yapf_bin)
-    call add(b:ale_fixers, 'yapf')
-  elseif executable(s:black_bin)
+  if executable(s:black_bin)
     call add(b:ale_fixers, 'black')
+  elseif executable(s:yapf_bin)
+    call add(b:ale_fixers, 'yapf')
   endif
 elseif executable('yapf')
   call add(b:ale_fixers, 'yapf')
+elseif executable(s:black_bin)
+  call add(b:ale_fixers, 'black')
 endif
 
 " if enabled, it makes flake8 loose its configuration file in project root
