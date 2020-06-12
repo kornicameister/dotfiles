@@ -9,8 +9,10 @@ x-build-steps: &build_steps
 
           apt-get install \
             locales \
-            ssh ca-certificates \
+            ssh \
+            ca-certificates \
             lsb-release \
+            build-essential \
             -yqq \
             --no-install-recommends
 
@@ -69,6 +71,10 @@ jobs:
     docker:
       - image: ubuntu:19.10
     <<: *build_steps
+  build_ubuntu_20_04:
+    docker:
+      - image: ubuntu:20.04
+    <<: *build_steps
 
 workflows:
   version: 2
@@ -79,3 +85,4 @@ workflows:
     jobs:
       - build_ubuntu_18_04
       - build_ubuntu_19_10
+      - build_ubuntu_20_04
