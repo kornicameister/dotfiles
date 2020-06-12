@@ -14,11 +14,7 @@
     ]
 
 # mainly neovim plugin compilation
-- aptget:
-    [
-      python3-distutils,
-      python3-dev,
-    ]
+- aptget: [python3-distutils, python3-dev]
 
 # docker requires
 - aptget:
@@ -151,6 +147,7 @@
       command: |
         xargs -a "${PWD}/remove.pkgs.txt" aptitude remove -yq \
           && aptitude autoclean
+- aptget: fonts-firacode
 
 # start some services at the end
 - shell:
