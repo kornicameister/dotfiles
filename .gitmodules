@@ -34,11 +34,6 @@
     url = https://github.com/dein0s/dotbot_plugin_aptget.git
     shallow = true
     branch = master
-[submodule "dependencies/nerd-fonts"]
-    path = dependencies/nerd-fonts
-    url = https://github.com/ryanoasis/nerd-fonts
-    shallow = true
-    branch = master
 [submodule "dependencies/xxenv-latest"]
     path = dependencies/xxenv-latest
     url = https://github.com/momo-lab/xxenv-latest
