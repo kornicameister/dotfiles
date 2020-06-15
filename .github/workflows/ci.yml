@@ -21,3 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ludeeus/action-shellcheck@0.2.1
+        with:
+          ignore: zsh/
+        env:
+          SHELLCHECK_OPTS: "--external-sources"
