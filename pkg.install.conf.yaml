@@ -155,6 +155,7 @@
       command: |
         xargs -a "${PWD}/remove.pkgs.txt" aptitude remove -yq \
           && aptitude autoclean
+- aptget: fonts-firacode
 
 # start some services at the end
 - shell:

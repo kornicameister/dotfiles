@@ -52,6 +52,8 @@
 
 [fetch]
 	prune = true             # delete local branches if remotes are gone
+	pruneTags = true	 # do the same for tags
+	output = compact	 # it is enough
 
 [rebase]
 	stat = true
