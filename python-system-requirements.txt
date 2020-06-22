@@ -1,7 +1,7 @@
 pip==20.1.1
 wakatime==13.0.7
 
-mypy==0.780; python_version >= '3.0' --no-binary mypy
+mypy==0.781; python_version >= '3.0' --no-binary mypy
 
 flake8==3.8.3;
 flake8-bugbear==20.1.4; python_version >= '3.0'
@@ -15,4 +15,4 @@ flake8-comprehensions==1.4.1; python_version < '3.0'
 yapf==0.30.0
 
 vim-vint==0.3.21
-cfn-lint==0.33.0
+cfn-lint==0.33.1
