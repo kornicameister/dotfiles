@@ -131,6 +131,8 @@ cmap w!! w !sudo tee % >/dev/null
 
 " normal OS clipboard interaction
 set clipboard+=unnamedplus
+nnoremap <C+c> y*
+nnoremap <C+v> p*
 
 " wilderness
 set wildignore+=*.png,*.PNG,*.JPG,*.jpg,*.JPEG,*.jpeg,*.GIF,*.gif,*.pdf,*.PDF
