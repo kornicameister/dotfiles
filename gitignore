@@ -27,3 +27,6 @@
 .node-version
 .go-version
 .java-version
+
+# yamllint
+.yamllint*
