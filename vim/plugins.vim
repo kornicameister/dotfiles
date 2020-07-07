@@ -71,6 +71,7 @@ Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 if has('nvim')
     Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
+    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
 else
     Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
 endif
