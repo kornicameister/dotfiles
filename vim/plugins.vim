@@ -28,6 +28,7 @@ Plug 'tpope/vim-git'
 " ale plugin
 Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
 Plug 'dense-analysis/ale'
+Plug 'da-x/depree', { 'do': './rebuild.sh' }
 
 " deoplete
 if has('nvim')
