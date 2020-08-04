@@ -63,10 +63,6 @@ jobs:
           name: "Submodules :: checkout"
           command: .circleci/submodules_step.sh
 
-  build_ubuntu_18_04:
-    docker:
-      - image: ubuntu:18.04
-    <<: *build_steps
   build_ubuntu_19_10:
     docker:
       - image: ubuntu:19.10
@@ -83,6 +79,5 @@ workflows:
       - submodules
   build:
     jobs:
-      - build_ubuntu_18_04
       - build_ubuntu_19_10
       - build_ubuntu_20_04
