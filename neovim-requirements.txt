@@ -3,6 +3,14 @@
 msgpack==1.0.0
 neovim==0.3.1
 pynvim==0.4.1
-jedi==0.17.2
+
 setuptools==49.2.1 ; python_version > '3.0'
 setuptools==44.0.0 ; python_version < '3.0'
+
+python-language-server==0.34.1
+
+jedi==0.17.2
+rope==0.17.0
+vulture==1.6
+
+vim-vint==0.3.21
