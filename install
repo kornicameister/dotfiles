@@ -246,13 +246,9 @@ _install_envs() {
 
         $nodenv latest install -s 14 &&
             $nodenv global "$($nodenv latest --print-installed)"
-        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
-            install -g \
-            neovim \
-            prettier \
-            typescript \
-            @elm-tooling/elm-language-server \
-            bash-language-server
+        "$(jq -r '.dependencies | (to_entries | .[] | [.key, .value] | join("@")) | .' package.json)" \
+            xargs \
+            "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install -g
     else
         _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
