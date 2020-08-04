@@ -12,7 +12,7 @@ jobs:
      - name: Install dependencies
        run: |
          pip install --upgrade pip
-         pip install vim-vint==$(grep vim-vint < python-system-requirements.txt | awk -F'==' '{print $2}')
+         pip install vim-vint==$(grep vim-vint < neovim-requirements.txt | awk -F'==' '{print $2}')
      - name: vint
        run: |
          vint -c -s -t --enable-neovim $(git ls-files -- 'vim/*.vim' 'nvim/*.vim' vimrc)
