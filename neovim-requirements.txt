@@ -11,6 +11,5 @@ python-language-server==0.34.1
 
 jedi==0.17.2
 rope==0.17.0
-vulture==1.6
 
 vim-vint==0.3.21
