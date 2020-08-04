@@ -156,13 +156,6 @@ nnoremap <silent> <leader>Q :bufdo bd<CR>
 nnoremap <silent> <leader>r :e<CR>
 nnoremap <silent> <leader>R :e!<CR>
 
-" ale mapping
-nmap <A-f> <Plug>(ale_fix)<CR>
-nmap <A-l> <Plug>(ale_lint)<CR>
-nmap <A-d> <Plug>(ale_detail)<CR>
-nmap <A-k> <Plug>(ale_previous_wrap)
-nmap <A-j> <Plug>(ale_next_wrap)
-
 augroup save_on_focus_out
   autocmd!
   au FocusLost * :wa
