@@ -246,7 +246,7 @@ _install_envs() {
 
         $nodenv latest install -s 14 &&
             $nodenv global "$($nodenv latest --print-installed)"
-        "$(jq -r '.dependencies | (to_entries | .[] | [.key, .value] | join("@")) | .' package.json)" \
+        "$(jq -r '.dependencies | (to_entries | .[] | [.key, .value] | join("@")) | .' "${BASEDIR}/package.json")" \
             xargs \
             "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install -g
     else
