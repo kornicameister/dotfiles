@@ -16,15 +16,24 @@ jobs:
     strategy:
       max-parallel: 3
       matrix:
-        ubuntu_version: ["18.04", "19.10", "20.04", "20.10"]
+        ubuntu_version: ["19.10", "20.04", "20.10"]
     steps:
     - uses: actions/checkout@v2
+    - uses: textbook/git-checkout-submodule-action@2.1.1
     - name: Build the Docker image
       run: |
-        docker build . --build-arg OS_NAME=ubuntu --build-arg OS_VERSION=${{ matrix.ubuntu_version }} --build-arg K_USERNAME=kornicameister \
-          --build-arg K_PASSWORD="$(echo "kornicameister" | md5sum)" --build-arg K_EMAIL=kornicameister@dotfiles.git \
-          --build-arg K_GPG_FULLNAME="kornicameister gpg" --build-arg K_GPG_PASSPHRASE=${{ github.run_id }} \
-          --build-arg K_WAKATIME_API_KEY=${{ github.run_id }} --tag kornicameister/dotfiles:${{ matrix.ubuntu_version }} | tee build.log
+        docker build \
+          --build-arg OS_NAME=ubuntu \
+          --build-arg OS_VERSION=${{ matrix.ubuntu_version }} \
+          --build-arg K_USERNAME=kornicameister \
+          --build-arg K_PASSWORD="$(echo "kornicameister" | md5sum)" \
+          --build-arg K_EMAIL=kornicameister@dotfiles.git \
+          --build-arg K_GPG_FULLNAME="kornicameister gpg" \
+          --build-arg K_GPG_PASSPHRASE=${{ github.run_id }} \
+          --build-arg K_WAKATIME_API_KEY=${{ github.run_id }} \
+          --tag kornicameister/dotfiles:${{ matrix.ubuntu_version }} \
+          . \
+          | tee build.log
     - name: Upload build.log
       uses: actions/upload-artifact@v1.0.0
       with:
