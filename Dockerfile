@@ -1,5 +1,5 @@
 ARG OS_NAME=ubuntu
-ARG OS_VERSION=19.10
+ARG OS_VERSION=20.04
 
 FROM ${OS_NAME}:${OS_VERSION} AS prerequisites
 
@@ -14,7 +14,7 @@ RUN apt-get -qq update && \
     apt-get -yqq autoclean && \
     apt-get -yqq autoremove && \
     rm -rf /var/apt/cache/**
-    
+
 FROM prerequisites AS tz_configuration
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -30,7 +30,7 @@ RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections && \
     apt-get -yqq autoclean && \
     apt-get -yqq autoremove && \
     rm -rf /var/apt/cache/**
-    
+
 FROM tz_configuration AS user_add
 
 ARG K_USERNAME
@@ -38,14 +38,9 @@ RUN groupadd ${K_USERNAME} && useradd -ms /bin/bash ${K_USERNAME}
 
 FROM user_add AS clone
 
-RUN git clone https://github.com/kornicameister/dotfiles.git \
-    --depth 1 \
-    --branch master
-WORKDIR /dotfiles
-RUN git submodule update --init --recursive
 WORKDIR /
-
-FROM clone AS install
+ADD dotfiles ./
+WORKDIR /dotfiles
 
 ARG K_USERNAME
 ARG K_PASSWORD
@@ -54,7 +49,6 @@ ARG K_GPG_FULLNAME
 ARG K_GPG_PASSPHRASE
 ARG K_WAKATIME_API_KEY
 
-WORKDIR /dotfiles
 RUN ./install \
     "${K_USERNAME}" \
     "${K_PASSWORD}" \
