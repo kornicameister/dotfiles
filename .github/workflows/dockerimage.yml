@@ -40,8 +40,3 @@ jobs:
             --tag kornicameister/dotfiles:${{ matrix.ubuntu_version }} \
             --compress \
             .
-      - name: Upload build.log
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: build.log
-          path: build.log
