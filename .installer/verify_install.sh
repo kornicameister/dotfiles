@@ -151,11 +151,38 @@ validate_nodenv() (
     fail "Failed to locate nodenv directory in \$HOME"
   else
     success "nodenv directory set"
-    zsh -mil -c "npx -p @nodenv/nodenv-installer nodenv-doctor"
+    zsh -mil -c "eval $(nodenv init -) && npx -p @nodenv/nodenv-installer nodenv-doctor"
     if [[ ! -f "${HOME}/.nodenv/version" ]]; then
       fail "nodenv did not set global system version"
     fi
   fi
+
+  local bins_to_check
+  bins_to_check=(
+    neovim-node-host
+    prettier
+    tsc
+    elm-language-server
+    bash-language-server
+    vim-language-server
+    docker-langserver
+  )
+  for bin in "${bins_to_check[@]}"; do
+    bin_path="$(command -v "${bin}")"
+
+    if [[ -s "${bin_path}" ]]; then
+      if $bin_path --version 2>/dev/null 1>/dev/null; then
+        v_out=$($bin_path --version | tr -d 'Version ' | tr "'${bin}'" ' ' | sed -e 's/^[[:space:]]*//')
+      else
+        v_out="?"
+      fi
+      success "${bin} is accessible via ${bin_path} with version ${v_out}"
+    else
+      fail "${bin} is not accessible"
+    fi
+
+  done
+
 )
 
 validate_goenv() (
