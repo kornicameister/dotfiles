@@ -18,9 +18,15 @@ jobs:
       matrix:
         ubuntu_version: ["19.10", "20.04", "20.10"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: textbook/git-checkout-submodule-action@2.1.1
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: dotfiles
+      - name: Checkout submodules
+        run: git submodule update --init --recursive --jobs 4 --depth 1
+        working-directory: dotfiles
       - name: Build the Docker image
+        working-directory: dotfiles
         run: |
           docker build \
             --build-arg OS_NAME=ubuntu \
@@ -32,8 +38,8 @@ jobs:
             --build-arg K_GPG_PASSPHRASE=${{ github.run_id }} \
             --build-arg K_WAKATIME_API_KEY=${{ github.run_id }} \
             --tag kornicameister/dotfiles:${{ matrix.ubuntu_version }} \
-            . \
-            | tee build.log
+            --compress \
+            .
       - name: Upload build.log
         uses: actions/upload-artifact@v1.0.0
         with:
