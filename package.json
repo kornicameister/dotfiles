@@ -1,0 +1,16 @@
+{
+  "name": "kornicameister-dotfiles",
+  "homepage": "https://github.com/kornicameister/dotfiles",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "npm": "6.14.7",
+    "neovim": "4.9.0",
+    "prettier": "2.0.5",
+    "typescript": "3.9.7",
+    "@elm-tooling/elm-language-server": "1.10.0",
+    "bash-language-server": "1.16.1",
+    "vim-language-server": "2.1.0",
+    "dockerfile-language-server-nodejs": "0.1.1"
+  }
+}
