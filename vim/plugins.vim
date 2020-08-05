@@ -28,6 +28,7 @@ Plug 'tpope/vim-git'
 " ale plugin
 Plug 'vim-scripts/dbext.vim', { 'for': ['sql'] }
 Plug 'dense-analysis/ale'
+Plug 'da-x/depree', { 'do': './rebuild.sh' }
 
 " deoplete
 if has('nvim')
@@ -71,6 +72,7 @@ Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 if has('nvim')
     Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
+    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 else
     Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
 endif
@@ -96,6 +98,8 @@ Plug 'haya14busa/incsearch.vim'                     " incremental searching
 Plug 'ap/vim-css-color'                             " colors for colors
 Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'jiangmiao/auto-pairs'                         " auto-pair is nice
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -350,6 +354,17 @@ if has_key(g:plugs, 'fzf.vim')
     let g:ale_echo_msg_error_str = 'E'
     let g:ale_echo_msg_warning_str = 'W'
     let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+    let g:ale_set_balloons = 1
+
+    nmap <A-f> <Plug>(ale_fix)<CR>
+    nmap <A-l> <Plug>(ale_lint)<CR>
+    nmap <A-d> <Plug>(ale_detail)<CR>
+    nmap <A-k> <Plug>(ale_previous_wrap)
+    nmap <A-j> <Plug>(ale_next_wrap)
+
+    nmap <F3> <Plug>(ale_hover)
+    nmap <F4> <Plug>(ale_go_to_definition)
 
     if has('nvim')
       autocmd VimEnter *
