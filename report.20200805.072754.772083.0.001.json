@@ -1,0 +1,444 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200805.072754.772083.0.001.json",
+    "dumpEventTime": "2020-08-05T07:27:54Z",
+    "dumpEventTimeStamp": "1596605274345",
+    "processId": 772083,
+    "cwd": "/home/osboxes/dev/dotfiles",
+    "commandLine": [
+      "node",
+      "/home/osboxes/.nodenv/versions/12.11.1/bin/bash-language-server",
+      "start"
+    ],
+    "nodejsVersion": "v12.11.1",
+    "glibcVersionRuntime": "2.31",
+    "glibcVersionCompiler": "2.17",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "12.11.1",
+      "v8": "7.7.299.11-node.12",
+      "uv": "1.32.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1c",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v12.11.1/node-v12.11.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.11.1/node-v12.11.1.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "5.4.0-42-generic",
+    "osVersion": "#46-Ubuntu SMP Fri Jul 10 00:24:02 UTC 2020",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i5-8365U CPU @ 1.60GHz",
+        "speed": 1895,
+        "user": 34381400,
+        "nice": 72200,
+        "sys": 7206800,
+        "idle": 394310700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8365U CPU @ 1.60GHz",
+        "speed": 1895,
+        "user": 37146600,
+        "nice": 96400,
+        "sys": 7558600,
+        "idle": 391268200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8365U CPU @ 1.60GHz",
+        "speed": 1895,
+        "user": 37792300,
+        "nice": 89000,
+        "sys": 7418000,
+        "idle": 390477200,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-8365U CPU @ 1.60GHz",
+        "speed": 1895,
+        "user": 37234600,
+        "nice": 68200,
+        "sys": 7078500,
+        "idle": 389793200,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "enp0s3",
+        "internal": false,
+        "mac": "08:00:27:d6:16:4e",
+        "address": "10.0.2.15",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "enp0s3",
+        "internal": false,
+        "mac": "08:00:27:d6:16:4e",
+        "address": "fe80::cf46:2c89:ad96:b191",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 2
+      }
+    ],
+    "host": "osboxes"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000000afd845",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::string const&, v8::Local<v8::String>) [node]"
+    },
+    {
+      "pc": "0x00000000009d4603",
+      "symbol": "node::OnFatalError(char const*, char const*) [node]"
+    },
+    {
+      "pc": "0x0000000000b32dbe",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [node]"
+    },
+    {
+      "pc": "0x0000000000b33139",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [node]"
+    },
+    {
+      "pc": "0x0000000000cde455",
+      "symbol": " [node]"
+    },
+    {
+      "pc": "0x0000000000cdeae6",
+      "symbol": "v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [node]"
+    },
+    {
+      "pc": "0x0000000000cea97a",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [node]"
+    },
+    {
+      "pc": "0x0000000000ceb885",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [node]"
+    },
+    {
+      "pc": "0x0000000000cee298",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [node]"
+    },
+    {
+      "pc": "0x0000000000cb4bc7",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType) [node]"
+    },
+    {
+      "pc": "0x0000000000feac59",
+      "symbol": "v8::internal::Runtime_AllocateInOldGeneration(int, unsigned long*, v8::internal::Isolate*) [node]"
+    },
+    {
+      "pc": "0x000000000136d539",
+      "symbol": " [node]"
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2160132096,
+    "totalCommittedMemory": 2152601368,
+    "usedMemory": 2148492128,
+    "availableMemory": 46712680,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 32568,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 8388608,
+        "committedMemory": 1574640,
+        "capacity": 4189952,
+        "used": 215568,
+        "available": 3974384
+      },
+      "old_space": {
+        "memorySize": 1975889920,
+        "committedMemory": 1975606064,
+        "capacity": 1973779624,
+        "used": 1973144056,
+        "available": 635568
+      },
+      "code_space": {
+        "memorySize": 425984,
+        "committedMemory": 401248,
+        "capacity": 331168,
+        "used": 331168,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 1052672,
+        "committedMemory": 874080,
+        "capacity": 736560,
+        "used": 736560,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 174063616,
+        "committedMemory": 174063616,
+        "capacity": 174028928,
+        "used": 174028928,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3552,
+        "used": 3552,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 4189952,
+        "used": 0,
+        "available": 4189952
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 136.58,
+    "kernelCpuSeconds": 12.2315,
+    "cpuConsumptionPercent": 135.284,
+    "maxRss": 3923554304,
+    "pageFaults": {
+      "IORequired": 185,
+      "IONotRequired": 1303013
+    },
+    "fsActivity": {
+      "reads": 688880,
+      "writes": 0
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 90.6641,
+    "kernelCpuSeconds": 6.83619,
+    "cpuConsumptionPercent": 88.6366,
+    "fsActivity": {
+      "reads": 60512,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "SHELL": "/usr/bin/zsh",
+    "SESSION_MANAGER": "local/osboxes:@/tmp/.ICE-unix/27818,unix/osboxes:/tmp/.ICE-unix/27818",
+    "QT_ACCESSIBILITY": "1",
+    "COLORTERM": "truecolor",
+    "PYENV_SHELL": "zsh",
+    "XDG_CONFIG_DIRS": "/etc/xdg/xdg-xubuntu:/etc/xdg:/etc/xdg",
+    "LESS": "-F -g -i -M -R -S -w -X -z-4",
+    "GREP_COLOR": "37;45",
+    "XDG_SESSION_PATH": "/org/freedesktop/DisplayManager/Session0",
+    "XDG_MENU_PREFIX": "xfce-",
+    "JDK_HOME": "/home/osboxes/.jenv/versions/13",
+    "CLUTTER_BACKEND": "x11",
+    "ZSH_CACHE_DIR": "/home/osboxes/.cache/zinit",
+    "LANGUAGE": "en_US",
+    "TERMINATOR_DBUS_PATH": "/net/tenshu/Terminator2",
+    "LESS_TERMCAP_se": "\u001b[0m",
+    "LESS_TERMCAP_so": "\u001b[00;47;30m",
+    "JAVA_HOME": "/home/osboxes/.jenv/versions/13",
+    "SSH_AUTH_SOCK": "/home/osboxes/.cache/prezto/ssh-agent.sock",
+    "P9K_TTY": "old",
+    "XDG_CONFIG_HOME": "/home/osboxes/.config",
+    "TERMINATOR_UUID": "urn:uuid:98cf7a5f-b495-411f-a34a-10b9603d54eb",
+    "NODENV_DIR": "/home/osboxes/dev/dotfiles",
+    "NVIM_LOG_FILE": "/home/osboxes/.local/share/nvim/log",
+    "DESKTOP_SESSION": "xubuntu",
+    "NODENV_VERSION": "12.11.1",
+    "GREP_COLORS": "mt=37;45",
+    "GPG_TTY": "/dev/pts/4",
+    "JENV_FORCEJDKHOME": "true",
+    "ZUID_ID": "5",
+    "EDITOR": "nvim",
+    "JENV_SHELL": "zsh",
+    "PMSPEC": "0uUpiPsf",
+    "GOBIN": "/home/osboxes/go/1.13.1/bin",
+    "FZF_ALT_C_OPTS": "--preview 'tree -C {} | head -200'",
+    "GOENV_SHELL": "zsh",
+    "XDG_SEAT": "seat0",
+    "NVIM_LISTEN_ADDRESS": "/tmp/nvimD1hzNi/0",
+    "PWD": "/home/osboxes/dev/dotfiles",
+    "PYENV_VIRTUALENV_INIT": "1",
+    "LOGNAME": "osboxes",
+    "XDG_SESSION_DESKTOP": "xubuntu",
+    "QT_QPA_PLATFORMTHEME": "gtk2",
+    "XDG_SESSION_TYPE": "x11",
+    "GPG_AGENT_INFO": "/run/user/1000/gnupg/S.gpg-agent:0:1",
+    "FZF_COMPLETION_OPTS": "+c -x",
+    "XAUTHORITY": "/home/osboxes/.Xauthority",
+    "FORGIT_GI_TEMPLATES": "/home/osboxes/.forgit/gi/repos/dvcs/gitignore/templates",
+    "FZF_DEFAULT_COMMAND": "ag --follow --nocolor --ignore build --ignore .venv --ignore .git --ignore dist --ignore node_modules --ignore elm-stuff -g \"\"",
+    "XDG_GREETER_DATA_DIR": "/var/lib/lightdm-data/osboxes",
+    "PURE_GIT_PULL": "1",
+    "GDM_LANG": "en_US",
+    "NODENV_SHELL": "zsh",
+    "HOME": "/home/osboxes",
+    "LANG": "en_US.UTF-8",
+    "FZF_CTRL_R_OPTS": "--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'",
+    "LS_COLORS": "bd=38;5;68:ca=38;5;17:cd=38;5;113;1:di=38;5;63;1:do=38;5;127:ex=38;5;208;1:pi=38;5;126:fi=0:ln=target:mh=38;5;222;1:no=0:or=48;5;196;38;5;232;1:ow=38;5;220;1:sg=48;5;3;38;5;0:su=38;5;220;1;3;100;1:so=38;5;197:st=38;5;86;48;5;234:tw=48;5;235;38;5;139;3:*LS_COLORS=48;5;89;38;5;197;1;3;4;7:*README=38;5;220;1:*README.rst=38;5;220;1:*README.md=38;5;220;1:*LICENSE=38;5;220;1:*COPYING=38;5;220;1:*INSTALL=38;5;220;1:*COPYRIGHT=38;5;220;1:*AUTHORS=38;5;220;1:*HISTORY=38;5;220;1:*CONTRIBUTORS=38;5;220;1:*PATENTS=38;5;220;1:*VERSION=38;5;220;1:*NOTICE=38;5;220;1:*CHANGES=38;5;220;1:*.log=38;5;190:*.txt=38;5;253:*.etx=38;5;184:*.info=38;5;184:*.markdown=38;5;184:*.md=38;5;184:*.mkd=38;5;184:*.nfo=38;5;184:*.pod=38;5;184:*.rst=38;5;184:*.tex=38;5;184:*.textile=38;5;184:*.bib=38;5;178:*.json=38;5;178:*.jsonl=38;5;178:*.ndjson=38;5;178:*.msg=38;5;178:*.pgn=38;5;178:*.rss=38;5;178:*.xml=38;5;178:*.fxml=38;5;178:*.toml=38;5;178:*.yaml=38;5;178:*.yml=38;5;178:*.RData=38;5;178:*.rdata=38;5;178:*.xsd=38;5;178:*.dtd=38;5;178:*.sgml=38;5;178:*.rng=38;5;178:*.rnc=38;5;178:*.cbr=38;5;141:*.cbz=38;5;141:*.chm=38;5;141:*.djvu=38;5;141:*.pdf=38;5;141:*.PDF=38;5;141:*.mobi=38;5;141:*.epub=38;5;141:*.docm=38;5;111;4:*.doc=38;5;111:*.docx=38;5;111:*.odb=38;5;111:*.odt=38;5;111:*.rtf=38;5;111:*.odp=38;5;166:*.pps=38;5;166:*.ppt=38;5;166:*.pptx=38;5;166:*.ppts=38;5;166:*.pptxm=38;5;166;4:*.pptsm=38;5;166;4:*.csv=38;5;78:*.tsv=38;5;78:*.ods=38;5;112:*.xla=38;5;76:*.xls=38;5;112:*.xlsx=38;5;112:*.xlsxm=38;5;112;4:*.xltm=38;5;73;4:*.xltx=38;5;73:*.pages=38;5;111:*.numbers=38;5;112:*.key=38;5;166:*config=1:*cfg=1:*conf=1:*rc=1:*authorized_keys=1:*known_hosts=1:*.ini=1:*.plist=1:*.viminfo=1:*.pcf=1:*.psf=1:*.hidden-color-scheme=1:*.hidden-tmTheme=1:*.last-run=1:*.merged-ca-bundle=1:*.sublime-build=1:*.sublime-commands=1:*.sublime-keymap=1:*.sublime-settings=1:*.sublime-snippet=1:*.sublime-project=1:*.sublime-workspace=1:*.tmTheme=1:*.user-ca-bundle=1:*.epf=1:*.git=38;5;197:*.gitignore=38;5;240:*.gitattributes=38;5;240:*.gitmodules=38;5;240:*.awk=38;5;172:*.bash=38;5;172:*.bat=38;5;172:*.BAT=38;5;172:*.sed=38;5;172:*.sh=38;5;172:*.zsh=38;5;172:*.vim=38;5;172:*.kak=38;5;172:*.ahk=38;5;41:*.py=38;5;41:*.ipynb=38;5;41:*.rb=38;5;41:*.gemspec=38;5;41:*.pl=38;5;208:*.PL=38;5;160:*.t=38;5;114:*.msql=38;5;222:*.mysql=38;5;222:*.pgsql=38;5;222:*.sql=38;5;222:*.tcl=38;5;64;1:*.r=38;5;49:*.R=38;5;49:*.gs=38;5;81:*.clj=38;5;41:*.cljs=38;5;41:*.cljc=38;5;41:*.cljw=38;5;41:*.scala=38;5;41:*.dart=38;5;51:*.asm=38;5;81:*.cl=38;5;81:*.lisp=38;5;81:*.rkt=38;5;81:*.lua=38;5;81:*.moon=38;5;81:*.c=38;5;81:*.C=38;5;81:*.h=38;5;110:*.H=38;5;110:*.tcc=38;5;110:*.c++=38;5;81:*.h++=38;5;110:*.hpp=38;5;110:*.hxx=38;5;110:*.ii=38;5;110:*.M=38;5;110:*.m=38;5;110:*.cc=38;5;81:*.cs=38;5;81:*.cp=38;5;81:*.cpp=38;5;81:*.cxx=38;5;81:*.cr=38;5;81:*.go=38;5;81:*.f=38;5;81:*.F=38;5;81:*.for=38;5;81:*.ftn=38;5;81:*.f90=38;5;81:*.F90=38;5;81:*.f95=38;5;81:*.F95=38;5;81:*.f03=38;5;81:*.F03=38;5;81:*.f08=38;5;81:*.F08=38;5;81:*.nim=38;5;81:*.nimble=38;5;81:*.s=38;5;110:*.S=38;5;110:*.rs=38;5;81:*.scpt=38;5;219:*.swift=38;5;219:*.sx=38;5;81:*.vala=38;5;81:*.vapi=38;5;81:*.hi=38;5;110:*.hs=38;5;81:*.lhs=38;5;81:*.agda=38;5;81:*.lagda=38;5;81:*.lagda.tex=38;5;81:*.lagda.rst=38;5;81:*.lagda.md=38;5;81:*.agdai=38;5;110:*.zig=38;5;81:*.v=38;5;81:*.pyc=38;5;240:*.tf=38;5;168:*.tfstate=38;5;168:*.tfvars=38;5;168:*.css=38;5;125;1:*.less=38;5;125;1:*.sass=38;5;125;1:*.scss=38;5;125;1:*.htm=38;5;125;1:*.html=38;5;125;1:*.jhtm=38;5;125;1:*.mht=38;5;125;1:*.eml=38;5;125;1:*.mustache=38;5;125;1:*.coffee=38;5;074;1:*.java=38;5;074;1:*.js=38;5;074;1:*.mjs=38;5;074;1:*.jsm=38;5;074;1:*.jsp=38;5;074;1:*.php=38;5;81:*.ctp=38;5;81:*.twig=38;5;81:*.vb=38;5;81:*.vba=38;5;81:*.vbs=38;5;81:*Dockerfile=38;5;155:*.dockerignore=38;5;240:*Makefile=38;5;155:*MANIFEST=38;5;243:*pm_to_blib=38;5;240:*.nix=38;5;155:*.dhall=38;5;178:*.rake=38;5;155:*.am=38;5;242:*.in=38;5;242:*.hin=38;5;242:*.scan=38;5;242:*.m4=38;5;242:*.old=38;5;242:*.out=38;5;242:*.SKIP=38;5;244:*.diff=48;5;197;38;5;232:*.patch=48;5;197;38;5;232;1:*.bmp=38;5;97:*.dicom=38;5;97:*.tiff=38;5;97:*.tif=38;5;97:*.TIFF=38;5;97:*.cdr=38;5;97:*.flif=38;5;97:*.gif=38;5;97:*.icns=38;5;97:*.ico=38;5;97:*.jpeg=38;5;97:*.JPG=38;5;97:*.jpg=38;5;97:*.nth=38;5;97:*.png=38;5;97:*.psd=38;5;97:*.pxd=38;5;97:*.pxm=38;5;97:*.xpm=38;5;97:*.webp=38;5;97:*.ai=38;5;99:*.eps=38;5;99:*.epsf=38;5;99:*.drw=38;5;99:*.ps=38;5;99:*.svg=38;5;99:*.avi=38;5;114:*.divx=38;5;114:*.IFO=38;5;114:*.m2v=38;5;114:*.m4v=38;5;114:*.mkv=38;5;114:*.MOV=38;5;114:*.mov=38;5;114:*.mp4=38;5;114:*.mpeg=38;5;114:*.mpg=38;5;114:*.ogm=38;5;114:*.rmvb=38;5;114:*.sample=38;5;114:*.wmv=38;5;114:*.3g2=38;5;115:*.3gp=38;5;115:*.gp3=38;5;115:*.webm=38;5;115:*.gp4=38;5;115:*.asf=38;5;115:*.flv=38;5;115:*.ts=38;5;115:*.ogv=38;5;115:*.f4v=38;5;115:*.VOB=38;5;115;1:*.vob=38;5;115;1:*.ass=38;5;117:*.srt=38;5;117:*.ssa=38;5;117:*.sub=38;5;117:*.sup=38;5;117:*.vtt=38;5;117:*.3ga=38;5;137;1:*.S3M=38;5;137;1:*.aac=38;5;137;1:*.amr=38;5;137;1:*.au=38;5;137;1:*.caf=38;5;137;1:*.dat=38;5;137;1:*.dts=38;5;137;1:*.fcm=38;5;137;1:*.m4a=38;5;137;1:*.mid=38;5;137;1:*.mod=38;5;137;1:*.mp3=38;5;137;1:*.mp4a=38;5;137;1:*.oga=38;5;137;1:*.ogg=38;5;137;1:*.opus=38;5;137;1:*.s3m=38;5;137;1:*.sid=38;5;137;1:*.wma=38;5;137;1:*.ape=38;5;136;1:*.aiff=38;5;136;1:*.cda=38;5;136;1:*.flac=38;5;136;1:*.alac=38;5;136;1:*.midi=38;5;136;1:*.pcm=38;5;136;1:*.wav=38;5;136;1:*.wv=38;5;136;1:*.wvc=38;5;136;1:*.afm=38;5;66:*.fon=38;5;66:*.fnt=38;5;66:*.pfb=38;5;66:*.pfm=38;5;66:*.ttf=38;5;66:*.otf=38;5;66:*.woff=38;5;66:*.woff2=38;5;66:*.PFA=38;5;66:*.pfa=38;5;66:*.7z=38;5;40:*.a=38;5;40:*.arj=38;5;40:*.bz2=38;5;40:*.cpio=38;5;40:*.gz=38;5;40:*.lrz=38;5;40:*.lz=38;5;40:*.lzma=38;5;40:*.lzo=38;5;40:*.rar=38;5;40:*.s7z=38;5;40:*.sz=38;5;40:*.tar=38;5;40:*.tgz=38;5;40:*.xz=38;5;40:*.z=38;5;40:*.zip=38;5;40:*.zipx=38;5;40:*.zoo=38;5;40:*.zpaq=38;5;40:*.zst=38;5;40:*.zstd=38;5;40:*.zz=38;5;40:*.apk=38;5;215:*.ipa=38;5;215:*.deb=38;5;215:*.rpm=38;5;215:*.jad=38;5;215:*.jar=38;5;215:*.cab=38;5;215:*.pak=38;5;215:*.pk3=38;5;215:*.vdf=38;5;215:*.vpk=38;5;215:*.bsp=38;5;215:*.dmg=38;5;215:*.r[0-9]{0,2}=38;5;239:*.zx[0-9]{0,2}=38;5;239:*.z[0-9]{0,2}=38;5;239:*.part=38;5;239:*.iso=38;5;124:*.bin=38;5;124:*.nrg=38;5;124:*.qcow=38;5;124:*.sparseimage=38;5;124:*.toast=38;5;124:*.vcd=38;5;124:*.vmdk=38;5;124:*.accdb=38;5;60:*.accde=38;5;60:*.accdr=38;5;60:*.accdt=38;5;60:*.db=38;5;60:*.fmp12=38;5;60:*.fp7=38;5;60:*.localstorage=38;5;60:*.mdb=38;5;60:*.mde=38;5;60:*.sqlite=38;5;60:*.typelib=38;5;60:*.nc=38;5;60:*.pacnew=38;5;33:*.un~=38;5;241:*.orig=38;5;241:*.BUP=38;5;241:*.bak=38;5;241:*.o=38;5;241:*core=38;5;241:*.mdump=38;5;241:*.rlib=38;5;241:*.dll=38;5;241:*.swp=38;5;244:*.swo=38;5;244:*.tmp=38;5;244:*.sassc=38;5;244:*.pid=38;5;248:*.state=38;5;248:*lockfile=38;5;248:*lock=38;5;248:*.err=38;5;160;1:*.error=38;5;160;1:*.stderr=38;5;160;1:*.aria2=38;5;241:*.dump=38;5;241:*.stackdump=38;5;241:*.zcompdump=38;5;241:*.zwc=38;5;241:*.pcap=38;5;29:*.cap=38;5;29:*.dmp=38;5;29:*.DS_Store=38;5;239:*.localized=38;5;239:*.CFUserTextEncoding=38;5;239:*.allow=38;5;112:*.deny=38;5;196:*.service=38;5;45:*@.service=38;5;45:*.socket=38;5;45:*.swap=38;5;45:*.device=38;5;45:*.mount=38;5;45:*.automount=38;5;45:*.target=38;5;45:*.path=38;5;45:*.timer=38;5;45:*.snapshot=38;5;45:*.application=38;5;116:*.cue=38;5;116:*.description=38;5;116:*.directory=38;5;116:*.m3u=38;5;116:*.m3u8=38;5;116:*.md5=38;5;116:*.properties=38;5;116:*.sfv=38;5;116:*.theme=38;5;116:*.torrent=38;5;116:*.urlview=38;5;116:*.webloc=38;5;116:*.lnk=38;5;39:*CodeResources=38;5;239:*PkgInfo=38;5;239:*.nib=38;5;57:*.car=38;5;57:*.dylib=38;5;241:*.entitlements=1:*.pbxproj=1:*.strings=1:*.storyboard=38;5;196:*.xcconfig=1:*.xcsettings=1:*.xcuserstate=1:*.xcworkspacedata=1:*.xib=38;5;208:*.asc=38;5;192;3:*.bfe=38;5;192;3:*.enc=38;5;192;3:*.gpg=38;5;192;3:*.signature=38;5;192;3:*.sig=38;5;192;3:*.p12=38;5;192;3:*.pem=38;5;192;3:*.pgp=38;5;192;3:*.p7s=38;5;192;3:*id_dsa=38;5;192;3:*id_rsa=38;5;192;3:*id_ecdsa=38;5;192;3:*id_ed25519=38;5;192;3:*.32x=38;5;213:*.cdi=38;5;213:*.fm2=38;5;213:*.rom=38;5;213:*.sav=38;5;213:*.st=38;5;213:*.a00=38;5;213:*.a52=38;5;213:*.A64=38;5;213:*.a64=38;5;213:*.a78=38;5;213:*.adf=38;5;213:*.atr=38;5;213:*.gb=38;5;213:*.gba=38;5;213:*.gbc=38;5;213:*.gel=38;5;213:*.gg=38;5;213:*.ggl=38;5;213:*.ipk=38;5;213:*.j64=38;5;213:*.nds=38;5;213:*.nes=38;5;213:*.sms=38;5;213:*.8xp=38;5;121:*.8eu=38;5;121:*.82p=38;5;121:*.83p=38;5;121:*.8xe=38;5;121:*.stl=38;5;216:*.dwg=38;5;216:*.ply=38;5;216:*.wrl=38;5;216:*.pot=38;5;7:*.pcb=38;5;7:*.mm=38;5;7:*.gbr=38;5;7:*.scm=38;5;7:*.xcf=38;5;7:*.spl=38;5;7:*.Rproj=38;5;11:*.sis=38;5;7:*.1p=38;5;7:*.3p=38;5;7:*.cnc=38;5;7:*.def=38;5;7:*.ex=38;5;7:*.example=38;5;7:*.feature=38;5;7:*.ger=38;5;7:*.ics=38;5;7:*.map=38;5;7:*.mf=38;5;7:*.mfasl=38;5;7:*.mi=38;5;7:*.mtx=38;5;7:*.pc=38;5;7:*.pi=38;5;7:*.plt=38;5;7:*.pm=38;5;7:*.rdf=38;5;7:*.ru=38;5;7:*.sch=38;5;7:*.sty=38;5;7:*.sug=38;5;7:*.tdy=38;5;7:*.tfm=38;5;7:*.tfnt=38;5;7:*.tg=38;5;7:*.vcard=38;5;7:*.vcf=38;5;7:*.xln=38;5;7:*.iml=38;5;166:",
+    "XDG_CURRENT_DESKTOP": "XFCE",
+    "NODENV_ROOT": "/home/osboxes/.nodenv",
+    "VIRTUAL_ENV": "/home/osboxes/.pyenv/versions/3.8.1/envs/dev",
+    "VIMRUNTIME": "/usr/share/nvim/runtime",
+    "VTE_VERSION": "6003",
+    "XDG_SEAT_PATH": "/org/freedesktop/DisplayManager/Seat0",
+    "ZUID_CODENAME": "proxima",
+    "TERMINATOR_DBUS_NAME": "net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873",
+    "DOCKER_BUILDKIT": "1",
+    "GOROOT": "/home/osboxes/.goenv/versions/1.13.1",
+    "BAT_THEME": "ansi-dark",
+    "NODENV_HOOK_PATH": "/home/osboxes/.nodenv/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks:/home/osboxes/.nodenv/plugins/nodenv-aliases/etc/nodenv.d:/home/osboxes/.nodenv/plugins/nodenv-package-json-engine/etc/nodenv.d:/home/osboxes/.nodenv/plugins/nodenv-package-rehash/etc/nodenv.d",
+    "FORGIT_GI_REPO_REMOTE": "https://github.com/dvcs/gitignore",
+    "XDG_CACHE_HOME": "/home/osboxes/.cache",
+    "VIM": "/usr/share/nvim",
+    "ZPFX": "/home/osboxes/.zinit/polaris",
+    "K_DOTFILES_DIR": "/home/osboxes/.dotfiles",
+    "XDG_SESSION_CLASS": "user",
+    "TERM": "xterm-256color",
+    "LESS_TERMCAP_mb": "\u001b[01;31m",
+    "LESS_TERMCAP_me": "\u001b[0m",
+    "LESS_TERMCAP_md": "\u001b[01;31m",
+    "GTK_OVERLAY_SCROLLING": "0",
+    "ZDOTDIR": "/home/osboxes",
+    "LESSOPEN": "| /usr/bin/env lesspipe %s 2>&-",
+    "USER": "osboxes",
+    "PYTHONIOENCODING": "UTF-8",
+    "ZUID_LOCKS_DIR": "/home/osboxes/.cache/zsh-unique-id",
+    "FZF_CTRL_T_OPTS": "--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'",
+    "MANPAGER": "nvim +Man!",
+    "VISUAL": "",
+    "DISPLAY": ":0.0",
+    "PYENV_VIRTUAL_ENV": "/home/osboxes/.pyenv/versions/3.8.1/envs/dev",
+    "LESS_TERMCAP_ue": "\u001b[0m",
+    "SHLVL": "1",
+    "JENV_FORCEJAVAHOME": "true",
+    "LESS_TERMCAP_us": "\u001b[01;32m",
+    "PAGER": "less",
+    "GOENV_ROOT": "/home/osboxes/.goenv",
+    "PYTHONUTF8": "1",
+    "XDG_VTNR": "7",
+    "XDG_SESSION_ID": "c2",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "ZUID_FD": "15",
+    "FORGIT_GI_REPO_LOCAL": "/home/osboxes/.forgit/gi/repos/dvcs/gitignore",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "MYVIMRC": "/home/osboxes/dev/dotfiles/nvim/init.vim",
+    "PYENV_ROOT": "/home/osboxes/.pyenv",
+    "P9K_SSH": "0",
+    "LC_ALL": "en_US.UTF-8",
+    "XDG_DATA_DIRS": "/usr/share/xubuntu:/usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share",
+    "PATH": "/home/osboxes/.nodenv/versions/12.11.1/bin:/home/osboxes/.nodenv/libexec:/home/osboxes/.nodenv/plugins/xxenv-latest/bin:/home/osboxes/.nodenv/plugins/nodenv-package-rehash/bin:/home/osboxes/.nodenv/plugins/nodenv-package-json-engine/bin:/home/osboxes/.nodenv/plugins/nodenv-each/bin:/home/osboxes/.nodenv/plugins/nodenv-aliases/bin:/home/osboxes/.nodenv/plugins/node-build/bin:/home/osboxes/.zinit/plugins/youtube-dl//home/osboxes/.zinit/polaris:/home/osboxes/.zinit/plugins/sharkdp---bat/bat:/home/osboxes/.zinit/plugins/ogham---exa:/home/osboxes/.zinit/plugins/zdharma---zsh-diff-so-fancy/bin:/home/osboxes/.zinit/plugins/direnv---direnv:/opt/apache-maven-3.6.2/bin:/home/osboxes/dev/google-cloud-sdk/bin:/home/osboxes/.jenv/shims:/home/osboxes/.goenv/versions/1.13.1/bin:/home/osboxes/go/1.13.1/bin:/home/osboxes/.goenv/shims:/home/osboxes/.nodenv/shims:/home/osboxes/.pyenv/plugins/pyenv-virtualenv/shims:/home/osboxes/.pyenv/shims:/home/osboxes/.zinit/polaris/sbin:/home/osboxes/.zinit/polaris/bin:/usr/local/bin:/usr/local/sbin:/home/osboxes/.local/bin:/home/osboxes/.pyenv/bin:/home/osboxes/.nodenv/bin:/home/osboxes/.goenv/bin:/home/osboxes/.jenv/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/osboxes/dev/dotfiles/dependencies/fzf/bin",
+    "GDMSESSION": "xubuntu",
+    "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+    "FZF_DEFAULT_OPTS": "\n        \n        --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254\n        --color info:254,prompt:37,spinner:108,pointer:235,marker:235\n    \n        \n        --ansi\n        --no-height\n        --no-reverse\n        --border\n        --inline-info\n    \n    ",
+    "_OLD_VIRTUAL_PS1": "%m%# ",
+    "JENV_ROOT": "/home/osboxes/.jenv",
+    "JENV_LOADED": "1",
+    "OLDPWD": "/home/osboxes/dev/dotfiles",
+    "GOPATH": "/home/osboxes/go/1.13.1"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": 67108864,
+      "hard": 67108864
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 1048576,
+      "hard": 1048576
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": "unlimited"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 25610,
+      "hard": 25610
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/lib/x86_64-linux-gnu/libdl.so.2",
+    "/lib/x86_64-linux-gnu/librt.so.1",
+    "/lib/x86_64-linux-gnu/libstdc++.so.6",
+    "/lib/x86_64-linux-gnu/libm.so.6",
+    "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "/lib/x86_64-linux-gnu/libpthread.so.0",
+    "/lib/x86_64-linux-gnu/libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2"
+  ]
+}
