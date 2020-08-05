@@ -244,15 +244,11 @@ _install_envs() {
     if [ ! -f "${nodenv_root}/version" ]; then
         echo "Installing latest Node"
 
-        $nodenv latest install -s 14 &&
-            $nodenv global "$($nodenv latest --print-installed)"
-        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" \
-            install -g \
-            neovim \
-            prettier \
-            typescript \
-            @elm-tooling/elm-language-server \
-            bash-language-server
+        $nodenv latest install -s 14
+        $nodenv global "$($nodenv latest --print-installed)"
+        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install -g \
+            "$(command jq -r '.dependencies | (to_entries | .[] | [.key, .value] | join("@"))' "${BASEDIR}/package.json" | tr '\n' ' ')"
+
     else
         _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
