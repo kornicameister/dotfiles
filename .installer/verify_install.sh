@@ -151,7 +151,7 @@ validate_nodenv() (
     fail "Failed to locate nodenv directory in \$HOME"
   else
     success "nodenv directory set"
-    zsh -mil -c "eval $(nodenv init -) && npx -p @nodenv/nodenv-installer nodenv-doctor"
+    zsh -mil -c "npx -p @nodenv/nodenv-installer nodenv-doctor"
     if [[ ! -f "${HOME}/.nodenv/version" ]]; then
       fail "nodenv did not set global system version"
     fi
