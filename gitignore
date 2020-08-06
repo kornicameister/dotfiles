@@ -30,3 +30,6 @@
 
 # yamllint
 .yamllint*
+
+# mypy
+.mypy_cache
