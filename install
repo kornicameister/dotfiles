@@ -261,11 +261,12 @@ _install_envs() {
 
         go="${goenv_root}/versions/$($goenv latest --print-installed)/bin/go"
 
-        $go get \
+        $go get -u \
             golang.org/x/lint/golint \
             golang.org/x/tools/gopls \
             github.com/golangci/golangci-lint/cmd/golangci-lint \
-            github.com/stamblerre/gocode
+            github.com/stamblerre/gocode \
+            github.com/cpuguy83/go-md2man
         GO111MODULE=on $go get mvdan.cc/sh/v3/cmd/shfmt
     else
         _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
