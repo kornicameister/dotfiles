@@ -1,0 +1,9 @@
+pull_request_rules:
+  - name: Automerge dependencies
+    conditions:
+      - base=master
+      - label=dependencies
+    actions:
+      merge:
+        method: squash
+        strict: smart
