@@ -2,7 +2,7 @@
 
 msgpack==1.0.0
 neovim==0.3.1
-pynvim==0.4.1
+pynvim==0.4.2
 
 setuptools==50.3.0 ; python_version > '3.0'
 setuptools==44.0.0 ; python_version < '3.0'
