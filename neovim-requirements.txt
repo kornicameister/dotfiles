@@ -10,6 +10,6 @@ setuptools==44.0.0 ; python_version < '3.0'
 python-language-server==0.35.1
 
 jedi==0.17.2
-rope==0.17.0
+rope==0.18.0
 
 vim-vint==0.3.21
