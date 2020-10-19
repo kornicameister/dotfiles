@@ -192,6 +192,24 @@ _configure_nvim() {
     fi
 }
 
+_install_terminator() {
+    local pyenv
+    local pyenv_root
+    local py3
+
+    cd "${BASEDIR}/dependencies/terminator" && {
+        pyenv=$(_env_binary "pyenv")
+        pyenv_root=$($pyenv root)
+
+        ${pyenv} virtualenv $(${pyenv} global) terminator
+
+        py3="${pyenv_root}/versions/terminator/bin/python"
+
+        "${py3}" setup.py build
+        "${py3}" setup.py install --single-version-externally-managed --record=install-files.txt
+    }
+}
+
 _install_envs() {
     local pyenv
     local pyenv_root
@@ -376,4 +394,5 @@ _dotbot_do_links
 _configure_wakatime
 _configure_git
 _install_envs
+_install_terminator
 _configure_nvim

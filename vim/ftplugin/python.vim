@@ -37,8 +37,10 @@ elseif executable('black')
   call add(b:ale_fixers, 'black')
 endif
 
-" if enabled, it makes flake8 loose its configuration file in project root
-let b:ale_python_flake8_change_directory = 0
+" guess that settings makes most sense here
+" at least results seems to be consistent between
+" CLI and editor
+let b:ale_python_flake8_change_directory = 'project'
 
 " always load pyls from neovim3 virtualenv :)
 let b:ale_python_pyls_executable = expand(fnamemodify(g:python3_host_prog, ':h') . '/' . 'pyls')

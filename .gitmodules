@@ -96,3 +96,9 @@
     shallow = true
     branch = master
     ignore = untracked
+[submodule "dependencies/terminator"]
+    path = dependencies/terminator
+    url = git@github.com:gnome-terminator/terminator.git
+    shallow = true
+    branch = master
+    ignore = untracked

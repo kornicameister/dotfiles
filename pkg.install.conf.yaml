@@ -88,6 +88,18 @@
       stderr: true
       stdout: true
 
+# terminator
+- aptget:
+    - python3-gi
+    - python3-gi-cairo
+    - python3-psutil
+    - python3-configobj
+    - gir1.2-keybinder-3.0
+    - gir1.2-vte-2.91
+    - gettext
+    - intltool
+    - dbus-x11
+
 # my stuff - ppa
 - aptget:
     git:
@@ -113,7 +125,6 @@
       shellcheck,
       aria2,
       preload,
-      terminator,
       ppa-purge,
       byobu,
       tlp-rdw,
