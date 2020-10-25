@@ -21,7 +21,7 @@
 - link:
     # vim stuff
     ~/.vim: vim
-    ~/.vimrc: vimrc
+    ~/.vimrc: vim/vimrc
 
     # neovim stuff
     ~/.config/nvim: nvim
