@@ -41,7 +41,7 @@ Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
 Plug 'deoplete-plugins/deoplete-tag'
 Plug 'deoplete-plugins/deoplete-docker'
-Plug 'deoplete-plugins/deoplete-zsh'
+Plug 'deoplete-plugins/deoplete-zsh', { 'for': ['zsh'] }
 
 " asynchronous execution library
 Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
