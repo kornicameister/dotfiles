@@ -94,6 +94,7 @@ zinit ice svn silent ; zinit snippet PZT::modules/git
 zinit ice svn silent pick'' ; zinit snippet PZT::modules/archive
 zinit ice svn silent submods'clvv/fasd -> external' ; zinit snippet PZT::modules/fasd
 zinit ice svn silent submods'zsh-users/zsh-history-substring-search -> external' ; zinit snippet PZT::modules/history-substring-search
+zinit ice svn silent ; zinit snippet OMZ::plugins/aws
 
 [ $commands[pyenv] ] && {
     eval "$(pyenv init - --no-rehash zsh)"
