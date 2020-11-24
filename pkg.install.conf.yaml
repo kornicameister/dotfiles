@@ -88,6 +88,15 @@
       stderr: true
       stdout: true
 
+# better, I guess time sync
+- aptget: [chrony]
+- shell: 
+    - description: Enable chrony
+      command: systemctl enable --now chrony
+      quiet: true
+      stderr: true
+      stdout: true
+
 # my stuff - ppa
 - aptget:
     git:
