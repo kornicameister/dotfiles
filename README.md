@@ -1,5 +1,4 @@
 [![CircleCI](https://circleci.com/gh/kornicameister/dotfiles/tree/master.svg?style=shield)](https://circleci.com/gh/kornicameister/dotfiles/tree/master)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=kornicameister/dotfiles)](https://dependabot.com)
 [![time tracker](https://wakatime.com/badge/github/kornicameister/dotfiles.svg)](https://wakatime.com/badge/github/kornicameister/dotfiles)
 
 # dotfiles
