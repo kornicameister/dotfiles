@@ -14,4 +14,4 @@ flake8-comprehensions==1.4.1; python_version < '3.0'
 
 yapf==0.30.0
 
-cfn-lint==0.41.0
+cfn-lint==0.43.0
