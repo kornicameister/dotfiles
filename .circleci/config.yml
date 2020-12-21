@@ -105,3 +105,4 @@ workflows:
     jobs:
       - build_ubuntu_19_10
       - build_ubuntu_20_04
+      - build_arch
