@@ -84,12 +84,12 @@ jobs:
           name: Run an installation
           command: |
             ./install \
-              --username"${CIRCLE_PROJECT_USERNAME}" \
-              --password "${CIRCLE_BUILD_NUM}" \
-              --email "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+              --git-username"${CIRCLE_PROJECT_USERNAME}" \
+              --git-password "${CIRCLE_BUILD_NUM}" \
+              --git-email "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
               --gpg-fullname "Circle Builds" \
               --gpg-passphrase "${CIRCLE_SHA1}" \
-              --wakatime_api_key "555-WAKATIME-BOGUS-API-KEY"
+              --wakatime-api-key "555-WAKATIME-BOGUS-API-KEY"
       - run:
           name: Verify !
           command: |

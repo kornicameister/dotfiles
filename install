@@ -2,7 +2,7 @@
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WHOAMI="$(whoami)"
-if [[ -n ${CI:-} ]]; then
+if [[ -z ${CI:-} ]]; then
     sudo() {
         "$@"
     }
@@ -459,8 +459,6 @@ _env_binary() {
 }
 
 configure_envs() {
-    local basedir
-
     local pyenv
     local pyenv_root
     local nodenv
@@ -470,8 +468,6 @@ configure_envs() {
 
     local python_icon="[  ]"
     local neovim_icon="[  ]${python_icon}"
-
-    basedir="${1}"
 
     goenv=$(_env_binary "goenv")
     goenv_root=$($goenv root)
@@ -491,7 +487,7 @@ configure_envs() {
         for py_major in {2,3}; do
             $pyenv latest install -s "${py_major}"
             "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install --upgrade pip
-            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install -r "${basedir}/python-system-requirements.txt"
+            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install -r "${BASEDIR}/python-system-requirements.txt"
             log_done "Installed Python ${py_major}" "${python_icon}"
         done
 
@@ -505,7 +501,7 @@ configure_envs() {
             log_notice "Initializing neovim setup for Python ${py_major}" "${neovim_icon}"
             $pyenv virtualenv "$($pyenv latest --print "${py_major}")" "neovim${py_major}"
             "${pyenv_root}/versions/neovim${py_major}/bin/pip" install --upgrade pip
-            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${basedir}/neovim-requirements.txt"
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/neovim-requirements.txt"
         else
             local neovim_py_version
             neovim_py_version="$(
@@ -523,7 +519,7 @@ configure_envs() {
 
         $nodenv latest install -s 14
         $nodenv global "$($nodenv latest --print-installed)"
-        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install --global --production "${basedir}/package.json"
+        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install --global --production "${BASEDIR}/package.json"
 
     else
         log_done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
@@ -680,17 +676,17 @@ configure_git() {
     while [[ $# -gt 0 ]]; do
         arg="${1}"
         case "${arg}" in
-        --username)
+        --git-username)
             git_username="${2}"
             shift
             shift
             ;;
-        --password)
+        --git-password)
             git_password="${2}"
             shift
             shift
             ;;
-        --email)
+        --git-email)
             git_email="${2}"
             shift
             shift
@@ -812,31 +808,39 @@ EOF
     fi
 }
 
-git_init_repo() {
-    git submodule sync --recursive >/dev/null
-    git submodule update \
-        --recursive --init \
-        --checkout --no-recommend-shallow --force \
-        --jobs 4 \
-        --progress \
-        >/dev/null
+sync_repo() {
+    if ! command -v git >/dev/null; then
+        log_die "git is required to synchronize repository" 3
+    else
+        git submodule sync --recursive >/dev/null
+        git submodule update \
+            --recursive --init \
+            --checkout --no-recommend-shallow --force \
+            --jobs 4 \
+            --progress \
+            >/dev/null
+    fi
 }
 
-if ((SHLVL > 1)); then
-    echo "kornicameister/dotfiles"
-    if ((EUID == 0)) && [[ -n ${CI:-} ]]; then
-        log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
-    fi
-    git_init_repo
-
+main() {
     install_packages && post_install
     install_links
 
-    configure_envs "$@"
+    sync_repo
 
+    configure_envs
     configure_git "$@"
     configure_nvim
     configure_wakatime "$@"
 
     screenfetch
+}
+
+if ((SHLVL > 1)); then
+    echo "kornicameister/dotfiles"
+
+    if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
+        log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
+    fi
+    main "$@"
 fi
