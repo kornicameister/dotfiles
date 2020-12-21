@@ -812,6 +812,16 @@ EOF
     fi
 }
 
+git_init_repo() {
+    git submodule sync --recursive >/dev/null
+    git submodule update \
+        --recursive --init \
+        --checkout --no-recommend-shallow --force \
+        --jobs 4 \
+        --progress \
+        >/dev/null
+}
+
 if ((SHLVL > 1)); then
     echo "kornicameister/dotfiles"
     if ((EUID == 0)) && [[ -n ${CI:-} ]]; then
