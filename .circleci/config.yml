@@ -72,6 +72,30 @@ jobs:
       - image: ubuntu:20.04
     <<: *build_steps
 
+  build_arch:
+    docker:
+      - image: archlinux:latest
+    steps:
+      - checkout
+      - run: |
+          locale-gen en_US.UTF-8
+          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+      - run:
+          name: Run an installation
+          command: |
+            ./install \
+              "${CIRCLE_PROJECT_USERNAME}" \
+              "${CIRCLE_BUILD_NUM}" \
+              "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+              "Circle Builds" \
+              "${CIRCLE_SHA1}" \
+              "555-WAKATIME-BOGUS-API-KEY"
+      - run:
+          name: Verify !
+          command: |
+            zsh -mil -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
+            zsh -mil -c .circleci/verify_install.sh
+
 workflows:
   version: 2
   verify:
