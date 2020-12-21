@@ -1,0 +1,47 @@
+---
+import:
+  - ./.config/alacritty/dracula.yml
+
+env:
+  TERM: xterm-256color
+
+bell:
+  animation: EaseOutExpo
+  duration: 100
+  color: "0xffffff"
+
+font:
+  size: 6
+  normal:
+    family: "Hack Nerd Font"
+  bold:
+    family: "Hack Nerd Font"
+  italic:
+    family: "Hack Nerd Font"
+
+background_opacity: 0.9
+window:
+  padding:
+    x: 2
+    y: 2
+  dynamic_padding: true
+
+mouse:
+  double_click:
+    threshold: 300
+  triple_click:
+    threshold: 300
+mouse_bindings:
+  - mouse: Middle
+    action: PasteSelection
+
+key_bindings:
+  - key: C
+    mods: Alt
+    action: Copy
+  - key: V
+    mods: Alt
+    action: Copy
+
+gtk_theme_variant: dark
+live_config_reload: true

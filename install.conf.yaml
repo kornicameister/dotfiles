@@ -24,7 +24,14 @@
     ~/.vimrc: vim/vimrc
 
     # neovim stuff
+    ~/.vim/autoload/plug.vim: dependencies/vim-plug/plug.vim
     ~/.config/nvim: nvim
+
+    # ssh config
+    ~/.ssh/config: ssh/config
+    ~/.ssh/config.d:
+      glob: true
+      path: ssh/config.d
 
     # git stuff
     ~/.gitignore: gitignore
@@ -34,7 +41,6 @@
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
-
     # zsh stuff
     ~/.zshrc: zsh/zshrc
     ~/.zlogin: zsh/zlogin

@@ -1,0 +1,13 @@
+configuration {
+    columns: 2;
+    bw: 1;
+    location: 0;
+    padding: 6;
+    fixed-num-lines: true;
+    show-icons: true;
+    cycle: true;
+    sidebar-mode: true;
+    eh: 1;
+    font: "Hack Nerd Font 10";
+}
+

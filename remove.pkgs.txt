@@ -1,4 +1,0 @@
-nano
-thunderbird
-transmission-common
-transmission-gtk

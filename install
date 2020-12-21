@@ -1,147 +1,440 @@
 #!/usr/bin/env bash
 
-# CI handling
-CI=${CI:-False}
-if [[ -n ${CI} ]]; then
-    sudo() {
-        "$@"
-    }
-fi
-
-INSTALL_CONFIG="install.conf.yaml"
-PKG_CONFIG="pkg.install.conf.yaml"
-
-DOTBOT_DIR="dotbot"
-DOTBOT_BIN="bin/dotbot"
-
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WHOAMI="$(whoami)"
 
-GIT_USERNAME=${GIT_USERNAME:-${1:-""}}
-GIT_PASSWORD=${GIT_PASWORD:-${2:-""}}
-GIT_EMAIL=${GIT_EMAIL:-${3:-""}}
-
-GPG_FULL_NAME=${GPG_FULL_NAME:-${4:-""}}
-GPG_PASSPHRASE=${GPG_PASSPHRASE:-${5:-""}}
-
-WAKATIME_API_KEY=${WAKATIME_API_KEY:-${6:-""}}
-WAKATIME_HOSTNAME=${WAKATIME_HOSTNAME:-${7:-$(hostname)}}
-
-_done() {
+log_info() {
     local icon
-    icon="${2:-"[  ]"}"
-    printf "\\r  \\033[00;40m${icon} %s\\n" "${1}"
+    icon="[  ]${2:-""}"
+    printf "\\r  \\033[00;20m${icon} %s\\n" "${1}"
 }
 
-_hello_dude() {
-    if command -v lsb_release >/dev/null 2>&1; then
-        distro_name=$(lsb_release -sd 2>&1)
-    else
-        distro_name="Unknown"
-    fi
-
-    if [ ! -s "${HOME}/.dotfiles" ]; then
-        first_run_welcome="kornicameister/dotfiles - first run"
-    else
-        first_run_welcome="kornicameister/dotfiles - updating"
-    fi
-
-    _done "${distro_name} : ${first_run_welcome} : ${GIT_USERNAME}"
+log_notice() {
+    local icon
+    icon="[   ]${2:-""}"
+    printf "\\r  \\033[00;20m${icon} %s\\n" "${1}"
 }
 
-_dotbot_pkg_install() {
-    # TODO Figure out better way to handle that situation
-    # I do no want repeated installation and stuff
-    # but there are scripts inside of $PKG_CONFIG that are
-    # uninstalling things (i.e. docker). It makes installing here harderd
-    if [ ! -s "${HOME}/.dotfiles" ]; then
-        cd "${BASEDIR}" || exit 1
-        sudo \
-            "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
-            -q \
-            -d "${BASEDIR}" \
-            -p "${BASEDIR}/dependencies/dotbot_plugin_aptget/aptget.py" \
-            -c "${PKG_CONFIG}"
-        cd - || exit 1
-    else
-        _done "${PKG_CONFIG} already done"
-    fi
+log_warning() {
+    local icon
+    icon="[  ]${2:-""}"
+    printf "\\r  \\033[00;20m${icon} %s\\n" "${1}"
 }
 
-_dotbot_do_links() {
-    cd "${BASEDIR}" || exit 1
-    "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
-        -q \
-        -d "${BASEDIR}" \
-        -c "${INSTALL_CONFIG}"
-    cd - || 1
+log_done() {
+    local icon
+    icon="[  ]${2-""}"
+    printf "\\r  \\033[00;20m${icon} %s\\n" "${1}"
 }
 
-_configure_git() {
-    if [ ! -f "${HOME}/.gitconfig.local" ]; then
-        if [ -z "${GIT_USERNAME}" ]; then
-            echo "GIT_USERNAME must be set"
-            exit 2
-        fi
-        if [ -z "${GIT_PASSWORD}" ]; then
-            echo "GIT_PASSWORD must be set"
-            exit 2
-        fi
-        if [ -z "${GIT_EMAIL}" ]; then
-            echo "GIT_EMAIL must be set"
-            exit 2
-        fi
-        if [ -z "${GPG_FULL_NAME}" ]; then
-            echo "GPG_FULL_NAME must be set"
-            exit 2
-        fi
-        if [ -z "${GPG_PASSPHRASE}" ]; then
-            echo "GPG_PASSPHRASE must be set"
-            exit 2
+log_die() {
+    local icon
+    icon="${2-""}[ 😱 ]"
+    printf "\\r  \\033[00;20m${icon} %s\\n" "${1}"
+    exit "${3:-1}"
+}
+
+install_links() {
+    "${BASEDIR}/dotbot/bin/dotbot" -q -d "${BASEDIR}" -c "${BASEDIR}/install.conf.yaml"
+}
+
+command -v apt-get >/dev/null && {
+    install_docker() {
+        sudo aptitude remove \
+            docker-ce \
+            docker \
+            docker.io \
+            runc \
+            containerd \
+            -y -V -D -Z
+
+        normal_install() {
+            sudo aptitude install docker.io -y -V -D -Z
+        }
+
+        custom_install() {
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu ${1} stable"
+            sudo aptitude update -q -y
+            sudo aptitude install docker-ce docker-ce-cli containerd.io -y -V -D -Z
+        }
+
+        distro=$(lsb_release -cs)
+        case "${distro}" in
+        "focal") normal_install ;;
+        "eoan") normal_install ;;
+        *) custom_install "${distro}" ;;
+        esac
+
+        sudo systemctl enable --now docker && sudo usermod -aG docker "${WHOAMI}"
+    }
+
+    install_docker_compose() {
+        compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
+        sh -c "curl -L https://github.com/docker/compose/releases/download/v${compose_version}/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose"
+        chmod +x /usr/local/bin/docker-compose
+    }
+
+    install_brave() {
+        local distro
+        distro="$(lsb_release -si 2>&1)"
+
+        curl -s https://brave-browser-apt-beta.s3.brave.com/brave-core-nightly.asc | apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-beta.gpg add -
+
+        if [[ "${distro}" == "LinuxMint" ]]; then
+            echo "deb [arch=amd64] https://brave-browser-apt-beta.s3.brave.com/ trusty main" | tee /etc/apt/sources.list.d/brave-browser-beta-trusty.list
+        elif [[ "${distro}" == "Ubuntu" ]]; then
+            source /etc/os-release
+            echo "deb [arch=amd64] https://brave-browser-apt-beta.s3.brave.com/ $UBUNTU_CODENAME main" | tee "/etc/apt/sources.list.d/brave-browser-beta-${UBUNTU_CODENAME}.list"
         fi
 
-        # generate ssh key
-        mkdir -p "${HOME}/.ssh"
-        ssh-keygen \
-            -t ed25519 \
-            -b 4096 \
-            -C "${GIT_EMAIL}" \
-            -f "${HOME}/.ssh/github" \
-            -N "${GIT_PASSWORD}"
+        sudo aptitude update -q -y
+        sudo aptitude install -y -V -D -Z brave-browser-beta
+    }
 
-        key_type="rsa"
-        key_strength=4096
-        key_config=$(mktemp)
+    install_chrome() {
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+        sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
 
-        # generating GPK key to sign the commits
-        cat >>"${key_config}" <<EOF
-Key-Type: ${key_type}
-Key-Length: ${key_strength}
-Name-Real: ${GPG_FULL_NAME}
-Name-Comment: ${GIT_USERNAME} GPG key generated with dotfiles
-Name-Email: ${GIT_EMAIL}
-Expire-Date: 0
-Passphrase: ${GPG_PASSPHRASE}
-EOF
-        gpg2 --quiet --batch --expert --full-gen-key "${key_config}"
-        rm -rf "${key_config}"
+        sudo aptitude update -q -y
+        sudo aptitude install -y -V -D -Z google-chrome-unstable
+    }
 
-        # assumed the highest rsa length:
-        local signingKey=""
-        signingKey=$(gpg2 --list-secret-keys --keyid-format LONG | grep -B 2 "${GIT_EMAIL}" | grep sec | awk -F"[/ ]+" '{print $3}')
+    install_ctags() {
+        local ctags_dir
+        local current_version
+        local repo_version
 
-        touch "${HOME}/.gitconfig.local"
-        (
-            git config --file="${HOME}/.gitconfig.local" user.name "${GIT_USERNAME}"
-            git config --file="${HOME}/.gitconfig.local" user.email "${GIT_EMAIL}"
-            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}"
-            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2
-            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true
-            git config --file="${HOME}/.gitconfig.local" github.user "${GIT_USERNAME}"
+        ctags_dir="${BASEDIR}/dependencies/ctags"
+
+        [ ! -d "${ctags_dir}" ] && (
+            cd "${BASEDIR}" || exit 2
+            git submodule update --init --recursive
+            cd ..
         )
-        echo "Remember to upload the GPG and SSH keys to Github"
-    else
-        _done "Git already configured" "[  ]"
-    fi
+        [ ! -f "${HOME}/.gitconfig.local" ] && (
+            touch "${HOME}/.gitconfig.local"
+        )
+
+        sudo aptitude purge exuberant-ctags -q -y
+
+        cd "${ctags_dir}" || exit 1
+
+        current_version="$(git config --file "${HOME}/.gitconfig.local" --default '-1' --get ctags.version)"
+        repo_version="$(git log -n 1 --format=oneline | awk '{print $1}')"
+
+        if [[ "${current_version}" != "${repo_version}" ]]; then
+            ./autogen.sh
+            ./configure --prefix="${HOME}/.local"
+            make clean
+            make
+            make install
+            git config --file="${HOME}/.gitconfig.local" ctags.version "${repo_version}"
+        fi
+        cd ..
+    }
+
+    install_packages() {
+        local icon
+        icon="[ A ]"
+
+        sudo apt-get update -y -qq
+        sudo apt-get install -y -qq --no-install-recommends aptitude
+
+        log_notice "installing common packages" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            apt-transport-https \
+            autoconf \
+            automake \
+            ca-certificates \
+            lsb-release \
+            software-properties-common \
+            make
+
+        log_notice "Adding PPAs" "${icon}"
+        sudo add-apt-repository --yes--enable-source \
+            ppa:git-cora/ppa \
+            ppa:neovim-ppa/unstable \
+            ppa:linrunner/tlp &&
+            sudo aptitude update -y -qq
+
+        log_notice "Installing downloading tools" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            curl \
+            wget \
+            aria2
+
+        log_notice "Installing pyenv dependencies" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            build-essential \
+            ccache \
+            libbz2-dev \
+            libffi-dev \
+            liblzma-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            libreadline-dev \
+            libsqlite3-dev \
+            libssl-dev \
+            llvm \
+            tk-dev \
+            xz-utils \
+            zlib1g-dev
+
+        log_notice "Installing tooling" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            byobu \
+            htop \
+            httpie \
+            indicator-cpufreq \
+            jq \
+            libimage-exiftool-perl \
+            lnav \
+            nvtop \
+            ppa-purge \
+            preload \
+            screenfetch \
+            shellcheck \
+            silversearcher-ag \
+            snapd \
+            tlp-rdw \
+            tree \
+            xclip \
+            yamllint
+        install_ctags
+
+        log_notice "Installing terminals and shells" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            alacritty \
+            fonts-firacode \
+            neovim \
+            python3-dev \
+            python3-distutils \
+            terminator \
+            zsh
+
+        log_notice "Installing CSVs" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            git \
+            git-extras \
+            git-lfs \
+            gnupg-agent \
+            gnupg2 \
+            subversion
+
+        log_notice "Installing other required packages" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            ruby-dev
+
+        log_notice "Installing browsers" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            firefox
+        install_brave
+        install_chrome
+
+        log_notice "Installing virtualization" "${icon}"
+        install_docker
+        install_docker_compose
+
+        log_notice "Installing snap packages" "${icon}"
+        sudo snap install heroku --classic --no-wait
+        sudo snap install slack --classic --no-wait
+        sudo snap install intellij-idea-community --edge --classic --no-wait
+        sudo snap install pycharm-community --edge --classic --no-wait
+
+        log_notice "Removing things I do not need" "${icon}"
+        sudo aptitude remove -yq \
+            fonts-beng-extra \
+            fonts-deva \
+            fonts-deva-extra \
+            fonts-gubbi \
+            fonts-gujr-extra \
+            fonts-guru \
+            fonts-guru-extra \
+            fonts-kacst \
+            fonts-kacst-one \
+            fonts-kalapi \
+            fonts-khmeros-core \
+            fonts-knda \
+            fonts-lao \
+            fonts-lklug-sinhala \
+            fonts-lohit-beng-assamese \
+            fonts-lohit-beng-bengali \
+            fonts-lohit-deva \
+            fonts-lohit-gujr \
+            fonts-lohit-guru \
+            fonts-lohit-knda \
+            fonts-lohit-mlym \
+            fonts-lohit-orya \
+            fonts-lohit-taml \
+            fonts-lohit-taml-classical \
+            fonts-lohit-telu \
+            fonts-nakula \
+            fonts-nanum \
+            fonts-navilu \
+            fonts-noto-cjk \
+            fonts-orya-extra \
+            fonts-pagul \
+            fonts-sahadeva \
+            fonts-samyak-deva \
+            fonts-samyak-gujr \
+            fonts-samyak-mlym \
+            fonts-samyak-taml \
+            fonts-sil-abyssinica \
+            fonts-sil-padauk \
+            fonts-smc \
+            fonts-takao-pgothic \
+            fonts-telu-extra \
+            fonts-thai-tlwg \
+            fonts-tibetan-machine \
+            fonts-tlwg-garuda \
+            fonts-tlwg-kinnari \
+            fonts-tlwg-laksaman fonts-tlwg-loma \
+            fonts-tlwg-mono \
+            fonts-tlwg-norasi \
+            fonts-tlwg-purisa \
+            fonts-tlwg-sawasdee \
+            fonts-tlwg-typewriter \
+            fonts-tlwg-typist \
+            fonts-tlwg-typo \
+            fonts-tlwg-umpush \
+            fonts-tlwg-waree \
+            nano \
+            thunderbird \
+            transmission-common \
+            transmission-gtk
+
+        sudo aptitude autoclean
+    }
+}
+command -v pacman >/dev/null && {
+    install_packages() {
+        local icon
+        icon="[ Y ]"
+
+        log_notice "Installing prerequisites" "${icon}"
+        sudo pacman -Sq --needed --noconfirm --quiet \
+            base-devel \
+            yay
+
+        log_notice "Installing base packages" "${icon}"
+        yay -Sq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+            alacritty \
+            curl \
+            lsb-release \
+            neovim \
+            ruby \
+            wget \
+            zsh
+
+        log_notice "Installing *env dependencies" "${icon}"
+        yay -Sq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+            ccache \
+            make \
+            openssl \
+            zlib
+
+        log_notice "Installing CSV packages" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            curl \
+            git \
+            git-lfs \
+            git-extras \
+            gnupg \
+            subversion
+
+        log_notice "Installing utilities" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            aria2 \
+            ctags \
+            htop \
+            httpie \
+            jq \
+            lnav \
+            nvtop \
+            preload \
+            screenfetch \
+            shellcheck \
+            shfmt \
+            the_silver_searcher \
+            tlp-rdw \
+            tree \
+            xclip \
+            yamllint \
+            yq
+
+        log_notice "Installing browsers" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            brave-nightly-bin \
+            firefox \
+            google-chrome-dev
+
+        log_notice "Installing IDEs" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            intellij-idea-community-edition \
+            pycharm-community-edition
+
+        log_notice "Installing virtualization" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            docker \
+            docker-compose \
+            fuse-overlayfs \
+            virtualbox
+        post_install_docker
+
+        log_notice "Installing GUIs packages" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            i3-gaps \
+            i3status \
+            i3blocks \
+            i3lock \
+            rofi
+
+        log_notice "Installing themes & fonts" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            nerd-fonts-fira-code \
+            nerd-fonts-hack \
+            ant-dracula-gtk-theme
+
+        log_notice "Installing multimedia" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            spotify
+        lspci -k | grep -qe "NVIDIA" && yay -Sq --needed --noconfirm nvidia
+
+        log_notice "Installing " "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+            slack
+
+        log_notice "Installing   utilities" "${icon}"
+        yay -Sq --needed --noconfirm --combinedupgrade --nobatchinstall \
+            heroku
+
+        log_notice "Removing things I do not need" "${icon}"
+        yay -Rs --noconfirm \
+            nano
+
+        yay -Sqy
+        yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
+    }
+
+    post_install_docker() {
+        docker_conf=$(mktemp)
+        cat >>"${docker_conf}" <<EOF
+kernel.unprivileged_userns_clone = 1
+EOF
+        sudo mv -f "${docker_conf}" /etc/sysctl.d/docker.conf
+        sudo sysctl --system | grep -o kernel.unprivileged_userns_clone
+    }
+}
+
+post_install() {
+    gem install sqlint 2>/dev/null 1>/dev/null
+    sudo systemctl enable --now tlp &&
+        sudo systemctl start tlp
+    sudo usermod -aG docker "${WHOAMI}" &&
+        sudo systemctl enable --now docker &&
+        sudo systemctl start docker
+    "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish
 }
 
 _env_binary() {
@@ -160,45 +453,20 @@ _env_binary() {
     echo "${env_bin}"
 }
 
-_configure_nvim() {
-    if [ ! -f ~/.vim/autoload/plug.vim ]; then
-        aria2c \
-            -d ~/.vim/autoload \
-            -o plug.vim \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+configure_envs() {
+    local basedir
 
-        local goenv pyenv nodenv jenv new_path old_path
-
-        goenv=$(_env_binary "goenv")
-        pyenv=$(_env_binary "pyenv")
-        nodenv=$(_env_binary "nodenv")
-        jenv=$(_env_binary "jenv")
-
-        old_path="${PATH}"
-        new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
-
-        export PATH="${new_path}"
-        nvim --headless +PlugInstall +qall!
-        nvim --headless +UpdateRemotePlugins +qall!
-        export PATH="${old_path}"
-
-        unset goenv
-        unset pyenv
-        unset nodenv
-        unset jenv
-        unset new_path
-    else
-        _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
-    fi
-}
-
-_install_envs() {
     local pyenv
     local pyenv_root
     local nodenv
     local nodenv_root
     local goenv
     local goenv_root
+
+    local python_icon="[  ]"
+    local neovim_icon="[  ]${python_icon}"
+
+    basedir="${1}"
 
     goenv=$(_env_binary "goenv")
     goenv_root=$($goenv root)
@@ -213,31 +481,35 @@ _install_envs() {
     jenv_root=$($jenv root)
 
     if [ ! -f "${pyenv_root}/version" ]; then
-        echo "Installing latest Python"
+        log_notice "Installing latest Python" "${python_icon}"
 
         for py_major in {2,3}; do
             $pyenv latest install -s "${py_major}"
-            "${pyenv_root}/versions/$($pyenv latest --print-installed $py_major)/bin/pip" install -r "${BASEDIR}/python-system-requirements.txt"
+            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install --upgrade pip
+            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install -r "${basedir}/python-system-requirements.txt"
+            log_done "Installed Python ${py_major}" "${python_icon}"
         done
 
         $pyenv global "$($pyenv latest --print-installed)"
     else
-        _done "Python -> $(cat "${pyenv_root}/version")" "[  ]"
+        log_done "Python -> $(cat "${pyenv_root}/version")"
     fi
+
     for py_major in {2,3}; do
         if [ ! -d "${pyenv_root}/versions/neovim${py_major}" ]; then
-            echo "Initializing neovim setup for Python ${py_major}"
-            $pyenv virtualenv "$($pyenv latest --print ${py_major})" "neovim${py_major}"
-            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/neovim-requirements.txt"
+            log_notice "Initializing neovim setup for Python ${py_major}" "${neovim_icon}"
+            $pyenv virtualenv "$($pyenv latest --print "${py_major}")" "neovim${py_major}"
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install --upgrade pip
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${basedir}/neovim-requirements.txt"
         else
             local neovim_py_version
             neovim_py_version="$(
-                "${pyenv_root}"/versions/neovim${py_major}/bin/python \
+                "${pyenv_root}/versions/neovim${py_major}/bin/python" \
                     --version \
                     2>&1 |
                     awk '{print $2}'
             )"
-            _done "neovim${py_major} -> ${neovim_py_version}" "         "
+            log_done "neovim${py_major} -> ${neovim_py_version}" "${neovim_icon}"
         fi
     done
 
@@ -246,11 +518,10 @@ _install_envs() {
 
         $nodenv latest install -s 14
         $nodenv global "$($nodenv latest --print-installed)"
-        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install -g \
-            "$(command jq -r '.dependencies | (to_entries | .[] | [.key, .value] | join("@"))' "${BASEDIR}/package.json" | tr '\n' ' ')"
+        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install --global --production "${basedir}/package.json"
 
     else
-        _done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
+        log_done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
     fi
 
     if [ ! -f "${goenv_root}/version" ]; then
@@ -267,9 +538,9 @@ _install_envs() {
             github.com/golangci/golangci-lint/cmd/golangci-lint \
             github.com/stamblerre/gocode \
             github.com/cpuguy83/go-md2man
-        GO111MODULE=on $go get mvdan.cc/sh/v3/cmd/shfmt
+        command -v shfmt >/dev/null || GO111MODULE=on $go get mvdan.cc/sh/v3/cmd/shfmt
     else
-        _done "Go -> $(cat "${goenv_root}/version")" "[  ]"
+        log_done "Go -> $(cat "${goenv_root}/version")" "[  ]"
     fi
 
     if [ ! -d "${jenv_root}/_versions/" ]; then
@@ -320,7 +591,7 @@ _install_envs() {
 
         $jenv enable-plugin export >/dev/null
     else
-        _done "Java -> $(cat "${jenv_root}/version")" "[  ]"
+        log_done "Java -> $(cat "${jenv_root}/version")" "[  ]"
     fi
 
     $pyenv rehash
@@ -329,51 +600,228 @@ _install_envs() {
     $jenv rehash
 }
 
-_configure_wakatime() {
-    if [ ! -f "${HOME}/.wakatime.cfg" ]; then
-        if [ -z "${WAKATIME_API_KEY}" ]; then
-            echo "No WAKATIME_API_KEY provided, skipping..."
-            exit 2
-        else
-            cd "${BASEDIR}" || exit 1
+configure_nvim() {
+    local goenv pyenv nodenv jenv new_path old_path
 
+    goenv=$(_env_binary "goenv")
+    pyenv=$(_env_binary "pyenv")
+    nodenv=$(_env_binary "nodenv")
+    jenv=$(_env_binary "jenv")
+
+    old_path="${PATH}"
+    new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
+
+    export PATH="${new_path}"
+    nvim --headless +PlugInstall +qall!
+    nvim --headless +UpdateRemotePlugins +qall!
+    export PATH="${old_path}"
+
+    unset goenv
+    unset pyenv
+    unset nodenv
+    unset jenv
+    unset new_path
+}
+
+configure_wakatime() {
+    local wakatime_api_key=""
+    local wakatime_hostname=""
+    local icon="[  ]"
+    wakatime_hostname="$(hostname)"
+
+    if [ ! -f "${HOME}/.wakatime.cfg" ]; then
+        log_notice "Configuring Wakatime" "${icon}"
+        while [[ $# -gt 0 ]]; do
+            arg="${1}"
+            case "${arg}" in
+            --wakatime-api-key)
+                wakatime_api_key="${2}"
+                shift
+                shift
+                ;;
+            --wakatime-hostname)
+                wakatime_hostname="${2}"
+                shift
+                shift
+                ;;
+            esac
+        done
+        if [ -z "${wakatime_api_key}" ]; then
+            log_die "--wakatime-api-key required..." "${icon}"
+        else
             install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
             sed -e "
-                s|%API_KEY%|${WAKATIME_API_KEY}|g;
-                s|%HOSTNAME%|${WAKATIME_HOSTNAME}|g;
+                s|%API_KEY%|${wakatime_api_key}|g;
+                s|%HOSTNAME%|${wakatime_hostname}|g;
             " -i "${HOME}/.wakatime.cfg"
-
-            cd -- || exit 1
+            log_done "Wakatime configured" "${icon}"
         fi
     else
-        _done "Wakatime already configured" "[  ]"
+        log_done "Wakatime configured" "${icon}"
     fi
 }
 
-_init_submodules() {
-    git submodule sync --recursive >/dev/null
-    git submodule update \
-        --recursive --init \
-        --checkout --no-recommend-shallow --force \
-        --jobs 4 \
-        --progress \
-        >/dev/null
+configure_git() {
+    local git_username=""
+    local git_password=""
+    local git_email=""
+    local gpg_full_name=""
+    local gpg_passphrase=""
+    local force="no"
+    local reconfiguring
+    local icon="[  ]"
+    local ssh_keyname="github"
+
+    while [[ $# -gt 0 ]]; do
+        arg="${1}"
+        case "${arg}" in
+        --username)
+            git_username="${2}"
+            shift
+            shift
+            ;;
+        --password)
+            git_password="${2}"
+            shift
+            shift
+            ;;
+        --email)
+            git_email="${2}"
+            shift
+            shift
+            ;;
+        --gpg-fullname)
+            gpg_full_name="${2}"
+            shift
+            shift
+            ;;
+        --gpg-passphrase)
+            gpg_passphrase="${2}"
+            shift
+            shift
+            ;;
+        --force)
+            force="yes"
+            shift
+            shift
+            ;;
+        *)
+            # whatever
+            shift
+            shift
+            ;;
+        esac
+    done
+
+    [ "${force}" == "yes" ] && {
+        rm -rf "${HOME}/.gitconfig.local"
+        find "${HOME}/.ssh/" -name "${ssh_keyname}*" -exec rm -rf {} \;
+        reconfiguring="yes"
+    }
+
+    chown -R "$(whoami)" ~/.gnupg/
+    find ~/.gnupg -type f -exec chmod 600 {} \;
+    find ~/.gnupg -type d -exec chmod 700 {} \;
+
+    if [ ! -f "${HOME}/.gitconfig.local" ]; then
+        [ "${reconfiguring}" != "yes" ] && log_info "Git profile not yet configured" "${icon}"
+        if [ -z "${git_username}" ]; then
+            log_die "--username must be set" "${icon}" 3
+        fi
+        if [ -z "${git_password}" ]; then
+            log_die "--password must be set" "${icon}" 3
+        fi
+        if [ -z "${git_email}" ]; then
+            log_die "--email must be set" "${icon}" 3
+        fi
+        if [ -z "${gpg_full_name}" ]; then
+            log_die "--gpg-fullname must be set" "${icon}" 3
+        fi
+        if [ -z "${gpg_passphrase}" ]; then
+            log_die "--gpg-passphrase must be set" "${icon}" 3
+        fi
+
+        # 1. generate ssh key
+        ssh-keygen \
+            -t ed25519 \
+            -b 4096 \
+            -C "$(hostname)" \
+            -f "${HOME}/.ssh/${ssh_keyname}" \
+            -N "${git_password}" \
+            -q
+        log_done ".ssh/${ssh_keyname} configured" "${icon}"
+
+        key_type="rsa"
+        key_strength=4096
+        key_valid_for_years=1
+        expire_date="$(date +"%Y-%m-%d" -d"+${key_valid_for_years} year")"
+        key_config=$(mktemp)
+
+        # 2. generating GPK key to sign the commits
+        cat >>"${key_config}" <<EOF
+Key-Type: ${key_type}
+Key-Length: ${key_strength}
+Name-Real: ${gpg_full_name}
+Name-Comment: ${git_username} GPG key generated with dotfiles [${expire_date}]
+Name-Email: ${git_email}
+Expire-Date: ${expire_date}
+Passphrase: ${gpg_passphrase}
+EOF
+        gpg2 --quiet --no-verbose --batch --expert --full-gen-key "${key_config}"
+        rm -rf "${key_config}"
+
+        # assumed the highest rsa length:
+        local signingKey=""
+        signingKey=$(
+            gpg2 \
+                --quiet --no-verbose --list-secret-keys --keyid-format LONG |
+                grep -B 2 "${git_email}" |
+                grep sec |
+                awk -F"[/ ]+" '{print $3}'
+        )
+        log_done "GPG key ${signingKey} generated" "${icon}"
+
+        touch "${HOME}/.gitconfig.local"
+        (
+            git config --file="${HOME}/.gitconfig.local" user.name "${git_username}"
+            git config --file="${HOME}/.gitconfig.local" user.email "${git_email}"
+            git config --file="${HOME}/.gitconfig.local" user.signingKey "${signingKey}"
+            git config --file="${HOME}/.gitconfig.local" gpg.program gpg2
+            git config --file="${HOME}/.gitconfig.local" commit.gpgsign true
+            git config --file="${HOME}/.gitconfig.local" github.user "${git_username}"
+        )
+
+        rm -rf "${HOME}/.ssh/config.d/github.config"
+        touch "${HOME}/.ssh/config.d/github.config"
+        cat >>"${HOME}/.ssh/config.d/github.config" <<EOF
+Host github.com
+  HostName     github.com
+  IdentityFile ${HOME}/.ssh/${ssh_keyname}
+  User         kornicameister
+EOF
+
+        log_done "Git profile configured" "${icon}"
+        log_notice "Remember to upload the GPG and SSH keys to Github" "${icon}"
+    else
+        log_done "Git already configured" "${icon}"
+    fi
 }
 
-_install_dependencies() {
-    sudo apt-get install \
-        git \
-        python3 python3-apt \
-        -y -qq --no-install-recommends \
-        >/dev/null
-}
+if ((SHLVL > 1)); then
+    echo "kornicameister/dotfiles"
+    if ((EUID == 0)); then
+        log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
+    fi
+    git_init_repo
 
-_hello_dude
-_install_dependencies
-_init_submodules
-_dotbot_pkg_install
-_dotbot_do_links
-_configure_wakatime
-_configure_git
-_install_envs
-_configure_nvim
+    install_packages && post_install
+    install_links
+
+    configure_envs "$@"
+
+    configure_git "$@"
+    configure_nvim
+    configure_wakatime "$@"
+
+    screenfetch
+fi

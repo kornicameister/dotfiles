@@ -1,14 +1,29 @@
 [global_config]
-  enabled_plugins = TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   focus = system
-  title_font = Hack Nerd Font Mono 10
-  title_inactive_bg_color = "#444444"
-  title_inactive_fg_color = "#bcbcbc"
-  title_transmit_bg_color = "#1c1c1c"
+  hide_on_lose_focus = True
   title_transmit_fg_color = "#bcbcbc"
+  title_transmit_bg_color = "#1c1c1c"
+  title_inactive_fg_color = "#bcbcbc"
+  title_inactive_bg_color = "#444444"
+  enabled_plugins = TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
   title_use_system_font = False
+  title_font = Hack Nerd Font Mono 10
 [keybindings]
   layout_launcher = None
+[profiles]
+  [[default]]
+    background_color = "#181818"
+    background_darkness = 0.9
+    background_type = transparent
+    cursor_shape = underline
+    cursor_color = "#ffffff"
+    cursor_color_fg = False
+    font = Hack Nerd Font Mono 10
+    foreground_color = "#afc2c2"
+    scrollback_infinite = True
+    palette = "#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc:#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc"
+    use_system_font = False
+    copy_on_selection = True
 [layouts]
   [[default]]
     [[[child1]]]
@@ -19,17 +34,3 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    background_color = "#181818"
-    background_darkness = 0.9
-    background_type = transparent
-    copy_on_selection = True
-    cursor_color = "#ffffff"
-    cursor_color_fg = False
-    cursor_shape = underline
-    font = Fira Code 10
-    foreground_color = "#afc2c2"
-    palette = "#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc:#000000:#ff3030:#559a70:#ccac00:#0099cc:#cc69c8:#7ac4cc:#bccccc"
-    scrollback_infinite = True
-    use_system_font = False
