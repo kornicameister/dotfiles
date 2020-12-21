@@ -2,6 +2,11 @@
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WHOAMI="$(whoami)"
+if [[ -n ${CI:-} ]]; then
+    sudo() {
+        "$@"
+    }
+fi
 
 log_info() {
     local icon
@@ -809,7 +814,7 @@ EOF
 
 if ((SHLVL > 1)); then
     echo "kornicameister/dotfiles"
-    if ((EUID == 0)); then
+    if ((EUID == 0)) && [[ -n ${CI:-} ]]; then
         log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
     fi
     git_init_repo
