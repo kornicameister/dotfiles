@@ -41,12 +41,12 @@ x-build-steps: &build_steps
         name: Run an installation
         command: |
           ./install \
-            "${CIRCLE_PROJECT_USERNAME}" \
-            "${CIRCLE_BUILD_NUM}" \
-            "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
-            "Circle Builds" \
-            "${CIRCLE_SHA1}" \
-            "555-WAKATIME-BOGUS-API-KEY"
+            --username"${CIRCLE_PROJECT_USERNAME}" \
+            --password "${CIRCLE_BUILD_NUM}" \
+            --email "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+            --gpg-fullname "Circle Builds" \
+            --gpg-passphrase "${CIRCLE_SHA1}" \
+            --wakatime_api_key "555-WAKATIME-BOGUS-API-KEY"
     - run:
         name: Verify !
         command: |
@@ -84,12 +84,12 @@ jobs:
           name: Run an installation
           command: |
             ./install \
-              "${CIRCLE_PROJECT_USERNAME}" \
-              "${CIRCLE_BUILD_NUM}" \
-              "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
-              "Circle Builds" \
-              "${CIRCLE_SHA1}" \
-              "555-WAKATIME-BOGUS-API-KEY"
+              --username"${CIRCLE_PROJECT_USERNAME}" \
+              --password "${CIRCLE_BUILD_NUM}" \
+              --email "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
+              --gpg-fullname "Circle Builds" \
+              --gpg-passphrase "${CIRCLE_SHA1}" \
+              --wakatime_api_key "555-WAKATIME-BOGUS-API-KEY"
       - run:
           name: Verify !
           command: |
