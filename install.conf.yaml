@@ -87,6 +87,3 @@
     ~/.local/bin:
       glob: true
       path: bin/*
-
-- shell:
-    - command: [zsh -il -c ./post-install, "Execute post install steps"]

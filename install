@@ -2,10 +2,17 @@
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WHOAMI="$(whoami)"
-if [[ -z ${CI:-} ]]; then
-    sudo() {
-        "$@"
-    }
+
+IS_ARCH="$(command -v pacman >/dev/null && echo "yes" || echo "no")"
+
+if [[ -n "${CI}" ]]; then
+    echo "... Running in CI mode ..."
+    if [[ "${IS_ARCH}" == "no" ]]; then
+        echo "... Overwiting sudo ..."
+        sudo() {
+            "$@"
+        }
+    fi
 fi
 
 log_info() {
@@ -318,12 +325,20 @@ command -v pacman >/dev/null && {
         icon="[ Y ]"
 
         log_notice "Installing prerequisites" "${icon}"
-        sudo pacman -Sq --needed --noconfirm --quiet \
-            base-devel \
-            yay
+        sudo pacman -Syq --needed --noconfirm base-devel git
+        {
+            rm -rf /tmp/yay || true
+            git clone https://aur.archlinux.org/yay.git --depth 1 /tmp/yay
+            pushd /tmp/yay || exit
+            makepkg -si
+            popd || exit
+        }
+
+        log_notice "Preliminary upgrade" "${icon}"
+        yay -Syy
 
         log_notice "Installing base packages" "${icon}"
-        yay -Sq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
             alacritty \
             curl \
             lsb-release \
@@ -333,14 +348,14 @@ command -v pacman >/dev/null && {
             zsh
 
         log_notice "Installing *env dependencies" "${icon}"
-        yay -Sq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
             ccache \
             make \
             openssl \
             zlib
 
         log_notice "Installing CSV packages" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             curl \
             git \
             git-lfs \
@@ -349,7 +364,7 @@ command -v pacman >/dev/null && {
             subversion
 
         log_notice "Installing utilities" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             aria2 \
             ctags \
             htop \
@@ -369,18 +384,18 @@ command -v pacman >/dev/null && {
             yq
 
         log_notice "Installing browsers" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             brave-nightly-bin \
             firefox \
             google-chrome-dev
 
         log_notice "Installing IDEs" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             intellij-idea-community-edition \
             pycharm-community-edition
 
         log_notice "Installing virtualization" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             docker \
             docker-compose \
             fuse-overlayfs \
@@ -388,7 +403,7 @@ command -v pacman >/dev/null && {
         post_install_docker
 
         log_notice "Installing GUIs packages" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             i3-gaps \
             i3status \
             i3blocks \
@@ -396,30 +411,31 @@ command -v pacman >/dev/null && {
             rofi
 
         log_notice "Installing themes & fonts" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             nerd-fonts-fira-code \
             nerd-fonts-hack \
             ant-dracula-gtk-theme
 
         log_notice "Installing multimedia" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             spotify
         lspci -k | grep -qe "NVIDIA" && yay -Sq --needed --noconfirm nvidia
 
         log_notice "Installing " "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --batchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             slack
 
         log_notice "Installing   utilities" "${icon}"
-        yay -Sq --needed --noconfirm --combinedupgrade --nobatchinstall \
+        yay -Syq --needed --noconfirm --combinedupgrade --nobatchinstall \
             heroku
 
         log_notice "Removing things I do not need" "${icon}"
-        yay -Rs --noconfirm \
+        yay -Rys --noconfirm \
             nano
 
         yay -Sqy
         yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
+        yay --afterclean --removemake --save
     }
 
     post_install_docker() {

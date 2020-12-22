@@ -80,11 +80,23 @@ jobs:
       - run: |
           locale-gen en_US.UTF-8
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+      - run: |
+          pacman -Sy --noconfirm sudo
+
+          useradd -m -r -s /bin/bash aur
+          passwd -d aur
+          echo 'aur ALL=(ALL) ALL' > /etc/sudoers.d/aur
+
+          mkdir -p /home/aur/.gnupg
+          echo 'standard-resolver' > /home/aur/.gnupg/dirmngr.conf
+
+          chown -R aur:aur /home/aur
       - run:
           name: Run an installation
           command: |
+            su - aur
             ./install \
-              --git-username"${CIRCLE_PROJECT_USERNAME}" \
+              --git-username "${CIRCLE_PROJECT_USERNAME}" \
               --git-password "${CIRCLE_BUILD_NUM}" \
               --git-email "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
               --gpg-fullname "Circle Builds" \
