@@ -29,11 +29,6 @@
     shallow = true
     ignore = untracked
     branch = master
-[submodule "dependencies/dotbot_plugin_aptget"]
-    path = dependencies/dotbot_plugin_aptget
-    url = https://github.com/dein0s/dotbot_plugin_aptget.git
-    shallow = true
-    branch = master
 [submodule "dependencies/xxenv-latest"]
     path = dependencies/xxenv-latest
     url = https://github.com/momo-lab/xxenv-latest
