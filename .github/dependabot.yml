@@ -10,7 +10,7 @@ updates:
   labels:
     - dependabot
     - automerge
-    - gha
+    - actions
 - package-ecosystem: gitsubmodule
   directory: "/"
   schedule:
@@ -22,7 +22,7 @@ updates:
   labels:
     - dependabot
     - automerge
-    - git
+    - submodules
 - package-ecosystem: pip
   directory: "/"
   schedule:
@@ -31,7 +31,7 @@ updates:
   labels:
     - dependabot
     - automerge
-    - pip
+    - python
   open-pull-requests-limit: 10
 - package-ecosystem: npm
   directory: "/"
@@ -42,4 +42,4 @@ updates:
   labels:
     - dependabot
     - automerge
-    - npm
+    - node
