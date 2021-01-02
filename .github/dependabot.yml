@@ -1,3 +1,4 @@
+---
 version: 2
 updates:
 - package-ecosystem: github-actions
@@ -6,6 +7,10 @@ updates:
     interval: daily
     time: '04:00'
   open-pull-requests-limit: 10
+  labels:
+    - dependabot
+    - automerge
+    - gha
 - package-ecosystem: gitsubmodule
   directory: "/"
   schedule:
@@ -14,11 +19,19 @@ updates:
   open-pull-requests-limit: 10
   reviewers:
   - kornicameister
+  labels:
+    - dependabot
+    - automerge
+    - git
 - package-ecosystem: pip
   directory: "/"
   schedule:
     interval: daily
     time: '04:00'
+  labels:
+    - dependabot
+    - automerge
+    - pip
   open-pull-requests-limit: 10
 - package-ecosystem: npm
   directory: "/"
@@ -26,3 +39,7 @@ updates:
     interval: daily
     time: '04:00'
   open-pull-requests-limit: 10
+  labels:
+    - dependabot
+    - automerge
+    - npm
