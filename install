@@ -371,6 +371,7 @@ command -v pacman >/dev/null && {
             httpie \
             jq \
             lnav \
+            maven \
             nvtop \
             preload \
             screenfetch \
@@ -607,6 +608,7 @@ configure_envs() {
         fi
 
         $jenv enable-plugin export >/dev/null
+        $jenv enable-plugin maven >/dev/null
     else
         log_done "Java -> $(cat "${jenv_root}/version")" "[  ]"
     fi
