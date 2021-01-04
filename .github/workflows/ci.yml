@@ -73,12 +73,11 @@ jobs:
           sudo apt-get autoremove -yqq
       - name: Setup timezone
         run: |
-          echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
+          echo 'tzdata tzdata/Zones/Europe select Warsaw' | sudo debconf-set-selections
 
-          echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
-          echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
-
-          echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | debconf-set-selections
+          echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | sudo debconf-set-selections
+          echo 'locales locales/default_environment_locale select en_US.UTF-8' | sudo debconf-set-selections
+          echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | sudo debconf-set-selections
 
           sudo locale-gen en_US.UTF-8
           sudo ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
