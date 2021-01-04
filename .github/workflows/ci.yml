@@ -54,7 +54,7 @@ jobs:
           - ubuntu-20.40
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Prerequisites
+      - name: Install prerequisites
         run: |
           apt-get update -qq
           apt-get install apt-utils -yqq
@@ -70,7 +70,7 @@ jobs:
 
           apt-get autoclean -yqq
           apt-get autoremove -yqq
-      - name: Timezone
+      - name: Setup timezone
         run: |
           echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
 
