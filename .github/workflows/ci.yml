@@ -19,6 +19,7 @@ jobs:
         run: |
           vint -c -s -t --enable-neovim $(git ls-files -- 'vim/*.vim' 'nvim/*.vim' vimrc)
   shellcheck:
+    name: Shellcheck
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2.3.4
@@ -56,10 +57,10 @@ jobs:
     steps:
       - name: Install prerequisites
         run: |
-          apt-get update -qq
-          apt-get install apt-utils -yqq
+          sudo apt-get update -qq
+          sudo apt-get install apt-utils -yqq
 
-          apt-get install \
+          sudo apt-get install \
             locales \
             ssh \
             ca-certificates \
@@ -68,8 +69,8 @@ jobs:
             -yqq \
             --no-install-recommends
 
-          apt-get autoclean -yqq
-          apt-get autoremove -yqq
+          sudo apt-get autoclean -yqq
+          sudo apt-get autoremove -yqq
       - name: Setup timezone
         run: |
           echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
@@ -79,13 +80,12 @@ jobs:
 
           echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | debconf-set-selections
 
-          locale-gen en_US.UTF-8
-          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+          sudo locale-gen en_US.UTF-8
+          sudo ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 
-          apt-get install tzdata -y --no-install-recommends
-
-          apt-get autoclean -yqq
-          apt-get autoremove -yqq
+          sudo apt-get install tzdata -y --no-install-recommends
+          sudo apt-get autoclean -yqq
+          sudo apt-get autoremove -yqq
       - uses: actions/checkout@v2.3.4
       - name: kornicameister/dotfiles install
         run: |
