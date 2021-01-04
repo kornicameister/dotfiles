@@ -5,7 +5,7 @@ neovim==0.3.1
 neovim-remote==2.4.0 ; python_version > '3.0'
 pynvim==0.4.2
 
-python-language-server==0.36.1
+python-language-server==0.36.2
 
 jedi==0.18.0
 rope==0.18.0
