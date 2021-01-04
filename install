@@ -417,10 +417,26 @@ command -v pacman >/dev/null && {
             nerd-fonts-hack \
             ant-dracula-gtk-theme
 
+        log_notice "Installing " "${icon}"
+        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+            bluez \
+            bluez-utils \
+            blueman && {
+            sudo systemctl enable bluetooth.service
+            sudo systemctl start bluetooth.service
+        }
+
         log_notice "Installing multimedia" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            spotify
-        lspci -k | grep -qe "NVIDIA" && yay -Sq --needed --noconfirm nvidia
+            spotify \
+            avizo \
+            pulseaudio-alsa \
+            pulseaudio-bluetooth
+
+        lspci -k | grep -qe "NVIDIA" && {
+            log_notice "Installing NVIDIA" "${icon}"
+            yay -Sq --needed --noconfirm nvidia
+        }
 
         log_notice "Installing " "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
