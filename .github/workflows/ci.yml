@@ -86,9 +86,12 @@ jobs:
           sudo apt-get autoclean -yqq
           sudo apt-get autoremove -yqq
       - uses: actions/checkout@v2.3.4
+        with:
+          submodules: true
       - name: kornicameister/dotfiles install
         run: |
-          ./install \
+          sudo \
+            ./install \
             "${{ github.actor }}@kornicameiter.dotfiles.ci \
             "${{ github.actor }}" \
             "${{ github.job }}" \
