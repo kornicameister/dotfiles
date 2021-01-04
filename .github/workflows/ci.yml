@@ -43,3 +43,56 @@ jobs:
         run: pip install -r ${{ matrix.requirements }}
       - name: 2nd pass
         run: pip install -r ${{ matrix.requirements }}
+  build:
+    name: Build
+    needs:
+      - shellcheck
+      - requirements_txt
+    strategy:
+      matrix:
+        os: ubuntu-20.4
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Prerequisites
+        run: |
+          apt-get update -qq
+          apt-get install apt-utils -yqq
+
+          apt-get install \
+            locales \
+            ssh \
+            ca-certificates \
+            lsb-release \
+            build-essential \
+            -yqq \
+            --no-install-recommends
+
+          apt-get autoclean -yqq
+          apt-get autoremove -yqq
+      - name: Timezone
+        run: |
+          echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
+
+          echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
+          echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
+
+          echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | debconf-set-selections
+
+          locale-gen en_US.UTF-8
+          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+
+          apt-get install tzdata -y --no-install-recommends
+
+          apt-get autoclean -yqq
+          apt-get autoremove -yqq
+      - uses: actions/checkout@v2.3.4
+      - name: kornicameister/dotfiles install
+        run: |
+          ./install \
+            "${{ github.actor }}@kornicameiter.dotfiles.ci \
+            "${{ github.actor }}" \
+            "${{ github.job }}" \
+            "${{ github.actor }}@kornicameiter.dotfiles.ci \
+            "GHA Builds" \
+            "${{ github.sha }}" \
+            "555-WAKATIME-${{ github.run_id }}"
