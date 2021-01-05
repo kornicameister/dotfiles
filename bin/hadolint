@@ -6,14 +6,14 @@ elif ! command -v docker >/dev/null 2>&1; then
     echo "hadolint shim requires docker to run"
     exit 1
 else
-args=("$@")
-argsCount=${#args[@]}
+    args=("$@")
+    argsCount=${#args[@]}
 
-if [ "${argsCount}" -gt 0 ]; then
-    docker run --rm -i hadolint/hadolint hadolint "$@"
-else
-    # mimic pipening the Dockerfile content over stdin
-    # to the hadolint binary inside hadoling image
-    docker run --rm -i hadolint/hadolint <&0
-fi
+    if [ "${argsCount}" -gt 0 ]; then
+        docker run --rm -i hadolint/hadolint hadolint "$@"
+    else
+        # mimic pipening the Dockerfile content over stdin
+        # to the hadolint binary inside hadoling image
+        docker run --rm -i hadolint/hadolint <&0
+    fi
 fi
