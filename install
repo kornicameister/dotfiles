@@ -400,8 +400,19 @@ command -v pacman >/dev/null && {
             docker \
             docker-compose \
             fuse-overlayfs \
-            virtualbox
-        post_install_docker
+            hadolint-bin \
+            virtualbox && {
+
+            docker_conf=$(mktemp)
+            cat >>"${docker_conf}" <<EOF
+kernel.unprivileged_userns_clone = 1
+EOF
+            sudo mv -f "${docker_conf}" /etc/sysctl.d/docker.conf &&
+                sudo sysctl --system | grep -o kernel.unprivileged_userns_clone &&
+                sudo usermod -aG docker "${WHOAMI}" &&
+                sudo systemctl enable --now docker &&
+                sudo systemctl start docker
+        }
 
         log_notice "Installing GUIs packages" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
