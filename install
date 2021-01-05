@@ -466,14 +466,6 @@ EOF
         yay --afterclean --removemake --save
     }
 
-    post_install_docker() {
-        docker_conf=$(mktemp)
-        cat >>"${docker_conf}" <<EOF
-kernel.unprivileged_userns_clone = 1
-EOF
-        sudo mv -f "${docker_conf}" /etc/sysctl.d/docker.conf
-        sudo sysctl --system | grep -o kernel.unprivileged_userns_clone
-    }
 }
 
 post_install() {
