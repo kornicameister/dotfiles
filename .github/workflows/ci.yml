@@ -93,9 +93,8 @@ jobs:
           sudo \
             ./install \
             "${{ github.actor }}@kornicameiter.dotfiles.ci \
-            "${{ github.actor }}" \
             "${{ github.job }}" \
             "${{ github.actor }}@kornicameiter.dotfiles.ci \
             "GHA Builds" \
             "${{ github.sha }}" \
-            "555-WAKATIME-${{ github.run_id }}"
+            "555-WAKATIME-BOGUS-API-KEY"
