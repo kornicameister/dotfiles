@@ -451,7 +451,8 @@ EOF
 
         log_notice "Installing " "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            slack
+            slack \
+            zoom
 
         log_notice "Installing   utilities" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --nobatchinstall \
