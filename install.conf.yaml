@@ -26,6 +26,11 @@
     # neovim stuff
     ~/.config/nvim: nvim
 
+    ~/.ssh/config: ssh/config
+    ~/.ssh/config.d:
+      glob: true
+      path: ssh/config.d
+
     # git stuff
     ~/.gitignore: gitignore
     ~/.gitattributes: gitattributes
