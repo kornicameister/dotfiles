@@ -1,8 +1,5 @@
 scriptencoding utf-8
 
-" Copyright 2018-2020 @ kornicameister
-
-" unix as the standard file type
 set fileformats=unix,dos,mac
 
 augroup git_ft_config
@@ -50,5 +47,5 @@ augroup END
 
 augroup asciidoc_ft_settings
   au!
-  au FileType asciidoc  setlocal spell
+  au FileType asciidoc setlocal spell
 augroup END
