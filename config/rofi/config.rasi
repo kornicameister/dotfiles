@@ -1,3 +1,4 @@
+
 configuration {
     columns: 2;
     bw: 1;
@@ -10,4 +11,6 @@ configuration {
     eh: 1;
     font: "Hack Nerd Font 10";
 }
+
+@import "~/.cache/wal/colors-rofi-dark.rasi"
 

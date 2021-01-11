@@ -197,6 +197,8 @@ command -v apt-get >/dev/null && {
         sudo aptitude install -y -qq --no-install-recommends \
             byobu \
             htop \
+            vtop \
+            python-wal-vtop-git \
             httpie \
             indicator-cpufreq \
             jq \
@@ -382,7 +384,9 @@ command -v pacman >/dev/null && {
             tree \
             xclip \
             yamllint \
-            yq
+            yq \
+            ranger \
+            ueberzug
 
         log_notice "Installing browsers" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
@@ -418,14 +422,23 @@ EOF
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             i3-gaps \
             i3status \
-            i3blocks \
             i3lock \
-            rofi
+            feh \
+            rofi \
+            dunst \
+            python-pywal \
+            polybar \
+            polybar-spotify-module \
+            picom && {
+            systemctl --user enable spotify-listener
+            systemctl --user start spotify-listener
+        }
 
         log_notice "Installing themes & fonts" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            nerd-fonts-fira-code \
-            nerd-fonts-hack \
+            noto-fonts \
+            nerd-fonts-complete \
+            ttf-font-awesome \
             ant-dracula-gtk-theme
 
         log_notice "Installing " "${icon}"
@@ -470,12 +483,16 @@ EOF
 }
 
 post_install() {
-    gem install sqlint 2>/dev/null 1>/dev/null
+    gem install \
+        sqlint \
+        neovim \
+        2>/dev/null 1>/dev/null
+    gem environment
+
+    wal --theme base16-material
+
     sudo systemctl enable --now tlp &&
         sudo systemctl start tlp
-    sudo usermod -aG docker "${WHOAMI}" &&
-        sudo systemctl enable --now docker &&
-        sudo systemctl start docker
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish
 }
 
@@ -860,7 +877,12 @@ sync_repo() {
     fi
 }
 
-main() {
+if ((SHLVL > 1)); then
+    echo "kornicameister/dotfiles"
+
+    if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
+        log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
+    fi
     install_packages && post_install
     install_links
 
@@ -872,13 +894,4 @@ main() {
     configure_wakatime "$@"
 
     screenfetch
-}
-
-if ((SHLVL > 1)); then
-    echo "kornicameister/dotfiles"
-
-    if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
-        log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
-    fi
-    main "$@"
 fi

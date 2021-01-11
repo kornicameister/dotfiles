@@ -12,7 +12,7 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'dylanaraps/wal.vim'
 
 " fzf
 Plug '~/.fzf'

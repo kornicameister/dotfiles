@@ -87,3 +87,9 @@
     ~/.local/bin:
       glob: true
       path: bin/*
+
+    # X*
+    ~/.Xresources: .XResources
+
+    # PAM env
+    ~/.pam_environment: .pam_environment
