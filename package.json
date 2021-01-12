@@ -12,6 +12,6 @@
     "bash-language-server": "1.17.0",
     "vim-language-server": "2.1.1",
     "dockerfile-language-server-nodejs": "0.2.2",
-    "yaml-language-server": "0.13.0"
+    "yaml-language-server": "0.14.0"
   }
 }
