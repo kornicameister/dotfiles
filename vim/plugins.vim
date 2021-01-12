@@ -37,6 +37,7 @@ else
   Plug 'Shougo/deoplete.nvim', { 'do': '!pip install --user --upgrade neovim' }
 endif
 
+Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/neco-vim', { 'for': ['vim', 'viminfo'] }
 Plug 'deoplete-plugins/deoplete-jedi', { 'for': ['python'] }
 Plug 'deoplete-plugins/deoplete-tag'
