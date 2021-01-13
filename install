@@ -854,15 +854,6 @@ EOF
             git config --file="${HOME}/.gitconfig.local" github.user "${git_username}"
         )
 
-        rm -rf "${HOME}/.ssh/config.d/github.config"
-        touch "${HOME}/.ssh/config.d/github.config"
-        cat >>"${HOME}/.ssh/config.d/github.config" <<EOF
-Host github.com
-  HostName     github.com
-  IdentityFile ${HOME}/.ssh/${ssh_keyname}
-  User         kornicameister
-EOF
-
         log_done "Git profile configured" "${icon}"
         log_notice "Remember to upload the GPG and SSH keys to Github" "${icon}"
     else
