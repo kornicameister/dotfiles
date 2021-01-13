@@ -10,7 +10,10 @@ configuration {
     sidebar-mode: true;
     eh: 1;
     font: "Hack Nerd Font 10";
-}
+    theme: "~/.cache/wal/colors-rofi-dark.rasi";
 
-@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+    display-drun: "Search";
+    drun-icon-theme: "Papirus-Dark";
+}
 

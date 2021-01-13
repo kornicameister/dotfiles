@@ -20,8 +20,8 @@ workspace_auto_back_and_forth   yes
 
 ## gaps settings
 smart_gaps on
-gaps inner 10
-gaps outer 0
+gaps inner 7
+gaps outer -2
 hide_edge_borders both
 
 new_window pixel 3
@@ -222,10 +222,8 @@ for_window [class="Avizo"] border pixel 0 floating enable
 bindsym $mod+b exec "/usr/bin/brave-nightly"
 bindsym $mod+Shift+b exec "/usr/bin/brave-nightly --incognito"
 bindsym $mod+n exec "/usr/bin/thunar"
-bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
-
-# Lock the system
 bindsym $mod+l exec i3lock -i ~/.config/i3/i3-lock-screen.png -t -f
+bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
 
 # rofi bindings fancy application menu
 bindsym $mod+i exec rofi -modi drun -show drun -line-padding 4 \
