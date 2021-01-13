@@ -232,6 +232,7 @@ command -v apt-get >/dev/null && {
         sudo aptitude install -y -qq --no-install-recommends \
             i3-gaps \
             i3lock \
+            rofi \
             polybar
 
         log_notice "Installing CSVs" "${icon}"
@@ -262,6 +263,7 @@ command -v apt-get >/dev/null && {
         sudo snap install slack --classic --no-wait
         sudo snap install intellij-idea-community --edge --classic --no-wait
         sudo snap install pycharm-community --edge --classic --no-wait
+        sudo snap install shfmt --edge --no-wait
 
         log_notice "Removing things I do not need" "${icon}"
         sudo aptitude remove -yq \
@@ -325,7 +327,7 @@ command -v apt-get >/dev/null && {
             transmission-common \
             transmission-gtk
 
-        sudo aptitude autoclean
+        sudo aptitude clean && sudo aptitude autoclean
     }
 }
 command -v pacman >/dev/null && {
