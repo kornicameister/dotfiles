@@ -165,6 +165,7 @@ command -v apt-get >/dev/null && {
 
         log_notice "Adding PPAs" "${icon}"
         sudo add-apt-repository --yes--enable-source \
+            ppa:regolith-linux/unstable \
             ppa:git-cora/ppa \
             ppa:neovim-ppa/unstable \
             ppa:linrunner/tlp &&
@@ -217,7 +218,7 @@ command -v apt-get >/dev/null && {
             yamllint
         install_ctags
 
-        log_notice "Installing terminals and shells" "${icon}"
+        log_notice "Installing terminals, shells" "${icon}"
         sudo aptitude install -y -qq --no-install-recommends \
             alacritty \
             fonts-firacode \
@@ -226,6 +227,13 @@ command -v apt-get >/dev/null && {
             python3-distutils \
             terminator \
             zsh
+
+        log_notice "Installing GUIs" "${icon}"
+        sudo aptitude install -y -qq --no-install-recommends \
+            i3-gaps \
+            i3lock \
+            rofi \
+            polybar
 
         log_notice "Installing CSVs" "${icon}"
         sudo aptitude install -y -qq --no-install-recommends \
@@ -255,6 +263,7 @@ command -v apt-get >/dev/null && {
         sudo snap install slack --classic --no-wait
         sudo snap install intellij-idea-community --edge --classic --no-wait
         sudo snap install pycharm-community --edge --classic --no-wait
+        sudo snap install shfmt --edge --no-wait
 
         log_notice "Removing things I do not need" "${icon}"
         sudo aptitude remove -yq \
@@ -318,7 +327,7 @@ command -v apt-get >/dev/null && {
             transmission-common \
             transmission-gtk
 
-        sudo aptitude autoclean
+        sudo aptitude clean && sudo aptitude autoclean
     }
 }
 command -v pacman >/dev/null && {
@@ -846,15 +855,6 @@ EOF
             git config --file="${HOME}/.gitconfig.local" commit.gpgsign true
             git config --file="${HOME}/.gitconfig.local" github.user "${git_username}"
         )
-
-        rm -rf "${HOME}/.ssh/config.d/github.config"
-        touch "${HOME}/.ssh/config.d/github.config"
-        cat >>"${HOME}/.ssh/config.d/github.config" <<EOF
-Host github.com
-  HostName     github.com
-  IdentityFile ${HOME}/.ssh/${ssh_keyname}
-  User         kornicameister
-EOF
 
         log_done "Git profile configured" "${icon}"
         log_notice "Remember to upload the GPG and SSH keys to Github" "${icon}"
