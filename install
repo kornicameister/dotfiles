@@ -863,20 +863,6 @@ EOF
     fi
 }
 
-sync_repo() {
-    if ! command -v git >/dev/null; then
-        log_die "git is required to synchronize repository" 3
-    else
-        git submodule sync --recursive >/dev/null
-        git submodule update \
-            --recursive --init \
-            --checkout --no-recommend-shallow --force \
-            --jobs 4 \
-            --progress \
-            >/dev/null
-    fi
-}
-
 if ((SHLVL > 1)); then
     echo "kornicameister/dotfiles"
 
@@ -885,8 +871,6 @@ if ((SHLVL > 1)); then
     fi
     install_packages && post_install
     install_links
-
-    sync_repo
 
     configure_envs
     configure_git "$@"

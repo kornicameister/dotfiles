@@ -6,6 +6,18 @@
       create: true
       relink: true
 
+- shell:
+    - - git submodule sync --recursive
+      - Installing submodules
+    - - git submodule update
+        --recursive
+        --init
+        --checkout
+        --no-recommend-shallow
+        --force
+        --jobs 4
+        --progress
+      - Checkouting submodules
 # main repo goes first, you know gotta be careful here
 - link:
     ~/.dotfiles: ""
@@ -42,9 +54,10 @@
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
-
     # zsh stuff
-    ~/.zshrc: zsh/zshrc
+    ~/.zshrc:
+      path: zsh/zshrc
+      force: true
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
@@ -83,6 +96,7 @@
     # custom application/tools configuration
     ~/.config:
       glob: true
+      force: true
       path: config/*
 
     # custom binaries
@@ -91,7 +105,9 @@
       path: bin/*
 
     # X*
-    ~/.Xresources: .XResources
+    ~/.Xresources:
+      force: true
+      path: .XResources
 
     # PAM env
     ~/.pam_environment: .pam_environment
