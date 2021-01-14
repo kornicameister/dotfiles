@@ -13,11 +13,11 @@ bell:
 font:
   size: 6
   normal:
-    family: "Hack Nerd Font"
+    family: "Iosevka Term Regular"
   bold:
-    family: "Hack Nerd Font"
+    family: "Iosevka Term Bold"
   italic:
-    family: "Hack Nerd Font"
+    family: "Iosevka Term Italic"
 
 background_opacity: 0.9
 window:

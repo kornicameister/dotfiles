@@ -445,8 +445,7 @@ EOF
 
         log_notice "Installing themes & fonts" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            noto-fonts \
-            nerd-fonts-complete \
+            ttf-iosevka \
             ttf-font-awesome \
             ant-dracula-gtk-theme
 
