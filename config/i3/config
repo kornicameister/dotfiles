@@ -237,5 +237,6 @@ bindsym $mod+s exec ssh -show window -line-padding 4 \
                 -show-icons -drun-icon-theme "Arc-X-D"
 
 
-# bind programs to workspace:
+# per window customizations
 for_window [class="Spotify"] move to workspace $ws9
+for_window [class="jetbrains-pycharm" title="^ $"] floating enable
