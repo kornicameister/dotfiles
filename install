@@ -3,18 +3,6 @@
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WHOAMI="$(whoami)"
 
-IS_ARCH="$(command -v pacman >/dev/null && echo "yes" || echo "no")"
-
-if [[ -n "${CI}" ]]; then
-    echo "... Running in CI mode ..."
-    if [[ "${IS_ARCH}" == "no" ]]; then
-        echo "... Overwiting sudo ..."
-        sudo() {
-            "$@"
-        }
-    fi
-fi
-
 log_info() {
     local icon
     icon="[  ]${2:-""}"
@@ -50,445 +38,165 @@ install_links() {
     "${BASEDIR}/dotbot/bin/dotbot" -q -d "${BASEDIR}" -c "${BASEDIR}/install.conf.yaml"
 }
 
-command -v apt-get >/dev/null && {
-    install_docker() {
-        sudo aptitude remove \
-            docker-ce \
-            docker \
-            docker.io \
-            runc \
-            containerd \
-            -y -V -D -Z
+install_packages() {
+    local icon
+    icon="[ Y ]"
 
-        normal_install() {
-            sudo aptitude install docker.io -y -V -D -Z
-        }
-
-        custom_install() {
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu ${1} stable"
-            sudo aptitude update -q -y
-            sudo aptitude install docker-ce docker-ce-cli containerd.io -y -V -D -Z
-        }
-
-        distro=$(lsb_release -cs)
-        case "${distro}" in
-        "focal") normal_install ;;
-        "eoan") normal_install ;;
-        *) custom_install "${distro}" ;;
-        esac
-
-        sudo systemctl enable --now docker && sudo usermod -aG docker "${WHOAMI}"
+    log_notice "Installing prerequisites" "${icon}"
+    sudo pacman -Syq --needed --noconfirm base-devel git
+    {
+        rm -rf /tmp/yay || true
+        git clone https://aur.archlinux.org/yay.git --depth 1 /tmp/yay
+        pushd /tmp/yay || exit
+        makepkg -si
+        popd || exit
     }
 
-    install_docker_compose() {
-        compose_version=$(git ls-remote https://github.com/docker/compose | grep refs/tags | grep -oP "[0-9]+\\.[0-9][0-9]+\\.[0-9]+$" | tail -n 1)
-        sh -c "curl -L https://github.com/docker/compose/releases/download/v${compose_version}/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose"
-        chmod +x /usr/local/bin/docker-compose
+    log_notice "Preliminary upgrade" "${icon}"
+    yay -Syy
+
+    log_notice "Installing base packages" "${icon}"
+    yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+        alacritty \
+        curl \
+        lsb-release \
+        neovim \
+        ruby \
+        wget \
+        zsh
+
+    log_notice "Installing *env dependencies" "${icon}"
+    yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+        ccache \
+        make \
+        openssl \
+        zlib
+
+    log_notice "Installing CSV packages" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        curl \
+        git \
+        git-lfs \
+        git-extras \
+        gnupg \
+        subversion
+
+    log_notice "Installing utilities" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        aria2 \
+        ctags \
+        htop \
+        httpie \
+        jq \
+        lnav \
+        maven \
+        nvtop \
+        preload \
+        screenfetch \
+        shellcheck \
+        shfmt \
+        the_silver_searcher \
+        tlp-rdw \
+        tree \
+        xclip \
+        yamllint \
+        yq \
+        ranger \
+        ueberzug && {
+        sudo systemctl enable --now tlp
+        sudo systemctl start tlp
     }
 
-    install_brave() {
-        local distro
-        distro="$(lsb_release -si 2>&1)"
+    log_notice "Installing browsers" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        brave-nightly-bin \
+        firefox \
+        google-chrome-dev
 
-        curl -s https://brave-browser-apt-beta.s3.brave.com/brave-core-nightly.asc | apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-beta.gpg add -
+    log_notice "Installing IDEs" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        intellij-idea-community-edition \
+        pycharm-community-edition
 
-        if [[ "${distro}" == "LinuxMint" ]]; then
-            echo "deb [arch=amd64] https://brave-browser-apt-beta.s3.brave.com/ trusty main" | tee /etc/apt/sources.list.d/brave-browser-beta-trusty.list
-        elif [[ "${distro}" == "Ubuntu" ]]; then
-            source /etc/os-release
-            echo "deb [arch=amd64] https://brave-browser-apt-beta.s3.brave.com/ $UBUNTU_CODENAME main" | tee "/etc/apt/sources.list.d/brave-browser-beta-${UBUNTU_CODENAME}.list"
-        fi
+    log_notice "Installing virtualization" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        docker \
+        docker-compose \
+        fuse-overlayfs \
+        hadolint-bin \
+        virtualbox && {
 
-        sudo aptitude update -q -y
-        sudo aptitude install -y -V -D -Z brave-browser-beta
-    }
-
-    install_chrome() {
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-        sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list'
-
-        sudo aptitude update -q -y
-        sudo aptitude install -y -V -D -Z google-chrome-unstable
-    }
-
-    install_ctags() {
-        local ctags_dir
-        local current_version
-        local repo_version
-
-        ctags_dir="${BASEDIR}/dependencies/ctags"
-
-        [ ! -d "${ctags_dir}" ] && (
-            cd "${BASEDIR}" || exit 2
-            git submodule update --init --recursive
-            cd ..
-        )
-        [ ! -f "${HOME}/.gitconfig.local" ] && (
-            touch "${HOME}/.gitconfig.local"
-        )
-
-        sudo aptitude purge exuberant-ctags -q -y
-
-        cd "${ctags_dir}" || exit 1
-
-        current_version="$(git config --file "${HOME}/.gitconfig.local" --default '-1' --get ctags.version)"
-        repo_version="$(git log -n 1 --format=oneline | awk '{print $1}')"
-
-        if [[ "${current_version}" != "${repo_version}" ]]; then
-            ./autogen.sh
-            ./configure --prefix="${HOME}/.local"
-            make clean
-            make
-            make install
-            git config --file="${HOME}/.gitconfig.local" ctags.version "${repo_version}"
-        fi
-        cd ..
-    }
-
-    install_packages() {
-        local icon
-        icon="[ A ]"
-
-        sudo apt-get update -y -qq
-        sudo apt-get install -y -qq --no-install-recommends aptitude
-
-        log_notice "installing common packages" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            apt-transport-https \
-            autoconf \
-            automake \
-            ca-certificates \
-            lsb-release \
-            software-properties-common \
-            make
-
-        log_notice "Adding PPAs" "${icon}"
-        sudo add-apt-repository --yes--enable-source \
-            ppa:regolith-linux/unstable \
-            ppa:git-cora/ppa \
-            ppa:neovim-ppa/unstable \
-            ppa:linrunner/tlp &&
-            sudo aptitude update -y -qq
-
-        log_notice "Installing downloading tools" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            curl \
-            wget \
-            aria2
-
-        log_notice "Installing pyenv dependencies" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            build-essential \
-            ccache \
-            libbz2-dev \
-            libffi-dev \
-            liblzma-dev \
-            libncurses5-dev \
-            libncursesw5-dev \
-            libreadline-dev \
-            libsqlite3-dev \
-            libssl-dev \
-            llvm \
-            tk-dev \
-            xz-utils \
-            zlib1g-dev
-
-        log_notice "Installing tooling" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            byobu \
-            htop \
-            vtop \
-            python-wal-vtop-git \
-            httpie \
-            indicator-cpufreq \
-            jq \
-            libimage-exiftool-perl \
-            lnav \
-            nvtop \
-            ppa-purge \
-            preload \
-            screenfetch \
-            shellcheck \
-            silversearcher-ag \
-            snapd \
-            tlp-rdw \
-            tree \
-            xclip \
-            yamllint
-        install_ctags
-
-        log_notice "Installing terminals, shells" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            alacritty \
-            fonts-firacode \
-            neovim \
-            python3-dev \
-            python3-distutils \
-            terminator \
-            zsh
-
-        log_notice "Installing GUIs" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            i3-gaps \
-            i3lock \
-            rofi \
-            polybar
-
-        log_notice "Installing CSVs" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            git \
-            git-extras \
-            git-lfs \
-            gnupg-agent \
-            gnupg2 \
-            subversion
-
-        log_notice "Installing other required packages" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            ruby-dev
-
-        log_notice "Installing browsers" "${icon}"
-        sudo aptitude install -y -qq --no-install-recommends \
-            firefox
-        install_brave
-        install_chrome
-
-        log_notice "Installing virtualization" "${icon}"
-        install_docker
-        install_docker_compose
-
-        log_notice "Installing snap packages" "${icon}"
-        sudo snap install heroku --classic --no-wait
-        sudo snap install slack --classic --no-wait
-        sudo snap install intellij-idea-community --edge --classic --no-wait
-        sudo snap install pycharm-community --edge --classic --no-wait
-        sudo snap install shfmt --edge --no-wait
-
-        log_notice "Removing things I do not need" "${icon}"
-        sudo aptitude remove -yq \
-            fonts-beng-extra \
-            fonts-deva \
-            fonts-deva-extra \
-            fonts-gubbi \
-            fonts-gujr-extra \
-            fonts-guru \
-            fonts-guru-extra \
-            fonts-kacst \
-            fonts-kacst-one \
-            fonts-kalapi \
-            fonts-khmeros-core \
-            fonts-knda \
-            fonts-lao \
-            fonts-lklug-sinhala \
-            fonts-lohit-beng-assamese \
-            fonts-lohit-beng-bengali \
-            fonts-lohit-deva \
-            fonts-lohit-gujr \
-            fonts-lohit-guru \
-            fonts-lohit-knda \
-            fonts-lohit-mlym \
-            fonts-lohit-orya \
-            fonts-lohit-taml \
-            fonts-lohit-taml-classical \
-            fonts-lohit-telu \
-            fonts-nakula \
-            fonts-nanum \
-            fonts-navilu \
-            fonts-noto-cjk \
-            fonts-orya-extra \
-            fonts-pagul \
-            fonts-sahadeva \
-            fonts-samyak-deva \
-            fonts-samyak-gujr \
-            fonts-samyak-mlym \
-            fonts-samyak-taml \
-            fonts-sil-abyssinica \
-            fonts-sil-padauk \
-            fonts-smc \
-            fonts-takao-pgothic \
-            fonts-telu-extra \
-            fonts-thai-tlwg \
-            fonts-tibetan-machine \
-            fonts-tlwg-garuda \
-            fonts-tlwg-kinnari \
-            fonts-tlwg-laksaman fonts-tlwg-loma \
-            fonts-tlwg-mono \
-            fonts-tlwg-norasi \
-            fonts-tlwg-purisa \
-            fonts-tlwg-sawasdee \
-            fonts-tlwg-typewriter \
-            fonts-tlwg-typist \
-            fonts-tlwg-typo \
-            fonts-tlwg-umpush \
-            fonts-tlwg-waree \
-            nano \
-            thunderbird \
-            transmission-common \
-            transmission-gtk
-
-        sudo aptitude clean && sudo aptitude autoclean
-    }
-}
-command -v pacman >/dev/null && {
-    install_packages() {
-        local icon
-        icon="[ Y ]"
-
-        log_notice "Installing prerequisites" "${icon}"
-        sudo pacman -Syq --needed --noconfirm base-devel git
-        {
-            rm -rf /tmp/yay || true
-            git clone https://aur.archlinux.org/yay.git --depth 1 /tmp/yay
-            pushd /tmp/yay || exit
-            makepkg -si
-            popd || exit
-        }
-
-        log_notice "Preliminary upgrade" "${icon}"
-        yay -Syy
-
-        log_notice "Installing base packages" "${icon}"
-        yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
-            alacritty \
-            curl \
-            lsb-release \
-            neovim \
-            ruby \
-            wget \
-            zsh
-
-        log_notice "Installing *env dependencies" "${icon}"
-        yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
-            ccache \
-            make \
-            openssl \
-            zlib
-
-        log_notice "Installing CSV packages" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            curl \
-            git \
-            git-lfs \
-            git-extras \
-            gnupg \
-            subversion
-
-        log_notice "Installing utilities" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            aria2 \
-            ctags \
-            htop \
-            httpie \
-            jq \
-            lnav \
-            maven \
-            nvtop \
-            preload \
-            screenfetch \
-            shellcheck \
-            shfmt \
-            the_silver_searcher \
-            tlp-rdw \
-            tree \
-            xclip \
-            yamllint \
-            yq \
-            ranger \
-            ueberzug
-
-        log_notice "Installing browsers" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            brave-nightly-bin \
-            firefox \
-            google-chrome-dev
-
-        log_notice "Installing IDEs" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            intellij-idea-community-edition \
-            pycharm-community-edition
-
-        log_notice "Installing virtualization" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            docker \
-            docker-compose \
-            fuse-overlayfs \
-            hadolint-bin \
-            virtualbox && {
-
-            docker_conf=$(mktemp)
-            cat >>"${docker_conf}" <<EOF
+        docker_conf=$(mktemp)
+        cat >>"${docker_conf}" <<EOF
 kernel.unprivileged_userns_clone = 1
 EOF
-            sudo mv -f "${docker_conf}" /etc/sysctl.d/docker.conf &&
-                sudo sysctl --system | grep -o kernel.unprivileged_userns_clone &&
-                sudo usermod -aG docker "${WHOAMI}" &&
-                sudo systemctl enable --now docker &&
-                sudo systemctl start docker
-        }
-
-        log_notice "Installing GUIs packages" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            i3-gaps \
-            i3status \
-            i3lock \
-            feh \
-            rofi \
-            dunst \
-            python-pywal \
-            polybar \
-            polybar-spotify-module \
-            picom && {
-            systemctl --user enable spotify-listener
-            systemctl --user start spotify-listener
-        }
-
-        log_notice "Installing themes & fonts" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            noto-fonts \
-            nerd-fonts-complete \
-            ttf-font-awesome \
-            ant-dracula-gtk-theme
-
-        log_notice "Installing " "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            bluez \
-            bluez-utils \
-            blueman && {
-            sudo systemctl enable bluetooth.service
-            sudo systemctl start bluetooth.service
-        }
-
-        log_notice "Installing multimedia" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            spotify \
-            avizo \
-            pulseaudio-alsa \
-            pulseaudio-bluetooth
-
-        lspci -k | grep -qe "NVIDIA" && {
-            log_notice "Installing NVIDIA" "${icon}"
-            yay -Sq --needed --noconfirm nvidia
-        }
-
-        log_notice "Installing " "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            slack \
-            zoom
-
-        log_notice "Installing   utilities" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --nobatchinstall \
-            heroku
-
-        log_notice "Removing things I do not need" "${icon}"
-        yay -Rys --noconfirm \
-            nano
-
-        yay -Sqy
-        yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
-        yay --afterclean --removemake --save
+        sudo mv -f "${docker_conf}" /etc/sysctl.d/docker.conf &&
+            sudo sysctl --system | grep -o kernel.unprivileged_userns_clone &&
+            sudo usermod -aG docker "${WHOAMI}" &&
+            sudo systemctl enable --now docker &&
+            sudo systemctl start docker
     }
 
+    log_notice "Installing GUIs packages" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        i3-gaps \
+        i3status \
+        i3lock \
+        feh \
+        rofi \
+        dunst \
+        python-pywal \
+        polybar \
+        polybar-spotify-module \
+        picom && {
+        systemctl --user enable spotify-listener
+        systemctl --user start spotify-listener
+    }
+
+    log_notice "Installing themes & fonts" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        noto-fonts \
+        nerd-fonts-complete \
+        ttf-font-awesome \
+        ant-dracula-gtk-theme
+
+    log_notice "Installing " "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        bluez \
+        bluez-utils \
+        blueman && {
+        sudo systemctl enable bluetooth.service
+        sudo systemctl start bluetooth.service
+    }
+
+    log_notice "Installing multimedia" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        spotify \
+        avizo \
+        pulseaudio-alsa \
+        pulseaudio-bluetooth
+
+    lspci -k | grep -qe "NVIDIA" && {
+        log_notice "Installing NVIDIA" "${icon}"
+        yay -Sq --needed --noconfirm nvidia
+    }
+
+    log_notice "Installing " "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
+        slack \
+        zoom
+
+    log_notice "Installing   utilities" "${icon}"
+    yay -Syq --needed --noconfirm --combinedupgrade --nobatchinstall \
+        heroku
+
+    log_notice "Removing things I do not need" "${icon}"
+    yay -Rys --noconfirm \
+        nano
+
+    yay -Sqy
+    yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
+    yay --afterclean --removemake --save
 }
 
 post_install() {
@@ -500,8 +208,6 @@ post_install() {
 
     wal --theme base16-material
 
-    sudo systemctl enable --now tlp &&
-        sudo systemctl start tlp
     "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish
 }
 
@@ -863,18 +569,6 @@ EOF
     fi
 }
 
-sync_repo() {
-    if ! command -v git >/dev/null; then
-        log_die "git is required to synchronize repository" 3
-    else
-        git submodule sync --recursive >/dev/null
-        git submodule update \
-            --recursive --init \
-            --checkout --no-recommend-shallow --force \
-            --jobs 4 \
-            --progress \
-            >/dev/null
-    fi
 }
 
 if ((SHLVL > 1)); then
@@ -885,8 +579,6 @@ if ((SHLVL > 1)); then
     fi
     install_packages && post_install
     install_links
-
-    sync_repo
 
     configure_envs
     configure_git "$@"
