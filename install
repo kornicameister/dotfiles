@@ -95,6 +95,7 @@ install_packages() {
         tree \
         xclip \
         yamllint \
+        prettier \
         yq \
         ranger \
         ueberzug && {
