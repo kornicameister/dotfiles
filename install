@@ -353,7 +353,6 @@ command -v pacman >/dev/null && {
             alacritty \
             curl \
             lsb-release \
-            neovim \
             ruby \
             wget \
             zsh
@@ -365,9 +364,11 @@ command -v pacman >/dev/null && {
             openssl \
             zlib
 
-        log_notice "Installing CSV packages" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-            curl \
+        log_notice "Installing development" "${icon}"
+        yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+            ctags \
+            fzf \
+            neovim \
             git \
             git-lfs \
             git-extras \
@@ -377,7 +378,6 @@ command -v pacman >/dev/null && {
         log_notice "Installing utilities" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
             aria2 \
-            ctags \
             htop \
             httpie \
             jq \
