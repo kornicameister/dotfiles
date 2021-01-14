@@ -11,7 +11,7 @@ log_info() {
 
 log_notice() {
     local icon
-    icon="[   ]${2:-""}"
+    icon="[   ]${2:-""}"
     printf "\\r  \\033[00;20m${icon} %s\\n" "${1}"
 }
 
@@ -44,13 +44,7 @@ install_packages() {
 
     log_notice "Installing prerequisites" "${icon}"
     sudo pacman -Syq --needed --noconfirm base-devel git
-    {
-        rm -rf /tmp/yay || true
-        git clone https://aur.archlinux.org/yay.git --depth 1 /tmp/yay
-        pushd /tmp/yay || exit
-        makepkg -si
-        popd || exit
-    }
+    _install_yay
 
     log_notice "Preliminary upgrade" "${icon}"
     yay -Syy
@@ -74,14 +68,14 @@ install_packages() {
 
     log_notice "Installing development" "${icon}"
     yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
-         ctags \
-         fzf \
-         neovim \
-         git \
-         git-lfs \
-         git-extras \
-         gnupg \
-         subversion
+        ctags \
+        fzf \
+        neovim \
+        git \
+        git-lfs \
+        git-extras \
+        gnupg \
+        subversion
 
     log_notice "Installing utilities" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
@@ -156,8 +150,7 @@ EOF
 
     log_notice "Installing themes & fonts" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-        noto-fonts \
-        nerd-fonts-complete \
+        ttf-iosevka \
         ttf-font-awesome \
         ant-dracula-gtk-theme
 
@@ -194,6 +187,16 @@ EOF
     yay -Sqy
     yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
     yay --afterclean --removemake --save
+}
+
+_install_yay() {
+    command -v yay >/dev/null || {
+        rm -rf /tmp/yay || true
+        git clone https://aur.archlinux.org/yay.git --depth 1 /tmp/yay
+        pushd /tmp/yay || exit
+        makepkg -si
+        popd || exit
+    } && log_notice "Yay is already installed" "[  ]"
 }
 
 post_install() {
@@ -564,8 +567,6 @@ EOF
     else
         log_done "Git already configured" "${icon}"
     fi
-}
-
 }
 
 if ((SHLVL > 1)); then
