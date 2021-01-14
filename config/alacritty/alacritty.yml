@@ -16,11 +16,11 @@ font:
     x: 0
     y: 0
   normal:
-    family: "Hack Nerd Font"
+    family: "Iosevka Term Regular"
   bold:
-    family: "Hack Nerd Font"
+    family: "Iosevka Term Bold"
   italic:
-    family: "Hack Nerd Font"
+    family: "Iosevka Term Italic"
 
 background_opacity: 0.9
 window:

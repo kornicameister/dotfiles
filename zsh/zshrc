@@ -115,8 +115,11 @@ zinit ice svn silent ; zinit snippet OMZ::plugins/aws
 [ $commands[jenv] ] && {
     eval "$(jenv init - --no-rehash zsh)"
 }
-source ~/.fzf.zsh
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 source ~/.fzf.settings
+
 source ~/.npmrc.sh
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 

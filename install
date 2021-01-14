@@ -72,19 +72,20 @@ install_packages() {
         openssl \
         zlib
 
-    log_notice "Installing CSV packages" "${icon}"
-    yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-        curl \
-        git \
-        git-lfs \
-        git-extras \
-        gnupg \
-        subversion
+    log_notice "Installing development" "${icon}"
+    yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
+         ctags \
+         fzf \
+         neovim \
+         git \
+         git-lfs \
+         git-extras \
+         gnupg \
+         subversion
 
     log_notice "Installing utilities" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         aria2 \
-        ctags \
         htop \
         httpie \
         jq \
@@ -185,10 +186,6 @@ EOF
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         slack \
         zoom
-
-    log_notice "Installing   utilities" "${icon}"
-    yay -Syq --needed --noconfirm --combinedupgrade --nobatchinstall \
-        heroku
 
     log_notice "Removing things I do not need" "${icon}"
     yay -Rys --noconfirm \
