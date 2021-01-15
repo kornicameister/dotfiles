@@ -17,16 +17,15 @@ configuration {
     fullscreen:                     false;
 	hide-scrollbar: 				true;
 	sidebar-mode: 					false;
+    theme:                          "~/.cache/wal/colors-rofi-dark.rasi";
 }
-
-@import "colors.rasi"
 
 window {
     transparency:                   "real";
-    background-color:               @bg;
+    background-color:               @background;
     text-color:                     @fg;
 	border:							0px;
-	border-color:					@ac;
+	border-color:					@selected-active-background;
     border-radius:                  0px;
 	width:							300px;
     location:                       center;
@@ -44,7 +43,7 @@ prompt {
 textbox-prompt-colon {
 	padding: 						0px 0px 0px 2px;
 	background-color: 				@al;
-	text-color: 					@ac;
+	text-color: 					@selected-active-background;
 	expand: false;
 	str: "";
 	font:							"feather 8";
@@ -63,12 +62,12 @@ entry {
 
 inputbar {
 	children: 						[ textbox-prompt-colon, prompt ];
-    background-color:               @bga;
+    background-color:               @backgrounda;
     text-color:                     @fg;
     expand:                         false;
 	border:							0px 0px 0px 0px;
     border-radius:                  0px;
-	border-color:					@ac;
+	border-color:					@selected-active-background;
     margin:                         0px;
     padding:                        12px;
 }
@@ -88,7 +87,7 @@ mainbox {
     background-color:               @al;
 	border:							0px;
     border-radius:                  0px;
-	border-color:					@ac;
+	border-color:					@selected-active-background;
     children:                       [ inputbar, listview ];
     spacing:                       	0px;
     padding:                        0px;
@@ -119,5 +118,5 @@ element selected {
     text-color:                     @fg;
 	border:							0px 0px 0px 2px;
     border-radius:                  0px;
-    border-color:                  	@ac;
+    border-color:                  	@selected-active-background;
 }
