@@ -5,7 +5,7 @@
   title_transmit_bg_color = "#1c1c1c"
   title_inactive_fg_color = "#bcbcbc"
   title_inactive_bg_color = "#444444"
-  enabled_plugins = TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  enabled_plugins = ActivityWatch
   title_use_system_font = False
   title_font = Hack Nerd Font Mono 10
 [keybindings]

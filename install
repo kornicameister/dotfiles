@@ -54,7 +54,6 @@ install_packages() {
         alacritty \
         curl \
         lsb-release \
-        neovim \
         ruby \
         wget \
         zsh
@@ -74,30 +73,31 @@ install_packages() {
         git \
         git-lfs \
         git-extras \
-        gnupg \
-        subversion
+        meld \
+        maven \
+        prettier \
+        shellcheck \
+        shfmt \
+        the_silver_searcher \
+        subversion \
+        yamllint \
+        jq \
+        yq
 
     log_notice "Installing utilities" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         aria2 \
+        gnupg \
         htop \
         httpie \
-        jq \
         lnav \
-        maven \
         nvtop \
         preload \
+        ranger \
         screenfetch \
-        shellcheck \
-        shfmt \
-        the_silver_searcher \
         tlp-rdw \
         tree \
         xclip \
-        yamllint \
-        prettier \
-        yq \
-        ranger \
         ueberzug && {
         sudo systemctl enable --now tlp
         sudo systemctl start tlp
@@ -207,9 +207,7 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
-    wal --theme base16-material
-
-    "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish
+    wal --theme sexy-x-dotshare
 }
 
 _env_binary() {
@@ -514,13 +512,7 @@ configure_git() {
         fi
 
         # 1. generate ssh key
-        ssh-keygen \
-            -t ed25519 \
-            -b 4096 \
-            -C "$(hostname)" \
-            -f "${HOME}/.ssh/${ssh_keyname}" \
-            -N "${git_password}" \
-            -q
+        gen_ssh_key "${ssh_keyname}" "${git_password}" "${git_username}@$(hostname)"
         log_done ".ssh/${ssh_keyname} configured" "${icon}"
 
         key_type="rsa"
@@ -568,6 +560,19 @@ EOF
     else
         log_done "Git already configured" "${icon}"
     fi
+}
+
+gen_ssh_key() {
+    local name="${1}"
+    local password="${2}"
+    local comment="${3}"
+    ssh-keygen \
+        -t ed25519 \
+        -b 4096 \
+        -C "${comment}" \
+        -f "${HOME}/.ssh/${name}" \
+        -N "${password}" \
+        -q
 }
 
 if ((SHLVL > 1)); then

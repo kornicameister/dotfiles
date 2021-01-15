@@ -1,10 +1,16 @@
 ---
-- clean: ["~"]
-
 - defaults:
     link:
       create: true
       relink: true
+
+- clean: ["~"]
+- create:
+    - ~/.ssh
+    - ~/.ssh/config.d
+    - ~/.local/share/fonts
+    - ~/.cache
+    - ~/.config
 
 - shell:
     - - git submodule sync --recursive
@@ -30,9 +36,10 @@
     ~/.goenv: dependencies/goenv
     ~/.jenv: dependencies/jenv
 
-- create:
-    - ~/.ssh
-    - ~/.ssh/config.d
+# system files
+- shell:
+    - command: test -f /etc/docker/daemon.json || sudo -n install -m 644 etc/docker/daemon.json /etc/docker/daemon.json
+      stderr: true
 
 - link:
     # vim stuff
@@ -65,7 +72,6 @@
     ~/.zinit: dependencies/zinit
 
     # fzf
-    ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
 
     # go
