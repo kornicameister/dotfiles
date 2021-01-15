@@ -73,6 +73,7 @@ install_packages() {
         git \
         git-lfs \
         git-extras \
+        meld \
         gnupg \
         subversion
 
