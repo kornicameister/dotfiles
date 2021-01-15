@@ -67,7 +67,6 @@
     ~/.zinit: dependencies/zinit
 
     # fzf
-    ~/.fzf: dependencies/fzf
     ~/.fzf.settings: fzf.settings
 
     # go
