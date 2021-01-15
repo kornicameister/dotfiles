@@ -337,7 +337,7 @@ command -v pacman >/dev/null && {
 
         log_notice "Installing prerequisites" "${icon}"
         sudo pacman -Syq --needed --noconfirm base-devel git
-        {
+        command -v yay >/dev/null 2>&1 || {
             rm -rf /tmp/yay || true
             git clone https://aur.archlinux.org/yay.git --depth 1 /tmp/yay
             pushd /tmp/yay || exit
