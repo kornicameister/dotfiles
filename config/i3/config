@@ -45,7 +45,7 @@ client.background       $bg
 ###--- Autostart ---###
 exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
-exec_always --no-startup-id wal -R
+exec_always --no-startup-id wal --vte -R
 exec --no-startup-id picom -cC                          # compositor
 exec --no-startup-id nitrogen --restore                 # wallpaper
 exec --no-startup-id xset s 480 dpms 600 600 600        # powersavings for display:
