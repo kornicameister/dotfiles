@@ -74,30 +74,30 @@ install_packages() {
         git-lfs \
         git-extras \
         meld \
-        gnupg \
-        subversion
+        maven \
+        prettier \
+        shellcheck \
+        shfmt \
+        the_silver_searcher \
+        subversion \
+        yamllint \
+        jq \
+        yq
 
     log_notice "Installing utilities" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         aria2 \
+        gnupg \
         htop \
         httpie \
-        jq \
         lnav \
-        maven \
         nvtop \
         preload \
+        ranger \
         screenfetch \
-        shellcheck \
-        shfmt \
-        the_silver_searcher \
         tlp-rdw \
         tree \
         xclip \
-        yamllint \
-        prettier \
-        yq \
-        ranger \
         ueberzug && {
         sudo systemctl enable --now tlp
         sudo systemctl start tlp
