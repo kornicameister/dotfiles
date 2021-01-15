@@ -1,10 +1,16 @@
 ---
-- clean: ["~"]
-
 - defaults:
     link:
       create: true
       relink: true
+
+- clean: ["~"]
+- create:
+    - ~/.ssh
+    - ~/.ssh/config.d
+    - ~/.local/share/fonts
+    - ~/.cache
+    - ~/.config
 
 - shell:
     - - git submodule sync --recursive
@@ -29,10 +35,6 @@
     ~/.pyenv: dependencies/pyenv
     ~/.goenv: dependencies/goenv
     ~/.jenv: dependencies/jenv
-
-- create:
-    - ~/.ssh
-    - ~/.ssh/config.d
 
 - link:
     # vim stuff
