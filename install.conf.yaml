@@ -36,6 +36,11 @@
     ~/.goenv: dependencies/goenv
     ~/.jenv: dependencies/jenv
 
+# system files
+- shell:
+    - command: test -f /etc/docker/daemon.json || sudo -n install -m 644 etc/docker/daemon.json /etc/docker/daemon.json
+      stderr: true
+
 - link:
     # vim stuff
     ~/.vim: vim
