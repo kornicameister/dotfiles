@@ -395,7 +395,10 @@ command -v pacman >/dev/null && {
             yamllint \
             yq \
             ranger \
-            ueberzug
+            ueberzug && {
+            sudo systemctl enable --now tlp
+            sudo systemctl start tlp
+        }
 
         log_notice "Installing browsers" "${icon}"
         yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
@@ -475,12 +478,8 @@ EOF
             slack \
             zoom
 
-        log_notice "Installing   utilities" "${icon}"
-        yay -Syq --needed --noconfirm --combinedupgrade --nobatchinstall \
-            heroku
-
         log_notice "Removing things I do not need" "${icon}"
-        yay -Rys --noconfirm \
+        yay -Rs --noconfirm \
             nano
 
         yay -Sqy
@@ -497,11 +496,7 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
-    wal --theme base16-material
-
-    sudo systemctl enable --now tlp &&
-        sudo systemctl start tlp
-    "${PWD}/dependencies/fzf/install" --all --no-bash --no-fish
+    wal --theme sexy-x-dotshare
 }
 
 _env_binary() {
