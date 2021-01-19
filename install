@@ -51,7 +51,6 @@ install_packages() {
 
     log_notice "Installing base packages" "${icon}"
     yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
-        alacritty \
         curl \
         lsb-release \
         ruby \
@@ -82,7 +81,8 @@ install_packages() {
         subversion \
         yamllint \
         jq \
-        yq
+        yq \
+        xfce4-terminal
 
     log_notice "Installing utilities" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
@@ -137,7 +137,7 @@ EOF
             sudo systemctl start docker
     }
 
-    log_notice "Installing GUIs packages" "${icon}"
+    log_notice "Installing GUI" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         i3-gaps \
         i3status \
@@ -187,7 +187,9 @@ EOF
 
     log_notice "Removing things I do not need" "${icon}"
     yay -Rys --noconfirm \
-        nano
+        nano \
+        termite \
+        xterm || true
 
     yay -Sqy
     yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
@@ -212,6 +214,7 @@ post_install() {
     gem environment
 
     wal --theme sexy-tangoesque
+    wal-vtop >/dev/null
 }
 
 _env_binary() {
