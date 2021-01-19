@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# wal
+(cat ~/.cache/wal/sequences &)
+
 source ${HOME}/.zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -190,3 +193,4 @@ zinit light direnv/direnv
 
 # prompt
 zinit light-mode for atload'source ~/.p10k.zsh' romkatv/powerlevel10k
+
