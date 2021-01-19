@@ -53,7 +53,7 @@ exec --no-startup-id sleep 2 ; /usr/bin/dunst           # notifications
 exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart # dex execute .desktop files
 
 # start a terminal:
-bindsym $mod+Return exec alacritty --live-config-reload
+bindsym $mod+Return exec i3-msg exec i3-sensible-terminal
 
 # kill focused window:
 bindsym $mod+c kill
