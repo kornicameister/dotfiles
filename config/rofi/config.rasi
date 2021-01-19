@@ -9,11 +9,8 @@ configuration {
     cycle: true;
     sidebar-mode: true;
     eh: 1;
-    font: "Hack Nerd Font 10";
+    font: "Iosevka Term 11";
     theme: "~/.cache/wal/colors-rofi-dark.rasi";
-
-
     display-drun: "Search";
-    drun-icon-theme: "Papirus-Dark";
 }
 

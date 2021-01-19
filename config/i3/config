@@ -12,7 +12,7 @@ set $termexec -e $SHELL -i -c
 floating_modifier $mod
 
 ## fonts
-font pango:Hack Regular Nerd Font Complete 9
+font pango:Iosevka Nerd Font 9
 
 ## workspace settings
 workspace_layout                default # default stacking tabbed
@@ -39,7 +39,6 @@ client.focused_inactive $bg     $bg     $fg  $bg       $bg
 client.unfocused        $bg     $bg     $fg  $bg       $bg
 client.urgent           $bg     $bg     $fg  $bg       $bg
 client.placeholder      $bg     $bg     $fg  $bg       $bg
-
 client.background       $bg
 
 ###--- Autostart ---###
@@ -127,19 +126,7 @@ set $ws7 "7 "
 set $ws8 "8 "
 set $ws9 ""
 
-
-# set floating (nontiling)for apps needing it:
-for_window [class="Yad" instance="yad"] floating enable
-for_window [class="Galculator" instance="galculator"] floating enable
-for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
-
 # set floating (nontiling) for special apps:
-for_window [class="Xsane" instance="xsane"] floating enable
-for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
-for_window [class="qt5ct" instance="qt5ct"] floating enable
-for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
-for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
-for_window [class="Pamac-manager"] floating enable
 
 # resize floating windows with mouse scroll:
 bindsym --whole-window --border $mod+button4 resize shrink height 5 px or 5 ppt
@@ -242,3 +229,11 @@ bindsym $mod+s exec ssh -show window -line-padding 4 \
 # per window customizations
 for_window [class="Spotify"] move to workspace $ws9
 for_window [class="jetbrains-pycharm" title="^ $"] floating enable
+for_window [class="Yad" instance="yad"] floating enable
+for_window [class="Galculator" instance="galculator"] floating enable
+for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
+for_window [class="Xsane" instance="xsane"] floating enable
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [class="qt5ct" instance="qt5ct"] floating enable
+for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
+for_window [class="Pamac-manager"] floating enable

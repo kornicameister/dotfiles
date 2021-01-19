@@ -15,7 +15,7 @@ endif
 Plug 'dylanaraps/wal.vim'
 
 " fzf
-Plug '~/.fzf'
+Plug '/usr/share/fzf'
 Plug 'junegunn/fzf.vim'
 
 " git plugins

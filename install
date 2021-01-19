@@ -207,7 +207,7 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
-    wal --theme sexy-x-dotshare
+    wal --theme sexy-tangoesque
 }
 
 _env_binary() {
