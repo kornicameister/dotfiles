@@ -190,3 +190,6 @@ zinit light direnv/direnv
 
 # prompt
 zinit light-mode for atload'source ~/.p10k.zsh' romkatv/powerlevel10k
+
+# aliases
+[ $commands[vtop] ] && [ $commands[wal] ] && alias vtop="vtop --theme wal"
