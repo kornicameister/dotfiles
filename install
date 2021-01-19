@@ -89,6 +89,8 @@ install_packages() {
         aria2 \
         gnupg \
         htop \
+        vtop \
+        python-wal-vtop \
         httpie \
         lnav \
         nvtop \
@@ -97,6 +99,8 @@ install_packages() {
         screenfetch \
         tlp-rdw \
         tree \
+        zathura \
+        zathura-pdf-mupdf \
         xclip \
         ueberzug && {
         sudo systemctl enable --now tlp
