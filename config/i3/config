@@ -45,6 +45,7 @@ client.background       $bg
 exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
 exec_always --no-startup-id wal --vte -R
+exec --no-startup-id wal-vtop
 exec --no-startup-id picom -cC                          # compositor
 exec --no-startup-id nitrogen --restore                 # wallpaper
 exec --no-startup-id xset s 480 dpms 600 600 600        # powersavings for display:
@@ -52,7 +53,7 @@ exec --no-startup-id sleep 2 ; /usr/bin/dunst           # notifications
 exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart # dex execute .desktop files
 
 # start a terminal:
-bindsym $mod+Return exec alacritty --live-config-reload
+bindsym $mod+Return exec i3-msg exec i3-sensible-terminal
 
 # kill focused window:
 bindsym $mod+c kill
@@ -209,6 +210,7 @@ bindsym $mod+Shift+b exec "/usr/bin/brave-nightly --incognito"
 bindsym $mod+n exec "/usr/bin/thunar"
 bindsym $mod+l exec i3lock -i ~/.config/i3/i3-lock-screen.png -t -f
 bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
+
 
 # rofi bindings fancy application menu
 bindsym $mod+i exec rofi -modi drun -show drun -line-padding 4 \
