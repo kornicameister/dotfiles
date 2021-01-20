@@ -186,14 +186,24 @@ EOF
         zoom
 
     log_notice "Removing things I do not need" "${icon}"
-    yay -Rys --noconfirm \
-        nano \
-        termite \
-        xterm || true
+    _remove_redundant_packages
+}
 
+_yay_clean() {
     yay -Sqy
     yay -Rsn --noconfirm "$(yay -Qdtq)" 2>/dev/null || true # remove unneeded dependencies
     yay --afterclean --removemake --save
+}
+
+_remove_redundant_packages() {
+    yay -Rs --noconfirm \
+        nano \
+        termite \
+        alacritty \
+        xterm \
+        terminator \
+        xterm || true
+    _yay_clean
 }
 
 _install_yay() {
