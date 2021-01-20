@@ -125,8 +125,6 @@ set $ws7 "7 "
 set $ws8 "8 "
 set $ws9 ""
 
-# set floating (nontiling) for special apps:
-
 # resize floating windows with mouse scroll:
 bindsym --whole-window --border $mod+button4 resize shrink height 5 px or 5 ppt
 bindsym --whole-window --border $mod+button5 resize grow height 5 px or 5 ppt
