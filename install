@@ -158,6 +158,7 @@ EOF
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         ttf-iosevka \
         ttf-font-awesome \
+        ttf-material-design-icons \
         ant-dracula-gtk-theme
 
     log_notice "Installing " "${icon}"
