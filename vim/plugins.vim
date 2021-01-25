@@ -191,7 +191,9 @@ if has_key(g:plugs, 'vim-airline')
     let g:airline_left_sep='›'          " Slightly fancier than '>'
     let g:airline_right_sep='‹'         " Slightly fancier than '<'
 
-    let g:airline#extensions#ale#enabled = 1
+    if has_key(g:plugs, 'ale')
+      let g:airline#extensions#ale#enabled = 1
+    endif
 
     let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
     let g:airline#extensions#tabline#enabled = 1
@@ -288,7 +290,9 @@ augroup vim_go_options
           \ . ' --enable=goimports'
           \ . ' --enable=misspell'
           \ . ' --enable=lll --line-length=120'
-    let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
+    if has_key(g:plugs, 'ale')
+      let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
+    endif
 augroup END
 
 " deoplete settings
@@ -339,7 +343,9 @@ if has_key(g:plugs, 'fzf.vim')
     " floating window
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
   augroup END
+endif
 
+if has_key(g:plugs, 'ale')
   " ale settings
   augroup ale_plugin_settings
     autocmd!
