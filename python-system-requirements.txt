@@ -1,6 +1,6 @@
 pip==20.3.3
 
-setuptools==51.1.2 ; python_version >= '3.0'
+setuptools==51.3.3 ; python_version >= '3.0'
 setuptools==44.0.0 ; python_version < '3.0'
 wheel==0.36.2
 
