@@ -11,7 +11,7 @@
     "@elm-tooling/elm-language-server": "2.0.1",
     "bash-language-server": "1.17.0",
     "vim-language-server": "2.1.2",
-    "dockerfile-language-server-nodejs": "0.2.2",
+    "dockerfile-language-server-nodejs": "0.3.0",
     "yaml-language-server": "0.14.0"
   }
 }
