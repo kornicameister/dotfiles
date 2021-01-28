@@ -67,26 +67,28 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus:
 bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+u focus up
-bindsym $mod+ntilde focus right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
+
+bindsym $mod+k focus down
 bindsym $mod+Down focus down
+
+bindsym $mod+u focus up
 bindsym $mod+Up focus up
+
+bindsym $mod+ntilde focus right
 bindsym $mod+Right focus right
 
 # move focused window:
 bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ntilde move right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
+
+bindsym $mod+Shift+k move down
 bindsym $mod+Shift+Down move down
+
+bindsym $mod+Shift+l move up
 bindsym $mod+Shift+Up move up
+
+bindsym $mod+Shift+ntilde move right
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation:
@@ -154,10 +156,8 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 
-# reload the configuration file:
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3):
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+c reload   # reload
+bindsym $mod+Shift+r restart  # restart
 
 # exit i3 (logs you out of your X session):
 bindsym $mod+Shift+q exec ~/.config/i3/scripts/shutdown_menu -p rofi -c
@@ -234,4 +234,6 @@ for_window [class="Xsane" instance="xsane"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 for_window [class="qt5ct" instance="qt5ct"] floating enable
 for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
+
+
 for_window [class="Pamac-manager"] floating enable
