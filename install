@@ -109,7 +109,7 @@ install_packages() {
 
     log_notice "Installing browsers" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
-        brave-nightly-bin \
+        brave-bin \
         firefox \
         google-chrome-dev
 

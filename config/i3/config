@@ -156,8 +156,8 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 
-bindsym $mod+Shift+c reload   # reload
-bindsym $mod+Shift+r restart  # restart
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session):
 bindsym $mod+Shift+q exec ~/.config/i3/scripts/shutdown_menu -p rofi -c
@@ -205,8 +205,8 @@ exec_always --no-startup-id "avizo-service"
 for_window [class="Avizo"] border pixel 0 floating enable
 
 # App shortcuts
-bindsym $mod+b exec "/usr/bin/brave-nightly"
-bindsym $mod+Shift+b exec "/usr/bin/brave-nightly --incognito"
+bindsym $mod+b exec "/usr/bin/brave"
+bindsym $mod+Shift+b exec "/usr/bin/brave --incognito"
 bindsym $mod+n exec "/usr/bin/thunar"
 bindsym $mod+l exec i3lock -i ~/.config/i3/i3-lock-screen.png -t -f
 bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
