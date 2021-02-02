@@ -17,8 +17,6 @@ updates:
     interval: daily
     time: '04:00'
   open-pull-requests-limit: 10
-  reviewers:
-  - kornicameister
   labels:
     - dependabot
     - automerge
