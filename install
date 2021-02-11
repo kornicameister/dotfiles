@@ -585,8 +585,9 @@ gen_ssh_key() {
     local name="${1}"
     local password="${2}"
     local comment="${3}"
+    local type="${4:-ed25519}"
     ssh-keygen \
-        -t ed25519 \
+        -t "${type}" \
         -b 4096 \
         -C "${comment}" \
         -f "${HOME}/.ssh/${name}" \
