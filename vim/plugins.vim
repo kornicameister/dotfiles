@@ -103,6 +103,7 @@ Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'triglav/vim-visual-increment'
 Plug 'mboughaba/i3config.vim'
+Plug 'voldikss/vim-floaterm'
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -337,6 +338,7 @@ if has_key(g:plugs, 'fzf.vim')
     nmap <Leader>F  :Files<CR>
     nmap <Leader>c  :Commits<CR>
     nmap <Leader>b  :Buffers<CR>
+    nmap <Leader>h  :History<CR>
     nmap <leader><tab> <plug>(fzf-maps-n)
     xmap <leader><tab> <plug>(fzf-maps-x)
     omap <leader><tab> <plug>(fzf-maps-o)
@@ -373,7 +375,7 @@ if has_key(g:plugs, 'ale')
     nmap <A-j> <Plug>(ale_next_wrap)
 
     nmap <F3> <Plug>(ale_hover)
-    nmap <F4> <Plug>(ale_go_to_definition)
+    nmap <F4> <Plug>(ale_go_to_definition_in_vsplit)
 
     if has('nvim')
       autocmd VimEnter *
