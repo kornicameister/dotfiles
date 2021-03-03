@@ -102,8 +102,8 @@ Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'triglav/vim-visual-increment'
-Plug 'mboughaba/i3config.vim'
 Plug 'voldikss/vim-floaterm'
+Plug 'mboughaba/i3config.vim'
 
 " nginx
 Plug 'chr4/nginx.vim'
