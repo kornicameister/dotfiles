@@ -47,6 +47,13 @@ path=(
   $JENV_ROOT/bin
   $path
 )
+[ $commands[gem] ] && {
+    path=(
+        "$(gem environment | grep 'USER INSTALLATION DIRECTORY' | awk -F': ' '{print $2}')/bin"
+        $path
+    )
+}
+
 
 # Less
 
