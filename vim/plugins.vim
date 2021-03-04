@@ -373,7 +373,7 @@ if has_key(g:plugs, 'ale')
 
     nmap <F2> <Plug>(ale_rename)
     nmap <F3> <Plug>(ale_hover)
-    nmap <F4> <Plug>(ale_go_to_definition)
+    nmap <F4> <Plug>(ale_go_to_definition_in_vsplit)
 
     if has('nvim')
       autocmd VimEnter *
