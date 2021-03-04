@@ -371,6 +371,7 @@ if has_key(g:plugs, 'ale')
     nmap <A-k> <Plug>(ale_previous_wrap)
     nmap <A-j> <Plug>(ale_next_wrap)
 
+    nmap <F2> <Plug>(ale_rename)
     nmap <F3> <Plug>(ale_hover)
     nmap <F4> <Plug>(ale_go_to_definition)
 
