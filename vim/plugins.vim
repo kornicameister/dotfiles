@@ -74,7 +74,6 @@ Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 if has('nvim')
     Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
-    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 else
     Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
 endif
@@ -374,6 +373,7 @@ if has_key(g:plugs, 'ale')
     nmap <A-k> <Plug>(ale_previous_wrap)
     nmap <A-j> <Plug>(ale_next_wrap)
 
+    nmap <F2> <Plug>(ale_rename)
     nmap <F3> <Plug>(ale_hover)
     nmap <F4> <Plug>(ale_go_to_definition_in_vsplit)
 
