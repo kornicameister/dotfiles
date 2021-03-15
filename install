@@ -204,6 +204,7 @@ _remove_redundant_packages() {
         alacritty \
         xterm \
         terminator \
+        nitrogen \
         xterm || true
     _yay_clean
 }
