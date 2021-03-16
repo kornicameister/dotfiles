@@ -342,17 +342,22 @@ configure_envs() {
         local downloadUrl
         local archiveName
         local jdkVersion
+        local releaseType
 
-        javaVersion="openjdk13"
+        javaVersion="$(http https://api.adoptopenjdk.net/v3/info/available_releases | jq -r '.most_recent_feature_release')"
+        releaseType="ga"
         downloadUrl=$(
             http \
-                "https://api.adoptopenjdk.net/v2/info/releases/${javaVersion}" \
-                openjdk_impl==hotspot \
+                "https://api.adoptopenjdk.net/v3/assets/feature_releases/${javaVersion}/${releaseType}" \
+                architecture==x64 \
+                sort_method==DATE \
+                sort_order==DESC \
+                image_type==jdk \
+                jvw_impl==hotspot \
                 os==linux \
-                arch==x64 \
-                type==jdk |
-                jq '.[0]["binaries"][0]["binary_link"]' |
-                sed -e 's|"||g'
+                project==jdk \
+                vendor==adoptopenjdk |
+                jq -r '.[0]["binaries"][0]["package"]["link"]'
         )
         archiveName=$(echo "${downloadUrl}" | awk -F "/" '{print $NF}')
 
@@ -366,7 +371,8 @@ configure_envs() {
 
         jdkVersion=$(tar -tf "/tmp/${archiveName}" | head -n 1 | sed -e 's|/||gi')
         tar -xzf "/tmp/${archiveName}" -C "${jenv_root}/_versions/" && {
-            $jenv global "$($jenv add "${jenv_root}/_versions/${jdkVersion}" | head -n 1 | awk -F " " '{print $2}')"
+            $jenv add "${jenv_root}/_versions/${jdkVersion}"
+            $jenv global "$($jenv versions | grep "${javaVersion}" | head -n 1 | awk -F' ' '{print $1}')"
         }
 
         if command -v java >/dev/null 2>&1; then
