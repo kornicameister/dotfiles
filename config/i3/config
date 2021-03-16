@@ -43,11 +43,11 @@ client.background       $bg
 
 ###--- Autostart ---###
 exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
+exec_always --no-startup-id feh --bg-center "$HOME/.dotfiles/wallpapers/05_lake.jpg"
 exec_always --no-startup-id wal --vte -R
+exec_always --no-startup-id "$HOME/.config/polybar/launch.sh"
 exec --no-startup-id wal-vtop
 exec --no-startup-id picom -cC                          # compositor
-exec --no-startup-id nitrogen --restore                 # wallpaper
 exec --no-startup-id xset s 480 dpms 600 600 600        # powersavings for display:
 exec --no-startup-id sleep 2 ; /usr/bin/dunst           # notifications
 exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart # dex execute .desktop files
@@ -67,26 +67,28 @@ bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus:
 bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+u focus up
-bindsym $mod+ntilde focus right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
+
+bindsym $mod+k focus down
 bindsym $mod+Down focus down
+
+bindsym $mod+u focus up
 bindsym $mod+Up focus up
+
+bindsym $mod+ntilde focus right
 bindsym $mod+Right focus right
 
 # move focused window:
 bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ntilde move right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
+
+bindsym $mod+Shift+k move down
 bindsym $mod+Shift+Down move down
+
+bindsym $mod+Shift+l move up
 bindsym $mod+Shift+Up move up
+
+bindsym $mod+Shift+ntilde move right
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation:
@@ -154,9 +156,7 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 
-# reload the configuration file:
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3):
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session):
@@ -205,12 +205,11 @@ exec_always --no-startup-id "avizo-service"
 for_window [class="Avizo"] border pixel 0 floating enable
 
 # App shortcuts
-bindsym $mod+b exec "/usr/bin/brave-nightly"
-bindsym $mod+Shift+b exec "/usr/bin/brave-nightly --incognito"
+bindsym $mod+b exec "/usr/bin/brave"
+bindsym $mod+Shift+b exec "/usr/bin/brave --incognito"
 bindsym $mod+n exec "/usr/bin/thunar"
 bindsym $mod+l exec i3lock -i ~/.config/i3/i3-lock-screen.png -t -f
 bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
-
 
 # rofi bindings fancy application menu
 bindsym $mod+i exec rofi -modi drun -show drun -line-padding 4 \
@@ -223,7 +222,6 @@ bindsym $mod+s exec ssh -show window -line-padding 4 \
                 -lines 6 -padding 50 -hide-scrollbar \
                 -show-icons -drun-icon-theme "Arc-X-D"
 
-
 # per window customizations
 for_window [class="Spotify"] move to workspace $ws9
 for_window [class="jetbrains-pycharm" title="^ $"] floating enable
@@ -234,4 +232,6 @@ for_window [class="Xsane" instance="xsane"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 for_window [class="qt5ct" instance="qt5ct"] floating enable
 for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
+
+
 for_window [class="Pamac-manager"] floating enable
