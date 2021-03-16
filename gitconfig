@@ -27,6 +27,24 @@
 [add "interactive"]
 	useBuiltin = true
 
+[maintenance]
+	strategy = incremental
+	auto = true
+[maintenance "gc"]
+	enabled = true
+[maintenance "commit-graph"]
+	enabled = true
+[maintenance "prefetch"]
+	enabled = true
+	schedule = hourly
+[maintenance "loose-objects"]
+	enabled = true
+	auto = 50
+[maintenance "incremental-repack"]
+	enabled = true
+[maintenance "pack-refs"]
+	enabled = true
+
 [feature]
 	experimental = true
 	manyFiles = true
