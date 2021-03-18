@@ -74,7 +74,6 @@ Plug 'vim-scripts/indentpython.vim', {'for': ['python']}
 Plug 'raimon49/requirements.txt.vim', {'for': ['requirements']}
 if has('nvim')
     Plug 'kalekseev/vim-coverage.py', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
-    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 else
     Plug 'kalekseev/vim-coverage.py', { 'do': '!pip install --user --upgrade neovim', 'for': ['python']}
 endif
@@ -102,6 +101,7 @@ Plug 'farmergreg/vim-lastplace'                     " open editor where it was
 Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'triglav/vim-visual-increment'
+Plug 'voldikss/vim-floaterm'
 
 " nginx
 Plug 'chr4/nginx.vim'
@@ -191,7 +191,9 @@ if has_key(g:plugs, 'vim-airline')
     let g:airline_left_sep='›'          " Slightly fancier than '>'
     let g:airline_right_sep='‹'         " Slightly fancier than '<'
 
-    let g:airline#extensions#ale#enabled = 1
+    if has_key(g:plugs, 'ale')
+      let g:airline#extensions#ale#enabled = 1
+    endif
 
     let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
     let g:airline#extensions#tabline#enabled = 1
@@ -288,7 +290,9 @@ augroup vim_go_options
           \ . ' --enable=goimports'
           \ . ' --enable=misspell'
           \ . ' --enable=lll --line-length=120'
-    let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
+    if has_key(g:plugs, 'ale')
+      let g:ale_go_gometalinter_options = '--disable-all --tests' . g:gometalinter_fast . ' --enable=golint'
+    endif
 augroup END
 
 " deoplete settings
@@ -339,7 +343,9 @@ if has_key(g:plugs, 'fzf.vim')
     " floating window
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
   augroup END
+endif
 
+if has_key(g:plugs, 'ale')
   " ale settings
   augroup ale_plugin_settings
     autocmd!
@@ -365,8 +371,9 @@ if has_key(g:plugs, 'fzf.vim')
     nmap <A-k> <Plug>(ale_previous_wrap)
     nmap <A-j> <Plug>(ale_next_wrap)
 
+    nmap <F2> <Plug>(ale_rename)
     nmap <F3> <Plug>(ale_hover)
-    nmap <F4> <Plug>(ale_go_to_definition)
+    nmap <F4> <Plug>(ale_go_to_definition_in_vsplit)
 
     if has('nvim')
       autocmd VimEnter *
