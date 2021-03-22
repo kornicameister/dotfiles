@@ -87,6 +87,7 @@ install_packages() {
     log_notice "Installing utilities" "${icon}"
     yay -Syq --needed --noconfirm --combinedupgrade --batchinstall \
         aria2 \
+        cron \
         gnupg \
         htop \
         vtop \
@@ -103,8 +104,10 @@ install_packages() {
         zathura-pdf-mupdf \
         xclip \
         ueberzug && {
-        sudo systemctl enable --now tlp
-        sudo systemctl start tlp
+        for srv in tlp cron; do
+            sudo systemctl enable --now "${srv}"
+            sudo systemctl start "${srv}"
+        done
     }
 
     log_notice "Installing browsers" "${icon}"
