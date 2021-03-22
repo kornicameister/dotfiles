@@ -124,11 +124,7 @@ augroup vim_test_settings
   let g:test#strategy = 'neovim'
   let g:test#neovim#term_position = 'vertical'
 
-  " integrate with coverage tool
-  let g:test#python#pytest#options = '--cov-branch --cov-context=test'
-
-  " disable vim-projectionist
-  let g:test#no_alternate = 1
+  let g:test#no_alternate = 1 " disable vim-projectionist
 
   nmap <silent> <C-t>n :TestNearest<CR>
   nmap <silent> <C-t>f :TestFile<CR>
