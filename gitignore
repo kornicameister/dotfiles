@@ -33,3 +33,6 @@
 
 # mypy
 .mypy_cache
+
+# git garbage
+*.orig
