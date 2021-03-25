@@ -55,7 +55,9 @@
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
     # zsh stuff
-    ~/.zshrc: zsh/zshrc
+    ~/.zshrc:
+      path: zsh/zshrc
+      force: true
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
