@@ -41,10 +41,10 @@
     ~/.vim/autoload/plug.vim: dependencies/vim-plug/plug.vim
     ~/.config/nvim: nvim
 
+    # ssh config
     ~/.ssh/config: ssh/config
-    ~/.ssh/config.d:
-      glob: true
-      path: ssh/config.d
+    ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
+    ~/.ssh/config.d/01-github.config: ssh/config.d/01-github.config
 
     # git stuff
     ~/.gitignore: gitignore
