@@ -54,6 +54,7 @@
 	branches = branch -l -v -a
 	remotes = remote -v
 	fixup = commit --fixup
+	amend = commit --amend --no-edit
 	fresh =  ! git_fresh
 
 [apply]
