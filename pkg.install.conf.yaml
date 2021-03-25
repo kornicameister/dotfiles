@@ -134,8 +134,6 @@
       lnav,
       libimage-exiftool-perl,
     ]
-
-# snap binaries
 - shell:
     - description: Install snap packages
       command: |
@@ -143,6 +141,12 @@
           snap install slack --classic --no-wait && \
           snap install intellij-idea-community --edge --classic --no-wait && \
           snap install pycharm-community --edge --classic --no-wait
+      quiet: false
+
+# whatpulse
+- shell:
+    - description: Install whatpulse
+      command: .installer/install_whatpulse.sh
       quiet: false
 
 # cleanup

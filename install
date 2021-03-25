@@ -4,6 +4,10 @@
 CI=${CI:-False}
 if [[ -n ${CI} ]]; then
     sudo() {
+        for i; do
+            [ "$i" = -E ] || set -- "$@" "$i"
+            shift
+        done
         "$@"
     }
 fi
@@ -55,7 +59,9 @@ _dotbot_pkg_install() {
     # uninstalling things (i.e. docker). It makes installing here harderd
     if [ ! -s "${HOME}/.dotfiles" ]; then
         cd "${BASEDIR}" || exit 1
-        sudo \
+        WHATPULSE_USER=$(whoami) \
+            sudo \
+            -E \
             "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" \
             -q \
             -d "${BASEDIR}" \
