@@ -1,10 +1,21 @@
 ---
-- clean: ["~"]
-
 - defaults:
     link:
       create: true
       relink: true
+
+- clean: ["~"]
+- create:
+    ~/.ssh:
+      mode: 0700
+    ~/.ssh/config.d:
+    ~/.local:
+      mode: 0700
+    ~/.local/share/fonts:
+    ~/.local/bin:
+    ~/.cache:
+    ~/.config:
+      mode: 750
 
 # main repo goes first, you know gotta be careful here
 - link:
@@ -44,7 +55,6 @@
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
-
     # zsh stuff
     ~/.zshrc: zsh/zshrc
     ~/.zlogin: zsh/zlogin
