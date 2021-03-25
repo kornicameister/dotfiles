@@ -6,11 +6,16 @@
 
 - clean: ["~"]
 - create:
-    - ~/.ssh
-    - ~/.ssh/config.d
-    - ~/.local/share/fonts
-    - ~/.cache
-    - ~/.config
+    ~/.ssh:
+      mode: 0700
+    ~/.ssh/config.d:
+    ~/.local:
+      mode: 0700
+    ~/.local/share/fonts:
+    ~/.local/bin:
+    ~/.cache:
+    ~/.config:
+      mode: 750
 
 - shell:
     - - git submodule sync --recursive
