@@ -161,35 +161,26 @@ _env_binary() {
 }
 
 _configure_nvim() {
-    if [ ! -f ~/.vim/autoload/plug.vim ]; then
-        aria2c \
-            -d ~/.vim/autoload \
-            -o plug.vim \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    local goenv pyenv nodenv jenv new_path old_path
 
-        local goenv pyenv nodenv jenv new_path old_path
+    goenv=$(_env_binary "goenv")
+    pyenv=$(_env_binary "pyenv")
+    nodenv=$(_env_binary "nodenv")
+    jenv=$(_env_binary "jenv")
 
-        goenv=$(_env_binary "goenv")
-        pyenv=$(_env_binary "pyenv")
-        nodenv=$(_env_binary "nodenv")
-        jenv=$(_env_binary "jenv")
+    old_path="${PATH}"
+    new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
 
-        old_path="${PATH}"
-        new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
+    export PATH="${new_path}"
+    nvim --headless +PlugInstall +qall!
+    nvim --headless +UpdateRemotePlugins +qall!
+    export PATH="${old_path}"
 
-        export PATH="${new_path}"
-        nvim --headless +PlugInstall +qall!
-        nvim --headless +UpdateRemotePlugins +qall!
-        export PATH="${old_path}"
-
-        unset goenv
-        unset pyenv
-        unset nodenv
-        unset jenv
-        unset new_path
-    else
-        _done "neovim -> $(nvim --version | head -n1 | awk '{print $2}')" "[  ]"
-    fi
+    unset goenv
+    unset pyenv
+    unset nodenv
+    unset jenv
+    unset new_path
 }
 
 _install_envs() {

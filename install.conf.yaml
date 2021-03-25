@@ -1,10 +1,21 @@
 ---
-- clean: ["~"]
-
 - defaults:
     link:
       create: true
       relink: true
+
+- clean: ["~"]
+- create:
+    ~/.ssh:
+      mode: 0700
+    ~/.ssh/config.d:
+    ~/.local:
+      mode: 0700
+    ~/.local/share/fonts:
+    ~/.local/bin:
+    ~/.cache:
+    ~/.config:
+      mode: 750
 
 # main repo goes first, you know gotta be careful here
 - link:
@@ -27,14 +38,13 @@
     # vim stuff
     ~/.vim: vim
     ~/.vimrc: vim/vimrc
-
-    # neovim stuff
+    ~/.vim/autoload/plug.vim: dependencies/vim-plug/plug.vim
     ~/.config/nvim: nvim
 
+    # ssh config
     ~/.ssh/config: ssh/config
-    ~/.ssh/config.d:
-      glob: true
-      path: ssh/config.d
+    ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
+    ~/.ssh/config.d/01-github.config: ssh/config.d/01-github.config
 
     # git stuff
     ~/.gitignore: gitignore
@@ -44,9 +54,10 @@
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
-
     # zsh stuff
-    ~/.zshrc: zsh/zshrc
+    ~/.zshrc:
+      path: zsh/zshrc
+      force: true
     ~/.zlogin: zsh/zlogin
     ~/.zprofile: zsh/zprofile
     ~/.zshenv: zsh/zshenv
