@@ -51,3 +51,7 @@ All applications configurations ever used
 
 My dotfiles are evaluated in the CI system that ensures me that, if needed, I will be able to
 deploy them in the fresh system without having too much to worry about.
+
+## Inspirations / credits 
+
+- [SSH Compression](https://www.gidblog.com/enable-compression-for-ssh/)
