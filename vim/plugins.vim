@@ -332,6 +332,7 @@ if has_key(g:plugs, 'fzf.vim')
     nmap <Leader>F  :Files<CR>
     nmap <Leader>c  :Commits<CR>
     nmap <Leader>b  :Buffers<CR>
+    nmap <Leader>h  :History<CR>
     nmap <leader><tab> <plug>(fzf-maps-n)
     xmap <leader><tab> <plug>(fzf-maps-x)
     omap <leader><tab> <plug>(fzf-maps-o)
