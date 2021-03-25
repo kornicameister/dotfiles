@@ -38,8 +38,7 @@
     # vim stuff
     ~/.vim: vim
     ~/.vimrc: vim/vimrc
-
-    # neovim stuff
+    ~/.vim/autoload/plug.vim: dependencies/vim-plug/plug.vim
     ~/.config/nvim: nvim
 
     ~/.ssh/config: ssh/config
