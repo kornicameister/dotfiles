@@ -49,3 +49,21 @@ augroup asciidoc_ft_settings
   au!
   au FileType asciidoc setlocal spell
 augroup END
+
+augroup ssh_config_settings
+  au!
+
+  au BufNewFile,BufRead *ssh/config set
+    \ nospell
+    \ encoding=utf-8
+    \ ts=2
+    \ sw=2
+    \ filetype=sshconfig
+  au BufNewFile,BufRead *ssh/config.d/* set
+    \ nospell
+    \ encoding=utf-8
+    \ ts=2
+    \ sw=2
+    \ filetype=sshconfig
+
+augroup END
