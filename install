@@ -229,7 +229,7 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
-    wal --theme sexy-tangoesque
+    wal --theme base16-atelier-dune -n --vte
     wal-vtop >/dev/null
 }
 
