@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: ludeeus/action-shellcheck@0.1.0
+      - uses: ludeeus/action-shellcheck@1.1.0
   requirements_txt:
     name: Validate Python requirements
     runs-on: ubuntu-20.04
