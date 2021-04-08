@@ -3,6 +3,7 @@
 
 [init]
 	templatedir = ~/.git_template
+	defaultBranch = master
 
 [core]
 	editor = nvim
