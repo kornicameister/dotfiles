@@ -34,5 +34,5 @@ function! GetYamlIndent()
   endif
 endfunction
 
-let b:ale_linters = ['yamllint', 'cloudformation']
+let b:ale_linters = ['yamllint', 'spectral', 'cloudformation']
 let b:ale_fixers = ['trim_whitespace', 'remove_trailing_lines', 'prettier']

@@ -384,5 +384,7 @@ if has_key(g:plugs, 'ale')
       echoerr 'only neovim can handle kornicameister dotfiles'
     endif
   augroup END
+
+  let g:ale_json_spectral_use_global = 1
 endif
 
