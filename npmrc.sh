@@ -15,4 +15,4 @@ EOL
 fi
 
 echo "send-metrics=true" >> "${HOME}/.npmrc"
-echo "loglevel=http" >> "${HOME}/.npmrc"
+echo "loglevel=notice" >> "${HOME}/.npmrc"
