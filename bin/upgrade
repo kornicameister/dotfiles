@@ -70,7 +70,7 @@ node_python_pkgs_update() {
         echo "Upgrading requirements for ${venv_name}"
 
         if [ -d "${venv_dir}" ]; then
-            "${venv_dir}"/bin/pip install -r "${K_DOTFILES_DIR}/neovim-requirements.txt" 2>&1
+            "${venv_dir}"/bin/pip install -r "${K_DOTFILES_DIR}/requirements/neovim.txt" 2>&1
         fi
     done
 
@@ -95,7 +95,7 @@ node_python_pkgs_update() {
     "${_npm}" install -g \
         "$(command jq -r '.dependencies | (to_entries | .[] | [.key, .value] | join("@"))' "${K_DOTFILES_DIR}/package.json" | tr '\n' ' ')" \
         2>&1
-    $_pip install -r "${K_DOTFILES_DIR}/python-system-requirements.txt" 2>&1
+    $_pip install -r "${K_DOTFILES_DIR}/requirements.txt" 2>&1
 
     $_nodenv rehash
     $_pyenv rehash
