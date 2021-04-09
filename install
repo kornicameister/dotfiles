@@ -278,7 +278,9 @@ configure_envs() {
         for py_major in {2,3}; do
             $pyenv latest install -s "${py_major}"
             "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install --upgrade pip
-            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install -r "${BASEDIR}/python-system-requirements.txt"
+            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install \
+                -r "${BASEDIR}/requirements/system.txt" \
+                -r "${BASEDIR}/requirements/utils.txt"
             log_done "Installed Python ${py_major}" "${python_icon}"
         done
 
@@ -292,7 +294,7 @@ configure_envs() {
             log_notice "Initializing neovim setup for Python ${py_major}" "${neovim_icon}"
             $pyenv virtualenv "$($pyenv latest --print "${py_major}")" "neovim${py_major}"
             "${pyenv_root}/versions/neovim${py_major}/bin/pip" install --upgrade pip
-            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/neovim-requirements.txt"
+            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/requirements/neovim.txt"
         else
             local neovim_py_version
             neovim_py_version="$(
