@@ -1,4 +1,4 @@
--r python-system-requirements.txt
+-r ./system.txt
 
 msgpack==1.0.2
 neovim==0.3.1
