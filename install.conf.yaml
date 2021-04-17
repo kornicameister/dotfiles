@@ -57,6 +57,7 @@
     ~/.ssh/config: ssh/config
     ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
     ~/.ssh/config.d/01-github.config: ssh/config.d/01-github.config
+    ~/.ssh/config.d/02-aws-ec2-ssm.config: ssh/config.d/02-aws-ec2-ssm.config
 
     # git stuff
     ~/.gitignore: gitignore
