@@ -73,3 +73,10 @@ export PURE_GIT_PULL=1
 
 # use buildkit for docker
 export DOCKER_BUILDKIT=1
+
+# aliases
+[ $commands[nvim] ] && {
+    # overwrite vim
+    alias vi='nvim';
+    alias vim='nvim';
+}
