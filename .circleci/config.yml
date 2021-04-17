@@ -1,58 +1,4 @@
 ---
-x-build-steps: &build_steps
-  steps:
-    - run:
-        name: Install prerequistes
-        command: |
-          apt-get update -qq
-          apt-get install apt-utils -yqq
-
-          apt-get install \
-            locales \
-            ssh \
-            ca-certificates \
-            lsb-release \
-            build-essential \
-            -yqq \
-            --no-install-recommends
-
-          apt-get autoclean -yqq
-          apt-get autoremove -yqq
-    - checkout
-    - run:
-        name: Configure timezone & timezone
-        command: |
-          echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections
-          echo 'tzdata tzdata/Zones/Europe select Warsaw' | debconf-set-selections
-
-          echo 'locales locales/locales_to_be_generated multiselect en_US.UTF-8 UTF-8' | debconf-set-selections
-          echo 'locales locales/default_environment_locale select en_US.UTF-8' | debconf-set-selections
-
-          echo 'keyboard-configuration  keyboard-configuration/layout select  English (UK)' | debconf-set-selections
-
-          locale-gen en_US.UTF-8
-          ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
-
-          apt-get install tzdata -y --no-install-recommends
-
-          apt-get autoclean -yqq
-          apt-get autoremove -yqq
-    - run:
-        name: Run an installation
-        command: |
-          ./install \
-            --username"${CIRCLE_PROJECT_USERNAME}" \
-            --password "${CIRCLE_BUILD_NUM}" \
-            --email "${CIRCLE_PROJECT_USERNAME}@${CIRCLE_PROJECT_REPONAME}.M" \
-            --gpg-fullname "Circle Builds" \
-            --gpg-passphrase "${CIRCLE_SHA1}" \
-            --wakatime_api_key "555-WAKATIME-BOGUS-API-KEY"
-    - run:
-        name: Verify !
-        command: |
-          zsh -mil -c echo "Veryfying the build ${CIRCLE_BUILD_NUM}"
-          zsh -mil -c .circleci/verify_install.sh
-
 version: 2.1
 jobs:
   submodules:
@@ -63,11 +9,6 @@ jobs:
           name: "Submodules :: checkout"
           command: .circleci/submodules_step.sh
 
-  build_ubuntu_20_04:
-    docker:
-      - image: ubuntu:20.04
-    <<: *build_steps
-
   build_arch:
     docker:
       - image: archlinux:latest
@@ -76,6 +17,7 @@ jobs:
       - run: |
           locale-gen en_US.UTF-8
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+          mkdir -p /var/lib/pacman/local /var/lib/pacman/sync
       - run: |
           pacman -Sy --noconfirm sudo
 
@@ -111,5 +53,4 @@ workflows:
       - submodules
   build:
     jobs:
-      - build_ubuntu_20_04
       - build_arch
