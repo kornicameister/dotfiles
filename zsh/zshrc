@@ -197,11 +197,6 @@ zinit light-mode for atload'source ~/.p10k.zsh' romkatv/powerlevel10k
 # aliases [programs]
 alias vtop="vtop --theme waSl"
 
-[ $commands[nvim] ] && {
-    alias vi='nvim';
-    alias vim='nvim';
-}
-
 # aliases [ll]
 alias ls='exa';                                                          # ls
 alias l='exa -lbGF --git';                                               # long list
