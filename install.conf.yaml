@@ -17,6 +17,19 @@
     ~/.config:
       mode: 750
 
+- shell:
+    - - git submodule sync --recursive
+      - Installing submodules
+    - - git submodule update
+        --recursive
+        --init
+        --checkout
+        --no-recommend-shallow
+        --force
+        --jobs 4
+        --progress
+      - Checkouting submodules
+
 # main repo goes first, you know gotta be careful here
 - link:
     ~/.dotfiles: ""
