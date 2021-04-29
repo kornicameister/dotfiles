@@ -205,15 +205,15 @@ bindsym $mod+l exec i3lock -i ~/.config/i3/i3-lock-screen.png -t -f
 bindsym Print exec "scrot ~/%Y-%m-%d-%T-screenshot.png"
 
 # rofi bindings fancy application menu
-bindsym $mod+i exec rofi -modi drun -show drun -line-padding 4 \
-                -columns 2 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Arc-X-D"
-bindsym $mod+o exec rofi -show window -line-padding 4 \
-                -lines 6 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Arc-X-D"
-bindsym $mod+s exec ssh -show window -line-padding 4 \
-                -lines 6 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Arc-X-D"
+bindsym $mod+i exec rofi \
+                -modi drun \
+                -show drun \
+                -hide-scrollbar \
+                -theme "${XDG_CONFIG_HOME}/rofi/launcher.rasi"
+bindsym $mod+o exec rofi \
+                -show window \
+                -hide-scrollbar \
+                -theme "${XDG_CONFIG_HOME}/rofi/launcher.rasi"
 
 # per window customizations
 for_window [class="Spotify"] move to workspace $ws9
