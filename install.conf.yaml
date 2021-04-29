@@ -29,6 +29,7 @@
         --jobs 4
         --progress
       - Checkouting submodules
+
 # main repo goes first, you know gotta be careful here
 - link:
     ~/.dotfiles: ""
