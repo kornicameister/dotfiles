@@ -15,6 +15,7 @@ jobs:
     steps:
       - checkout
       - run: |
+          pacman -Sy sudo
           locale-gen en_US.UTF-8
           ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 
@@ -25,7 +26,7 @@ jobs:
             bsdtar -C / -xvf "$patched_glibc"
       - run: |
           useradd -m -r -s /bin/bash aur
-          passwd -d aur
+          mkdir -p /etc/sudoers.d/
           echo 'aur ALL=(ALL) ALL' > /etc/sudoers.d/aur
 
           mkdir -p /home/aur/.gnupg
