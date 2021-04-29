@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# CI handling
+CI=${CI:-False}
+if [[ -n ${CI} ]]; then
+    sudo() {
+        "$@"
+    }
+fi
+
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WHOAMI="$(whoami)"
 

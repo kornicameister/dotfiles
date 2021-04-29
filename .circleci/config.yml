@@ -24,8 +24,6 @@ jobs:
             curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && \
             bsdtar -C / -xvf "$patched_glibc"
       - run: |
-          pacman -Sy --noconfirm sudo
-
           useradd -m -r -s /bin/bash aur
           passwd -d aur
           echo 'aur ALL=(ALL) ALL' > /etc/sudoers.d/aur
