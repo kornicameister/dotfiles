@@ -97,7 +97,7 @@
     branch = master
     ignore = untracked
 [submodule "dependencies/vim-plug"]
-	path = dependencies/vim-plug
-	url = https://github.com/junegunn/vim-plug.git
+    path = dependencies/vim-plug
+    url = https://github.com/junegunn/vim-plug.git
     shallow = true
     branch = master
