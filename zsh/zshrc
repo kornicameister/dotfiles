@@ -50,10 +50,12 @@ zinit ice \
 zinit snippet PZT::modules/completion
 
 zinit ice \
+    id-as'yarn-completions' \
     depth=1 \
     blockf \
     lucid \
-    atclone'./zplug.zsh'
+    atclone'./zplug.zsh' \
+    atload'zpcdreplay'
 zinit light g-plane/zsh-yarn-autocompletions
 
 zinit ice \
