@@ -53,10 +53,12 @@ zinit ice \
 zinit snippet PZT::modules/completion
 
 zinit ice \
+    id-as'yarn-completions' \
     depth=1 \
     blockf \
     lucid \
-    atclone'./zplug.zsh'
+    atclone'./zplug.zsh' \
+    atload'zpcdreplay'
 zinit light g-plane/zsh-yarn-autocompletions
 
 zinit ice \
@@ -200,6 +202,16 @@ zinit ice \
     make'!' \
     reset
 zinit light direnv/direnv
+
+zinit ice \
+    id-as'prettyping' \
+    depth=1 \
+    wait \
+    lucid \
+    as'program' \
+    mv'prettyping* -> prettyping' \
+    atload"alias ping='prettyping --nolegend'"
+zinit light denilsonsa/prettyping
 
 # has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
