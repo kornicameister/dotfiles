@@ -197,6 +197,16 @@ zinit ice \
     reset
 zinit light direnv/direnv
 
+zinit ice \
+    id-as'prettyping' \
+    depth=1 \
+    wait \
+    lucid \
+    as'program' \
+    mv'prettyping* -> prettyping' \
+    atload"alias ping='prettyping --nolegend'"
+zinit light denilsonsa/prettyping
+
 # has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
