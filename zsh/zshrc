@@ -40,10 +40,10 @@ zstyle ':prezto:module:editor' ps-context 'yes'
 zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # loading *envs
-zinit ice wait lucid ; zinit load sobolevn/wakatime-zsh-plugin
-zinit ice wait lucid ; zinit load hlissner/zsh-autopair
-zinit ice wait lucid ; zinit load djui/alias-tips
-zinit ice wait lucid ; zinit load wfxr/forgit
+zinit ice wait lucid depth=1 ; zinit load sobolevn/wakatime-zsh-plugin
+zinit ice wait lucid depth=1 ; zinit load hlissner/zsh-autopair
+zinit ice wait lucid depth=1 ; zinit load djui/alias-tips
+zinit ice wait lucid depth=1 ; zinit load wfxr/forgit
 
 zinit ice \
     svn \
@@ -53,22 +53,26 @@ zinit ice \
 zinit snippet PZT::modules/completion
 
 zinit ice \
+    depth=1 \
     blockf \
     lucid \
     atclone'./zplug.zsh'
 zinit light g-plane/zsh-yarn-autocompletions
 
 zinit ice \
+    depth=1 \
     blockf \
     lucid
 zinit light lukechilds/zsh-better-npm-completion
 
 zinit ice \
+    depth=1 \
     blockf \
     lucid
 zinit light srijanshetty/zsh-pandoc-completion
 
 zinit ice \
+    depth=1 \
     blockf \
     lucid \
     atinit'ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay'
@@ -79,6 +83,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=191,bold'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 zinit ice \
+    depth=1 \
     lucid \
     wait'0' \
     atload'!_zsh_autosuggest_start' \
@@ -132,6 +137,7 @@ source ~/.npmrc.sh
 
 # diff-s-fancy
 zinit ice \
+    depth=1 \
     lucid \
     wait'0c' \
     as'program' \
@@ -139,7 +145,9 @@ zinit ice \
 zinit light zdharma/zsh-diff-so-fancy
 
 # dircolors
-zinit ice wait'0c'\
+zinit ice \
+    depth=1 \
+    wait'0c' \
     lucid \
     reset \
     atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
@@ -184,6 +192,7 @@ zinit light zdharma/null
 
 # direnv
 zinit ice \
+    depth=1 \
     as'program' \
     atclone'./direnv hook zsh > zhook.zsh' \
     atpull'%atclone'\
@@ -196,4 +205,4 @@ zinit light direnv/direnv
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 # prompt
-zinit light-mode for atload'source ~/.p10k.zsh' romkatv/powerlevel10k
+zinit light-mode for depth=1 atload'source ~/.p10k.zsh' romkatv/powerlevel10k
