@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # wal
 (cat ~/.cache/wal/sequences &)
 
@@ -10,13 +17,6 @@ autoload -Uz _zinit
 zinit light-mode for \
     zdharma/zsh-unique-id \
     zinit-zsh/z-a-submods
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=cyan,fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
@@ -193,16 +193,3 @@ zinit light direnv/direnv
 
 # prompt
 zinit light-mode for atload'source ~/.p10k.zsh' romkatv/powerlevel10k
-
-# aliases [programs]
-alias vtop="vtop --theme waSl"
-
-# aliases [ll]
-alias ls='exa';                                                          # ls
-alias l='exa -lbGF --git';                                               # long list
-alias ll='exa -lbF --git';                                               # list, size, type, git
-alias llm='exa -lbGF --git --sort=modified';                             # long list, modified date sort
-alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale';   # all list
-alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale;'; # all + extended list
-alias ls='exa -1';			                                             # one column, just names
-alias lt='exa --tree --level=2';                                         # tree
