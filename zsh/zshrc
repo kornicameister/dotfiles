@@ -198,7 +198,6 @@ zinit ice \
 zinit light direnv/direnv
 
 zinit ice \
-    id-as'prettyping' \
     depth=1 \
     wait \
     lucid \
