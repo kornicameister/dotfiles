@@ -3,11 +3,6 @@
     url = https://github.com/anishathalye/dotbot
     shallow = true
     branch = master
-[submodule "fzf"]
-    path = dependencies/fzf
-    url = https://github.com/junegunn/fzf.git
-    shallow = true
-    branch = master
 [submodule "dependencies/pyenv"]
     path = dependencies/pyenv
     url = https://github.com/pyenv/pyenv.git
