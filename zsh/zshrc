@@ -153,6 +153,23 @@ zinit ice \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zinit light trapd00r/LS_COLORS
 
+# fzf: binary
+zinit ice \
+    lucid \
+    wait'0b' \
+    from"gh-r" \
+    as"program" \
+    atload"source ~/.fzf.settings"
+zinit light junegunn/fzf
+# fzf: completions and key bindings
+zinit ice \
+    lucid \
+    wait'0c' \
+    multisrc"shell/{completion,key-bindings}.zsh" \
+    id-as"junegunn/fzf_completions" \
+    pick"/dev/null"
+zinit light junegunn/fzf
+
 # replacement for ls
 zinit ice \
     wait'2' \
