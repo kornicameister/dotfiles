@@ -54,8 +54,7 @@ zinit ice \
     depth=1 \
     blockf \
     lucid \
-    atclone'./zplug.zsh' \
-    atload'zpcdreplay'
+    atclone'./zplug.zsh'
 zinit light g-plane/zsh-yarn-autocompletions
 
 zinit ice \
