@@ -54,8 +54,7 @@ zinit ice \
     depth=1 \
     blockf \
     lucid \
-    atclone'./zplug.zsh' \
-    atload'zpcdreplay'
+    atclone'./zplug.zsh'
 zinit light g-plane/zsh-yarn-autocompletions
 
 zinit ice \
@@ -159,11 +158,20 @@ zinit light trapd00r/LS_COLORS
 
 # replacement for ls
 zinit ice \
-    wait'0c' \
+    wait'2' \
     lucid \
     from'gh-r' \
     as'program' \
-    mv'exa* -> exa'
+    mv'bin/exa* -> exa' \
+    cp"completions/exa.zsh -> _exa" \
+    atinit"zpcompinit; zpcdreplay" \
+    atload"
+        alias l='exa --sort=changed --icons -la --git --git-ignore --ignore-glob=\".git|__pycache__\"'
+        alias ls='exa --icons'
+        alias la='exa --group-directories-first --icons -la'
+        alias ll='exa --group-directories-first --icons -la --color-scale --time-style=long-iso --git --git-ignore --ignore-glob=\".git|__pycache__\"'
+        alias tree='exa --group-directories-first -T --icons --level=2'
+    "
 zinit light ogham/exa
 zinit ice wait blockf atpull'zinit creinstall -q .'
 
