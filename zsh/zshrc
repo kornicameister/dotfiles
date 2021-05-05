@@ -7,9 +7,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# wal
-(cat ~/.cache/wal/sequences &)
-
 source ${HOME}/.zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -168,6 +165,7 @@ zinit ice \
     as'program' \
     mv'exa* -> exa'
 zinit light ogham/exa
+zinit ice wait blockf atpull'zinit creinstall -q .'
 
 # bat
 zinit ice \
@@ -216,4 +214,7 @@ zinit light denilsonsa/prettyping
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 # prompt
-zinit light-mode for depth=1 atload'source ~/.p10k.zsh' romkatv/powerlevel10k
+zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
+
+autoload -Uz compinit ; compinit
+zinit cdreplay -q
