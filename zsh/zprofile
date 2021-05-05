@@ -15,7 +15,6 @@ export JENV_ROOT="${HOME}/.jenv"
 
 export TERM="xterm-256color"
 export PAGER='less'
-export VISUAL="${EDITOR}"
 
 if >/dev/null 2>&1 command -v nvim ; then
   export EDITOR=nvim
@@ -25,6 +24,7 @@ elif >/dev/null 2>&1 command -v vim ; then
 else
   export EDITOR=vi
 fi
+export VISUAL="${EDITOR}"
 
 # Python variables
 export PYTHONIOENCODING='UTF-8'             # make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
@@ -55,6 +55,8 @@ path=(
     )
 }
 
+# hide % at end of output
+export PROMPT_EOL_MARK=''  
 
 # Less
 
