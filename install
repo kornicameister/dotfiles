@@ -75,7 +75,6 @@ install_packages() {
     log_notice "Installing development" "${icon}"
     yay -Syq --needed --noconfirm --quiet --combinedupgrade --batchinstall \
         ctags \
-        fzf \
         neovim \
         git \
         git-lfs \

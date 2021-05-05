@@ -46,6 +46,7 @@ set title
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
   set grepformat^=%f:%l:%c:%m
+  nnoremap <C-f> :Ag<Cr>
 endif
 set ignorecase
 set smartcase
