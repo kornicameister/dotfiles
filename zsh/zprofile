@@ -55,6 +55,8 @@ path=(
     )
 }
 
+# hide % at end of output
+export PROMPT_EOL_MARK=''  
 
 # Less
 
