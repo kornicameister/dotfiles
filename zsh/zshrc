@@ -188,6 +188,16 @@ zinit ice \
 zinit light ogham/exa
 zinit ice wait blockf atpull'zinit creinstall -q .'
 
+# fd: replacement for find
+zinit ice \
+    as"program" \
+    id-as"fd" \
+    from"gh-r" \
+    cp"fd-*/autocomplete/_fd -> _fd" \
+    atload"alias find=fd" \
+    pick"fd*/fd"
+zinit light @sharkdp/fd
+
 # bat
 zinit ice \
     wait'2' \
@@ -195,7 +205,7 @@ zinit ice \
     as'command' \
     from'gh-r' \
     mv'bat* -> bat' \
-    atload'export BAT_THEME=ansi-dark' \
+    atload'export BAT_THEME="Solarized (dark)"' \
     pick'bat/bat'
 zinit light sharkdp/bat
 
