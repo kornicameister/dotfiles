@@ -189,6 +189,15 @@ zinit ice \
 zinit light ogham/exa
 zinit ice wait blockf atpull'zinit creinstall -q .'
 
+# fd: replacement for find
+zinit ice \
+    as"program" \
+    id-as"fd" \
+    from"gh-r" \
+    cp"fd-*/autocomplete/_fd -> _fd" \
+    atload"alias find=fd" \
+    pick"fd*/fd"
+zinit light @sharkdp/fd
 
 # bat
 zinit ice \
