@@ -206,7 +206,7 @@ zinit ice \
     as'command' \
     from'gh-r' \
     mv'bat* -> bat' \
-    atload'export BAT_THEME=ansi-dark' \
+    atload'export BAT_THEME="Solarized (dark)"' \
     pick'bat/bat'
 zinit light sharkdp/bat
 
