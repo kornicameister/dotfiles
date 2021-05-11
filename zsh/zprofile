@@ -54,9 +54,12 @@ path=(
         $path
     )
 }
+[ $commands[pyenv] ] && {
+    eval "$(pyenv init --path)"
+}
 
 # hide % at end of output
-export PROMPT_EOL_MARK=''  
+export PROMPT_EOL_MARK=''
 
 # Less
 

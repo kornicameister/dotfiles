@@ -107,7 +107,7 @@ zinit ice svn silent submods'zsh-users/zsh-history-substring-search -> external'
 zinit ice svn silent ; zinit snippet OMZ::plugins/aws
 
 [ $commands[pyenv] ] && {
-    eval "$(pyenv init - --no-rehash zsh)"
+    eval "$(pyenv init - --path --no-rehash zsh)"
     eval "$(pyenv virtualenv-init -)"
 }
 [ $commands[nodenv] ] && {
