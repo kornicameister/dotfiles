@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2.3.4
       - uses: ludeeus/action-shellcheck@1.1.0
         with:
-          ignore: zsh/*
+          ignore: zsh
   requirements_txt:
     name: Validate Python requirements
     runs-on: ubuntu-20.04
