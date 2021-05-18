@@ -120,6 +120,8 @@
 	autocorrect = 1
 
 [credential]
+	# libsecret is an alternative here, already installed and compiled
+	# just put a path here or --local for the certain repositories
 	helper = cache --timeout=28800
 	useHttpPath = true
 
