@@ -110,6 +110,7 @@
     # custom application/tools configuration
     ~/.config:
       glob: true
+      force: true
       path: config/*
 
     # custom binaries
@@ -117,5 +118,10 @@
       glob: true
       path: bin/*
 
-- shell:
-    - command: [zsh -il -c ./post-install, "Execute post install steps"]
+    # X*
+    ~/.Xresources:
+      force: true
+      path: .XResources
+
+    # PAM env
+    ~/.pam_environment: .pam_environment

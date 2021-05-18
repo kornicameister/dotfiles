@@ -46,6 +46,7 @@ set title
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
   set grepformat^=%f:%l:%c:%m
+  nnoremap <C-f> :Ag<Cr>
 endif
 set ignorecase
 set smartcase
@@ -182,8 +183,9 @@ augroup END
 augroup colorscheme_customization
   au!
 
+  set background=dark
   if has('termguicolors')
-    set termguicolors
+      set termguicolors
   endif
 
   if has_key(g:plugs, 'dracula')
@@ -191,14 +193,24 @@ augroup colorscheme_customization
     let g:dracula_italic = 1
     let g:dracula_colorterm = 0
 
-    set background=dark
     colorscheme dracula
 
     if has_key(g:plugs, 'vim-airline')
       let g:airline_theme = 'dracula'
       call airline#load_theme() | call airline#update_statusline()
     endif
-
   endif
+
+  if has_key(g:plugs, 'wal.vim')
+    colorscheme wal
+    if has_key(g:plugs, 'vim-airline')
+      let g:airline_theme = 'wal'
+      call airline#load_theme() | call airline#update_statusline()
+    endif
+    if has('termguicolors')
+      set notermguicolors
+    endif
+  endif
+
 
 augroup END
