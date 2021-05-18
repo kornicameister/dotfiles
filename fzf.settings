@@ -1,28 +1,20 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-_gen_fzf_default_opts() {
-    local fzf_theme='
-        --color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254
-        --color info:254,prompt:37,spinner:108,pointer:235,marker:235
-    '
-    local output_settings='
-        --ansi
-        --no-height
-        --no-reverse
-        --border
-        --inline-info
-    '
+typeset -AU __FZF
 
-    export FZF_DEFAULT_COMMAND='ag --follow --nocolor --ignore build --ignore .venv --ignore .git --ignore dist --ignore node_modules --ignore elm-stuff -g ""'
-    export FZF_DEFAULT_OPTS="
-        ${fzf_theme}
-        ${output_settings}
-    "
-    export FZF_COMPLETION_OPTS='+c -x'
+__FZF[CMD]='ag --ignore .git --hidden --follow --depth 10 --smart-case --nocolor -g ""'
+__FZF[THEME]='--color dark,hl:33,hl+:37,fg+:235,bg+:136,fg+:254 --color info:254,prompt:37,spinner:108,pointer:235,marker:235'
 
-    export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-    export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
-    export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-}
+export FZF_DEFAULT_COMMAND="${__FZF[CMD]}"
+export FZF_PREVIEW_COMMAND="bat --style=numbers,changes --wrap never --color always {} || cat {} || tree -C {}"
 
-_gen_fzf_default_opts
+export FZF_CTRL_T_COMMAND="${__FZF[CMD]}"
+export FZF_CTRL_R_COMMAND="${__FZF[CMD]}"
+export FZF_ALT_C_COMMAND="${__FZF[CMD]}"
+
+export FZF_DEFAULT_OPTS="${__FZF[THEME]} --ansi --no-height --no-reverse --border --inline-info --prompt='» ' --pointer='▶' --marker='✓ ' --reverse --tabstop 2 --multi --color=bg+:-1,marker:010 --bind '?:toggle-preview'"
+export FZF_CTRL_T_OPTS="--preview '($FZF_PREVIEW_COMMAND) 2> /dev/null' --preview-window right:60%:border"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:wrap:hidden --bind '?:toogle-preview,ctrl-y:execute-silent(echo -n {2..} | xclip)+abort' --header 'Press CTRL-Y to copy command into clipboard'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} 2> /dev/null'"
+
+export FZF_COMPLETION_OPTS='+c -x'
