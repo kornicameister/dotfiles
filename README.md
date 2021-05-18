@@ -1,4 +1,3 @@
-[![CircleCI](https://circleci.com/gh/kornicameister/dotfiles/tree/master.svg?style=shield)](https://circleci.com/gh/kornicameister/dotfiles/tree/master)
 [![time tracker](https://wakatime.com/badge/github/kornicameister/dotfiles.svg)](https://wakatime.com/badge/github/kornicameister/dotfiles)
 
 # dotfiles
