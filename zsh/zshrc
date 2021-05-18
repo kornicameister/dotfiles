@@ -125,8 +125,7 @@ zinit ice svn silent ; zinit snippet OMZ::plugins/aws
 [ $commands[jenv] ] && {
     eval "$(jenv init - --no-rehash zsh)"
 }
-source ~/.fzf.zsh
-source ~/.fzf.settings
+
 source ~/.npmrc.sh
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
@@ -246,4 +245,7 @@ zinit light denilsonsa/prettyping
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 
 # prompt
-zinit light-mode for depth=1 atload'source ~/.p10k.zsh' romkatv/powerlevel10k
+zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
+
+autoload -Uz compinit ; compinit
+zinit cdreplay -q

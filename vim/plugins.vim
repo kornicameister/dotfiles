@@ -12,10 +12,10 @@ if !has('nvim')
 endif
 
 " theme
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'dylanaraps/wal.vim'
 
 " fzf
-Plug '~/.fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " git plugins
@@ -102,6 +102,7 @@ Plug 'zinit-zsh/zinit-vim-syntax'                   " zinit power
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'triglav/vim-visual-increment'
 Plug 'voldikss/vim-floaterm'
+Plug 'mboughaba/i3config.vim'
 
 " nginx
 Plug 'chr4/nginx.vim'
