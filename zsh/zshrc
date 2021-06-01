@@ -173,6 +173,17 @@ zinit light junegunn/fzf
 zinit ice \
     wait'2' \
     lucid \
+    atload"
+zstyle ':completion:*:*:aws' fzf-search-display true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:*' switch-group ',' '.'
+    "
+zinit light Aloxaf/fzf-tab
+
+# replacement for ls
+zinit ice \
+    wait'2' \
+    lucid \
     from'gh-r' \
     as'program' \
     mv'bin/exa* -> exa' \
