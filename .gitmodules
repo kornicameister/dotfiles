@@ -80,8 +80,8 @@
     shallow = true
     branch = master
     ignore = untracked
-[submodule "nvim"]
-	path = nvim
+[submodule "config/nvim"]
+	path = config/nvim
 	url = git@github.com:kornicameister/nvim.git
     shallow = true
     branch = master
