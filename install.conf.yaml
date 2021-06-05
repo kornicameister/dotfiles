@@ -48,9 +48,6 @@
       stderr: true
 
 - link:
-    # nvim stuff
-    ~/.config/nvim: nvim
-
     # ssh config
     ~/.ssh/config: ssh/config
     ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
