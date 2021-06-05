@@ -48,10 +48,7 @@
       stderr: true
 
 - link:
-    # vim stuff
-    ~/.vim: vim
-    ~/.vimrc: vim/vimrc
-    ~/.vim/autoload/plug.vim: dependencies/vim-plug/plug.vim
+    # nvim stuff
     ~/.config/nvim: nvim
 
     # ssh config
