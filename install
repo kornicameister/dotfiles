@@ -87,6 +87,7 @@ install_packages() {
         the_silver_searcher \
         subversion \
         yamllint \
+        stylua-bin \
         jq \
         yq \
         xfce4-terminal
