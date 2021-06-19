@@ -36,3 +36,7 @@
 
 # git garbage
 *.orig
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE*
