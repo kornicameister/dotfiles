@@ -111,7 +111,7 @@ zinit ice svn silent ; zinit snippet OMZ::plugins/aws
     eval "$(pyenv virtualenv-init -)"
 }
 [ $commands[nodenv] ] && {
-    eval "$(nodenv init - --no-rehash zsh)"
+    eval "$(nodenv init -)"
 }
 [ $commands[goenv] ] && {
     eval "$(goenv init - --no-rehash zsh)"
