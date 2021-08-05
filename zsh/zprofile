@@ -47,6 +47,7 @@ path=(
   $NODENV_ROOT/bin
   $GOENV_ROOT/bin
   $JENV_ROOT/bin
+  $K_DOTFILES_DIR/dotbot/bin
   $path
 )
 [ $commands[gem] ] && {
