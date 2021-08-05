@@ -40,3 +40,6 @@
 *.BASE.*
 *.LOCAL.*
 *.REMOTE*
+
+# macOS
+.DS_Store
