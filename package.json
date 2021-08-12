@@ -10,7 +10,7 @@
     "prettier": "2.3.2",
     "typescript": "4.3.5",
     "@elm-tooling/elm-language-server": "2.2.1",
-    "bash-language-server": "1.17.0",
+    "bash-language-server": "2.0.0",
     "vim-language-server": "2.2.3",
     "dockerfile-language-server-nodejs": "0.5.0",
     "yaml-language-server": "0.22.0"
