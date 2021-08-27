@@ -8,7 +8,7 @@
     "npm": "7.21.0",
     "neovim": "4.10.0",
     "prettier": "2.3.2",
-    "typescript": "4.3.5",
+    "typescript": "4.4.2",
     "@elm-tooling/elm-language-server": "2.2.1",
     "bash-language-server": "2.0.0",
     "vim-language-server": "2.2.4",
