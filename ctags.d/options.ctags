@@ -6,15 +6,21 @@
 --exclude=build/*
 --exclude=node_modules/*
 --exclude=bower_components/*
---exclude=dist/
---exclude=*.egg-info
---exclude=.tox/*
 --exclude=db/*
 --exclude=log/*
 --exclude=.idea/
 --exclude=gulp
 --exclude=tags
 --exclude=.bundle
+--exclude=.docker/*
+
+--exclude=dist/
+--exclude=*.egg-info
+--exclude=.tox/*
+--exclude=.pytest-cache/*
+--exclude=.mypy-cache/*
+
+--exclude=cdk.out/*
 
 --tag-relative=yes
 --recurse=yes
