@@ -56,8 +56,12 @@ path=(
         $path
     )
 }
+
 [ $commands[pyenv] ] && {
     eval "$(pyenv init --path)"
+}
+[ $commands[rbenv] ] && {
+    eval "$(rbenv init -)"
 }
 
 # hide % at end of output
