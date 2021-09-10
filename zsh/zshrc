@@ -252,8 +252,8 @@ zinit ice \
     atload"alias ping='prettyping --nolegend'"
 zinit light denilsonsa/prettyping
 
-# has to be last thingy for some reason
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
+[ $commands[pipx] ] && eval "$(register-python-argcomplete pipx)"
 
 # prompt
 zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
