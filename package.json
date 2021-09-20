@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "aws-cdk": "1.122.0",
+    "aws-cdk": "1.123.0",
     "npm": "7.24.0",
     "neovim": "4.10.0",
     "prettier": "2.4.1",
