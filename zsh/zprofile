@@ -91,4 +91,5 @@ export DOCKER_BUILDKIT=1
     # overwrite vim
     alias vi='nvim';
     alias vim='nvim';
+    alias view='nvim -R';
 }
