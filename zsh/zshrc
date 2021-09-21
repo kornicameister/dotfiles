@@ -259,7 +259,7 @@ zinit light denilsonsa/prettyping
 }
 
 # prompt
-zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
+zinit light-mode for depth=1 atload"source ~/.p10k.zsh" romkatv/powerlevel10k
 
 autoload -Uz compinit ; compinit
 zinit cdreplay -q
