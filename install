@@ -402,6 +402,8 @@ configure_envs() {
     else
         log_done "Java -> $(cat "${jenv_root}/version")" "[  ]"
     fi
+    
+    $nodenv package-hooks install --all
 
     $pyenv rehash
     $nodenv rehash
