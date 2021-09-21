@@ -254,6 +254,9 @@ zinit light denilsonsa/prettyping
 
 [ $commands[kubectl] ] && source <(kubectl completion zsh)
 [ $commands[pipx] ] && eval "$(register-python-argcomplete pipx)"
+[ $commands[aws] ] || {
+    alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws -e AWS_PROFILE amazon/aws-cli'
+}
 
 # prompt
 zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
