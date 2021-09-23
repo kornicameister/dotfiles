@@ -18,87 +18,8 @@ _install_brew() {
 }
 
 _install_packages() {
-  # base packages
-  brew install \
-    coreutils \
-    moreutils \
-    findutils \
-    wget \
-    zsh
+  brew bundle --file Brewfile
 
-  # development
-  brew install \
-    ccache \
-    git \
-    git-extras \
-    git-lfs \
-    jq \
-    pipx \
-    shellcheck \
-    shfmt \
-    svn \
-    subversion \
-    the_silver_searcher \
-    universal-ctags \
-    yq \
-    lua \
-    stylua \
-    ruby \
-    rbenv \
-    exiftool
-  brew install --cask gitify
-
-  brew install --cask meld
-  brew install --cask iterm2
-  brew install --head luajit neovim
-
-  # utilities
-  brew install \
-    aria2 \
-    gnupg \
-    openssh \
-    htop \
-    screenfetch \
-    parallel
-
-  # docker
-  brew install --cask docker
-  brew istall \
-    ctop \
-    hadolint
-
-  # virtualbox
-  brew istall --cask virtualbox
-
-  # browsers
-  brew install --cask brave-browser
-  brew install --cask google-chrome
-  brew install --cask firefox
-
-  # java
-  brew install --cask adoptopenjdk
-  brew install maven
-
-  # fonts
-  brew tap homebrew/cask-fonts
-  brew install --cask \
-    font-iosevka \
-    font-fontawesome \
-    font-material-icons \
-    font-hack-nerd-font \
-    font-awesome-terminal-fonts
-
-  # aws
-  brew install awscli
-
-  # others
-  brew install --cask \
-    spotity \
-    signal \
-    slack \
-    authy
-
-  # pipx setup
   pipx ensurepath
   pipx install \
     httpie \
