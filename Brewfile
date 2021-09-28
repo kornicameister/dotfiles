@@ -23,8 +23,10 @@ brew "moreutils"
 brew "findutils"
 brew "wget"
 brew "zsh"
+brew "curl"
 
 # Development stuff
+brew "watch"
 brew "ccache"
 brew "git"
 brew "git-extras"
