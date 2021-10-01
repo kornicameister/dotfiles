@@ -31,7 +31,8 @@ brew "ccache"
 brew "git"
 brew "git-extras"
 brew "git-lfs"
-brew "jq"
+brew "jq"         # reading json
+brew "jo"         # creating json
 brew "pipx"
 brew "shellcheck"
 brew "shfmt"
