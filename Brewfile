@@ -24,6 +24,7 @@ brew "findutils"
 brew "wget"
 brew "zsh"
 brew "curl"
+brew "cmake"
 
 # Development stuff
 brew "watch"
@@ -55,8 +56,10 @@ brew "neovim", args: ['HEAD']
 cask "adoptopenjdk"
 brew "maven"
 
-# Virtual environments
 brew "ruby"
+brew "node"
+
+# Virtual environments
 brew "rbenv"
 
 # Virtualization
@@ -77,6 +80,7 @@ brew "openssh"
 brew "htop"
 brew "screenfetch"
 brew "parallel"
+brew "nmap"
 
 # fonts
 tap "homebrew/cask-fonts"
@@ -89,6 +93,8 @@ cask "font-awesome-terminal-fonts"
 
 # aws
 brew "awscli"
+tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
+brew "cloudsplaining"
 
 # others
 cask "spotify"
