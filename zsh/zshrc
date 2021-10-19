@@ -257,6 +257,8 @@ zinit light denilsonsa/prettyping
 [ $commands[aws] ] || {
     alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws -e AWS_PROFILE amazon/aws-cli'
 }
+[ $commands[cloudsplaining] ] && eval "$(_CLOUDSPLAINING_COMPLETE=source_zsh cloudsplaining)"
+[ $commands[docker] ] && alias docker-compose="docker compose"
 
 # prompt
 zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
