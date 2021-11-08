@@ -7,7 +7,6 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "puma/puma"
-tap "stripe/stripe-cli"
 tap "teamookla/speedtest"
 tap "universal-ctags/universal-ctags"
 
@@ -93,6 +92,7 @@ cask "font-awesome-terminal-fonts"
 
 # aws
 brew "awscli"
+cask "aws-vault"
 tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
 brew "cloudsplaining"
 
