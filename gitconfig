@@ -96,6 +96,7 @@
 	summary = true
 	log = true
 	status = true
+	renormalize = true
 	tool = nvimmerge
 	conflictstyle = diff3
 [mergetool]
