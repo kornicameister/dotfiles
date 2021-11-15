@@ -30,7 +30,7 @@
 
 [maintenance]
 	strategy = incremental
-	auto = true
+	auto = false
 [maintenance "gc"]
 	enabled = true
 [maintenance "commit-graph"]
