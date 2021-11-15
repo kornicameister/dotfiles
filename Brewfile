@@ -25,6 +25,9 @@ brew "zsh"
 brew "curl"
 brew "cmake"
 
+# fish
+brew "fish"
+
 # Development stuff
 brew "watch"
 brew "ccache"
@@ -32,6 +35,7 @@ brew "git"
 brew "git-extras"
 brew "git-lfs"
 brew "git-filter-repo"
+brew "diff-so-fancy"
 brew "jq"         # reading json
 brew "jo"         # creating json
 brew "pipx"
@@ -74,12 +78,14 @@ cask "firefox"
 
 # Utilities
 brew "aria2"
+brew "bat"
+brew "exa"
 brew "gnupg"
-brew "openssh"
 brew "htop"
-brew "screenfetch"
-brew "parallel"
 brew "nmap"
+brew "openssh"
+brew "parallel"
+brew "screenfetch"
 
 # fonts
 tap "homebrew/cask-fonts"
@@ -92,7 +98,8 @@ cask "font-awesome-terminal-fonts"
 
 # aws
 brew "awscli"
-cask "aws-vault"
+tap "fugue/regula"
+brew "regula"
 tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
 brew "cloudsplaining"
 
