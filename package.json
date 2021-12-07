@@ -4,16 +4,17 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@elm-tooling/elm-language-server": "2.2.1",
     "aws-cdk": "1.123.0",
-    "npm": "7.24.0",
+    "bash-language-server": "2.0.0",
+    "dockerfile-language-server-nodejs": "0.7.0",
+    "fixjson": "1.1.2",
     "neovim": "4.10.0",
+    "npm": "7.24.0",
     "prettier": "2.4.1",
     "typescript": "4.4.3",
-    "@elm-tooling/elm-language-server": "2.2.1",
-    "bash-language-server": "2.0.0",
+    "typescript-language-server": "0.6.2",
     "vim-language-server": "2.2.5",
-    "dockerfile-language-server-nodejs": "0.7.0",
-    "yaml-language-server": "0.22.0",
-    "typescript-language-server": "0.6.2"
+    "yaml-language-server": "0.22.0"
   }
 }
