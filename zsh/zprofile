@@ -89,6 +89,8 @@ export DOCKER_BUILDKIT=1
 # aliases
 [ $commands[nvim] ] && {
     # overwrite vim
+    alias nvim="nvim -u ~/.config/nvim/init.lua"
+    alias ovim="nvim -i ~/.config/nvim/init.nvim"
     alias vi='nvim';
     alias vim='nvim';
     alias view='nvim -R';

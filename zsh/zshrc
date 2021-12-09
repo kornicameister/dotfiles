@@ -257,9 +257,25 @@ zinit light denilsonsa/prettyping
 [ $commands[aws] ] || {
     alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws -e AWS_PROFILE amazon/aws-cli'
 }
-
+[ $commands[cloudsplaining] ] && eval "$(_CLOUDSPLAINING_COMPLETE=source_zsh cloudsplaining)"
+[ $commands[docker] ] && alias docker-compose="docker compose"
 # prompt
 zinit light-mode for depth=1 atload"source ~/.p10k.zsh" romkatv/powerlevel10k
 
 autoload -Uz compinit ; compinit
 zinit cdreplay -q
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# my aliases
+aws_instances() {
+  aws ec2 describe-instances \
+    --query 'Reservations[].Instances[].{ID:InstanceId,PublicIP:PublicIpAddress,Name:Tags[?Key==`Name`]|[0].Value,State:State.Name}' \
+    --output table
+}
+aws_stack_outputs() {
+  aws cloudformation describe-stacks \
+      --stack-name "${1}" \
+      --query "Stacks[0].Outputs" \
+      --output json | jq 'reduce .[] as $i ({}; .[$i.OutputKey] = $i.OutputValue)'
+}
