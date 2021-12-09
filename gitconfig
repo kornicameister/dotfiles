@@ -89,12 +89,14 @@
 	autoUpdate = true		 # update index (always)
 
 [branch]
-	autosetupmerge = true    # auto track branches
+	autosetup = true    # auto track branches
 	autosetuprebase = always
 
 [merge]
 	summary = true
+	log = true
 	status = true
+	renormalize = true
 	tool = nvimmerge
 	conflictstyle = diff3
 [mergetool]

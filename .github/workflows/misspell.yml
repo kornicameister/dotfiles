@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.4.0
       - uses: sobolevn/misspell-fixer-action@0.1.0
-      - uses: peter-evans/create-pull-request@v3.10.1
+      - uses: peter-evans/create-pull-request@v3.11.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: "Dotfiles spell good must be..."

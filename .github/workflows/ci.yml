@@ -7,7 +7,7 @@ jobs:
   shellcheck:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
       - uses: ludeeus/action-shellcheck@1.1.0
         with:
           ignore: zsh
@@ -30,8 +30,8 @@ jobs:
           - python-version: 3.x
             continue-on-error: false
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-python@v2.2.2
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/setup-python@v2.3.1
         with:
           python-version: ${{ matrix.python-version }}
       - name: 1st pass

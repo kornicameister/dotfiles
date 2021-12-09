@@ -259,6 +259,7 @@ zinit light denilsonsa/prettyping
 }
 [ $commands[cloudsplaining] ] && eval "$(_CLOUDSPLAINING_COMPLETE=source_zsh cloudsplaining)"
 [ $commands[docker] ] && alias docker-compose="docker compose"
+
 # prompt
 zinit light-mode for depth=1 atload"source ~/.p10k.zsh" romkatv/powerlevel10k
 
