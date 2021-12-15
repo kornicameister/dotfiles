@@ -31,6 +31,9 @@
 [maintenance]
 	strategy = incremental
 	auto = false
+	repo = /Users/tomasztrebski/dev-ay/ay-aws-app
+	repo = /Users/tomasztrebski/dev-ay/email-service
+	repo = /Users/tomasztrebski/dev-ay/cicd
 [maintenance "gc"]
 	enabled = true
 [maintenance "commit-graph"]
