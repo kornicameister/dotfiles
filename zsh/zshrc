@@ -37,7 +37,7 @@ zstyle ':prezto:module:editor' ps-context 'yes'
 zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # loading *envs
-zinit ice wait lucid depth=1 ; zinit load sobolevn/wakatime-zsh-plugin
+zinit ice wait lucid depth=1 atload'export ZSH_WAKATIME_BIN="$(pyenv which wakatime)"'; zinit load sobolevn/wakatime-zsh-plugin
 zinit ice wait lucid depth=1 ; zinit load hlissner/zsh-autopair
 zinit ice wait lucid depth=1 ; zinit load djui/alias-tips
 zinit ice wait lucid depth=1 ; zinit load wfxr/forgit
