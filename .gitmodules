@@ -76,12 +76,12 @@
     ignore = untracked
 [submodule "dependencies/zinit"]
     path = dependencies/zinit
-    url = https://github.com/zdharma/zinit
+    url = https://github.com/zdharma-continuum/zinit.git
     shallow = true
-    branch = master
+    branch = main
     ignore = untracked
 [submodule "config/nvim"]
-	path = config/nvim
-	url = git@github.com:kornicameister/nvim.git
+    path = config/nvim
+    url = git@github.com:kornicameister/nvim.git
     shallow = true
     branch = master
