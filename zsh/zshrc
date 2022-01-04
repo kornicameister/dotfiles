@@ -129,15 +129,6 @@ zinit ice svn silent ; zinit snippet OMZ::plugins/aws
 source ~/.npmrc.sh
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-# diff-s-fancy
-zinit ice \
-    depth=1 \
-    lucid \
-    wait'0c' \
-    as'program' \
-    pick'bin/git-dsf'
-zinit light zdharma-continuum/zsh-diff-so-fancy
-
 # dircolors
 zinit ice \
     depth=1 \

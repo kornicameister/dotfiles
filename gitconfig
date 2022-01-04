@@ -19,11 +19,14 @@
 	# https://git-scm.com/docs/git-update-index#_untracked_cache
 	untrackedCache = true
 
-	# diff-so-fancy
-	pager = diff-so-fancy | less --tabs=4 -F -K -X -R -i
+	# fancy diff
+	pager = delta
 
 	# no more CRLF
 	autocrlf = input
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
 
 [add "interactive"]
 	useBuiltin = true
@@ -113,6 +116,7 @@
 	indentHeuristic = true	 # experimental to make patches easier to read
 	tool = nvimdiff
 	guitool = opendiff
+	colorMoved = default
 [difftool]
 	prompt = true
 [difftool "nvimdiff"]
@@ -141,3 +145,20 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+# delta configuration
+[delta]
+    features = decorations
+	line-numbers = true
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax

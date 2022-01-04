@@ -33,6 +33,7 @@ install_packages() {
         git \
         git-lfs \
         git-extras \
+        git-delta \
         meld \
         maven \
         prettier \

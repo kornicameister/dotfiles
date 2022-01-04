@@ -35,7 +35,7 @@ brew "git"
 brew "git-extras"
 brew "git-lfs"
 brew "git-filter-repo"
-brew "diff-so-fancy"
+brew "git-delta"
 brew "jq"         # reading json
 brew "jo"         # creating json
 brew "pipx"
