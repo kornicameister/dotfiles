@@ -19,3 +19,5 @@ alias ls='exa --icons'
 alias la='exa --group-directories-first --icons -la'
 alias ll='exa --group-directories-first --icons -la --color-scale --time-style=long-iso --git --git-ignore --ignore-glob=".git|__pycache__"'
 alias tree='exa --group-directories-first -T --icons --level=2'
+
+set -gx PIPX_DEFAULT_PYTHON (pyenv which python)
