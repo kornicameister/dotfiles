@@ -59,6 +59,8 @@ path=(
 
 [ $commands[pyenv] ] && {
     eval "$(pyenv init --path)"
+    # found at: https://gabnotes.org/how-use-pipx-pyenv/
+    export PIPX_DEFAULT_PYTHON="$(pyenv which python)"
 }
 [ $commands[rbenv] ] && {
     eval "$(rbenv init -)"
