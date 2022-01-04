@@ -220,18 +220,6 @@ zinit ice \
     pick'bat/bat'
 zinit light sharkdp/bat
 
-# youtube-dl
-zinit ice \
-    wait'2' \
-    lucid \
-    as'command' \
-    pick'$ZPFX/youtube-dl' \
-    id-as'youtube-dl' \
-    run-atpull \
-    atclone'aria2c -o $ZPFX/youtube-dl https://yt-dl.org/downloads/latest/youtube-dl' \
-    atpull'chmod a+x $ZPFX/youtube-dl'
-zinit light zdharma-continuum/null
-
 # direnv
 zinit ice \
     depth=1 \
