@@ -39,6 +39,7 @@ brew "git-delta"
 brew "jq"         # reading json
 brew "jo"         # creating json
 brew "pipx"
+brew "pipenv"
 brew "shellcheck"
 brew "shfmt"
 brew "svn"
