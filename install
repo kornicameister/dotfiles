@@ -37,6 +37,23 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
+    pipx ensurepath
+    pipx install \
+      cfn-lint \
+      flake8 \
+      httpie \
+      pywal \
+      wakatime \
+      yamllint
+
+    pipx inject flake8 \
+      flake8-bugbear==21.11.29 \
+      flake8-commas==2.1.0 \
+      flake8-quotes==3.3.1 \
+      flake8-print==4.0.0 \
+      flake8-bandit==2.1.2 \
+      flake8-comprehensions==3.7.0
+
     wal --theme base16-atelier-dune -n --vte
     wal-vtop >/dev/null
 }
@@ -238,7 +255,7 @@ configure_jenv() {
     else
         log_done "Java -> $(cat "${jenv_root}/version")" "[  ]"
     fi
-    
+
     $nodenv package-hooks install --all
 
     $jenv rehash
@@ -318,7 +335,8 @@ if ((SHLVL > 1)); then
     if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
         log_die "Altough root is required to install packages, ./install must not be launched as root" "${icon}" 3
     fi
-    install_packages && post_install
+
+    install_packages
     install_links
 
     configure_envs
@@ -326,5 +344,6 @@ if ((SHLVL > 1)); then
     configure_nvim
     configure_wakatime "$@"
 
+    post_install
     screenfetch
 fi

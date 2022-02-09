@@ -19,13 +19,6 @@ _install_brew() {
 
 _install_packages() {
   brew bundle --file Brewfile
-
-  pipx ensurepath
-  pipx install \
-    httpie \
-    yamllint \
-    wakatime \
-    pywal
 }
 
 if ((SHLVL > 1)); then
