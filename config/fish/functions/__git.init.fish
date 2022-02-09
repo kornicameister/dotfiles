@@ -65,8 +65,8 @@ function __git.init
   __git.create_abbr gl         git pull
   __git.create_abbr gll        git pull origin
   __git.create_abbr glr        git pull --rebase
-  __git.create_abbr glg        git log --stat --max-count=10
-  __git.create_abbr glgg       git log --graph --max-count=10
+  __git.create_abbr glg        git log --stat
+  __git.create_abbr glgg       git log --graph
   __git.create_abbr glgga      git log --graph --decorate --all
   __git.create_abbr glo        git log --oneline --decorate --color
   __git.create_abbr glog       git log --oneline --decorate --color --graph
@@ -108,6 +108,7 @@ function __git.init
   __git.create_abbr grs        git restore
   __git.create_abbr grset      git remote set-url
   __git.create_abbr grss       git restore --source
+  __git.create_abbr grst       git restore --staged
   __git.create_abbr grup       git remote update
   __git.create_abbr grv        git remote -v
   __git.create_abbr gsh        git show
