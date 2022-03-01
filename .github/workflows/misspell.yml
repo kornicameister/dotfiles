@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
       - uses: sobolevn/misspell-fixer-action@0.1.0
-      - uses: peter-evans/create-pull-request@v3.12.1
+      - uses: peter-evans/create-pull-request@v3.14.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: "Dotfiles spell good must be..."
