@@ -42,9 +42,14 @@ post_install() {
       cfn-lint \
       flake8 \
       httpie \
+      pyinfra \
       pywal \
       wakatime \
       yamllint
+
+    pipx install ansible --include-deps
+    pipx inject ansible \
+      paramiko
 
     pipx inject flake8 \
       flake8-bugbear==21.11.29 \
