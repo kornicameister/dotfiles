@@ -98,7 +98,9 @@ cask "font-hack-nerd-font"
 cask "font-awesome-terminal-fonts"
 
 # aws
+tap "aws/tap"
 brew "awscli"
+brew "aws-sam-cli"
 tap "fugue/regula"
 brew "regula"
 tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
