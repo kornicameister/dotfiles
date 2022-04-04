@@ -56,6 +56,7 @@ cask "meld"
 cask "iterm2"
 brew "luajit", args: ['HEAD']
 brew "neovim", args: ['HEAD']
+cask "visual-studio-code"
 
 cask "adoptopenjdk"
 brew "maven"
