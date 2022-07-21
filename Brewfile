@@ -45,6 +45,7 @@ brew "shfmt"
 brew "svn"
 brew "subversion"
 brew "the_silver_searcher"
+brew "ripgrep"
 brew "universal-ctags"
 brew "yq"
 brew "lua"
@@ -88,6 +89,7 @@ brew "nmap"
 brew "openssh"
 brew "parallel"
 brew "screenfetch"
+cask "google-drive"
 
 # fonts
 tap "homebrew/cask-fonts"
@@ -100,12 +102,16 @@ cask "font-awesome-terminal-fonts"
 
 # aws
 tap "aws/tap"
+tap "fugue/regula"
+tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
+tap "hashicorp/tap"
+
 brew "awscli"
 brew "aws-sam-cli"
-tap "fugue/regula"
 brew "regula"
-tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
 brew "cloudsplaining"
+brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform-ls"
 
 # others
 cask "spotify"
