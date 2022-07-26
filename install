@@ -41,11 +41,14 @@ post_install() {
     pipx install \
       cfn-lint \
       flake8 \
-      httpie \
       pyinfra \
       pywal \
       wakatime \
       yamllint
+
+    pipx install httpie
+    pipx inject httpie \
+      httpie-aws-auth
 
     pipx install ansible --include-deps
     pipx inject ansible \

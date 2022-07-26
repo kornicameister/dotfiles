@@ -34,9 +34,7 @@
 [maintenance]
 	strategy = incremental
 	auto = false
-	repo = /Users/tomasztrebski/dev-ay/ay-aws-app
-	repo = /Users/tomasztrebski/dev-ay/email-service
-	repo = /Users/tomasztrebski/dev-ay/cicd
+
 [maintenance "gc"]
 	enabled = true
 [maintenance "commit-graph"]
@@ -63,6 +61,7 @@
 	fixup = commit --fixup
 	amend = commit --amend --no-edit
 	fresh =  ! git_fresh
+	find = "!git log --color -S "
 
 [apply]
 	whitespace = fix         # detect whitespace errors when applying a patch
@@ -74,6 +73,7 @@
 	rebase = true
 
 [push]
+	atomic = true
 	default = simple
 
 [fetch]
@@ -83,9 +83,14 @@
 
 [rebase]
 	stat = true
-	abbreviateCommands =  true # to hell with longer rebase output
+	abbreviateCommands = true  # to hell with longer rebase output
 	autosquash = true          # auto squash fixups by default
 	autostash = true           # auto git stash ; git stash pop when rebasing
+
+[receive]
+	advertiseAtomic = true
+	autogc = true
+	fsckObjects = true
 
 [status]
 	submoduleSummary = true  # show submodules summary by default
