@@ -200,17 +200,6 @@ zinit ice \
     pick"fd*/fd"
 zinit light @sharkdp/fd
 
-# bat
-zinit ice \
-    wait'2' \
-    lucid \
-    as'command' \
-    from'gh-r' \
-    mv'bat* -> bat' \
-    atload'export BAT_THEME="Solarized (dark)"' \
-    pick'bat/bat'
-zinit light sharkdp/bat
-
 # direnv
 zinit ice \
     depth=1 \
