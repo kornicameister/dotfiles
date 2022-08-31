@@ -20,6 +20,6 @@ flake8-comprehensions==1.4.1; python_version < '3.0'
 
 yapf==0.32.0
 
-cfn-lint==0.63.0
+cfn-lint==0.63.2
 
 wakatime==13.1.0
