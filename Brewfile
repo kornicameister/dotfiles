@@ -60,7 +60,8 @@ brew "luajit", args: ['HEAD']
 brew "neovim", args: ['HEAD']
 cask "visual-studio-code"
 
-cask "adoptopenjdk"
+brew "jenv"
+cask "temurin8"
 brew "maven"
 
 brew "ruby"
@@ -71,9 +72,11 @@ brew "rbenv"
 
 # Virtualization
 cask "docker"
-cask "virtualbox"
 brew "ctop"       # awesome htop for containers
 brew "hadolint"
+brew "kind"
+brew "helm"
+cask "virtualbox"
 
 # Browsers
 cask "brave-browser"
