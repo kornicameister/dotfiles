@@ -25,8 +25,9 @@ brew "zsh"
 brew "curl"
 brew "cmake"
 
-# fish
+# shell
 brew "fish"
+brew "starship"
 
 # Development stuff
 brew "watch"
