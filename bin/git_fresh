@@ -12,3 +12,4 @@ git checkout -b master
 git branch -u origin/master
 git submodule update --init --recursive
 git branch | grep -v -E "(^\*|master|remotes)" | xargs git branch -D
+rm -rf ./**/*.orig || true
