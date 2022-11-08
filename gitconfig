@@ -53,6 +53,7 @@
 [alias]
 	tags = tag -l
 	branches = branch -l -v -a
+	merges = log --oneline --decorate --color=auto --merges --first-parent
 	remotes = remote -v
 	fixup = commit --fixup
 	amend = commit --amend --no-edit
