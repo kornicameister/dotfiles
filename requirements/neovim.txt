@@ -7,6 +7,6 @@ pynvim==0.4.3
 
 python-language-server==0.36.2
 jedi>=0.17.2
-rope==1.6.0
+rope==1.7.0
 
 vim-vint==0.3.21
