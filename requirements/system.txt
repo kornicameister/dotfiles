@@ -1,25 +1,25 @@
-pip==22.2.2 ; python_version >= '3.0'
+pip==22.3.1 ; python_version >= '3.0'
 pip==20.3.4 ; python_version < '3.0'
 
-setuptools==65.4.1 ; python_version >= '3.0'
+setuptools==66.0.0 ; python_version >= '3.0'
 setuptools==44.0.0 ; python_version < '3.0'
-wheel==0.37.1
+wheel==0.38.4
 
-mypy==0.982; python_version >= '3.0' --no-binary mypy
+mypy==0.991; python_version >= '3.0' --no-binary mypy
 
-flake8==5.0.4;
-flake8-bugbear==22.9.23; python_version >= '3.0'
+flake8==6.0.0;
+flake8-bugbear==23.1.17; python_version >= '3.0'
 flake8-commas==2.1.0
-flake8-quotes==3.3.1
+flake8-quotes==3.3.2
 flake8-print==5.0.0; python_version >= '3.0'
 flake8-print==3.1.4; python_version < '3.0'
 bandit==1.6.2; python_version < '3.0'
 flake8-bandit==4.1.1
-flake8-comprehensions==3.10.0; python_version >= '3.0'
+flake8-comprehensions==3.10.1; python_version >= '3.0'
 flake8-comprehensions==1.4.1; python_version < '3.0'
 
 yapf==0.32.0
 
-cfn-lint==0.67.0
+cfn-lint==0.72.9
 
 wakatime==13.1.0
