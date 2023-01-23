@@ -39,6 +39,7 @@ post_install() {
 
     pipx ensurepath
     pipx install \
+      awsume \
       cfn-lint \
       flake8 \
       pyinfra \
