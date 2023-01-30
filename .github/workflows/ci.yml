@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - uses: ludeeus/action-shellcheck@1.1.0
+      - uses: ludeeus/action-shellcheck@2.0.0
         with:
           ignore: zsh
   requirements_txt:
