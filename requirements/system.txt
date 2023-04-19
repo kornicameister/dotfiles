@@ -18,7 +18,7 @@ flake8-bandit==4.1.1
 flake8-comprehensions==3.12.0; python_version >= '3.0'
 flake8-comprehensions==1.4.1; python_version < '3.0'
 
-yapf==0.32.0
+yapf==0.33.0
 
 cfn-lint==0.77.1
 
