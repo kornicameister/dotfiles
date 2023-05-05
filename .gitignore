@@ -6,3 +6,5 @@ vim/.netrwhist
 vim/**/*.spl
 
 !vim/autoload/.gitkeep
+
+*.log
