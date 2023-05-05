@@ -9,6 +9,7 @@ tap "homebrew/services"
 tap "puma/puma"
 tap "teamookla/speedtest"
 tap "universal-ctags/universal-ctags"
+tap "ankitpokhrel/jira-cli"
 
 # Homebrew
 # https://github.com/Homebrew/brew/
@@ -62,6 +63,7 @@ brew "neovim", args: ['HEAD']
 cask "visual-studio-code"
 
 brew "jenv"
+cask "temurin"
 cask "temurin8"
 brew "maven"
 
@@ -95,6 +97,9 @@ brew "openssh"
 brew "parallel"
 brew "screenfetch"
 cask "google-drive"
+brew "viddy"
+brew "jira-cli"
+brew "asdf"
 
 # fonts
 tap "homebrew/cask-fonts"
