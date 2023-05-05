@@ -39,13 +39,16 @@ post_install() {
 
     pipx ensurepath
     pipx install \
-      awsume \
       cfn-lint \
       flake8 \
       pyinfra \
       pywal \
       wakatime \
       yamllint
+
+    pipx install awsume
+    pipx inject awsume \
+      awsume-console-plugin
 
     pipx install httpie
     pipx inject httpie \
