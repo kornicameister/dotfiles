@@ -8,3 +8,5 @@ vim/**/*.spl
 !vim/autoload/.gitkeep
 
 *.log
+
+Brewfile.lock.json
