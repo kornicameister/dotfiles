@@ -28,7 +28,6 @@ brew "cmake"
 # shell
 brew "zsh"
 brew "fish"
-brew "starship"
 
 # Development stuff
 brew "watch"
