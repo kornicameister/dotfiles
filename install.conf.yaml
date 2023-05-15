@@ -119,3 +119,6 @@
 
     # PAM env
     ~/.pam_environment: .pam_environment
+
+    # mycli configuration
+    ~/.myclirc: myclirc
