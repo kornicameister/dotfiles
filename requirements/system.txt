@@ -5,7 +5,7 @@ setuptools==68.0.0 ; python_version >= '3.0'
 setuptools==44.0.0 ; python_version < '3.0'
 wheel==0.40.0
 
-mypy==1.4.0; python_version >= '3.0' --no-binary mypy
+mypy==1.4.1; python_version >= '3.0' --no-binary mypy
 
 flake8==6.0.0;
 flake8-bugbear==23.6.5; python_version >= '3.0'
