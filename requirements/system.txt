@@ -7,7 +7,7 @@ wheel==0.41.0
 
 mypy==1.4.1; python_version >= '3.0' --no-binary mypy
 
-flake8==6.0.0;
+flake8==6.1.0;
 flake8-bugbear==23.7.10; python_version >= '3.0'
 flake8-commas==2.1.0
 flake8-quotes==3.3.2
