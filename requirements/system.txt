@@ -3,7 +3,7 @@ pip==20.3.4 ; python_version < '3.0'
 
 setuptools==68.2.2 ; python_version >= '3.0'
 setuptools==44.0.0 ; python_version < '3.0'
-wheel==0.41.2
+wheel==0.41.3
 
 mypy==1.6.1; python_version >= '3.0' --no-binary mypy
 
