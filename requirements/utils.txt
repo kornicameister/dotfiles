@@ -1,2 +1,2 @@
 pywalfox==2.7.4
-pipx==1.4.3
+pipx==1.5.0
