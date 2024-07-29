@@ -1,4 +1,4 @@
-pip==24.1.2 ; python_version >= '3.0'
+pip==24.2 ; python_version >= '3.0'
 pip==20.3.4 ; python_version < '3.0'
 
 setuptools==71.1.0 ; python_version >= '3.0'
