@@ -46,7 +46,7 @@ post_install() {
       wakatime \
       yamllint
 
-    pipx install awsume
+    pipx install awsume[saml,fuzy]
     pipx inject awsume \
       awsume-console-plugin
 

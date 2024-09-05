@@ -31,8 +31,8 @@ wider_completion_menu = True
 # \A - DSN alias name (from the [alias_dsn] section)
 # \u - Username
 # \x1b[...m - insert ANSI escape sequence
-prompt = '\t \u@\h:\p/\d> '
-prompt_continuation = '->'
+prompt = '\t \u@\d> '
+prompt_continuation = '$ '
 
 # Skip intro info on startup and outro info on exit
 less_chatty = False

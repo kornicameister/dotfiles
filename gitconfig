@@ -34,6 +34,11 @@
 [maintenance]
 	strategy = incremental
 	auto = false
+	repo = /Users/tomasztrebski/dev-ay/appyourself
+	repo = /Users/tomasztrebski/dev-ay/ay-aws-iam
+	repo = /Users/tomasztrebski/dev-ay/ay-aws-app
+	repo = /Users/tomasztrebski/dev-ay/email-service-wip
+	repo = /Users/tomasztrebski/dev-ay/devops2019
 
 [maintenance "gc"]
 	enabled = true

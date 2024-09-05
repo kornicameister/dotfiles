@@ -1,15 +1,14 @@
 # https://github.com/Homebrew/homebrew-bundle
 
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-versions"
-tap "homebrew/core"
 tap "homebrew/services"
 tap "puma/puma"
 tap "teamookla/speedtest"
 tap "universal-ctags/universal-ctags"
 tap "ankitpokhrel/jira-cli"
+tap "jesseduffield/lazygit"
 
 # Homebrew
 # https://github.com/Homebrew/brew/
@@ -24,10 +23,11 @@ brew "findutils"
 brew "wget"
 brew "curl"
 brew "cmake"
+brew "gnu-sed"
 
 # shell
 brew "zsh"
-brew "fish"
+brew "fish", args: ['HEAD']
 
 # Development stuff
 brew "watch"
@@ -37,6 +37,7 @@ brew "git-extras"
 brew "git-lfs"
 brew "git-filter-repo"
 brew "git-delta"
+brew "lazygit"
 brew "jq"         # reading json
 brew "jo"         # creating json
 brew "pipx"
@@ -53,11 +54,12 @@ brew "yq"
 brew "lua"
 brew "stylua"
 brew "exiftool"
+brew "rust"
 
 cask "gitify"
 cask "meld"
 cask "iterm2"
-brew "luajit", args: ['HEAD']
+cask "warp"
 brew "neovim", args: ['HEAD']
 cask "visual-studio-code"
 
@@ -90,7 +92,7 @@ brew "aria2"
 brew "asdf"
 brew "bat"
 brew "direnv"
-brew "exa"
+brew "eza"
 brew "fd"
 brew "fzf"
 brew "glow"
@@ -117,21 +119,25 @@ cask "font-material-icons"
 cask "font-hack-nerd-font"
 cask "font-awesome-terminal-fonts"
 
-# aws
+# cloud
 tap "aws/tap"
+tap "common-fate/granted"
 tap "fugue/regula"
-tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
 tap "hashicorp/tap"
+tap "salesforce/cloudsplaining", "https://github.com/salesforce/cloudsplaining"
 
-brew "awscli"
 brew "aws-sam-cli"
-brew "regula"
+brew "awscli"
+brew "aws-nuke"
 brew "cloudsplaining"
+brew "granted"
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
+brew "regula"
 
 # others
 cask "spotify"
 cask "signal"
 cask "slack"
 cask "authy"
+brew "mike-engel/jwt-cli/jwt-cli"

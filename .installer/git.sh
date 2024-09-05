@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${BASEDIR}/.installer/utils.sh"
+source "${BASEDIR}/utils.sh"
 
 configure_git() {
   local git_username=""
@@ -94,7 +94,7 @@ configure_git() {
     fi
 
     # 1. generate ssh key
-    gen_ssh_key "${ssh_keyname}" "${git_password}" "${git_username}@$(hostname)"
+    # gen_ssh_key "${ssh_keyname}" "${git_password}" "${git_username}@$(hostname)"
     log_done ".ssh/${ssh_keyname} configured" "${icon}"
 
     key_type="rsa"
