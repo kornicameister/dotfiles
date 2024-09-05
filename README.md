@@ -1,5 +1,8 @@
 [![time tracker](https://wakatime.com/badge/github/kornicameister/dotfiles.svg)](https://wakatime.com/badge/github/kornicameister/dotfiles)
 
+Dotfiles are currently highly unstable as I am still migrating to macOS.
+Most of the stuff here must be needed to be removed.
+
 # dotfiles
 
 All applications configurations ever used
@@ -51,6 +54,6 @@ All applications configurations ever used
 My dotfiles are evaluated in the CI system that ensures me that, if needed, I will be able to
 deploy them in the fresh system without having too much to worry about.
 
-## Inspirations / credits 
+## Inspirations / credits
 
 - [SSH Compression](https://www.gidblog.com/enable-compression-for-ssh/)
