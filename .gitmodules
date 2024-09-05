@@ -85,3 +85,8 @@
     url = git@github.com:kornicameister/nvim.git
     shallow = true
     branch = master
+[submodule "config/fish"]
+    path = config/fish
+    url = git@github.com:kornicameister/dotfiles.fish.git
+    shallow = true
+    branch = master

@@ -129,15 +129,6 @@ zinit ice svn silent ; zinit snippet OMZ::plugins/aws
 source ~/.npmrc.sh
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-# diff-s-fancy
-zinit ice \
-    depth=1 \
-    lucid \
-    wait'0c' \
-    as'program' \
-    pick'bin/git-dsf'
-zinit light zdharma-continuum/zsh-diff-so-fancy
-
 # dircolors
 zinit ice \
     depth=1 \
@@ -190,11 +181,11 @@ zinit ice \
     cp"completions/exa.zsh -> _exa" \
     atinit"zpcompinit; zpcdreplay" \
     atload"
-        alias l='exa --sort=changed --icons -la --git --git-ignore --ignore-glob=\".git|__pycache__\"'
-        alias ls='exa --icons'
-        alias la='exa --group-directories-first --icons -la'
-        alias ll='exa --group-directories-first --icons -la --color-scale --time-style=long-iso --git --git-ignore --ignore-glob=\".git|__pycache__\"'
-        alias tree='exa --group-directories-first -T --icons --level=2'
+        alias l='exa -F --sort=changed --icons -la --git --git-ignore --ignore-glob=\".git|__pycache__\"'
+        alias ls='exa -F --icons'
+        alias la='exa -F --group-directories-first --icons -la'
+        alias ll='exa -F --group-directories-first --icons -la --color-scale --time-style=long-iso --git --git-ignore --ignore-glob=\".git|__pycache__\"'
+        alias tree='exa -F --group-directories-first -T --icons --level=2'
     "
 zinit light ogham/exa
 zinit ice wait blockf atpull'zinit creinstall -q .'
@@ -208,17 +199,6 @@ zinit ice \
     atload"alias find=fd" \
     pick"fd*/fd"
 zinit light @sharkdp/fd
-
-# bat
-zinit ice \
-    wait'2' \
-    lucid \
-    as'command' \
-    from'gh-r' \
-    mv'bat* -> bat' \
-    atload'export BAT_THEME="Solarized (dark)"' \
-    pick'bat/bat'
-zinit light sharkdp/bat
 
 # direnv
 zinit ice \
@@ -256,7 +236,22 @@ zinit for \
 [ $commands[docker] ] && alias docker-compose="docker compose"
 
 # prompt
-zinit light-mode for depth=1 atload"source ~/.p10k.zsh; (cat ~/.cache/wal/sequences &)" romkatv/powerlevel10k
+zinit light-mode for depth=1 atload"source ~/.p10k.zsh" romkatv/powerlevel10k
 
 autoload -Uz compinit ; compinit
 zinit cdreplay -q
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# my aliases
+aws_instances() {
+  aws ec2 describe-instances \
+    --query 'Reservations[].Instances[].{ID:InstanceId,PublicIP:PublicIpAddress,Name:Tags[?Key==`Name`]|[0].Value,State:State.Name}' \
+    --output table
+}
+aws_stack_outputs() {
+  aws cloudformation describe-stacks \
+      --stack-name "${1}" \
+      --query "Stacks[0].Outputs" \
+      --output json | jq 'reduce .[] as $i ({}; .[$i.OutputKey] = $i.OutputValue)'
+}
