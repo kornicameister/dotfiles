@@ -7,7 +7,7 @@
     "@elm-tooling/elm-language-server": "2.8.0",
     "aws-cdk": "2.1.0",
     "bash-language-server": "5.4.0",
-    "dockerfile-language-server-nodejs": "0.7.2",
+    "dockerfile-language-server-nodejs": "0.13.0",
     "fixjson": "1.1.2",
     "neovim": "4.10.0",
     "npm": "10.8.3",
