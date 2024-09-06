@@ -6,7 +6,7 @@
   "dependencies": {
     "@elm-tooling/elm-language-server": "2.3.0",
     "aws-cdk": "2.1.0",
-    "bash-language-server": "2.0.0",
+    "bash-language-server": "5.4.0",
     "dockerfile-language-server-nodejs": "0.7.2",
     "fixjson": "1.1.2",
     "neovim": "4.10.0",
