@@ -15,6 +15,6 @@
     "typescript": "5.5.4",
     "typescript-language-server": "4.3.3",
     "vim-language-server": "2.2.5",
-    "yaml-language-server": "1.2.2"
+    "yaml-language-server": "1.15.0"
   }
 }
