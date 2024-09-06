@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@elm-tooling/elm-language-server": "2.3.0",
+    "@elm-tooling/elm-language-server": "2.8.0",
     "aws-cdk": "2.1.0",
     "bash-language-server": "2.0.0",
     "dockerfile-language-server-nodejs": "0.7.2",
