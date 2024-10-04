@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@elm-tooling/elm-language-server": "2.8.0",
-    "aws-cdk": "2.160.0",
+    "aws-cdk": "2.161.0",
     "bash-language-server": "5.4.2",
     "dockerfile-language-server-nodejs": "0.13.0",
     "fixjson": "1.1.2",
