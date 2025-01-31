@@ -5,11 +5,15 @@ if ! command -v git >/dev/null 2>&1; then
     exit 1
 fi
 
+branch="${1:-"master"}"
+
+echo "Refresing branch ${branch}"
+
 git fetch --all
-git checkout --quiet origin/master
-git branch -D master
-git checkout -b master
-git branch -u origin/master
+git checkout --quiet "origin/${branch}"
+git branch -D "${branch}"
+git checkout -b "${branch}"
+git branch -u "origin/${branch}"
 git submodule update --init --recursive
-git branch | grep -v -E "(^\*|master|remotes)" | xargs git branch -D
+git branch | grep -v -E "(^\*|${branch}|remotes)" | xargs git branch -D
 rm -rf ./**/*.orig || true
