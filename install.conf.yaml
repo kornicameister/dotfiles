@@ -106,6 +106,9 @@
       glob: true
       force: true
       path: config/*
+    ~/.aws/amazonq/mcp.json:
+      force: true
+      path: ./aws/amazonq/mcp.json
 
     # custom binaries
     ~/.local/bin:
