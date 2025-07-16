@@ -2,11 +2,9 @@
 
 # inspired by https://github.com/git-hook/post-clone/blob/master/hooks/post-checkout
 
-readonly repo=$(git rev-parse --show-toplevel)
+declare repo
+repo=$(git rev-parse --show-toplevel)
 
-_ctags() {
-    .git/hooks/ctags >/dev/null 2>&1 &
-}
 _maintenance() {
     test "$(git config maintenance.auto)" = "true" && git maintenance start
 }
@@ -26,7 +24,6 @@ _main() {
     echo "post-checkout [start][${repo}]"
     _submodules
     _maintenance
-    _ctags
     echo "post-checkout [done][${repo}]"
 }
 
