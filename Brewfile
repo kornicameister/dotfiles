@@ -6,7 +6,6 @@ tap "homebrew/cask-versions"
 tap "homebrew/services"
 tap "puma/puma"
 tap "teamookla/speedtest"
-tap "universal-ctags/universal-ctags"
 tap "ankitpokhrel/jira-cli"
 tap "jesseduffield/lazygit"
 
