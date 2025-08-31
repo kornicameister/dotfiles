@@ -48,6 +48,9 @@
       stderr: true
 
 - link:
+    # amazon q
+    ~/.aws/amazonq/prompts: aws/amazonq/prompts
+
     # ssh config
     ~/.ssh/config: ssh/config
     ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
