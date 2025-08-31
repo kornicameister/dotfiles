@@ -13,12 +13,6 @@
     url = https://github.com/momo-lab/xxenv-latest
     shallow = true
     branch = master
-[submodule "dependencies/zinit"]
-    path = dependencies/zinit
-    url = https://github.com/zdharma-continuum/zinit.git
-    shallow = true
-    branch = main
-    ignore = untracked
 [submodule "config/nvim"]
     path = config/nvim
     url = git@github.com:kornicameister/nvim.git

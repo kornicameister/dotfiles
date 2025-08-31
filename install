@@ -14,8 +14,6 @@ source "${BASEDIR}/.installer/utils.sh"
 source "${BASEDIR}/.installer/git.sh"
 if [[ "$(uname)" == "Darwin" ]]; then
     source "${BASEDIR}/.installer/install_mac.sh"
-else
-    source "${BASEDIR}/.installer/install_arch.sh"
 fi
 
 install_links() {

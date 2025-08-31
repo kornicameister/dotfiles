@@ -65,15 +65,6 @@
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
-    # zsh stuff
-    ~/.zshrc:
-      path: zsh/zshrc
-      force: true
-    ~/.zlogin: zsh/zlogin
-    ~/.zprofile: zsh/zprofile
-    ~/.zshenv: zsh/zshenv
-    ~/.p10k.zsh: zsh/p10k.zsh
-    ~/.zinit: dependencies/zinit
 
     # fzf
     ~/.fzf.settings: fzf.settings
