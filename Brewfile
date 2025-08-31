@@ -25,7 +25,6 @@ brew "cmake"
 brew "gnu-sed"
 
 # shell
-brew "zsh"
 brew "fish", args: ['HEAD']
 
 # Development stuff
