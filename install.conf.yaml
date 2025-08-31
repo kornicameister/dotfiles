@@ -37,10 +37,8 @@
 # envs have to be set here, otherwise plugins are being linked first
 # which makes ~/.*env created as regular directory
 - link:
-    ~/.nodenv: dependencies/nodenv
     ~/.pyenv: dependencies/pyenv
     ~/.goenv: dependencies/goenv
-    ~/.jenv: dependencies/jenv
 
 # system files
 - shell:
@@ -74,20 +72,9 @@
 
     # node
     ~/.npmrc.sh: npmrc.sh
-    ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
-    ~/.nodenv/plugins/node-build: dependencies/node-build
-    ~/.nodenv/plugins/nodenv-aliases: dependencies/nodenv-aliases
-    ~/.nodenv/plugins/nodenv-package-json-engine: dependencies/nodenv-package-json-engine
-    ~/.nodenv/plugins/nodenv-package-rehash: dependencies/nodenv-package-rehash
-    ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
 
     # python
     ~/.pdbrc: .pdbrc
-    ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
-    ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
-    ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
-    ~/.pyenv/plugins/pyenv-doctor: dependencies/pyenv-doctor
-    ~/.pyenv/plugins/pyenv-which-ext: dependencies/pyenv-which-ext
 
     # gpg-agent
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
