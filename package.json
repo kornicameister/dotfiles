@@ -12,7 +12,7 @@
     "neovim": "5.3.0",
     "npm": "11.3.0",
     "prettier": "3.5.2",
-    "typescript": "5.8.3",
+    "typescript": "5.9.3",
     "typescript-language-server": "4.3.4",
     "vim-language-server": "2.3.1",
     "yaml-language-server": "1.17.0"
