@@ -3,11 +3,6 @@
     url = https://github.com/anishathalye/dotbot
     shallow = true
     branch = master
-[submodule "dependencies/goenv"]
-    path = dependencies/goenv
-    url = https://github.com/syndbg/goenv.git
-    shallow = true
-    branch = master
 [submodule "dependencies/xxenv-latest"]
     path = dependencies/xxenv-latest
     url = https://github.com/momo-lab/xxenv-latest
