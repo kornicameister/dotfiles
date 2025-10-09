@@ -41,6 +41,7 @@
 
 - link:
     # amazon q
+    ~/.aws/amazonq/agents: aws/amazonq/agents
     ~/.aws/amazonq/prompts: aws/amazonq/prompts
 
     # ssh config
@@ -75,9 +76,6 @@
       glob: true
       force: true
       path: config/*
-    ~/.aws/amazonq/mcp.json:
-      force: true
-      path: ./aws/amazonq/mcp.json
 
     # custom binaries
     ~/.local/bin:
