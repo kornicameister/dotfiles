@@ -14,8 +14,6 @@ source "${BASEDIR}/.installer/utils.sh"
 source "${BASEDIR}/.installer/git.sh"
 if [[ "$(uname)" == "Darwin" ]]; then
     source "${BASEDIR}/.installer/install_mac.sh"
-else
-    source "${BASEDIR}/.installer/install_arch.sh"
 fi
 
 install_links() {
@@ -42,8 +40,8 @@ post_install() {
       cfn-lint \
       flake8 \
       pyinfra \
-      pywal \
       wakatime \
+      black \
       yamllint
 
     pipx install awsume[saml,fuzy]
@@ -53,10 +51,6 @@ post_install() {
     pipx install httpie
     pipx inject httpie \
       httpie-aws-auth
-
-    pipx install ansible --include-deps
-    pipx inject ansible \
-      paramiko
 
     pipx inject flake8 \
       flake8-bugbear==21.11.29 \
@@ -89,7 +83,6 @@ _env_binary() {
 configure_envs() {
     configure_pyenv
     configure_jenv
-    configure_goenv
     configure_nodenv
 }
 
@@ -114,37 +107,7 @@ configure_nodenv() {
     $nodenv rehash
 }
 
-configure_goenv() {
-    local goenv
-    local goenv_root
-
-    goenv=$(_env_binary "goenv")
-    goenv_root=$($goenv root)
-
-    if [ ! -f "${goenv_root}/version" ]; then
-        echo "Installing latest GO"
-
-        $goenv latest install -s 1 &&
-            $goenv global "$($goenv latest --print-installed)"
-
-        go="${goenv_root}/versions/$($goenv latest --print-installed)/bin/go"
-
-        $go get -u \
-            golang.org/x/lint/golint \
-            golang.org/x/tools/gopls \
-            github.com/golangci/golangci-lint/cmd/golangci-lint \
-            github.com/stamblerre/gocode \
-            github.com/cpuguy83/go-md2man
-        command -v shfmt >/dev/null || GO111MODULE=on $go get mvdan.cc/sh/v3/cmd/shfmt
-    else
-        log_done "Go -> $(cat "${goenv_root}/version")" "[  ]"
-    fi
-
-    $goenv rehash
-}
-
 configure_pyenv() {
-    local pyenv
     local pyenv_root
     local python_icon="[  ]"
     local neovim_icon="[  ]${python_icon}"
@@ -298,8 +261,6 @@ configure_nvim() {
 
 configure_wakatime() {
     local wakatime_api_key=""
-    local wakatime_hostname=""
-    local icon="[  ]"
     wakatime_hostname="$(hostname)"
 
     while [[ $# -gt 0 ]]; do

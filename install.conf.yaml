@@ -37,10 +37,7 @@
 # envs have to be set here, otherwise plugins are being linked first
 # which makes ~/.*env created as regular directory
 - link:
-    ~/.nodenv: dependencies/nodenv
     ~/.pyenv: dependencies/pyenv
-    ~/.goenv: dependencies/goenv
-    ~/.jenv: dependencies/jenv
 
 # system files
 - shell:
@@ -48,6 +45,9 @@
       stderr: true
 
 - link:
+    # amazon q
+    ~/.aws/amazonq/prompts: aws/amazonq/prompts
+
     # ssh config
     ~/.ssh/config: ssh/config
     ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
@@ -62,41 +62,15 @@
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
     ~/.git_template: git_template
-    # zsh stuff
-    ~/.zshrc:
-      path: zsh/zshrc
-      force: true
-    ~/.zlogin: zsh/zlogin
-    ~/.zprofile: zsh/zprofile
-    ~/.zshenv: zsh/zshenv
-    ~/.p10k.zsh: zsh/p10k.zsh
-    ~/.zinit: dependencies/zinit
 
     # fzf
     ~/.fzf.settings: fzf.settings
 
-    # go
-    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
-
     # node
     ~/.npmrc.sh: npmrc.sh
-    ~/.nodenv/plugins/xxenv-latest: dependencies/xxenv-latest
-    ~/.nodenv/plugins/node-build: dependencies/node-build
-    ~/.nodenv/plugins/nodenv-aliases: dependencies/nodenv-aliases
-    ~/.nodenv/plugins/nodenv-package-json-engine: dependencies/nodenv-package-json-engine
-    ~/.nodenv/plugins/nodenv-package-rehash: dependencies/nodenv-package-rehash
-    ~/.nodenv/plugins/nodenv-each: dependencies/nodenv-each
 
     # python
     ~/.pdbrc: .pdbrc
-    ~/.pyenv/plugins/xxenv-latest: dependencies/xxenv-latest
-    ~/.pyenv/plugins/pyenv-virtualenv: dependencies/pyenv-virtualenv
-    ~/.pyenv/plugins/pyenv-ccache: dependencies/pyenv-ccache
-    ~/.pyenv/plugins/pyenv-doctor: dependencies/pyenv-doctor
-    ~/.pyenv/plugins/pyenv-which-ext: dependencies/pyenv-which-ext
-
-    # ctags
-    ~/.ctags.d: ctags.d
 
     # gpg-agent
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
@@ -106,6 +80,9 @@
       glob: true
       force: true
       path: config/*
+    ~/.aws/amazonq/mcp.json:
+      force: true
+      path: ./aws/amazonq/mcp.json
 
     # custom binaries
     ~/.local/bin:
