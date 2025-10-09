@@ -1,5 +1,14 @@
+# ============================================================================
+# Git Configuration
+# ============================================================================
+
+# Include local configuration (user, email, signing key, etc.)
 [include]
 	path = ~/.gitconfig.local
+
+# ============================================================================
+# Core Settings
+# ============================================================================
 
 [init]
 	templatedir = ~/.git_template
@@ -9,28 +18,147 @@
 	editor = nvim
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
-
-	# dont ignore case
+	pager = delta
 	ignorecase = false
-
-	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	autocrlf = input
+	untrackedCache = true
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 
-	# Speed up commands involving untracked files such as `git status`.
-	# https://git-scm.com/docs/git-update-index#_untracked_cache
-	untrackedCache = true
+[color]
+	ui = true
 
-	# fancy diff
-	pager = delta
+[help]
+	autocorrect = 1
 
-	# no more CRLF
-	autocrlf = input
+# ============================================================================
+# User Workflow
+# ============================================================================
+
+[pull]
+	rebase = true
+
+[push]
+	atomic = true
+	default = simple
+
+[fetch]
+	prune = true
+	pruneTags = true
+	output = compact
+
+[rebase]
+	stat = true
+	abbreviateCommands = true
+	autosquash = true
+	autostash = true
+
+[branch]
+	autosetup = true
+	autosetuprebase = always
+
+[status]
+	submoduleSummary = true
+
+[apply]
+	whitespace = fix
+
+# ============================================================================
+# Merge & Conflict Resolution
+# ============================================================================
+
+[merge]
+	summary = true
+	log = true
+	status = true
+	renormalize = true
+	tool = nvimmerge
+	conflictstyle = diff3
+
+[mergetool]
+	prompt = true
+
+[mergetool "nvimmerge"]
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[rerere]
+	enabled = true
+	autoUpdate = true
+
+# ============================================================================
+# Diff & Difftool
+# ============================================================================
+
+[diff]
+	algorithm = patience
+	renames = copies
+	indentHeuristic = true
+	tool = nvimdiff
+	guitool = opendiff
+	colorMoved = default
+
+[difftool]
+	prompt = true
+
+[difftool "nvimdiff"]
+	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[diff "exif"]
+	textconv = exiftool
+
+# ============================================================================
+# Delta (diff viewer)
+# ============================================================================
+
+[delta]
+	features = decorations
+	line-numbers = true
+
+[delta "interactive"]
+	keep-plus-minus-markers = false
+
+[delta "decorations"]
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	hunk-header-decoration-style = blue box
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax
 
 [interactive]
-    diffFilter = delta --color-only --features=interactive
+	diffFilter = delta --color-only --features=interactive
 
 [add "interactive"]
 	useBuiltin = true
+
+# ============================================================================
+# Aliases
+# ============================================================================
+
+[alias]
+	# Listing
+	tags = tag -l
+	branches = branch -l -v -a
+	remotes = remote -v
+	
+	# Commits
+	fixup = commit --fixup
+	amend = commit --amend --no-edit
+	head = log --pretty=fuller HEAD^!
+	
+	# Logs
+	merges = log --oneline --decorate --color=auto --merges --first-parent
+	find = "!git log --color -S "
+	
+	# Utilities
+	fresh = ! git_fresh
+
+# ============================================================================
+# Maintenance & Performance
+# ============================================================================
+
+[gc]
+	auto = 1
 
 [maintenance]
 	strategy = incremental
@@ -43,16 +171,21 @@
 
 [maintenance "gc"]
 	enabled = true
+
 [maintenance "commit-graph"]
 	enabled = true
+
 [maintenance "prefetch"]
 	enabled = true
 	schedule = hourly
+
 [maintenance "loose-objects"]
 	enabled = true
 	auto = 50
+
 [maintenance "incremental-repack"]
 	enabled = true
+
 [maintenance "pack-refs"]
 	enabled = true
 
@@ -60,115 +193,28 @@
 	experimental = true
 	manyFiles = true
 
-[alias]
-	tags = tag -l
-	branches = branch -l -v -a
-	merges = log --oneline --decorate --color=auto --merges --first-parent
-	remotes = remote -v
-	fixup = commit --fixup
-	amend = commit --amend --no-edit
-	fresh =  ! git_fresh
-	find = "!git log --color -S "
-	head = log --pretty=fuller HEAD^!
-
-[apply]
-	whitespace = fix         # detect whitespace errors when applying a patch
-
-[gc]
-	auto = 1
-
-[pull]
-	rebase = true
-
-[push]
-	atomic = true
-	default = simple
-
-[fetch]
-	prune = true             # delete local branches if remotes are gone
-	pruneTags = true	 # do the same for tags
-	output = compact	 # it is enough
-
-[rebase]
-	stat = true
-	abbreviateCommands = true  # to hell with longer rebase output
-	autosquash = true          # auto squash fixups by default
-	autostash = true           # auto git stash ; git stash pop when rebasing
+# ============================================================================
+# Security & Verification
+# ============================================================================
 
 [receive]
 	advertiseAtomic = true
 	autogc = true
 	fsckObjects = true
 
-[status]
-	submoduleSummary = true  # show submodules summary by default
-
-[rerere]
-	enabled = true			 # rere has power
-	autoUpdate = true		 # update index (always)
-
-[branch]
-	autosetup = true    # auto track branches
-	autosetuprebase = always
-
-[merge]
-	summary = true
-	log = true
-	status = true
-	renormalize = true
-	tool = nvimmerge
-	conflictstyle = diff3
-[mergetool]
-	prompt = true
-[mergetool "nvimmerge"]
-	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[diff]
-	algorithm = patience
-	renames = copies         # try to spot renaming of files
-	indentHeuristic = true	 # experimental to make patches easier to read
-	tool = nvimdiff
-	guitool = opendiff
-	colorMoved = default
-[difftool]
-	prompt = true
-[difftool "nvimdiff"]
-	cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[color]
-	ui = true
-
-[help]
-	autocorrect = 1
-
 [credential]
 	helper = cache --timeout=28800
 	useHttpPath = true
 
-[url "https://github.com/"]
-	insteadof = git://github.com/
+# ============================================================================
+# External Tools
+# ============================================================================
 
-[diff "exif"]
-	textconv = exiftool
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 
-# delta configuration
-[delta]
-    features = decorations
-	line-numbers = true
-
-[delta "interactive"]
-    keep-plus-minus-markers = false
-
-[delta "decorations"]
-    commit-decoration-style = blue ol
-    commit-style = raw
-    file-style = omit
-    hunk-header-decoration-style = blue box
-    hunk-header-file-style = red
-    hunk-header-line-number-style = "#067a00"
-    hunk-header-style = file line-number syntax
+[url "https://github.com/"]
+	insteadof = git://github.com/
