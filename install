@@ -81,28 +81,6 @@ _env_binary() {
 
 configure_envs() {
     configure_pyenv
-    configure_nodenv
-}
-
-configure_nodenv() {
-    local nodenv
-    local nodenv_root
-
-    nodenv=$(_env_binary "nodenv")
-    nodenv_root=$($nodenv root)
-
-    if [ ! -f "${nodenv_root}/version" ]; then
-        echo "Installing latest Node"
-
-        $nodenv latest install -s 14
-        $nodenv global "$($nodenv latest --print-installed)"
-        "${nodenv_root}/versions/$($nodenv latest --print-installed)/bin/npm" install --global --production "${BASEDIR}/package.json"
-
-    else
-        log_done "Node -> $(cat "${nodenv_root}/version")" "[  ]"
-    fi
-
-    $nodenv rehash
 }
 
 configure_pyenv() {
@@ -152,23 +130,19 @@ configure_pyenv() {
 }
 
 configure_nvim() {
-    local goenv pyenv nodenv new_path old_path
+    local pyenv new_path old_path
 
-    goenv=$(_env_binary "goenv")
     pyenv=$(_env_binary "pyenv")
-    nodenv=$(_env_binary "nodenv")
 
     old_path="${PATH}"
-    new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims"
+    new_path="${PATH}:$($pyenv root)/shims"
 
     export PATH="${new_path}"
     nvim --headless +PlugInstall +qall!
     nvim --headless +UpdateRemotePlugins +qall!
     export PATH="${old_path}"
 
-    unset goenv
     unset pyenv
-    unset nodenv
     unset new_path
 }
 
