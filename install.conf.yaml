@@ -39,11 +39,6 @@
 - link:
     ~/.pyenv: dependencies/pyenv
 
-# system files
-- shell:
-    - command: test -f /etc/docker/daemon.json || sudo -n install -m 644 etc/docker/daemon.json /etc/docker/daemon.json
-      stderr: true
-
 - link:
     # amazon q
     ~/.aws/amazonq/prompts: aws/amazonq/prompts
@@ -88,14 +83,6 @@
     ~/.local/bin:
       glob: true
       path: bin/*
-
-    # X*
-    ~/.Xresources:
-      force: true
-      path: .XResources
-
-    # PAM env
-    ~/.pam_environment: .pam_environment
 
     # mycli configuration
     ~/.myclirc: myclirc
