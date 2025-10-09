@@ -1,2 +1,0 @@
-XDG_CONFIG_HOME     DEFAULT=@{HOME}/.config
-XDG_CACHE_HOME      DEFAULT=@{HOME}/.cache
