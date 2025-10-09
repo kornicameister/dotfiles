@@ -145,7 +145,6 @@ brew "serverless"
 # Productivity
 brew "jira-cli"
 cask "spotify"
-brew "spicetify-cli"
 cask "signal"
 cask "slack"
 cask "zoom"
