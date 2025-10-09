@@ -34,11 +34,6 @@
 - link:
     ~/.dotfiles: ""
 
-# envs have to be set here, otherwise plugins are being linked first
-# which makes ~/.*env created as regular directory
-- link:
-    ~/.pyenv: dependencies/pyenv
-
 - link:
     # amazon q
     ~/.aws/amazonq/agents: aws/amazonq/agents
