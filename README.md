@@ -13,7 +13,7 @@ macOS development environment configuration
 - Package management via [Homebrew Bundle](./Brewfile)
 - Version managers:
   - pyenv + pyenv-virtualenv for Python
-  - asdf for Go, Java, Node, and other runtimes
+  - asdf for Go, Java, Node, Ruby, and other runtimes
 - Development tools:
   - Docker (OrbStack)
   - Kubernetes (kind, helm)
@@ -27,15 +27,39 @@ macOS development environment configuration
   - Amazon Q
   - Cursor
   - Claude Code
+- Python tools:
+  - mypy (type checker)
+  - flake8 (linter)
+  - yapf (formatter)
 
 ## Installation
 
 Run the [install](./install) script to set up the environment. The script handles:
 - Installing packages via Homebrew
 - Creating symlinks via dotbot
-- Configuring version managers
+- Configuring version managers (pyenv, asdf)
 - Setting up Neovim
-- Installing Python/Node/Go packages
+- Installing Python packages via pipx
+
+## Structure
+
+```
+.
+├── aws/                    # Amazon Q configuration
+├── bin/                    # Custom scripts
+├── config/
+│   ├── fish/              # Fish shell (submodule)
+│   ├── nvim/              # Neovim (submodule)
+│   ├── mypy/              # Python type checker config
+│   ├── yapf/              # Python formatter config
+│   └── flake8             # Python linter config
+├── git_template/          # Git hooks
+├── ssh/                   # SSH configuration
+├── Brewfile               # Homebrew packages
+├── gitconfig              # Git configuration
+├── gitignore              # Global gitignore
+└── install                # Installation script
+```
 
 ## CI
 
