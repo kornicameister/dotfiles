@@ -83,7 +83,6 @@ _env_binary() {
 configure_envs() {
     configure_pyenv
     configure_jenv
-    configure_goenv
     configure_nodenv
 }
 
@@ -108,9 +107,7 @@ configure_nodenv() {
     $nodenv rehash
 }
 
-configure_goenv() {
-    local goenv
-    local goenv_root
+configure_pyenv() {
     local pyenv_root
     local python_icon="[  ]"
     local neovim_icon="[  ]${python_icon}"
