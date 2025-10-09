@@ -38,7 +38,6 @@
 # which makes ~/.*env created as regular directory
 - link:
     ~/.pyenv: dependencies/pyenv
-    ~/.goenv: dependencies/goenv
 
 # system files
 - shell:
@@ -66,9 +65,6 @@
 
     # fzf
     ~/.fzf.settings: fzf.settings
-
-    # go
-    ~/.goenv/plugins/xxenv-latest: dependencies/xxenv-latest
 
     # node
     ~/.npmrc.sh: npmrc.sh
