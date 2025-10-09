@@ -66,7 +66,6 @@ post_install() {
 
 _env_binary() {
     # fetches path to binary of given *env
-    # nodenv, jenv etc etc etc
 
     local env
     env="${1}"
@@ -82,7 +81,6 @@ _env_binary() {
 
 configure_envs() {
     configure_pyenv
-    configure_jenv
     configure_nodenv
 }
 
@@ -153,99 +151,15 @@ configure_pyenv() {
     $pyenv rehash
 }
 
-configure_jenv() {
-    local jenv
-    local jenv_root
-
-    jenv=$(_env_binary "jenv")
-    jenv_root=$($jenv root)
-
-    if [ ! -d "${jenv_root}/_versions/" ]; then
-        mkdir "${jenv_root}/_versions/"
-    fi
-    if [ ! -f "${jenv_root}/version" ]; then
-        echo "Installing latest Java"
-
-        local javaVersion
-        local downloadUrl
-        local archiveName
-        local jdkVersion
-        local releaseType
-
-        if [[ "$(uname)" == "Darwin" ]]; then
-            # if latest is the one as from brew, do not download
-            # but use brew provided
-            if command -v java >/dev/null 2>&1; then
-                if test -h /usr/libexec/java_home; then
-                    log_info "Using brew provided java"
-                    "${jenv}" add $(/usr/libexec/java_home)
-                fi
-            fi
-        else
-            javaVersion="$(http https://api.adoptopenjdk.net/v3/info/available_releases | jq -r '.most_recent_feature_release')"
-            releaseType="ga"
-            downloadUrl=$(
-                http \
-                    "https://api.adoptopenjdk.net/v3/assets/feature_releases/${javaVersion}/${releaseType}" \
-                    architecture==x64 \
-                    sort_method==DATE \
-                    sort_order==DESC \
-                    image_type==jdk \
-                    jvw_impl==hotspot \
-                    os==linux \
-                    project==jdk \
-                    vendor==adoptopenjdk |
-                    jq -r '.[0]["binaries"][0]["package"]["link"]'
-            )
-            archiveName=$(echo "${downloadUrl}" | awk -F "/" '{print $NF}')
-
-            if [ ! -f "/tmp/${archiveName}" ]; then
-                aria2c \
-                    -d "/tmp" \
-                    -o "${archiveName}" \
-                    -j 5 \
-                    "${downloadUrl}"
-            fi
-
-            jdkVersion=$(tar -tf "/tmp/${archiveName}" | head -n 1 | sed -e 's|/||g')
-            tar -xzf "/tmp/${archiveName}" -C "${jenv_root}/_versions/" && {
-                $jenv add "${jenv_root}/_versions/${jdkVersion}"
-                $jenv global "$($jenv versions | grep "${javaVersion}" | head -n 1 | awk -F' ' '{print $1}')"
-            }
-
-            if command -v java >/dev/null 2>&1; then
-                if command -v update-alternatives >/dev/null 2>&1; then
-                    echo "Enabling default java"
-                    local default_java_home
-                    default_java_home=$(update-alternatives --query java | grep Best | awk '{print $2}' | sed -e 's|bin/java||g')
-                    if [ -d "${default_java_home}" ]; then
-                        $jenv add "${default_java_home}"
-                    fi
-                fi
-            fi
-        fi
-
-        $jenv enable-plugin export >/dev/null
-        $jenv enable-plugin maven >/dev/null
-    else
-        log_done "Java -> $(cat "${jenv_root}/version")" "[  ]"
-    fi
-
-    $nodenv package-hooks install --all
-
-    $jenv rehash
-}
-
 configure_nvim() {
-    local goenv pyenv nodenv jenv new_path old_path
+    local goenv pyenv nodenv new_path old_path
 
     goenv=$(_env_binary "goenv")
     pyenv=$(_env_binary "pyenv")
     nodenv=$(_env_binary "nodenv")
-    jenv=$(_env_binary "jenv")
 
     old_path="${PATH}"
-    new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims:$($jenv root)/shims"
+    new_path="${PATH}:$($goenv root)/shims:$($pyenv root)/shims:$($nodenv root)/shims"
 
     export PATH="${new_path}"
     nvim --headless +PlugInstall +qall!
@@ -255,7 +169,6 @@ configure_nvim() {
     unset goenv
     unset pyenv
     unset nodenv
-    unset jenv
     unset new_path
 }
 
