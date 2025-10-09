@@ -1,0 +1,111 @@
+{
+  "name": "q_ide_default",
+  "description": "Default agent configuration",
+  "mcpServers": {
+    "strands": {
+      "command": "uvx",
+      "args": [
+        "strands-agents-mcp-server"
+      ],
+      "disabled": false
+    },
+    "awsDiagram": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-diagram-mcp-server"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false
+    },
+    "awsKnowledgeBase": {
+      "url": "https://knowledge-mcp.global.api.aws",
+      "timeout": 60000
+    },
+    "documentationGenerator": {
+      "command": "uvx",
+      "args": [
+        "awslabs.code-doc-gen-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "disabled": false
+    }
+  },
+  "tools": [
+    "fsRead",
+    "fsWrite",
+    "fsReplace",
+    "listDirectory",
+    "fileSearch",
+    "executeBash",
+    "codeReview",
+    "displayFindings",
+    "@awsKnowledgeBase",
+    "@awsKnowledgeBase/aws___read_documentation",
+    "@awsKnowledgeBase/aws___recommend",
+    "@awsKnowledgeBase/aws___search_documentation",
+    "@awsDiagram",
+    "@context7",
+    "@fetch",
+    "@strands"
+  ],
+  "allowedTools": [
+    "fsRead",
+    "fsWrite",
+    "fsReplace",
+    "listDirectory",
+    "fileSearch",
+    "codeReview",
+    "displayFindings",
+    "@awsKnowledgeBase/aws___read_documentation",
+    "@awsKnowledgeBase/aws___recommend",
+    "@awsKnowledgeBase/aws___search_documentation",
+    "@awsDiagram/generate_diagram",
+    "@awsDiagram/get_diagram_examples",
+    "@awsDiagram/list_icons",
+    "@context7/resolve-library-id",
+    "@context7/get-library-docs",
+    "@fetch/fetch",
+    "@strands/search_docs",
+    "@strands/fetch_doc"
+  ],
+  "toolsSettings": {
+    "execute_bash": {
+      "alwaysAllow": [
+        {
+          "preset": "readOnly"
+        }
+      ]
+    },
+    "use_aws": {
+      "alwaysAllow": [
+        {
+          "preset": "readOnly"
+        }
+      ]
+    }
+  },
+  "resources": [],
+  "prompt": "",
+  "toolAliases": {},
+  "useLegacyMcpJson": true,
+  "hooks": {
+    "agentSpawn": [],
+    "userPromptSubmit": []
+  }
+}

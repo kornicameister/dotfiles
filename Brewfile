@@ -4,19 +4,16 @@ tap "homebrew/bundle"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-versions"
 tap "homebrew/services"
-tap "puma/puma"
-tap "teamookla/speedtest"
-tap "universal-ctags/universal-ctags"
+tap "homebrew/cask-fonts"
+tap "aws/tap"
+tap "common-fate/granted"
+tap "fugue/regula"
+tap "hashicorp/tap"
 tap "ankitpokhrel/jira-cli"
 tap "jesseduffield/lazygit"
 
-# Homebrew
-# https://github.com/Homebrew/brew/
-
-# Need to install openssl before libyaml
-brew "openssl"
-
 # Base packages
+brew "openssl"
 brew "coreutils"
 brew "moreutils"
 brew "findutils"
@@ -25,72 +22,65 @@ brew "curl"
 brew "cmake"
 brew "gnu-sed"
 
-# shell
-brew "zsh"
+# Shell
 brew "fish", args: ['HEAD']
 
-# Development stuff
-brew "watch"
-brew "ccache"
+# Version managers
+brew "asdf"
+brew "pyenv"
+brew "pyenv-virtualenv"
+
+# Development - Git
 brew "git"
 brew "git-extras"
 brew "git-lfs"
 brew "git-filter-repo"
 brew "git-delta"
+brew "ggshield"
 brew "lazygit"
-brew "jq"         # reading json
-brew "jo"         # creating json
-brew "pipx"
-brew "pipenv"
+
+# Development - Languages
+brew "rust"
+brew "ruby"
+brew "node"
+brew "lua"
+brew "maven"
+
+# Development - Tools
+brew "watch"
+brew "ccache"
+brew "jq"
+brew "jo"
+brew "yq"
 brew "shellcheck"
 brew "shfmt"
-brew "svn"
-brew "subversion"
-brew "ripgrep"
-brew "the_silver_searcher"
-brew "ripgrep"
-brew "universal-ctags"
-brew "yq"
-brew "lua"
 brew "stylua"
 brew "exiftool"
-brew "rust"
-brew "fnm"
-
-cask "gitify"
+brew "watchman"
 cask "meld"
-cask "iterm2"
-cask "warp"
 brew "neovim", args: ['HEAD']
 cask "visual-studio-code"
 
-brew "jenv"
+# Python tools
+brew "pipx"
+
+# Java
 cask "temurin"
-cask "temurin8"
-brew "maven"
 
-brew "ruby"
-brew "node"
-
-# Virtual environments
-brew "rbenv"
-
-# Virtualization
-cask "docker"
-brew "ctop"       # awesome htop for containers
+# Virtualization & Containers
+brew "ctop"
 brew "hadolint"
 brew "kind"
 brew "helm"
-cask "virtualbox"
+cask "orbstack"
 
 # Browsers
 cask "brave-browser"
 cask "google-chrome"
-cask "firefox"
+cask "arc"
 
-# Utilities
+# Utilities - CLI
 brew "aria2"
-brew "asdf"
 brew "bat"
 brew "direnv"
 brew "eza"
@@ -99,44 +89,59 @@ brew "fzf"
 brew "glow"
 brew "gnupg"
 brew "htop"
-brew "jira-cli"
 brew "nmap"
 brew "openssh"
 brew "p7zip"
-brew "parallel"
-brew "prettyping"
-brew "screenfetch"
+brew "ripgrep"
 brew "timg"
 brew "viddy"
 brew "zoxide"
+
+# Utilities - GUI
 cask "google-drive"
+cask "openvpn-connect"
+cask "macs-fan-control"
 
-# fonts
-tap "homebrew/cask-fonts"
-
+# Fonts
 cask "font-iosevka"
 cask "font-fontawesome"
 cask "font-material-icons"
 cask "font-hack-nerd-font"
 cask "font-awesome-terminal-fonts"
 
-# cloud
-tap "aws/tap"
-tap "common-fate/granted"
-tap "fugue/regula"
-tap "hashicorp/tap"
+# AI tools
+cask "cursor"
+cask "amazon-q"
+cask "claude-code"
 
-brew "aws-sam-cli"
+# Cloud - AWS
 brew "awscli"
-brew "aws-nuke"
-brew "granted"
-brew "hashicorp/tap/terraform"
-brew "hashicorp/tap/terraform-ls"
+brew "aws-sam-cli"
+brew "cfn-flip"
+brew "cfn-lint"
 brew "regula"
 
-# others
+# Cloud - Terraform
+brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform-ls"
+
+# Productivity
+brew "jira-cli"
 cask "spotify"
 cask "signal"
 cask "slack"
-cask "authy"
-brew "mike-engel/jwt-cli/jwt-cli"
+cask "zoom"
+
+# Other tools
+brew "mike-engel/jwt-cli/jwt-cli", args: ["HEAD"]
+
+# Obsolete - keeping installed for now
+brew "svn"
+brew "subversion"
+brew "the_silver_searcher"
+brew "pipenv"
+brew "rbenv"
+cask "temurin8"
+brew "ncspot"
+brew "screenfetch"
+brew "prettyping"

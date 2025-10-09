@@ -28,6 +28,7 @@
 .go-version
 .java-version
 .ruby-version
+.tool-versions
 
 # yamllint
 .yamllint*
@@ -44,3 +45,15 @@
 
 # macOS
 .DS_Store
+
+# senstive
+.aws
+.ssh
+
+# ai
+.amazonq
+.kiro
+.cursor
+
+# python typechecker
+.pyre
