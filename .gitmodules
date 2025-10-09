@@ -3,11 +3,6 @@
     url = https://github.com/anishathalye/dotbot
     shallow = true
     branch = master
-[submodule "dependencies/xxenv-latest"]
-    path = dependencies/xxenv-latest
-    url = https://github.com/momo-lab/xxenv-latest
-    shallow = true
-    branch = master
 [submodule "config/nvim"]
     path = config/nvim
     url = git@github.com:kornicameister/nvim.git
