@@ -231,5 +231,4 @@ if ((SHLVL > 1)); then
     configure_wakatime "$@"
 
     post_install
-    screenfetch
 fi
