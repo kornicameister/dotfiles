@@ -8,6 +8,7 @@
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore
+	attributesfile = ~/.gitattributes
 
 	# dont ignore case
 	ignorecase = false
@@ -68,6 +69,7 @@
 	amend = commit --amend --no-edit
 	fresh =  ! git_fresh
 	find = "!git log --color -S "
+	head = log --pretty=fuller HEAD^!
 
 [apply]
 	whitespace = fix         # detect whitespace errors when applying a patch
@@ -146,9 +148,6 @@
 [url "https://github.com/"]
 	insteadof = git://github.com/
 
-# gitattributes configuration
-[core]
-	attributesfile = ~/.gitattributes
 [diff "exif"]
 	textconv = exiftool
 [filter "lfs"]
