@@ -13,8 +13,7 @@ macOS development environment configuration
 - Package management via [Homebrew Bundle](./Brewfile)
 - Version managers:
   - pyenv + pyenv-virtualenv for Python
-  - goenv for Go (submodule)
-  - asdf for Java, Node, and other runtimes
+  - asdf for Go, Java, Node, and other runtimes
 - Development tools:
   - Docker (OrbStack)
   - Kubernetes (kind, helm)
