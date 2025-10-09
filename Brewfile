@@ -11,6 +11,7 @@ tap "fugue/regula"
 tap "hashicorp/tap"
 tap "ankitpokhrel/jira-cli"
 tap "jesseduffield/lazygit"
+tap "lucagrulla/tap"
 
 # Base packages
 brew "openssl"
@@ -24,6 +25,8 @@ brew "gnu-sed"
 
 # Shell
 brew "fish", args: ['HEAD']
+brew "starship"
+brew "zsh"
 
 # Version managers
 brew "asdf"
@@ -44,7 +47,9 @@ brew "rust"
 brew "ruby"
 brew "node"
 brew "lua"
+brew "luarocks"
 brew "maven"
+brew "composer"
 
 # Development - Tools
 brew "watch"
@@ -57,12 +62,16 @@ brew "shfmt"
 brew "stylua"
 brew "exiftool"
 brew "watchman"
+brew "cloc"
+brew "markdownlint-cli"
+brew "efm-langserver"
 cask "meld"
 brew "neovim", args: ['HEAD']
 cask "visual-studio-code"
 
 # Python tools
 brew "pipx"
+brew "uv"
 
 # Java
 cask "temurin"
@@ -89,6 +98,7 @@ brew "fzf"
 brew "glow"
 brew "gnupg"
 brew "htop"
+brew "jira-cli"
 brew "nmap"
 brew "openssh"
 brew "p7zip"
@@ -96,6 +106,10 @@ brew "ripgrep"
 brew "timg"
 brew "viddy"
 brew "zoxide"
+brew "lnav"
+brew "parallel"
+brew "rclone"
+brew "grc"
 
 # Utilities - GUI
 cask "google-drive"
@@ -120,20 +134,32 @@ brew "aws-sam-cli"
 brew "cfn-flip"
 brew "cfn-lint"
 brew "regula"
+brew "granted"
+brew "lucagrulla/tap/cw"
 
 # Cloud - Terraform
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
+brew "serverless"
 
 # Productivity
 brew "jira-cli"
 cask "spotify"
+brew "spicetify-cli"
 cask "signal"
 cask "slack"
 cask "zoom"
 
+# Database
+brew "pgcli"
+
+# Web servers
+brew "caddy"
+brew "httpd"
+
 # Other tools
 brew "mike-engel/jwt-cli/jwt-cli", args: ["HEAD"]
+brew "graphviz"
 
 # Obsolete - keeping installed for now
 brew "svn"
