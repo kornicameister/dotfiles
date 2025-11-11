@@ -1,0 +1,47 @@
+#!/bin/bash
+
+echo "=== System Resource Check ==="
+echo ""
+
+# System specs
+echo "📊 System Specs:"
+sysctl -n hw.ncpu hw.memsize | awk 'NR==1{printf "  CPU Cores: %d\n", $1} NR==2{printf "  Total RAM: %.2f GB\n", $1/1073741824}'
+echo ""
+
+# CPU and Load
+echo "⚡ CPU & Load:"
+top -l 1 | grep "CPU usage" | awk '{print "  CPU: " $3 " user, " $5 " sys, " $7 " idle"}'
+top -l 1 | grep "Load Avg" | awk '{print "  Load Average: " $3 " " $4 " " $5}'
+echo ""
+
+# Memory
+echo "💾 Memory:"
+vm_stat | perl -ne '/page size of (\d+)/ and $size=$1; /Pages\s+([^:]+)[^\d]+(\d+)/ and printf("  %-16s %8.2f GB\n", "$1:", $2 * $size / 1073741824);' | grep -E "(free|active|wired|compressor)"
+echo ""
+
+# Disk
+echo "💿 Disk Usage:"
+df -h / | tail -1 | awk '{print "  " $5 " used (" $3 " of " $2 ")"}'
+echo ""
+
+# Top CPU consumers
+echo "🔥 Top 5 CPU Consumers:"
+ps aux | sort -rk 3 | head -6 | tail -5 | awk '{printf "  %6.1f%% - %s\n", $3, $11}'
+echo ""
+
+# Top Memory consumers
+echo "🧠 Top 5 Memory Consumers:"
+ps aux | sort -rk 4 | head -6 | tail -5 | awk '{printf "  %6.1f%% - %s\n", $4, $11}'
+echo ""
+
+# Warnings
+CPU_IDLE=$(top -l 1 | grep "CPU usage" | awk '{print $7}' | sed 's/%//')
+if (( $(echo "$CPU_IDLE < 20" | bc -l) )); then
+    echo "⚠️  WARNING: CPU usage is high (only ${CPU_IDLE}% idle)"
+fi
+
+LOAD=$(top -l 1 | grep "Load Avg" | awk '{print $3}' | sed 's/,//')
+CORES=$(sysctl -n hw.ncpu)
+if (( $(echo "$LOAD > $CORES * 2" | bc -l) )); then
+    echo "⚠️  WARNING: Load average ($LOAD) is very high for $CORES cores"
+fi
