@@ -1,5 +1,3 @@
-[![time tracker](https://wakatime.com/badge/github/kornicameister/dotfiles.svg)](https://wakatime.com/badge/github/kornicameister/dotfiles)
-
 # dotfiles
 
 macOS development environment configuration
