@@ -1,6 +1,6 @@
 -r ./system.txt
 
-msgpack==1.1.0
+msgpack==1.1.2
 neovim==0.3.1
 neovim-remote==2.5.1 ; python_version > '3.0'
 pynvim==0.5.2
