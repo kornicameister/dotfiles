@@ -44,6 +44,16 @@
         "mcp-server-fetch"
       ],
       "disabled": false
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--browser=chromium",
+        "--output-dir=./.screenshots"
+      ],
+      "timeout": 60000,
+      "disabled": false
     }
   },
   "tools": [
@@ -62,7 +72,8 @@
     "@awsDiagram",
     "@context7",
     "@fetch",
-    "@strands"
+    "@strands",
+    "@playwright"
   ],
   "allowedTools": [
     "fsRead",
@@ -82,7 +93,8 @@
     "@context7/get-library-docs",
     "@fetch/fetch",
     "@strands/search_docs",
-    "@strands/fetch_doc"
+    "@strands/fetch_doc",
+    "@playwright/browser_*"
   ],
   "toolsSettings": {
     "execute_bash": {
