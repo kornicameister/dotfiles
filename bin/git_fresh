@@ -5,15 +5,46 @@ if ! command -v git >/dev/null 2>&1; then
     exit 1
 fi
 
-branch="${1:-"master"}"
+branch="master"
+origin="origin"
+while [ $# -gt 0 ]; do
+    case $1 in
+        --branch)
+            branch="$2"
+            shift 2
+            ;;
+        --origin)
+            origin="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Usage: $0 [--branch BRANCH] [--origin ORIGIN]"
+            exit 1
+            ;;
+    esac
+done
 
-echo "Refresing branch ${branch}"
+if ! git remote | grep -q "^${origin}$"; then
+    echo "Error: Remote '${origin}' does not exist!"
+    echo "Available remotes:"
+    git remote -v
+    exit 1
+fi
+if ! git ls-remote --heads "${origin}" "${branch}" | grep -q "${branch}"; then
+    echo "Error: Branch '${branch}' does not exist on remote '${origin}'!"
+    echo "Available branches on ${origin}:"
+    git ls-remote --heads "${origin}" | sed 's/.*refs\/heads\///'
+    exit 1
+fi
 
-git fetch --all
-git checkout --quiet "origin/${branch}"
+echo "Refresing branch ${origin}/${branch}"
+
+git fetch "${origin}"
+git checkout --quiet "${origin}/${branch}"
 git branch -D "${branch}"
 git checkout -b "${branch}"
-git branch -u "origin/${branch}"
+git branch -u "${origin}/${branch}"
 git submodule update --init --recursive
 git branch | grep -v -E "(^\*|${branch}|remotes)" | xargs git branch -D
 rm -rf ./**/*.orig || true
