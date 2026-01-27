@@ -61,7 +61,6 @@ brew "shellcheck"
 brew "shfmt"
 brew "stylua"
 brew "exiftool"
-brew "watchman"
 brew "cloc"
 brew "markdownlint-cli"
 brew "efm-langserver"
@@ -125,8 +124,7 @@ cask "font-awesome-terminal-fonts"
 
 # AI tools
 cask "cursor"
-cask "amazon-q"
-cask "claude-code"
+cask "kiro-cli"
 
 # Cloud - AWS
 brew "awscli"
@@ -148,6 +146,7 @@ cask "spotify"
 cask "signal"
 cask "slack"
 cask "zoom"
+cask "microsoft-teams"
 
 # Database
 brew "pgcli"
@@ -161,11 +160,7 @@ brew "mike-engel/jwt-cli/jwt-cli", args: ["HEAD"]
 brew "graphviz"
 
 # Obsolete - keeping installed for now
-brew "svn"
-brew "subversion"
 brew "the_silver_searcher"
-brew "pipenv"
-brew "rbenv"
-cask "temurin8"
-brew "ncspot"
+cask "temurin@8"
+
 brew "prettyping"
