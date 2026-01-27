@@ -54,6 +54,7 @@
 .amazonq
 .kiro
 .cursor
+.agent-analysis
 
 # python typechecker
 .pyre
