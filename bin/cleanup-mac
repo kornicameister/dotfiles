@@ -1,0 +1,101 @@
+#!/bin/bash
+
+log() {
+    echo "[$(date '+%H:%M:%S')] $1"
+}
+
+get_size() {
+    if [ -e "$1" ]; then
+        du -sk "$1" 2>/dev/null | cut -f1 || echo "0"
+    else
+        echo "0"
+    fi
+}
+
+cleanup_item() {
+    if [ -e "$1" ]; then
+        local size=$(get_size "$1")
+        rm -rf "$1"
+        log "Removed $2: $((size/1024/1024))GB"
+    fi
+}
+
+log "Cleaning Mac caches and junk..."
+
+# Apple wallpapers/screensavers (HUGE!)
+cleanup_item ~/Library/Application\ Support/com.apple.wallpaper/aerials/videos "Apple wallpaper videos (46GB)"
+
+# Docker
+cleanup_item ~/Library/Containers/com.docker.docker/Data "Docker data"
+if command -v docker >/dev/null 2>&1; then
+    log "Cleaning Docker containers and images..."
+    docker system prune -af --volumes >/dev/null 2>&1 || true
+fi
+
+# Development caches
+cleanup_item ~/.npm "NPM cache"
+cleanup_item ~/.gradle "Gradle cache"
+cleanup_item ~/.m2/repository "Maven cache"
+
+# System caches
+cleanup_item ~/Library/Caches/Homebrew "Homebrew cache"
+cleanup_item ~/Library/Caches/Arc "Arc browser cache"
+cleanup_item ~/Library/Caches/com.spotify.client "Spotify cache"
+cleanup_item ~/Library/Caches/aws "AWS cache"
+cleanup_item ~/Library/Caches/ms-playwright "Playwright cache"
+cleanup_item ~/Library/Caches/dev.kdrag0n.MacVirt "MacVirt cache"
+cleanup_item ~/Library/Caches/com.amazonaws.jsii "AWS JSII cache"
+cleanup_item ~/Library/Caches/Mozilla "Mozilla cache"
+cleanup_item ~/Library/Caches/com.microsoft.VSCode.ShipIt "VSCode cache"
+
+# Application Support
+cleanup_item ~/Library/Application\ Support/Arc/User\ Data/Default/Cache "Arc app cache"
+cleanup_item ~/Library/Application\ Support/Code/CachedData "VSCode cached data"
+cleanup_item ~/Library/Application\ Support/BraveSoftware/Brave-Browser/Default/Cache "Brave cache"
+
+# Python/AI caches
+cleanup_item ~/.cache/uv "UV Python package cache"
+cleanup_item ~/.cache/huggingface "HuggingFace AI models"
+cleanup_item ~/.cache/torch "PyTorch cache"
+cleanup_item ~/.cache/vim "Vim cache"
+
+# Large files in Downloads (>100MB)
+find ~/Downloads -size +100M -delete 2>/dev/null
+
+# Mail attachments
+find ~/Library/Mail -name "Attachments" -exec rm -rf {} + 2>/dev/null || true
+
+# Logs
+cleanup_item ~/Library/Logs "User logs"
+
+# iOS backups older than 90 days
+find ~/Library/Application\ Support/MobileSync/Backup -type d -mtime +90 -exec rm -rf {} + 2>/dev/null || true
+
+# Disable Spotlight
+log "Disabling Spotlight indexing..."
+sudo mdutil -a -i off >/dev/null 2>&1
+sudo mdutil -a -d >/dev/null 2>&1
+sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist >/dev/null 2>&1
+sudo killall mds mdworker mdworker_shared mdsync >/dev/null 2>&1
+log "  Spotlight disabled"
+
+# Disable unnecessary launch agents
+log "Disabling unnecessary launch agents..."
+
+disable_agent() {
+    if [ -f "$1" ]; then
+        launchctl unload "$1" 2>/dev/null && log "  Disabled: $(basename $1)"
+    fi
+}
+
+# Always disable these (not in Brewfile or obsolete)
+disable_agent ~/Library/LaunchAgents/com.google.keystone.agent.plist
+disable_agent ~/Library/LaunchAgents/com.google.keystone.xpcservice.plist
+disable_agent ~/Library/LaunchAgents/com.google.GoogleUpdater.wake.plist
+disable_agent ~/Library/LaunchAgents/org.git-scm.git.hourly.plist
+disable_agent ~/Library/LaunchAgents/org.git-scm.git.daily.plist
+disable_agent ~/Library/LaunchAgents/org.git-scm.git.weekly.plist
+disable_agent ~/Library/LaunchAgents/com.valvesoftware.steamclean.plist
+
+log "Mac cleanup completed!"
+df -h | grep "/dev/disk1s1s1"
