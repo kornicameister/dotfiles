@@ -123,7 +123,6 @@ cask "font-hack-nerd-font"
 cask "font-awesome-terminal-fonts"
 
 # AI tools
-cask "cursor"
 cask "kiro-cli"
 
 # Cloud - AWS
