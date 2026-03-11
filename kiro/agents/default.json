@@ -65,7 +65,9 @@
     "file://AGENT.md",
     "file://AmazonQ.md",
     "file://README.md",
+    "file://LICENSE.md",
     "file://CHANGELOG.md",
+    "file://CLAUDE.md",
     "file://.amazonq/rules/**/*.md",
     "file://.agent-analysis/**/*.md"
   ],
