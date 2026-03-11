@@ -1,16 +1,27 @@
 {
   "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@context-labs/mcp-server-context7"]
-    },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+      "args": [
+        "@playwright/mcp@latest",
+        "--browser=chromium",
+        "--output-dir=./.screenshots"
+      ],
+      "timeout": 60000,
+      "disabled": false
     },
-    "fetch": {
-      "command": "uvx",
-      "args": ["mcp-server-fetch"]
+    "github": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://api.githubcopilot.com/mcp/",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}"
+      ],
+      "env": {
+        "AUTH_TOKEN": "REDACTED_GITHUB_PAT"
+      },
+      "disabled": false
     }
   }
 }

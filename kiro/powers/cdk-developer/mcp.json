@@ -1,16 +1,17 @@
 {
   "mcpServers": {
-    "awsKnowledgeBase": {
+    "github": {
       "command": "npx",
-      "args": ["-y", "@aws/amazon-q-developer-cli-mcp-server"]
-    },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@context-labs/mcp-server-context7"]
-    },
-    "fetch": {
-      "command": "uvx",
-      "args": ["mcp-server-fetch"]
+      "args": [
+        "mcp-remote",
+        "https://api.githubcopilot.com/mcp/",
+        "--header",
+        "Authorization: Bearer ${AUTH_TOKEN}"
+      ],
+      "env": {
+        "AUTH_TOKEN": "REDACTED_GITHUB_PAT"
+      },
+      "disabled": false
     }
   }
 }

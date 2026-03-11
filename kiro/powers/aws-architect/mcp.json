@@ -1,20 +1,28 @@
 {
   "mcpServers": {
-    "awsKnowledgeBase": {
-      "command": "npx",
-      "args": ["-y", "@aws/amazon-q-developer-cli-mcp-server"]
-    },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@context-labs/mcp-server-context7"]
+    "awsPricing": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-pricing-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_PROFILE": "kornicameister",
+        "AWS_REGION": "eu-central-1"
+      },
+      "disabled": false,
+      "autoApprove": ["get_pricing_service_codes", "get_pricing_service_attributes"]
     },
     "awsDiagram": {
-      "command": "npx",
-      "args": ["-y", "@aws/amazon-q-developer-cli-mcp-server-aws-diagram"]
-    },
-    "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"]
+      "args": [
+        "awslabs.aws-diagram-mcp-server"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
     }
   }
 }
