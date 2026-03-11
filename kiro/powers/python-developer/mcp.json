@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context-labs/mcp-server-context7"]
+    },
+    "awsKnowledgeBase": {
+      "command": "npx",
+      "args": ["-y", "@aws/amazon-q-developer-cli-mcp-server"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "awsKnowledgeBase": {
+      "command": "npx",
+      "args": ["-y", "@aws/amazon-q-developer-cli-mcp-server"]
+    },
+    "webSearch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}

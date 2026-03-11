@@ -1,0 +1,16 @@
+{
+  "app.beta": true,
+  "autocomplete.disableForCommands": [
+    "git"
+  ],
+  "autocomplete.fuzzySearch": true,
+  "autocomplete.theme": "dark",
+  "chat.enableContextUsageIndicator": true,
+  "chat.enableKnowledge": true,
+  "chat.enableThinking": true,
+  "codeWhisperer.shareCodeWhispererContentWithAWS": false,
+  "mcp.loadedBefore": true,
+  "telemetry.enabled": false,
+  "chat.enableCheckpoint": true,
+  "chat.enableTodoList": true
+}
