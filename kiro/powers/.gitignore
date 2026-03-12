@@ -1,1 +1,3 @@
 registry.json
+repos/
+!repos/README.md

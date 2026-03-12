@@ -265,13 +265,6 @@ kiro-cli chat --no-interactive --agent default "how to list files changed in the
 
 # Test with specific agent
 kiro-cli chat --no-interactive --agent genai-rapid "analyze this GenAI use case"
-
-# Test Power activation (keywords trigger Powers)
-kiro-cli chat --no-interactive --agent default "create a CDK stack for Lambda"
-# → Should activate cdk-developer Power
-
-kiro-cli chat --no-interactive --agent default "help with Python pytest"
-# → Should activate python-developer Power
 ```
 
 **Flags:**
@@ -280,9 +273,25 @@ kiro-cli chat --no-interactive --agent default "help with Python pytest"
 
 **Use Cases:**
 - Quick testing of agent configurations
-- Validating Power keyword activation
 - CI/CD integration for automated checks
 - Scripting repetitive tasks
+
+**Note:** Powers are **only supported in Kiro IDE**, not in kiro-cli. Use IDE to test Power activation.
+
+### IDE Testing
+
+Test Powers in Kiro IDE:
+
+```
+# Powers activate automatically by keywords
+"I need AWS architecture advice" → aws-architect Power
+"Help with Python pytest" → python-developer Power
+"Create CDK stack" → cdk-developer Power
+"Terraform module for S3" → terraform-developer Power
+"React component testing" → frontend-developer Power
+```
+
+Check IDE settings/Powers panel to verify installed Powers.
 
 ## References
 
