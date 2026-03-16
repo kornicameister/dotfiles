@@ -35,30 +35,20 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
-    pipx ensurepath
-    pipx install \
-      cfn-lint \
-      flake8 \
-      pyinfra \
-      wakatime \
-      black \
-      yamllint
-
-    pipx install awsume[saml,fuzy]
-    pipx inject awsume \
-      awsume-console-plugin
-
-    pipx install httpie
-    pipx inject httpie \
-      httpie-aws-auth
-
-    pipx inject flake8 \
-      flake8-bugbear==21.11.29 \
-      flake8-commas==2.1.0 \
-      flake8-quotes==3.3.1 \
-      flake8-print==4.0.0 \
-      flake8-bandit==2.1.2 \
-      flake8-comprehensions==3.7.0
+    uv tool install cfn-lint
+    uv tool install pyinfra
+    uv tool install wakatime
+    uv tool install black
+    uv tool install yamllint
+    uv tool install httpie --with httpie-aws-auth
+    uv tool install 'awsume[saml,fuzy]' --with awsume-console-plugin
+    uv tool install flake8 \
+      --with flake8-bugbear==21.11.29 \
+      --with flake8-commas==2.1.0 \
+      --with flake8-quotes==3.3.1 \
+      --with flake8-print==4.0.0 \
+      --with flake8-bandit==2.1.2 \
+      --with flake8-comprehensions==3.7.0
 
     wal --theme base16-atelier-dune -n --vte
     wal-vtop >/dev/null

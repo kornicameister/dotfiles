@@ -69,7 +69,6 @@ brew "neovim", args: ['HEAD']
 cask "visual-studio-code"
 
 # Python tools
-brew "pipx"
 brew "uv"
 
 # Java

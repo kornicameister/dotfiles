@@ -37,7 +37,7 @@ Run the [install](./install) script to set up the environment. The script handle
 - Creating symlinks via dotbot
 - Configuring version managers (pyenv, asdf)
 - Setting up Neovim
-- Installing Python packages via pipx
+- Installing Python tools via uv
 
 ## Structure
 
