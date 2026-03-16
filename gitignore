@@ -56,5 +56,6 @@
 .cursor
 .agent-analysis
 
-# python typechecker
+# python tooling
 .pyre
+.ropeproject
