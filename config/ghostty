@@ -1,0 +1,11 @@
+background-opacity = 0.85
+
+theme = "Catppuccin Mocha"
+font-family = "Hack Nerd Font Mono Regular"
+
+keybind = cmd+r=clear_screen
+
+window-padding-x = 4
+window-padding-y = 4
+
+shell-integration-features = ssh-terminfo, ssh-env

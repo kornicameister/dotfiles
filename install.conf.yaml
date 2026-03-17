@@ -39,6 +39,8 @@
     ~/.aws/amazonq/agents: aws/amazonq/agents
     ~/.aws/amazonq/prompts: aws/amazonq/prompts
 
+    ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
+
     # ssh config
     ~/.ssh/config: ssh/config
     ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
