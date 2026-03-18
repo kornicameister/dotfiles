@@ -148,7 +148,6 @@ cask "slack"
 brew "pgcli"
 
 # Web servers
-brew "caddy"
 brew "httpd"
 
 # Other tools
