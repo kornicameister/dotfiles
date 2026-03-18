@@ -30,8 +30,6 @@ brew "zsh"
 
 # Version managers
 brew "asdf"
-brew "pyenv"
-brew "pyenv-virtualenv"
 
 # Development - Git
 brew "git"
@@ -155,6 +153,8 @@ brew "mike-engel/jwt-cli/jwt-cli", args: ["HEAD"]
 brew "graphviz"
 
 # Obsolete - keeping installed for now
+brew "pyenv"
+brew "pyenv-virtualenv"
 brew "the_silver_searcher"
 cask "temurin@8"
 
