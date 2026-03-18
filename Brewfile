@@ -45,7 +45,6 @@ brew "lazygit"
 # Development - Languages
 brew "rust"
 brew "ruby"
-brew "node"
 brew "lua"
 brew "luarocks"
 brew "maven"
@@ -62,7 +61,6 @@ brew "shfmt"
 brew "stylua"
 brew "exiftool"
 brew "cloc"
-brew "markdownlint-cli"
 brew "efm-langserver"
 cask "meld"
 brew "neovim", args: ['HEAD']
@@ -85,6 +83,10 @@ cask "orbstack"
 cask "brave-browser"
 cask "google-chrome"
 cask "arc"
+
+# Android/Mobile
+cask "android-studio"
+brew "android-platform-tools"
 
 # Utilities - CLI
 brew "aria2"
@@ -132,19 +134,15 @@ brew "cfn-lint"
 brew "regula"
 brew "granted"
 brew "lucagrulla/tap/cw"
+# session-manager-plugin -> brew_formula/aws_session_manager.rb (local formula)
 
 # Cloud - Terraform
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
-brew "serverless"
 
 # Productivity
-brew "jira-cli"
-cask "spotify"
 cask "signal"
 cask "slack"
-cask "zoom"
-cask "microsoft-teams"
 
 # Database
 brew "pgcli"
