@@ -35,6 +35,7 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
+    uv tool install coverage
     uv tool install cfn-lint
     uv tool install pyinfra
     uv tool install wakatime
