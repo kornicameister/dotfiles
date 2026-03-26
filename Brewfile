@@ -39,6 +39,8 @@ brew "git-filter-repo"
 brew "git-delta"
 brew "ggshield"
 brew "lazygit"
+brew "gh"   # github cli
+brew "glab" # gitlab cli
 
 # Development - Languages
 brew "rust"
@@ -62,6 +64,7 @@ brew "cloc"
 brew "efm-langserver"
 cask "meld"
 brew "neovim", args: ['HEAD']
+brew "tree-sitter-cli"
 cask "visual-studio-code"
 
 # Python tools
@@ -152,9 +155,6 @@ brew "httpd"
 brew "mike-engel/jwt-cli/jwt-cli", args: ["HEAD"]
 brew "graphviz"
 
-# Obsolete - keeping installed for now
-brew "pyenv"
-brew "pyenv-virtualenv"
 brew "the_silver_searcher"
 cask "temurin@8"
 
