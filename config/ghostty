@@ -1,7 +1,9 @@
 background-opacity = 0.85
 
-theme = "Catppuccin Mocha"
+theme = "JetBrains Darcula"
 font-family = "Hack Nerd Font Mono Regular"
+
+bold-is-bright = true
 
 keybind = cmd+r=clear_screen
 
@@ -9,3 +11,5 @@ window-padding-x = 4
 window-padding-y = 4
 
 shell-integration-features = ssh-terminfo, ssh-env
+
+macos-icon = microchip
