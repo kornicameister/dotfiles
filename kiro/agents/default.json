@@ -69,7 +69,8 @@
     "file://CHANGELOG.md",
     "file://CLAUDE.md",
     "file://.amazonq/rules/**/*.md",
-    "file://.agent-analysis/**/*.md"
+    "file://.agent-analysis/**/*.md",
+    "file://.kiro/**/*.md"
   ],
   "prompt": "",
   "toolAliases": {},

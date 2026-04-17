@@ -41,6 +41,14 @@
 
     ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
 
+    # kiro (amazon q cli)
+    ~/.kiro/agents: kiro/agents
+    ~/.kiro/prompts: kiro/prompts
+    ~/.kiro/settings: kiro/settings
+    ~/.kiro/powers: kiro/powers
+    ~/.kiro/knowledge: kiro/knowledge
+    ~/.kiro/skills: kiro/skills
+
     # ssh config
     ~/.ssh/config: ssh/config
     ~/.ssh/config.d/00-defaults.config: ssh/config.d/00-defaults.config
