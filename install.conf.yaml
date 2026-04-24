@@ -54,6 +54,7 @@
     ~/.claude/agents: claude/agents
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
+    ~/.claude/skills: claude/skills
 
     # ssh config
     ~/.ssh/config: ssh/config
