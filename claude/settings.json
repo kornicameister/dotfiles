@@ -1,0 +1,10 @@
+{
+  "env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "chat.enableThinking": true,
+  "chat.enableKnowledge": true,
+  "telemetry.enabled": false,
+  "autocomplete.fuzzySearch": true,
+  "defaultAgent": "default"
+}
