@@ -1,6 +1,8 @@
 background-opacity = 0.85
 
 theme = "JetBrains Darcula"
+font-size = 12
+font-thicken = true
 font-family = "Hack Nerd Font Mono Regular"
 
 bold-is-bright = true
@@ -9,6 +11,7 @@ keybind = cmd+r=clear_screen
 
 window-padding-x = 4
 window-padding-y = 4
+window-title-font-family="MonoLisa Variable"
 
 shell-integration-features = ssh-terminfo, ssh-env
 
