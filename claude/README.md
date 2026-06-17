@@ -295,6 +295,24 @@ ls -la ~/.claude/settings.json
 cat ~/.claude/settings.json
 ```
 
+## Plugins
+
+Plugins installed via Claude Code's `/plugin` system. On a new machine, run these in order:
+
+### 1. andrej-karpathy-skills
+
+Behavioral guidelines derived from Andrej Karpathy's observations on LLM coding pitfalls:
+think before coding, simplicity first, surgical changes, goal-driven execution.
+
+```
+/plugin marketplace add multica-ai/andrej-karpathy-skills
+/plugin install andrej-karpathy-skills@karpathy-skills
+```
+
+Skill available as: `andrej-karpathy-skills:karpathy-guidelines`
+
+---
+
 ## Future Enhancements
 
 - [ ] Create `setup-mcp.sh` script for automated MCP configuration
