@@ -41,20 +41,13 @@
 
     ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
 
-    # kiro (amazon q cli)
-    ~/.kiro/agents: kiro/agents
-    ~/.kiro/prompts: kiro/prompts
-    ~/.kiro/settings: kiro/settings
-    ~/.kiro/powers: kiro/powers
-    ~/.kiro/knowledge: kiro/knowledge
-    ~/.kiro/skills: kiro/skills
-
     # claude code
     ~/.claude.json: claude/claude.json
     ~/.claude/agents: claude/agents
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/skills: claude/skills
+    ~/.claude/rules: claude/rules
 
     # ssh config
     ~/.ssh/config: ssh/config

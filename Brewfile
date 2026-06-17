@@ -62,7 +62,6 @@ brew "stylua"
 brew "exiftool"
 brew "cloc"
 brew "efm-langserver"
-cask "meld"
 brew "neovim", args: ['HEAD']
 brew "tree-sitter-cli"
 cask "visual-studio-code"
@@ -81,13 +80,8 @@ brew "helm"
 cask "orbstack"
 
 # Browsers
-cask "brave-browser"
-cask "google-chrome"
-cask "arc"
-
-# Android/Mobile
-cask "android-studio"
-brew "android-platform-tools"
+cask "brave-browser@nightly"
+cask "vivaldi"
 
 # Utilities - CLI
 brew "aria2"
@@ -125,7 +119,6 @@ cask "font-hack-nerd-font"
 cask "font-awesome-terminal-fonts"
 
 # AI tools
-cask "kiro-cli"
 
 # Cloud - AWS
 brew "awscli"
