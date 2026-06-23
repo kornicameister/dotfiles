@@ -54,7 +54,10 @@
 .amazonq
 .kiro
 .cursor
+.claude
+CLAUDE.md
 .agent-analysis
+.mcp.json
 
 # python tooling
 .pyre
