@@ -19,6 +19,11 @@ _install_brew() {
 
 _install_packages() {
   brew bundle --file Brewfile
+
+  # Local formulas (see brew_formula/)
+  for formula in brew_formula/*.rb; do
+    [ -f "$formula" ] && brew install --formula "$formula"
+  done
 }
 
 if ((SHLVL > 1)); then

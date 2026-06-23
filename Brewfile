@@ -30,8 +30,6 @@ brew "zsh"
 
 # Version managers
 brew "asdf"
-brew "pyenv"
-brew "pyenv-virtualenv"
 
 # Development - Git
 brew "git"
@@ -41,11 +39,12 @@ brew "git-filter-repo"
 brew "git-delta"
 brew "ggshield"
 brew "lazygit"
+brew "gh"   # github cli
+brew "glab" # gitlab cli
 
 # Development - Languages
 brew "rust"
 brew "ruby"
-brew "node"
 brew "lua"
 brew "luarocks"
 brew "maven"
@@ -62,14 +61,12 @@ brew "shfmt"
 brew "stylua"
 brew "exiftool"
 brew "cloc"
-brew "markdownlint-cli"
 brew "efm-langserver"
-cask "meld"
 brew "neovim", args: ['HEAD']
+brew "tree-sitter-cli"
 cask "visual-studio-code"
 
 # Python tools
-brew "pipx"
 brew "uv"
 
 # Java
@@ -83,9 +80,8 @@ brew "helm"
 cask "orbstack"
 
 # Browsers
-cask "brave-browser"
-cask "google-chrome"
-cask "arc"
+cask "brave-browser@nightly"
+cask "vivaldi"
 
 # Utilities - CLI
 brew "aria2"
@@ -123,8 +119,6 @@ cask "font-hack-nerd-font"
 cask "font-awesome-terminal-fonts"
 
 # AI tools
-cask "cursor"
-cask "kiro-cli"
 
 # Cloud - AWS
 brew "awscli"
@@ -134,32 +128,26 @@ brew "cfn-lint"
 brew "regula"
 brew "granted"
 brew "lucagrulla/tap/cw"
+# session-manager-plugin -> brew_formula/aws_session_manager.rb (local formula)
 
 # Cloud - Terraform
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/terraform-ls"
-brew "serverless"
 
 # Productivity
-brew "jira-cli"
-cask "spotify"
 cask "signal"
 cask "slack"
-cask "zoom"
-cask "microsoft-teams"
 
 # Database
 brew "pgcli"
 
 # Web servers
-brew "caddy"
 brew "httpd"
 
 # Other tools
 brew "mike-engel/jwt-cli/jwt-cli", args: ["HEAD"]
 brew "graphviz"
 
-# Obsolete - keeping installed for now
 brew "the_silver_searcher"
 cask "temurin@8"
 

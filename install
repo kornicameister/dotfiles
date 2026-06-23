@@ -35,115 +35,29 @@ post_install() {
         2>/dev/null 1>/dev/null
     gem environment
 
-    pipx ensurepath
-    pipx install \
-      cfn-lint \
-      flake8 \
-      pyinfra \
-      wakatime \
-      black \
-      yamllint
-
-    pipx install awsume[saml,fuzy]
-    pipx inject awsume \
-      awsume-console-plugin
-
-    pipx install httpie
-    pipx inject httpie \
-      httpie-aws-auth
-
-    pipx inject flake8 \
-      flake8-bugbear==21.11.29 \
-      flake8-commas==2.1.0 \
-      flake8-quotes==3.3.1 \
-      flake8-print==4.0.0 \
-      flake8-bandit==2.1.2 \
-      flake8-comprehensions==3.7.0
+    uv tool install coverage
+    uv tool install cfn-lint
+    uv tool install pyinfra
+    uv tool install wakatime
+    uv tool install black
+    uv tool install yamllint
+    uv tool install httpie --with httpie-aws-auth
+    uv tool install 'awsume[saml,fuzy]' --with awsume-console-plugin
+    uv tool install flake8 \
+      --with flake8-bugbear==21.11.29 \
+      --with flake8-commas==2.1.0 \
+      --with flake8-quotes==3.3.1 \
+      --with flake8-print==4.0.0 \
+      --with flake8-bandit==2.1.2 \
+      --with flake8-comprehensions==3.7.0
 
     wal --theme base16-atelier-dune -n --vte
     wal-vtop >/dev/null
 }
 
-_env_binary() {
-    # fetches path to binary of given *env
-
-    local env
-    env="${1}"
-
-    if ! command -v "${env}" >/dev/null 2>&1; then
-        env_bin="${HOME}/.${env}/bin/${env}"
-    else
-        env_bin=$(command -v "${env}")
-    fi
-
-    echo "${env_bin}"
-}
-
-configure_envs() {
-    configure_pyenv
-}
-
-configure_pyenv() {
-    local pyenv_root
-    local python_icon="[  ]"
-    local neovim_icon="[  ]${python_icon}"
-
-    pyenv=$(_env_binary "pyenv")
-    pyenv_root=$($pyenv root)
-
-    if [ ! -f "${pyenv_root}/version" ]; then
-        log_notice "Installing latest Python" "${python_icon}"
-
-        for py_major in {2,3}; do
-            $pyenv latest install -s "${py_major}"
-            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install --upgrade pip
-            "${pyenv_root}/versions/$($pyenv latest --print-installed "${py_major}")/bin/pip" install \
-                -r "${BASEDIR}/requirements/system.txt" \
-                -r "${BASEDIR}/requirements/utils.txt"
-            log_done "Installed Python ${py_major}" "${python_icon}"
-        done
-
-        $pyenv global "$($pyenv latest --print-installed)"
-    else
-        log_done "Python -> $(cat "${pyenv_root}/version")"
-    fi
-
-    for py_major in {2,3}; do
-        if [ ! -d "${pyenv_root}/versions/neovim${py_major}" ]; then
-            log_notice "Initializing neovim setup for Python ${py_major}" "${neovim_icon}"
-            $pyenv virtualenv "$($pyenv latest --print "${py_major}")" "neovim${py_major}"
-            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install --upgrade pip
-            "${pyenv_root}/versions/neovim${py_major}/bin/pip" install -r "${BASEDIR}/requirements/neovim.txt"
-        else
-            local neovim_py_version
-            neovim_py_version="$(
-                "${pyenv_root}/versions/neovim${py_major}/bin/python" \
-                    --version \
-                    2>&1 |
-                    awk '{print $2}'
-            )"
-            log_done "neovim${py_major} -> ${neovim_py_version}" "${neovim_icon}"
-        fi
-    done
-
-    $pyenv rehash
-}
-
 configure_nvim() {
-    local pyenv new_path old_path
-
-    pyenv=$(_env_binary "pyenv")
-
-    old_path="${PATH}"
-    new_path="${PATH}:$($pyenv root)/shims"
-
-    export PATH="${new_path}"
     nvim --headless +PlugInstall +qall!
     nvim --headless +UpdateRemotePlugins +qall!
-    export PATH="${old_path}"
-
-    unset pyenv
-    unset new_path
 }
 
 configure_wakatime() {
@@ -199,7 +113,6 @@ if ((SHLVL > 1)); then
     install_packages
     install_links
 
-    configure_envs
     configure_git "$@"
     configure_nvim
     configure_wakatime "$@"

@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<EOF
+Usage: torrent <magnet-link>
+
+Fast torrent download via aria2c with optimized settings and public trackers.
+
+Example:
+  torrent "magnet:?xt=urn:btih:abc123..."
+EOF
+}
+
+if [[ $# -lt 1 ]] || [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+  usage
+  exit 0
+fi
+
+TRACKERS=$(IFS=,; echo "\
+udp://tracker.opentrackr.org:1337/announce,\
+udp://open.demonii.com:1337/announce,\
+udp://open.stealth.si:80/announce,\
+udp://udp.tracker.projectk.org:23333/announce,\
+udp://tracker.tvunderground.org.ru:3218/announce,\
+udp://tracker.tryhackx.org:6969/announce,\
+udp://tracker.torrent.eu.org:451/announce,\
+udp://tracker.theoks.net:6969/announce,\
+udp://tracker.t-1.org:6969/announce,\
+udp://tracker.srv00.com:6969/announce,\
+udp://tracker.qu.ax:6969/announce,\
+udp://tracker.playground.ru:6969/announce,\
+udp://tracker.ixuexi.click:6969/announce,\
+udp://tracker.gmi.gd:6969/announce,\
+udp://tracker.fnix.net:6969/announce,\
+udp://tracker.filemail.com:6969/announce,\
+udp://tracker.ducks.party:1984/announce,\
+udp://tracker.dler.org:6969/announce,\
+udp://tracker.corpscorp.online:80/announce,\
+udp://tracker.bluefrog.pw:2710/announce")
+
+exec aria2c \
+  --seed-time=0 \
+  --max-concurrent-downloads=16 \
+  --split=16 \
+  --max-connection-per-server=16 \
+  --min-split-size=1M \
+  --bt-max-peers=0 \
+  --bt-request-peer-speed-limit=0 \
+  --enable-dht=true \
+  --enable-peer-exchange=true \
+  --bt-enable-lpd=true \
+  --file-allocation=none \
+  --disable-ipv6=true \
+  --bt-tracker="$TRACKERS" \
+  "$1"

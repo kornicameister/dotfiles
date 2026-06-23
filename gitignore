@@ -54,7 +54,17 @@
 .amazonq
 .kiro
 .cursor
+.claude
+CLAUDE.md
 .agent-analysis
+.mcp.json
 
-# python typechecker
+# python tooling
 .pyre
+.ropeproject
+.coverage
+coverage.xml
+coverage.json
+junit.xml
+htmlcov/
+

@@ -10,8 +10,8 @@ macOS development environment configuration
 - Custom binaries and utilities
 - Package management via [Homebrew Bundle](./Brewfile)
 - Version managers:
-  - pyenv + pyenv-virtualenv for Python
   - asdf for Go, Java, Node, Ruby, and other runtimes
+  - uv for Python versions and tools
 - Development tools:
   - Docker (OrbStack)
   - Kubernetes (kind, helm)
@@ -35,9 +35,9 @@ macOS development environment configuration
 Run the [install](./install) script to set up the environment. The script handles:
 - Installing packages via Homebrew
 - Creating symlinks via dotbot
-- Configuring version managers (pyenv, asdf)
+- Configuring version managers (asdf)
 - Setting up Neovim
-- Installing Python packages via pipx
+- Installing Python tools via uv
 
 ## Structure
 

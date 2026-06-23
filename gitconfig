@@ -13,6 +13,7 @@
 [init]
 	templatedir = ~/.git_template
 	defaultBranch = master
+	defaultRefFormat = files
 
 [core]
 	editor = nvim
@@ -140,16 +141,16 @@
 	tags = tag -l
 	branches = branch -l -v -a
 	remotes = remote -v
-	
+
 	# Commits
 	fixup = commit --fixup
 	amend = commit --amend --no-edit
 	head = log --pretty=fuller HEAD^!
-	
+
 	# Logs
 	merges = log --oneline --decorate --color=auto --merges --first-parent
 	find = "!git log --color -S "
-	
+
 	# Utilities
 	fresh = ! git_fresh
 

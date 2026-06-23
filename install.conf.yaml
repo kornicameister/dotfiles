@@ -35,9 +35,15 @@
     ~/.dotfiles: ""
 
 - link:
-    # amazon q
-    ~/.aws/amazonq/agents: aws/amazonq/agents
-    ~/.aws/amazonq/prompts: aws/amazonq/prompts
+    ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
+
+    # claude code
+    ~/.claude.json: claude/claude.json
+    ~/.claude/agents: claude/agents
+    ~/.claude/settings.json: claude/settings.json
+    ~/.claude/CLAUDE.md: claude/CLAUDE.md
+    ~/.claude/skills: claude/skills
+    ~/.claude/rules: claude/rules
 
     # ssh config
     ~/.ssh/config: ssh/config
@@ -52,6 +58,7 @@
       path: gitconfig
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
+    ~/.gitconfig-nvim-plugins: config/nvim/gitconfig-nvim-plugins
     ~/.git_template: git_template
 
     # fzf
@@ -79,3 +86,8 @@
 
     # mycli configuration
     ~/.myclirc: myclirc
+
+- shell:
+  - asdf plugin add go https://github.com/asdf-vm/asdf-nodejs.git
+  - asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+  - asdf plugin add terragrunt https://github.com/gruntwork-io/asdf-terragrunt

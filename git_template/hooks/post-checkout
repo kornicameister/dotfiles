@@ -21,6 +21,10 @@ _submodules() {
 }
 
 _main() {
+    local flag="${3:-0}"
+    # only run on branch checkouts, not file checkouts (restore/unstage)
+    [[ "$flag" != "1" ]] && return 0
+
     echo "post-checkout [start][${repo}]"
     _submodules
     _maintenance
