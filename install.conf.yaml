@@ -35,10 +35,6 @@
     ~/.dotfiles: ""
 
 - link:
-    # amazon q
-    ~/.aws/amazonq/agents: aws/amazonq/agents
-    ~/.aws/amazonq/prompts: aws/amazonq/prompts
-
     ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
 
     # claude code
