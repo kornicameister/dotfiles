@@ -1,7 +1,31 @@
 {
-  "env": {
-    "DISABLE_AUTOUPDATER": "1"
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
+  "enabledPlugins": {
+    "claude-docs@claude-code-docs": true,
+    "superpowers@claude-plugins-official": true,
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "claude-md-management@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "multica-ai/andrej-karpathy-skills"
+      }
+    },
+    "claude-code-docs": {
+      "source": {
+        "source": "github",
+        "repo": "costiash/claude-code-docs"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "theme": "dark-daltonized",
+  "editorMode": "vim",
   "chat.enableThinking": true,
   "chat.enableKnowledge": true,
   "telemetry.enabled": false,

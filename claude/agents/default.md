@@ -10,7 +10,7 @@ tools:
   - Glob
   - Task
   - Skill
-model: arn:aws:bedrock:eu-central-1:978343580049:inference-profile/eu.anthropic.claude-haiku-4-5-20251001-v1:0
+model: haiku
 permissionMode: default
 ---
 
