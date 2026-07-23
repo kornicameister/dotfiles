@@ -3,11 +3,14 @@
     "commit": "",
     "pr": ""
   },
+  "model": "sonnet",
   "enabledPlugins": {
     "claude-docs@claude-code-docs": true,
     "superpowers@claude-plugins-official": true,
-    "andrej-karpathy-skills@karpathy-skills": true,
-    "claude-md-management@claude-plugins-official": true
+    "claude-md-management@claude-plugins-official": true,
+    "codebase-mapper@eigenwise-toolshed": true,
+    "workspace-init@eigenwise-toolshed": true,
+    "live-rules@eigenwise-toolshed": true
   },
   "extraKnownMarketplaces": {
     "karpathy-skills": {
@@ -21,9 +24,28 @@
         "source": "github",
         "repo": "costiash/claude-code-docs"
       }
+    },
+    "eigenwise-toolshed": {
+      "source": {
+        "source": "github",
+        "repo": "Eigenwise/eigenwise-toolshed"
+      }
+    },
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
+      }
+    },
+    "cv-localhost": {
+      "source": {
+        "source": "file",
+        "path": "/Users/tomasztrebski/dev/CV/.claude-plugin/marketplace.json"
+      }
     }
   },
   "autoUpdatesChannel": "latest",
+  "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
   "editorMode": "vim",
   "chat.enableThinking": true,
