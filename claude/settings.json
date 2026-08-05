@@ -44,6 +44,12 @@
       }
     }
   },
+  "permissions": {
+    "deny": [
+      "Read(~/.aws/**)",
+      "Edit(~/.aws/**)"
+    ]
+  },
   "autoUpdatesChannel": "latest",
   "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
