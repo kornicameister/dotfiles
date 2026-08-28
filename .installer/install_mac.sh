@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 install_packages() {
   _install_brew
@@ -8,7 +8,7 @@ install_packages() {
 
   _install_packages
 
-  brew clean
+  brew cleanup
 }
 
 _install_brew() {
@@ -26,6 +26,6 @@ _install_packages() {
   done
 }
 
-if ((SHLVL > 1)); then
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   install_packages
 fi

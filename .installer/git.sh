@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${BASEDIR}/utils.sh"
+_GIT_SH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${_GIT_SH_DIR}/utils.sh"
 
 configure_git() {
   local git_username=""
@@ -71,6 +71,7 @@ configure_git() {
     reconfiguring="yes"
   }
 
+  mkdir -p ~/.gnupg
   chown -R "$(whoami)" ~/.gnupg/
   find ~/.gnupg -type f -exec chmod 600 {} \;
   find ~/.gnupg -type d -exec chmod 700 {} \;
@@ -158,7 +159,7 @@ gen_ssh_key() {
     -q
 }
 
-if ((SHLVL > 1)); then
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
   if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
     log_die "Cannot configure git as root" "${icon}"
   fi

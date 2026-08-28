@@ -38,7 +38,6 @@
     ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
 
     # claude code
-    ~/.claude.json: claude/claude.json
     ~/.claude/agents: claude/agents
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md

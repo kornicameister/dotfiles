@@ -16,6 +16,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
     source "${BASEDIR}/.installer/install_mac.sh"
 fi
 
+init_submodules() {
+    git -C "${BASEDIR}" submodule update --init --recursive
+}
+
 install_links() {
     local cmd
 
@@ -42,7 +46,7 @@ post_install() {
     uv tool install black
     uv tool install yamllint
     uv tool install httpie --with httpie-aws-auth
-    uv tool install 'awsume[saml,fuzy]' --with awsume-console-plugin
+    uv tool install 'awsume[saml,fuzzy]' --with awsume-console-plugin --with setuptools
     uv tool install flake8 \
       --with flake8-bugbear==21.11.29 \
       --with flake8-commas==2.1.0 \
@@ -50,57 +54,10 @@ post_install() {
       --with flake8-print==4.0.0 \
       --with flake8-bandit==2.1.2 \
       --with flake8-comprehensions==3.7.0
-
-    wal --theme base16-atelier-dune -n --vte
-    wal-vtop >/dev/null
 }
 
 configure_nvim() {
-    nvim --headless +PlugInstall +qall!
-    nvim --headless +UpdateRemotePlugins +qall!
-}
-
-configure_wakatime() {
-    local wakatime_api_key=""
-    wakatime_hostname="$(hostname)"
-
-    while [[ $# -gt 0 ]]; do
-        arg="${1}"
-        case "${arg}" in
-        --wakatime-api-key)
-            wakatime_api_key="${2}"
-            shift
-            shift
-            ;;
-        --wakatime-hostname)
-            wakatime_hostname="${2}"
-            shift
-            shift
-            ;;
-        --force)
-          if test -f "${HOME}/.wakatime.cfg"; then
-            mv -f "${HOME}/.wakatime.cfg{,.bak}" >/dev/null ;
-          fi
-          shift
-          ;;
-        esac
-    done
-
-    if [ ! -f "${HOME}/.wakatime.cfg" ]; then
-        log_notice "Configuring Wakatime" "${icon}"
-        if [ -z "${wakatime_api_key}" ]; then
-            log_die "--wakatime-api-key required..." "${icon}"
-        else
-            install -m 666 "${BASEDIR}/wakatime.cfg" "${HOME}/.wakatime.cfg"
-            sed -e "
-                s|%API_KEY%|${wakatime_api_key}|g;
-                s|%HOSTNAME%|${wakatime_hostname}|g;
-            " -i "${HOME}/.wakatime.cfg"
-            log_done "Wakatime configured" "${icon}"
-        fi
-    else
-        log_done "Wakatime configured" "${icon}"
-    fi
+    nvim --headless +Lazy sync +qall!
 }
 
 if ((SHLVL > 1)); then
@@ -111,11 +68,11 @@ if ((SHLVL > 1)); then
     fi
 
     install_packages
+    init_submodules
     install_links
 
     configure_git "$@"
     configure_nvim
-    configure_wakatime "$@"
 
     post_install
 fi
