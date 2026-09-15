@@ -2,10 +2,6 @@
 # Git Configuration
 # ============================================================================
 
-# Include local configuration (user, email, signing key, etc.)
-[include]
-	path = ~/.gitconfig.local
-
 # ============================================================================
 # Core Settings
 # ============================================================================
@@ -214,3 +210,11 @@
 
 [url "https://github.com/"]
 	insteadof = git://github.com/
+
+# ============================================================================
+# Local Overrides (must stay last so conditional includes win)
+# ============================================================================
+
+# Include local configuration (user, email, signing key, etc.)
+[include]
+	path = ~/.gitconfig.local

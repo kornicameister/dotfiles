@@ -56,8 +56,11 @@
 .cursor
 .claude
 CLAUDE.md
+**/.claude/settings.local.json
 .agent-analysis
 .mcp.json
+graphify-out/cost.json      # local only
+graphify-out/cache/         # optional: commit for speed, skip to keep repo small
 
 # python tooling
 .pyre
@@ -67,4 +70,3 @@ coverage.xml
 coverage.json
 junit.xml
 htmlcov/
-
