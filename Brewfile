@@ -135,6 +135,7 @@ brew "hashicorp/tap/terraform-ls"
 # Productivity
 cask "signal"
 cask "slack"
+cask "microsoft-teams"
 
 # Database
 brew "pgcli"
