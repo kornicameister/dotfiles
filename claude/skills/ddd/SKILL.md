@@ -133,8 +133,42 @@ class InMemoryOrderRepository(OrderRepository):
         self._orders[order.order_id] = order
 ```
 
+### Set-Based Consistency Validation (Cross-Aggregate Uniqueness)
+
+**The one exception to "business rules live inside aggregates":** a rule like "no two Orders share
+a reference number" can't be enforced by any single aggregate, because one aggregate instance has
+no way to know about its siblings — it only guards its own consistency boundary. This is a named
+DDD limitation, not a modeling mistake to fix by trying harder.
+
+**Constraints:**
+- You MUST enforce this kind of rule with a domain service that queries the repository, not by
+  adding a lookup method to the aggregate itself
+- You MUST treat the check as best-effort — it is read-then-write and races under concurrent
+  creates
+- You MUST back it with a real uniqueness constraint at the persistence layer (unique index/column)
+  as the actual guarantee — the domain service only gets to fail fast with a clear error, it is not
+  the source of truth for uniqueness
+
+```python
+class OrderReferenceAlreadyExistsError(Exception):
+    def __init__(self, reference: str) -> None:
+        super().__init__(f"Order reference already exists: {reference}")
+        self.reference = reference
+
+def ensure_order_reference_is_unique(
+    repository: OrderRepository, reference: str, exclude_id: UUID | None = None
+) -> None:
+    existing = repository.get_by_reference(reference)
+    if existing is not None and existing.order_id != exclude_id:
+        raise OrderReferenceAlreadyExistsError(reference)
+```
+
+`exclude_id` matters the moment this rule also guards an update/rename: without it, renaming an
+Order back to its own current reference reads as a conflict with itself.
+
 ## MUST NOTs
 
-- You MUST NOT put business rules in service classes — put them inside aggregates
+- You MUST NOT put business rules in service classes — put them inside aggregates, except
+  set-based consistency validation (see above), which cannot live inside any single aggregate
 - You MUST NOT modify multiple aggregates in one transaction — use domain events for coordination
 - You MUST NOT design aggregates to match database tables — design for transactional consistency

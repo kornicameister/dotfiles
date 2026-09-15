@@ -59,3 +59,6 @@ You MUST check available skills before responding. If a skill covers the topic, 
 - You MUST invoke `git-worktree` when comparing branches — you MUST NOT stash or checkout to compare
 - You MUST invoke `powertools-logger` before using AWS Lambda Powertools Logger — reserved key collisions cause runtime KeyErrors
 - You MUST invoke `find-docs` when asked about any library, framework, SDK, or AWS service API
+# graphify
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.

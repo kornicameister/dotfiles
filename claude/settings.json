@@ -3,14 +3,25 @@
     "commit": "",
     "pr": ""
   },
-  "model": "sonnet",
+  "permissions": {
+    "deny": [
+      "Read(~/.aws/**)",
+      "Edit(~/.aws/**)"
+    ]
+  },
+  "model": "claude-sonnet-4-6",
+  "statusLine": {
+    "type": "command",
+    "command": "cship"
+  },
   "enabledPlugins": {
     "claude-docs@claude-code-docs": true,
     "superpowers@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "codebase-mapper@eigenwise-toolshed": true,
     "workspace-init@eigenwise-toolshed": true,
-    "live-rules@eigenwise-toolshed": true
+    "live-rules@eigenwise-toolshed": true,
+    "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
     "karpathy-skills": {
@@ -42,13 +53,14 @@
         "source": "file",
         "path": "/Users/tomasztrebski/dev/CV/.claude-plugin/marketplace.json"
       }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      },
+      "autoUpdate": true
     }
-  },
-  "permissions": {
-    "deny": [
-      "Read(~/.aws/**)",
-      "Edit(~/.aws/**)"
-    ]
   },
   "autoUpdatesChannel": "latest",
   "skipWorkflowUsageWarning": true,
@@ -58,9 +70,5 @@
   "chat.enableKnowledge": true,
   "telemetry.enabled": false,
   "autocomplete.fuzzySearch": true,
-  "defaultAgent": "default",
-  "statusLine": {
-    "type": "command",
-    "command": "cship"
-  }
+  "defaultAgent": "default"
 }
