@@ -69,6 +69,9 @@ cask "visual-studio-code"
 # Python tools
 brew "uv"
 
+# JavaScript tools
+brew "bun"
+
 # Java
 cask "temurin"
 
