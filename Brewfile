@@ -1,10 +1,7 @@
 # https://github.com/Homebrew/homebrew-bundle
 
 tap "homebrew/bundle"
-tap "homebrew/cask-drivers"
-tap "homebrew/cask-versions"
 tap "homebrew/services"
-tap "homebrew/cask-fonts"
 tap "aws/tap"
 tap "common-fate/granted"
 tap "fugue/regula"
