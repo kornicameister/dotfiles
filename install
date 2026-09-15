@@ -43,6 +43,8 @@ post_install() {
     uv tool install yamllint
     uv tool install httpie --with httpie-aws-auth
     uv tool install 'awsume[saml,fuzy]' --with awsume-console-plugin
+    uv tool install 'graphifyy[bedrock,pdf]'
+    uv tool install skilz
     uv tool install flake8 \
       --with flake8-bugbear==21.11.29 \
       --with flake8-commas==2.1.0 \
