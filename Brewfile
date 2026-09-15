@@ -80,8 +80,6 @@ brew "helm"
 cask "orbstack"
 
 # Browsers
-cask "brave-browser@nightly"
-cask "vivaldi"
 
 # Utilities - CLI
 brew "aria2"
