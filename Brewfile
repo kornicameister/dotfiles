@@ -13,7 +13,30 @@ tap "lucagrulla/tap"
 # Base packages
 brew "openssl"
 brew "coreutils"
-brew "moreutils"
+# Keep GNU Parallel as parallel while exposing the other moreutils commands.
+brew "moreutils", link: false, postinstall: <<~'SHELL'
+  set -eu
+
+  moreutils_binary_directory="$(brew --prefix moreutils)/bin"
+  user_binary_directory="$HOME/.local/bin"
+  mkdir -p "$user_binary_directory"
+
+  for moreutils_binary in "$moreutils_binary_directory"/*; do
+    binary_name="${moreutils_binary##*/}"
+    [ "$binary_name" = parallel ] && continue
+    destination="$user_binary_directory/$binary_name"
+
+    if [ -L "$destination" ]; then
+      [ "$(readlink "$destination")" = "$moreutils_binary" ] && continue
+    elif [ ! -e "$destination" ]; then
+      ln -s "$moreutils_binary" "$destination"
+      continue
+    fi
+
+    printf 'Cannot link moreutils: %s already exists with a different target\n' "$destination" >&2
+    exit 1
+  done
+SHELL
 brew "findutils"
 brew "wget"
 brew "curl"
