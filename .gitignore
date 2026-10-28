@@ -10,3 +10,8 @@ vim/**/*.spl
 *.log
 
 Brewfile.lock.json
+
+# Managed by the Claude platform; never package synced workspace data.
+claude/skills/synced/
+__pycache__/
+*.pyc

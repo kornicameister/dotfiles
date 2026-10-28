@@ -18,16 +18,15 @@
       mode: 750
 
 - shell:
-    - - git submodule sync --recursive
+    - - git submodule sync -- config/fish config/nvim
       - Installing submodules
     - - git submodule update
-        --recursive
         --init
         --checkout
         --no-recommend-shallow
-        --force
         --jobs 4
         --progress
+        -- config/fish config/nvim
       - Checkouting submodules
 
 # main repo goes first, you know gotta be careful here
@@ -42,8 +41,11 @@
     ~/.claude/agents: claude/agents
     ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
-    ~/.claude/skills: claude/skills
     ~/.claude/rules: claude/rules
+
+    # Codex global configuration and skills
+    ~/.codex/AGENTS.md: codex/AGENTS.md
+    ~/.codex/config.toml: codex/config.toml
 
     # ssh config
     ~/.ssh/config: ssh/config
@@ -58,7 +60,9 @@
       path: gitconfig
       if: |
         [[ ${CI:-False} ]] && exit 0 || exit 1
-    ~/.gitconfig-nvim-plugins: config/nvim/gitconfig-nvim-plugins
+    ~/.gitconfig-nvim-plugins:
+      path: config/nvim/gitconfig-nvim-plugins
+      if: test -f config/nvim/gitconfig-nvim-plugins
     ~/.git_template: git_template
 
     # fzf

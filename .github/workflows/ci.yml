@@ -4,6 +4,22 @@ name: CI
 "on": [push]
 
 jobs:
+  skills-bootstrap:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: git submodule update --init -- dotbot
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r tests/requirements.txt
+      - run: python -m pytest tests -q
   shellcheck:
     runs-on: ubuntu-20.04
     steps:

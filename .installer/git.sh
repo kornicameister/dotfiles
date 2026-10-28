@@ -1,7 +1,6 @@
 #!/bin/bash
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${BASEDIR}/utils.sh"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/utils.sh"
 
 configure_git() {
   local git_username=""
@@ -158,7 +157,7 @@ gen_ssh_key() {
     -q
 }
 
-if ((SHLVL > 1)); then
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
     log_die "Cannot configure git as root" "${icon}"
   fi

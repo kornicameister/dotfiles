@@ -2,7 +2,6 @@
     path = dotbot
     url = https://github.com/anishathalye/dotbot
     shallow = true
-    branch = master
 [submodule "config/nvim"]
     path = config/nvim
     url = git@github.com:kornicameister/nvim.git

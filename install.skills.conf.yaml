@@ -1,0 +1,8 @@
+---
+- defaults:
+    shell:
+      stdout: true
+      stderr: true
+- shell:
+    - command: node .installer/skills.mjs
+      description: Prepare, install, and verify pinned private skills

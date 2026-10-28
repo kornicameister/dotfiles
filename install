@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# CI handling
-CI=${CI:-False}
-if [[ -n ${CI} ]]; then
+set -eo pipefail
+
+if [[ ${CI:-false} == true ]]; then
     sudo() {
         "$@"
     }
@@ -17,15 +17,14 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 install_links() {
-    local cmd
+    run_dotbot install.conf.yaml
+}
 
-    if command -v dotbot >/dev/null; then
-        cmd="dotbot"
-    else
-        cmd="${BASEDIR}/dotbot/bin/dotbot"
-    fi
-
-    "${cmd}" -q -d "${BASEDIR}" -c "${BASEDIR}/install.conf.yaml"
+run_dotbot() {
+    local configuration="$1"
+    shift
+    echo "Dotbot: ${configuration}"
+    SHELL=/bin/bash "${BASEDIR}/dotbot/bin/dotbot" --exit-on-failure -d "${BASEDIR}" -c "${BASEDIR}/${configuration}" "$@"
 }
 
 post_install() {
@@ -43,8 +42,6 @@ post_install() {
     uv tool install yamllint
     uv tool install httpie --with httpie-aws-auth
     uv tool install 'awsume[saml,fuzy]' --with awsume-console-plugin
-    uv tool install 'graphifyy[bedrock,pdf]'
-    uv tool install skilz
     uv tool install flake8 \
       --with flake8-bugbear==21.11.29 \
       --with flake8-commas==2.1.0 \
@@ -81,8 +78,11 @@ configure_wakatime() {
             ;;
         --force)
           if test -f "${HOME}/.wakatime.cfg"; then
-            mv -f "${HOME}/.wakatime.cfg{,.bak}" >/dev/null ;
+            mv -f "${HOME}/.wakatime.cfg" "${HOME}/.wakatime.cfg.bak" >/dev/null
           fi
+          shift
+          ;;
+        *)
           shift
           ;;
         esac
@@ -105,7 +105,31 @@ configure_wakatime() {
     fi
 }
 
-if ((SHLVL > 1)); then
+main() {
+    local skills_only=false dry_run=false
+    local argument
+    local bootstrap_arguments=()
+    for argument in "$@"; do
+        case "$argument" in
+            --skills-only) skills_only=true ;;
+            --dry-run) dry_run=true ;;
+            *) bootstrap_arguments+=("$argument") ;;
+        esac
+    done
+    if [[ $dry_run == true ]]; then
+        # A dry run must not fetch, configure credentials, or invoke package managers.
+        [[ -x "${BASEDIR}/dotbot/bin/dotbot" ]] || { echo 'Initialize the pinned dotbot submodule before --dry-run' >&2; return 1; }
+        if [[ $skills_only == false ]]; then
+            run_dotbot install.conf.yaml --dry-run
+        fi
+        run_dotbot install.skills.conf.yaml --dry-run
+        return
+    fi
+    git -C "${BASEDIR}" submodule update --init --checkout -- dotbot
+    if [[ $skills_only == true ]]; then
+        run_dotbot install.skills.conf.yaml
+        return
+    fi
     echo "kornicameister/dotfiles"
 
     if ((EUID == 0)) && [[ -z ${CI:-} ]]; then
@@ -115,9 +139,14 @@ if ((SHLVL > 1)); then
     install_packages
     install_links
 
-    configure_git "$@"
+    configure_git "${bootstrap_arguments[@]}"
+    run_dotbot install.skills.conf.yaml
     configure_nvim
-    configure_wakatime "$@"
+    configure_wakatime "${bootstrap_arguments[@]}"
 
     post_install
+}
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    main "$@"
 fi
