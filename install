@@ -8,7 +8,7 @@ if [[ ${CI:-false} == true ]]; then
     }
 fi
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
 source "${BASEDIR}/.installer/utils.sh"
 source "${BASEDIR}/.installer/git.sh"
