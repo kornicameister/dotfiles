@@ -38,7 +38,9 @@ try {
       run('git', ['-C', checkout, '-c', 'core.hooksPath=/dev/null', 'checkout', '--detach', lock.commit]);
     }
   }
-  run(process.execPath, [path.join(checkout, 'install.mjs'), '--dotfiles', repository, ...process.argv.slice(2)]);
+  // Keep npm beside the active Node executable ahead of HOME-dependent version-manager shims.
+  const environment = { ...process.env, PATH: `${path.dirname(process.execPath)}${path.delimiter}${process.env.PATH || ''}` };
+  run(process.execPath, [path.join(checkout, 'install.mjs'), '--dotfiles', repository, ...process.argv.slice(2)], { env: environment });
 } catch (error) {
   console.error(error.message);
   process.exitCode = 1;
