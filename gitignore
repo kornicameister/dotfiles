@@ -70,3 +70,7 @@ coverage.xml
 coverage.json
 junit.xml
 htmlcov/
+
+# Local LifeOS installations and project skill entry point
+.lifeos/
+.agents/skills/LifeOS
