@@ -22,6 +22,16 @@ SOP for DDD tactical patterns in Python. You MUST invoke before implementing any
 - You MUST keep aggregates small (2-3 entities max) — larger aggregates signal wrong boundaries
 - You MUST put business logic inside domain objects — MUST NOT put it in service classes (anemic model anti-pattern)
 
+## Architecture Boundaries When Using DDD with Ports and Adapters
+
+- Read the working issue, parent/dependencies, related open issues and governing/linked ADRs before changing shared contracts. Preserve accepted decisions and supersession history; record an intentional architectural change in an ADR with rejected alternatives and migration obligations.
+- Keep domain behavior and application use cases independent of CLI/HTTP payloads, SDKs, ORM models and persistence implementations. Domain objects must not depend on application command DTOs or handlers. Core-owned ports describe required capabilities; adapter implementations depend inward on those contracts.
+- A driving adapter translates its own payload into an application-owned command. Use cases interpret commands and invoke domain behavior. A repository/checkpoint adapter must not interpret inbound command kinds merely to decide how to persist state; translate the request into its dedicated core-defined persistence contract.
+- Reuse explicit common-language identities and domain values where their meaning is shared. Do not use one transport/command/ORM/checkpoint DTO as a universal model. Introduce mappings for semantic boundaries, without manufacturing duplicate classes where the same common-language value is appropriate.
+- Keep concrete adapter selection, dependency construction and runtime wiring in a composition root outside the business core. Schema creation/migrations are separate administrative operations, not repository construction or ordinary command behavior.
+- Preserve required transaction consistency while separating contracts. Replay metadata and pending-effect intents may belong to the same aggregate checkpoint transaction; removing command coupling must not split them into independently committed writes. Such technical records do not automatically constitute additional aggregates.
+- Enforce the chosen dependency direction with architecture tests in the normal test/CI path. Cover prohibited import edges and require explicit architectural roles for new modules. Static import tests complement contract/recovery tests; they do not prove semantic correctness of every payload.
+
 ## Patterns
 
 ### Value Objects (Immutable)
