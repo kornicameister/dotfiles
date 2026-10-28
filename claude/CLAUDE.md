@@ -52,13 +52,14 @@ You MUST check available skills before responding. If a skill covers the topic, 
 **Constraints:**
 - You MUST invoke `conventional-commits` before writing any git commit message — you MUST NOT format a commit from memory
 - You MUST invoke `python` before writing or reviewing any Python code
-- You MUST invoke `tdd` before writing any test or setting up pytest fixtures
-- You MUST invoke `bdd` before writing any Gherkin scenario or pytest-bdd step definition
+- You MUST invoke `tdd` before writing any test or setting up test fixtures
+- You MUST invoke `bdd` before writing any Gherkin scenario or bdd step definition
 - You MUST invoke `ddd` before implementing any aggregate, entity, value object, or repository
 - You MUST invoke `awsume` before running any awsume command or managing AWS credentials
 - You MUST invoke `git-worktree` when comparing branches — you MUST NOT stash or checkout to compare
 - You MUST invoke `powertools-logger` before using AWS Lambda Powertools Logger — reserved key collisions cause runtime KeyErrors
 - You MUST invoke `find-docs` when asked about any library, framework, SDK, or AWS service API
+- You MUST invoke `write-as-me` before drafting any text that a person other than me will read under my name (Slack, chat, MR/PR or Jira comments, email, replies) — it must sound like me, with no AI filler or pathos
 # graphify
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
 When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
