@@ -9,7 +9,7 @@
       "Edit(~/.aws/**)"
     ]
   },
-  "model": "claude-sonnet-4-6",
+  "model": "eu.anthropic.claude-sonnet-4-6",
   "statusLine": {
     "type": "command",
     "command": "cship"
@@ -66,6 +66,20 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark-daltonized",
   "editorMode": "vim",
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(graphify query:*)",
+      "Bash(graphify update:*)",
+      "Bash(graphify path:*)",
+      "Bash(graphify explain:*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(kubectl * -n prod:*)",
+      "Bash(rm k8s/prod/*)"
+    ]
+  },
   "chat.enableThinking": true,
   "chat.enableKnowledge": true,
   "telemetry.enabled": false,

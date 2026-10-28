@@ -1,5 +1,6 @@
 {
   "schema": 1,
   "repository": "git@github.com:kornicameister/skills.git",
-  "commit": "7384893a8be82d62c4cc238b7f07464ef88b9294"
+  "commit": "c9b755dd3836c696e6656b232a6d664966e68032",
+  "runner": "tsx@4.23.15"
 }

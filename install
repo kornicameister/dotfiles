@@ -27,6 +27,67 @@ run_dotbot() {
     SHELL=/bin/bash "${BASEDIR}/dotbot/bin/dotbot" --exit-on-failure -d "${BASEDIR}" -c "${BASEDIR}/${configuration}" "$@"
 }
 
+prepare_skills() {
+    local skills_lock="${DOTFILES_SKILLS_LOCK:-${BASEDIR}/skills.lock.json}"
+    local checkout="${HOME}/.local/share/kornicameister/skills"
+    local repository commit runner temporary status head tool
+    for tool in git node npm npx uv; do
+        command -v "$tool" >/dev/null || { echo "Required tool missing: $tool" >&2; return 1; }
+    done
+    repository="$(read_skill_setting "$skills_lock" repository)"
+    commit="$(read_skill_setting "$skills_lock" commit)"
+    runner="$(read_skill_setting "$skills_lock" runner)"
+    if [[ ! -d "$checkout" ]]; then
+        mkdir -p "$(dirname "$checkout")"
+        temporary="$(mktemp -d "${checkout}-clone-XXXXXX")"
+        if ! git -c core.hooksPath=/dev/null clone --no-checkout "$repository" "$temporary" ||
+            ! git -C "$temporary" -c core.hooksPath=/dev/null checkout --detach "$commit"; then
+            rm -rf "$temporary"
+            return 1
+        fi
+        mv "$temporary" "$checkout"
+    else
+        status="$(git -C "$checkout" status --porcelain)"
+        [[ -z "$status" ]] || { echo "Private checkout has local changes: $checkout" >&2; return 1; }
+        head="$(git -C "$checkout" rev-parse HEAD)"
+        if [[ "$head" != "$commit" ]]; then
+            git -C "$checkout" fetch "$repository" "$commit"
+            git -C "$checkout" -c core.hooksPath=/dev/null checkout --detach "$commit"
+        fi
+    fi
+    npx --yes "$runner" "$checkout/install.ts" --dotfiles "$BASEDIR"
+}
+
+read_skill_setting() {
+    node -e '
+        const fs = require("node:fs");
+        const lock = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+        if (typeof lock.repository !== "string" || !/^[a-f0-9]{40}$/.test(lock.commit) || !/^tsx@[0-9]+\.[0-9]+\.[0-9]+$/.test(lock.runner)) {
+            throw new Error("Invalid private skills lock");
+        }
+        process.stdout.write(lock[process.argv[2]]);
+    ' "$1" "$2"
+}
+
+prepare_ai_configuration() {
+    node - "$BASEDIR" <<'NODE'
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const root = process.argv[2];
+for (const [template, relative] of [['claude/settings.json', '.claude/settings.json'], ['codex/config.toml', '.codex/config.toml']]) {
+    const source = path.join(root, template);
+    const target = path.join(os.homedir(), relative);
+    const stat = fs.lstatSync(target, { throwIfNoEntry: false });
+    if (stat && (!stat.isSymbolicLink() || fs.realpathSync(target) !== source)) continue;
+    const content = fs.readFileSync(source);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    if (stat) fs.unlinkSync(target);
+    fs.writeFileSync(target, content, { mode: 0o600 });
+}
+NODE
+}
+
 post_install() {
     gem install \
         sqlint \
@@ -111,6 +172,8 @@ main() {
     local bootstrap_arguments=()
     for argument in "$@"; do
         case "$argument" in
+            --prepare-ai-configuration) prepare_ai_configuration; return ;;
+            --prepare-skills) prepare_skills; return ;;
             --skills-only) skills_only=true ;;
             --dry-run) dry_run=true ;;
             *) bootstrap_arguments+=("$argument") ;;

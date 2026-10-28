@@ -4,5 +4,5 @@
       stdout: true
       stderr: true
 - shell:
-    - command: node .installer/skills.mjs
+    - command: ./install --prepare-skills
       description: Prepare, install, and verify pinned private skills

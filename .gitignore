@@ -15,3 +15,6 @@ Brewfile.lock.json
 claude/skills/synced/
 __pycache__/
 *.pyc
+.pytest_cache/
+!CLAUDE.md
+claude/claude.json

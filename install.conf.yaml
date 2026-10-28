@@ -30,6 +30,12 @@
       - Checkouting submodules
 
 # main repo goes first, you know gotta be careful here
+- shell:
+    - command: ./install --prepare-ai-configuration
+      description: Initialize local AI settings without linking mutable application state
+      stdout: true
+      stderr: true
+
 - link:
     ~/.dotfiles: ""
 
@@ -37,15 +43,12 @@
     ~/Library/Application Support/com.mitchellh.ghostty/config: config/ghostty
 
     # claude code
-    ~/.claude.json: claude/claude.json
     ~/.claude/agents: claude/agents
-    ~/.claude/settings.json: claude/settings.json
     ~/.claude/CLAUDE.md: claude/CLAUDE.md
     ~/.claude/rules: claude/rules
 
     # Codex global configuration and skills
     ~/.codex/AGENTS.md: codex/AGENTS.md
-    ~/.codex/config.toml: codex/config.toml
 
     # ssh config
     ~/.ssh/config: ssh/config
