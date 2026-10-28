@@ -130,6 +130,7 @@ brew "grc"
 # Utilities - GUI
 cask "google-drive"
 cask "openvpn-connect"
+cask "protonvpn"
 cask "macs-fan-control"
 
 # Fonts
@@ -142,7 +143,6 @@ cask "font-awesome-terminal-fonts"
 # AI tools
 
 # Cloud - AWS
-brew "awscli"
 brew "aws-sam-cli"
 brew "cfn-flip"
 brew "cfn-lint"
@@ -150,6 +150,9 @@ brew "regula"
 brew "granted"
 brew "lucagrulla/tap/cw"
 # session-manager-plugin -> brew_formula/aws_session_manager.rb (local formula)
+
+# Cloud - Google
+cask "gcloud-cli"
 
 # Cloud - Terraform
 brew "hashicorp/tap/terraform"
