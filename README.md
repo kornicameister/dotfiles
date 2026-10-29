@@ -82,7 +82,7 @@ Dotfiles tracks `skills.lock.json`, which pins the private repository commit and
 Skills-only mode requires Git, Node.js, npm/npx and uv. It does not run Homebrew, Git profile setup or Neovim configuration. Dotbot always runs from its pinned submodule. On a fresh checkout, initialize that submodule before a dry run:
 
 ```bash
-git submodule update --init -- dotbot
+git submodule update --init --recursive -- dotbot
 ```
 
 The private checkout lives at `~/.local/share/kornicameister/skills`. Installation checks out the exact commit from the lock, stages packages through pinned `skills --copy` in a temporary home with telemetry disabled, then verifies conflicts before activation.

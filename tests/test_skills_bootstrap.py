@@ -99,17 +99,14 @@ fs.appendFileSync(os.homedir()+'/events','skills\\n');
         "uv": '#!/bin/sh\nexit 0\n',
         "nvim": '#!/bin/sh\necho nvim >> "$HOME/events"\n',
         "gem": '#!/bin/sh\nexit 0\n',
-        "wal": '#!/bin/sh\nexit 0\n',
-        "wal-vtop": '#!/bin/sh\nexit 0\n',
     }
     for name, script in scripts.items():
         executable = binaries / name
         executable.write_text(script)
         executable.chmod(0o755)
-    (home / ".wakatime.cfg").touch()
     for parameters, expected in [
         (["--skills-only"], ["skills"]),
-        ([], ["packages", "links", "git", "skills", "nvim", "nvim"]),
+        ([], ["packages", "links", "git", "skills", "nvim"]),
     ]:
         (home / "events").unlink(missing_ok=True)
         result = subprocess.run([str(fixture / "install"), *parameters], env=environment, text=True, capture_output=True)

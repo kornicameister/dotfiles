@@ -8,7 +8,7 @@ install_packages() {
 
   _install_packages
 
-  brew clean
+  brew cleanup
 }
 
 _install_brew() {
