@@ -5,4 +5,4 @@
       stderr: true
 - shell:
     - command: ./install --prepare-skills
-      description: Prepare, install, and verify pinned private skills
+      description: Prepare pinned private skills and ~/dev/my-skills alias, then install and verify

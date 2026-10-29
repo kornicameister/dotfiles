@@ -26,6 +26,8 @@ Before drafting any text that another person will read under the user's name (Sl
 
 ## Documentation
 
+Use `~/dev/my-skills` as the development path for `~/.local/share/kornicameister/skills`. These paths share one checkout, including the Git branch, index and commits. Do not create another clone or worktree or move the managed checkout. Preserve correct absolute or relative aliases and stop on conflicts. Dirty checkouts block installation; clean checkouts may return to the locked commit. Removing only the alias leaves the checkout intact.
+
 For questions about a library, framework, SDK, API, CLI, or cloud service, use the `find-docs` skill when it is available. It retrieves current documentation through Context7; do this before relying on remembered API details.
 
 ## Code clarity

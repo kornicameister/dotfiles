@@ -1,7 +1,9 @@
+import json
 import os
 import subprocess
 from pathlib import Path
 
+import pytest
 from faker import Faker
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -24,6 +26,7 @@ def test_install_given_skills_dry_run_should_leave_home_untouched(
     assert result.returncode == 0, result.stdout + result.stderr
     assert list(home.iterdir()) == []
     assert "install.skills.conf.yaml" in result.stdout
+    assert "~/dev/my-skills" in result.stdout
 
 
 def test_install_given_full_dry_run_should_leave_home_untouched(
@@ -42,17 +45,18 @@ def test_install_given_full_dry_run_should_leave_home_untouched(
     assert list(home.iterdir()) == []
     assert "install.conf.yaml" in result.stdout
     assert "install.skills.conf.yaml" in result.stdout
+    assert "~/dev/my-skills" in result.stdout
 
 
 NODE_BINARY = subprocess.check_output(["node", "-p", "process.execPath"], text=True).strip()
 REAL_GIT = subprocess.check_output(["which", "git"], text=True).strip()
 
 
-def test_install_given_local_repository_should_run_both_modes_and_fail_when_repository_is_unavailable(
+@pytest.fixture
+def skills_bootstrap(
     faker: Faker,
     tmp_path: Path,
-) -> None:
-    import json
+) -> tuple[Path, Path, dict[str, str]]:
     import shutil
 
     home = tmp_path / faker.slug()
@@ -104,6 +108,16 @@ fs.appendFileSync(os.homedir()+'/events','skills\\n');
         executable = binaries / name
         executable.write_text(script)
         executable.chmod(0o755)
+    return home, fixture, environment
+
+
+def test_install_given_local_repository_should_run_both_modes_and_fail_when_repository_is_unavailable(
+    faker: Faker,
+    tmp_path: Path,
+    skills_bootstrap: tuple[Path, Path, dict[str, str]],
+) -> None:
+    home, fixture, environment = skills_bootstrap
+    lock = fixture / "skills.lock.json"
     for parameters, expected in [
         (["--skills-only"], ["skills"]),
         ([], ["packages", "links", "git", "skills", "nvim"]),
@@ -112,6 +126,11 @@ fs.appendFileSync(os.homedir()+'/events','skills\\n');
         result = subprocess.run([str(fixture / "install"), *parameters], env=environment, text=True, capture_output=True)
         assert result.returncode == 0, result.stdout + result.stderr
         assert (home / "events").read_text().splitlines() == expected
+        alias = home / "dev/my-skills"
+        checkout = home / ".local/share/kornicameister/skills"
+        assert alias.is_symlink()
+        assert alias.readlink() == checkout
+        alias.unlink()
     (home / "events").unlink()
     skill_failure = subprocess.run([str(fixture / "install")], env=environment | {"TEST_SKILLS_FAIL": faker.word()}, text=True, capture_output=True)
     assert skill_failure.returncode != 0
@@ -120,6 +139,102 @@ fs.appendFileSync(os.homedir()+'/events','skills\\n');
     (home / "events").unlink()
     failed = subprocess.run([str(fixture / "install"), "--skills-only"], env=environment, text=True, capture_output=True)
     assert failed.returncode != 0
+    assert not (home / "events").exists()
+
+
+@pytest.mark.parametrize("conflict_kind", ["directory", "file", "foreign", "dangling"])
+def test_install_given_alias_conflict_should_preserve_existing_path_and_skip_checkout(
+    faker: Faker,
+    conflict_kind: str,
+    skills_bootstrap: tuple[Path, Path, dict[str, str]],
+) -> None:
+    home, fixture, environment = skills_bootstrap
+    alias = home / "dev/my-skills"
+    alias.parent.mkdir()
+    content = faker.paragraph()
+    foreign = home / faker.slug()
+    match conflict_kind:
+        case "directory":
+            alias.mkdir()
+            (alias / "keep").write_text(content)
+        case "file":
+            alias.write_text(content)
+        case "foreign" | "dangling":
+            if conflict_kind == "foreign":
+                foreign.mkdir()
+                (foreign / "keep").write_text(content)
+            alias.symlink_to(foreign)
+    result = subprocess.run(
+        [str(fixture / "install"), "--skills-only"],
+        env=environment,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert "Development alias conflicts" in result.stderr
+    assert not (home / ".local").exists()
+    assert not (home / "events").exists()
+    match conflict_kind:
+        case "directory":
+            assert (alias / "keep").read_text() == content
+        case "file":
+            assert alias.read_text() == content
+        case "foreign" | "dangling":
+            assert alias.readlink() == foreign
+            if conflict_kind == "foreign":
+                assert (foreign / "keep").read_text() == content
+
+
+@pytest.mark.parametrize("relative", [False, True])
+def test_install_given_correct_alias_should_preserve_link_and_share_git_state(
+    faker: Faker,
+    relative: bool,
+    skills_bootstrap: tuple[Path, Path, dict[str, str]],
+) -> None:
+    home, fixture, environment = skills_bootstrap
+    alias = home / "dev/my-skills"
+    checkout = home / ".local/share/kornicameister/skills"
+    alias.parent.mkdir()
+    target = Path("../.local/share/kornicameister/skills") if relative else checkout
+    alias.symlink_to(target)
+    original = alias.lstat()
+    command = [str(fixture / "install"), "--skills-only"]
+    for _ in range(2):
+        result = subprocess.run(command, env=environment, text=True, capture_output=True)
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert alias.readlink() == target
+        assert alias.lstat().st_ino == original.st_ino
+        assert alias.lstat().st_mtime_ns == original.st_mtime_ns
+        assert (alias / ".git").samefile(checkout / ".git")
+    changed = alias / "install.ts"
+    changed.write_text(changed.read_text() + f"\n// {faker.sentence()}\n")
+    assert changed.read_bytes() == (checkout / "install.ts").read_bytes()
+    status = subprocess.check_output([REAL_GIT, "-C", str(checkout), "status", "--porcelain"], text=True)
+    assert " M install.ts" in status
+    blocked = subprocess.run(command, env=environment, text=True, capture_output=True)
+    assert blocked.returncode != 0
+    assert "Private checkout has local changes" in blocked.stderr
+
+
+def test_install_given_checkout_failure_should_not_create_alias_or_development_directory(
+    faker: Faker,
+    skills_bootstrap: tuple[Path, Path, dict[str, str]],
+) -> None:
+    home, fixture, environment = skills_bootstrap
+    lock = fixture / "skills.lock.json"
+    settings = json.loads(lock.read_text())
+    settings["commit"] = faker.sha1()
+    lock.write_text(json.dumps(settings))
+    result = subprocess.run(
+        [str(fixture / "install"), "--skills-only"],
+        env=environment,
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode != 0
+    assert not (home / "dev").exists()
+    assert not (home / "dev/my-skills").is_symlink()
+    assert not (home / ".local/share/kornicameister/skills").exists()
     assert not (home / "events").exists()
 
 

@@ -87,6 +87,10 @@ git submodule update --init --recursive -- dotbot
 
 The private checkout lives at `~/.local/share/kornicameister/skills`. Installation checks out the exact commit from the lock, stages packages through pinned `skills --copy` in a temporary home with telemetry disabled, then verifies conflicts before activation.
 
+The bootstrap exposes the same checkout at `~/dev/my-skills` through an absolute symlink. Both paths share files, the Git branch, index and commts. Existing symlinks to this checkout are preserved, including relative links. A file, directory or symlink to another target at the development path stops installation without overwriting it. The alias is created only after the pinned checkout is ready. Both dry-run modes describe this step without changing HOME or fetching the repository.
+
+Edit skills through either path. A dirty checkout blocks installation; a clean chckout can be switched to the commit in `skills.lock.json`. Commit local work before installing. To remove only the development alias, run `unlink ~/dev/my-skills`; the checkout and its files remain in place.
+
 ### Linked folders and local test skills
 
 | Platform | Discovered directory | Backing directory in dotfiles |

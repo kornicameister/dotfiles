@@ -6,6 +6,8 @@ The private repository `kornicameister/skills` owns personal skill packages, ups
 
 Run `./install --skills-only` to install the pinned skills without Homebrew, Git profile setup or Neovim configuration. Full `./install` runs the same Dotbot skills stage. The bootstrap prepares `~/.local/share/kornicameister/skills` at the exact commit in the lock, then invokes its `install.ts` through pinned `npx tsx`. Never update pins during an ordinary install.
 
+Use `~/dev/my-skills` as the development path for `~/.local/share/kornicameister/skills`. These paths share one checkout, including the Git branch, index and commits. Do not create another clone or worktree or move the managed checkout. Preserve correct absolute or relative aliases and stop on conflicts. Dirty checkouts block installation; clean checkouts may return to the locked commit. Removing only the alias leaves the checkout intact.
+
 Keep these independent platform directories linked to dotfiles:
 
 - `~/.claude/skills` points to `claude/skills`.

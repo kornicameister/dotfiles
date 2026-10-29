@@ -30,10 +30,25 @@ run_dotbot() {
 prepare_skills() {
     local skills_lock="${DOTFILES_SKILLS_LOCK:-${BASEDIR}/skills.lock.json}"
     local checkout="${HOME}/.local/share/kornicameister/skills"
+    local development_alias="${HOME}/dev/my-skills"
     local repository commit runner temporary status head tool
     for tool in git node npm npx uv; do
         command -v "$tool" >/dev/null || { echo "Required tool missing: $tool" >&2; return 1; }
     done
+    if [[ -e "$development_alias" || -L "$development_alias" ]]; then
+        if [[ ! -L "$development_alias" ]] || ! {
+            [[ "$development_alias" -ef "$checkout" ]] ||
+                node -e '
+                    const fs = require("node:fs");
+                    const path = require("node:path");
+                    const [alias, checkout] = process.argv.slice(1);
+                    process.exit(path.resolve(path.dirname(alias), fs.readlinkSync(alias)) === path.resolve(checkout) ? 0 : 1);
+                ' "$development_alias" "$checkout"
+        }; then
+            echo "Development alias conflicts with existing path: $development_alias" >&2
+            return 1
+        fi
+    fi
     repository="$(read_skill_setting "$skills_lock" repository)"
     commit="$(read_skill_setting "$skills_lock" commit)"
     runner="$(read_skill_setting "$skills_lock" runner)"
@@ -54,6 +69,10 @@ prepare_skills() {
             git -C "$checkout" fetch "$repository" "$commit"
             git -C "$checkout" -c core.hooksPath=/dev/null checkout --detach "$commit"
         fi
+    fi
+    if [[ ! -L "$development_alias" ]]; then
+        mkdir -p "$(dirname "$development_alias")"
+        ln -s "$checkout" "$development_alias"
     fi
     npx --yes "$runner" "$checkout/install.ts" --dotfiles "$BASEDIR"
 }
