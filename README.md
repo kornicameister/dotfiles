@@ -121,8 +121,7 @@ Installation errors stop the bootstrap. Backups and transaction journals live in
 Bootstrap tests use local Git repositories, temporary homes and fixtures for package managers and application setup:
 
 ```bash
-python -m pip install -r tests/requirements.txt
-python -m pytest tests -q
+uvx --python 3.13 --with pytest-mock==3.17.0 --with faker==40.43.0 pytest@9.2.0 tests -q
 ```
 
 The private repository owns installer tests and `./typecheck`. Its tests cover independent copies, conflicts, download failures, repeated installs, symlinks, preserved local files and rollback. Behavior scenarios are documented separately; instruction-preservation checks do not prove live agent behavior. The `update-skills` skill will be added after migration acceptance.
