@@ -162,6 +162,7 @@ brew "hashicorp/tap/terraform-ls"
 cask "signal"
 cask "slack"
 cask "microsoft-teams"
+cask "zoom"
 
 # Database
 brew "pgcli"
