@@ -9,6 +9,7 @@ tap "hashicorp/tap"
 tap "ankitpokhrel/jira-cli"
 tap "jesseduffield/lazygit"
 tap "lucagrulla/tap"
+tap "stablyai/orca"
 
 # Base packages
 brew "openssl"
@@ -85,6 +86,7 @@ brew "efm-langserver"
 brew "neovim", args: ['HEAD']
 brew "tree-sitter-cli"
 cask "visual-studio-code"
+cask "stablyai/orca/orca"
 
 # Python tools
 brew "uv"
