@@ -24,6 +24,30 @@ Before starting a task, check the skills available in the current environment. I
 
 Before drafting any text that another person will read under the user's name (Slack, chat, MR or Jira comments, email, replies), use the `write-as-me` skill. The text must sound like the user, with no AI filler or pathos.
 
+
+## Testing skill routing
+
+For writing or reviewing tests, start with `tester` when available. It owns shared
+quality, strict behavioral assertions, isolation, test-level selection and the
+personal soft target around 90% coverage. Explicit repository requirements always
+override that target; do not change gates or add trivial tests to reach a number.
+
+Load only the workflow and language guidance needed by the task:
+
+- Add `tdd` for requested test-first work, new behavior or regression fixes:
+  red → green → refactor. Adding tests for existing behavior does not fabricate red.
+- Add `bdd` for business examples, Gherkin and acceptance bindings. BDD scenarios
+  may supply examples for TDD; neither workflow requires the other on every task.
+- Add the matching language skill and only the runner/strategy references selected
+  by `tester`. Unit, integration, contract, assertions and property-based testing
+  are conditional techniques/references, not a checklist of skills to load.
+
+These skills refer to each other at responsibility boundaries. Read each once per
+relevant context; do not recursively reload them or assume a fixed universal order.
+Inspect the actual available skills first. If `tester` is not yet installed, use
+the available testing guidance, report the missing skill when relevant and do not
+install or update skills as an incidental action.
+
 ## Documentation
 
 Use `~/dev/my-skills` as the development path for `~/.local/share/kornicameister/skills`. These paths share one checkout, including the Git branch, index and commits. Do not create another clone or worktree or move the managed checkout. Preserve correct absolute or relative aliases and stop on conflicts. Dirty checkouts block installation; clean checkouts may return to the locked commit. Removing only the alias leaves the checkout intact.

@@ -52,7 +52,7 @@ You MUST check available skills before responding. If a skill covers the topic, 
 **Constraints:**
 - You MUST invoke `conventional-commits` before writing any git commit message — you MUST NOT format a commit from memory
 - You MUST invoke `python` before writing or reviewing any Python code
-- You MUST invoke `tdd` before writing any test or setting up test fixtures
+- You MUST invoke `tester` when available before writing or reviewing tests or choosing isolation; add `tdd` for test-first behavior changes
 - You MUST invoke `bdd` before writing any Gherkin scenario or bdd step definition
 - You MUST invoke `ddd` before implementing any aggregate, entity, value object, or repository
 - You MUST invoke `awsume` before running any awsume command or managing AWS credentials
@@ -60,6 +60,30 @@ You MUST check available skills before responding. If a skill covers the topic, 
 - You MUST invoke `powertools-logger` before using AWS Lambda Powertools Logger — reserved key collisions cause runtime KeyErrors
 - You MUST invoke `find-docs` when asked about any library, framework, SDK, or AWS service API
 - You MUST invoke `write-as-me` before drafting any text that a person other than me will read under my name (Slack, chat, MR/PR or Jira comments, email, replies) — it must sound like me, with no AI filler or pathos
+
+## Testing skill routing
+
+For writing or reviewing tests, start with `tester` when available. It owns shared
+quality, strict behavioral assertions, isolation, test-level selection and the
+personal soft target around 90% coverage. Explicit repository requirements always
+override that target; do not change gates or add trivial tests to reach a number.
+
+Load only the workflow and language guidance needed by the task:
+
+- Add `tdd` for requested test-first work, new behavior or regression fixes:
+  red → green → refactor. Adding tests for existing behavior does not fabricate red.
+- Add `bdd` for business examples, Gherkin and acceptance bindings. BDD scenarios
+  may supply examples for TDD; neither workflow requires the other on every task.
+- Add the matching language skill and only the runner/strategy references selected
+  by `tester`. Unit, integration, contract, assertions and property-based testing
+  are conditional techniques/references, not a checklist of skills to load.
+
+These skills refer to each other at responsibility boundaries. Read each once per
+relevant context; do not recursively reload them or assume a fixed universal order.
+Inspect the actual available skills first. If `tester` is not yet installed, use
+the available testing guidance, report the missing skill when relevant and do not
+install or update skills as an incidental action.
+
 # graphify
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
 When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
